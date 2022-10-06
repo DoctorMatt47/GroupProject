@@ -8,4 +8,8 @@
         <RootNamespace>GroupProject.Infrastructure</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Application\Application.csproj"/>
+    </ItemGroup>
+
 </Project>
