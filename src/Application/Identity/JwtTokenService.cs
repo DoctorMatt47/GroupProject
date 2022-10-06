@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace GroupProject.Application.Identity;
 
-public class JwtTokenService
+public class JwtTokenService : IJwtTokenService
 {
     private readonly IAuthOptions _options;
 
