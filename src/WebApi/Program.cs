@@ -1,20 +1,35 @@
+using GroupProject.Application.Common.Extensions;
+using GroupProject.Infrastructure.Extensions;
+using GroupProject.Infrastructure.Persistence.Initializers;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services
+    .AddApplication()
+    .AddInfrastructure(connectionString)
+    .AddEndpointsApiExplorer()
+    .AddSwaggerGen()
+    .AddControllers();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+using (var scope = app.Services.CreateScope())
+{
+    var initializers = scope.ServiceProvider.GetServices<IEntityInitializer>();
+    foreach (var initializer in initializers) initializer.Initialize();
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+app.UseExceptionHandler("/error");
 
 app.UseAuthorization();
 
