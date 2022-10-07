@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GroupProject.Application.Commentaries;
 
-public class CommentaryService
+public class CommentaryService : ICommentaryService
 {
     private readonly IAppContext _context;
     private readonly ILogger<CommentaryService> _logger;
