@@ -13,14 +13,14 @@ public class UserService : IUserService
 {
     private readonly IAppContext _context;
     private readonly IJwtTokenService _jwtToken;
-    private readonly ILogger _logger;
+    private readonly ILogger<UserService> _logger;
     private readonly IPasswordHashService _passwordHash;
 
     public UserService(
         IAppContext context,
         IJwtTokenService jwtToken,
         IPasswordHashService passwordHash,
-        ILogger logger)
+        ILogger<UserService> logger)
     {
         _context = context;
         _jwtToken = jwtToken;
