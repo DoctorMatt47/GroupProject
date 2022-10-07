@@ -16,18 +16,18 @@ public class TopicService : ITopicService
     private readonly IAppDbContext _dbContext;
     private readonly ILogger<TopicService> _logger;
     private readonly IMapper _mapper;
-    private readonly IUserService _user;
+    private readonly IUserService _users;
 
     public TopicService(
         IAppDbContext dbContext,
         ILogger<TopicService> logger,
         IMapper mapper,
-        IUserService user)
+        IUserService users)
     {
         _dbContext = dbContext;
         _logger = logger;
         _mapper = mapper;
-        _user = user;
+        _users = users;
     }
 
     public async Task<IEnumerable<TopicInfoResponse>> Get(CancellationToken cancellationToken)
@@ -37,7 +37,7 @@ public class TopicService : ITopicService
             .ToListAsync(cancellationToken);
 
         var users = await topicInfos
-            .Select(t => _user.Get(t.UserId, cancellationToken))
+            .Select(t => _users.Get(t.UserId, cancellationToken))
             .WhenAllAsync();
 
         return topicInfos.Zip(users, (t, u) => t with {UserLogin = u.Login});
@@ -56,7 +56,7 @@ public class TopicService : ITopicService
         var topic = await _dbContext.Set<Topic>().FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
         if (topic is null) throw new NotFoundException($"There is no topic with id: {id}");
 
-        var user = await _user.Get(topic.UserId, cancellationToken);
+        var user = await _users.Get(topic.UserId, cancellationToken);
 
         return _mapper.Map<TopicResponse>(topic) with {UserLogin = user.Login};
     }

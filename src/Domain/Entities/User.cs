@@ -33,6 +33,6 @@ public class User
     public UserRole Role { get; set; } = UserRole.User;
     public UserStatus Status { get; set; } = UserStatus.Active;
 
-    public IEnumerable<Topic> Questions => _questions.ToList();
+    public IEnumerable<Topic> Topics => _questions.ToList();
     public IEnumerable<Commentary> Commentaries => _commentaries.ToList();
 }
