@@ -1,12 +1,13 @@
-﻿using GroupProject.Application.Common.Interfaces;
+﻿using System.Reflection;
+using GroupProject.Application.Common.Interfaces;
 using GroupProject.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GroupProject.Infrastructure.Persistence.Contexts;
 
-public sealed class AppContext : DbContext, IAppContext
+public sealed class AppDbContext : DbContext, IAppDbContext
 {
-    public AppContext(DbContextOptions options) : base(options)
+    public AppDbContext(DbContextOptions options) : base(options)
     {
         Database.EnsureCreated();
     }
@@ -16,13 +17,9 @@ public sealed class AppContext : DbContext, IAppContext
     public DbSet<Complaint> Complaints { get; set; } = null!;
     public DbSet<Commentary> Commentaries { get; set; } = null!;
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        base.OnConfiguring(optionsBuilder);
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(modelBuilder);
     }
 }

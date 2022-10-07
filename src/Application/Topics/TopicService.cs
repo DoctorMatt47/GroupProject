@@ -13,18 +13,18 @@ namespace GroupProject.Application.Topics;
 
 public class TopicService : ITopicService
 {
-    private readonly IAppContext _context;
+    private readonly IAppDbContext _dbContext;
     private readonly ILogger<TopicService> _logger;
     private readonly IMapper _mapper;
     private readonly IUserService _user;
 
     public TopicService(
-        IAppContext context,
+        IAppDbContext dbContext,
         ILogger<TopicService> logger,
         IMapper mapper,
         IUserService user)
     {
-        _context = context;
+        _dbContext = dbContext;
         _logger = logger;
         _mapper = mapper;
         _user = user;
@@ -32,7 +32,7 @@ public class TopicService : ITopicService
 
     public async Task<IEnumerable<TopicInfoResponse>> Get(CancellationToken cancellationToken)
     {
-        var topicInfos = await _context.Set<Topic>()
+        var topicInfos = await _dbContext.Set<Topic>()
             .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
@@ -45,7 +45,7 @@ public class TopicService : ITopicService
 
     public async Task<IEnumerable<TopicByUserIdResponse>> GetByUserId(Guid userId, CancellationToken cancellationToken)
     {
-        return await _context.Set<Topic>()
+        return await _dbContext.Set<Topic>()
             .Where(t => t.UserId == userId)
             .ProjectTo<TopicByUserIdResponse>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
@@ -53,7 +53,7 @@ public class TopicService : ITopicService
 
     public async Task<TopicResponse> Get(Guid id, CancellationToken cancellationToken)
     {
-        var topic = await _context.Set<Topic>().FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+        var topic = await _dbContext.Set<Topic>().FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
         if (topic is null) throw new NotFoundException($"There is no topic with id: {id}");
 
         var user = await _user.Get(topic.UserId, cancellationToken);
@@ -66,12 +66,12 @@ public class TopicService : ITopicService
         Guid userId,
         CancellationToken cancellationToken)
     {
-        var isTopicExist = await _context.Set<Topic>().AnyAsync(t => t.Header == request.Header, cancellationToken);
+        var isTopicExist = await _dbContext.Set<Topic>().AnyAsync(t => t.Header == request.Header, cancellationToken);
         if (isTopicExist) throw new ConflictException($"There is already topic with header: {request.Header}");
 
         var topic = new Topic(request.Header, request.Description, request.Code, userId);
-        _context.Set<Topic>().Add(topic);
-        await _context.SaveChangesAsync(cancellationToken);
+        _dbContext.Set<Topic>().Add(topic);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Created topic with id: {Id}", topic.Id);
 

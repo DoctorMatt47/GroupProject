@@ -12,20 +12,20 @@ namespace GroupProject.Application.Users;
 
 public class UserService : IUserService
 {
-    private readonly IAppContext _context;
+    private readonly IAppDbContext _dbContext;
     private readonly IJwtTokenService _jwtToken;
     private readonly ILogger<UserService> _logger;
     private readonly IMapper _mapper;
     private readonly IPasswordHashService _passwordHash;
 
     public UserService(
-        IAppContext context,
+        IAppDbContext dbContext,
         IJwtTokenService jwtToken,
         IPasswordHashService passwordHash,
         ILogger<UserService> logger,
         IMapper mapper)
     {
-        _context = context;
+        _dbContext = dbContext;
         _jwtToken = jwtToken;
         _passwordHash = passwordHash;
         _logger = logger;
@@ -34,7 +34,7 @@ public class UserService : IUserService
 
     public async Task<UserResponse> Get(Guid id, CancellationToken cancellationToken)
     {
-        var user = await _context.Set<User>().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+        var user = await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
         if (user is null) throw new NotFoundException($"There is no user with id: {id}");
 
         return _mapper.Map<UserResponse>(user);
@@ -56,7 +56,7 @@ public class UserService : IUserService
     {
         var badRequestException = new BadRequestException("Incorrect password or login");
 
-        var user = await _context.Set<User>().FirstOrDefaultAsync(u => u.Login == request.Login, cancellationToken);
+        var user = await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == request.Login, cancellationToken);
         if (user is null) throw badRequestException;
 
         var passwordHash = _passwordHash.Encode(request.Password, user.PasswordSalt);
@@ -73,12 +73,12 @@ public class UserService : IUserService
         UserRole role,
         CancellationToken cancellationToken)
     {
-        var isUserExist = await _context.Set<User>().AnyAsync(u => u.Login == request.Login, cancellationToken);
+        var isUserExist = await _dbContext.Set<User>().AnyAsync(u => u.Login == request.Login, cancellationToken);
         if (isUserExist) throw new ConflictException($"There is already user with login: {request.Login}");
 
         var user = new User(request.Login, request.Password, _passwordHash, role);
-        _context.Set<User>().Add(user);
-        await _context.SaveChangesAsync(cancellationToken);
+        _dbContext.Set<User>().Add(user);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Created {Role} with id: {Id}", role, user.Id);
 
