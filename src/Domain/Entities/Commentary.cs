@@ -9,14 +9,14 @@ public class Commentary
     {
     }
 
-    public Commentary(string description, string? code, Guid userId, Guid topicId)
+    public Commentary(string description, string? code, Guid topicId, Guid userId)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
         Description = description;
         Code = code;
-        UserId = userId;
         TopicId = topicId;
+        UserId = userId;
     }
 
     public Guid Id { get; protected set; }
