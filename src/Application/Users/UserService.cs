@@ -1,4 +1,5 @@
-﻿using GroupProject.Application.Common.Exceptions;
+﻿using AutoMapper;
+using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Identity;
 using GroupProject.Domain.Entities;
@@ -14,18 +15,29 @@ public class UserService : IUserService
     private readonly IAppContext _context;
     private readonly IJwtTokenService _jwtToken;
     private readonly ILogger<UserService> _logger;
+    private readonly IMapper _mapper;
     private readonly IPasswordHashService _passwordHash;
 
     public UserService(
         IAppContext context,
         IJwtTokenService jwtToken,
         IPasswordHashService passwordHash,
-        ILogger<UserService> logger)
+        ILogger<UserService> logger,
+        IMapper mapper)
     {
         _context = context;
         _jwtToken = jwtToken;
         _passwordHash = passwordHash;
         _logger = logger;
+        _mapper = mapper;
+    }
+
+    public async Task<UserResponse> Get(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await _context.Set<User>().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
+        if (user is null) throw new NotFoundException($"There is no user with id: {id}");
+
+        return _mapper.Map<UserResponse>(user);
     }
 
     public async Task<AuthenticateUserResponse> CreateUser(
