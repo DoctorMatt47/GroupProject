@@ -1,4 +1,6 @@
-﻿namespace GroupProject.Domain.Entities;
+﻿using GroupProject.Domain.Enums;
+
+namespace GroupProject.Domain.Entities;
 
 public class Topic
 {
@@ -27,6 +29,7 @@ public class Topic
     public string Header { get; protected set; } = null!;
     public string Description { get; protected set; } = null!;
     public string? Code { get; protected set; }
+    public TopicStatus Status { get; protected set; } = TopicStatus.Active;
 
     public Guid UserId { get; protected set; }
     public User User { get; protected set; } = null!;
