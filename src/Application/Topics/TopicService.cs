@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace GroupProject.Application.Topics;
 
-public class TopicService
+public class TopicService : ITopicService
 {
     private readonly IAppContext _context;
     private readonly ILogger<TopicService> _logger;
