@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using GroupProject.Application.Commentaries;
+using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Complaints;
 using GroupProject.Application.Topics;
-using GroupProject.WebApi.Extensions;
 using GroupProject.WebApi.Requests;
 
 namespace GroupProject.WebApi.Mappings;

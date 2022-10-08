@@ -2,7 +2,7 @@
 using AutoMapper;
 using AutoMapper.Internal;
 
-namespace GroupProject.WebApi.Extensions;
+namespace GroupProject.Application.Common.Extensions;
 
 public static class AutoMapperExtensions
 {

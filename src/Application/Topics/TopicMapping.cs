@@ -1,16 +1,20 @@
 ﻿using AutoMapper;
-using GroupProject.Application.Topics;
+using GroupProject.Application.Common.Extensions;
 using GroupProject.Domain.Entities;
 
-namespace GroupProject.Application.Common.Mappings;
+namespace GroupProject.Application.Topics;
 
 public class TopicMapping : Profile
 {
     public TopicMapping()
     {
         CreateMap<Topic, TopicResponse>();
-        CreateMap<Topic, TopicInfoForUserResponse>();
-        CreateMap<Topic, TopicInfoForModeratorResponse>();
         CreateMap<Topic, TopicByUserIdResponse>();
+        CreateMap<Topic, TopicInfoForUserResponse>()
+            .MapRecordMember(r => r.UserLogin, _ => string.Empty);
+
+        CreateMap<Topic, TopicInfoForModeratorResponse>()
+            .MapRecordMember(r => r.UserLogin, _ => string.Empty)
+            .MapRecordMember(r => r.ComplaintCount, _ => 0);
     }
 }

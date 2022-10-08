@@ -63,7 +63,7 @@ public class TopicService : ITopicService
             .Include(t => t.Complaints)
             .OrderBy(t => t.Complaints.Count())
             .Skip((page - 1) * perPage)
-            .Take(page)
+            .Take(perPage)
             .ToListAsync(cancellationToken);
 
         var users = await topics
