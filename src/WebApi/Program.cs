@@ -1,3 +1,4 @@
+using System.Reflection;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Infrastructure.Extensions;
 using GroupProject.Infrastructure.Identity;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services
+    .AddAutoMapper(Assembly.GetExecutingAssembly())
     .AddApplication()
     .AddInfrastructure(connectionString)
     .AddBearerAuthentication(new AuthOptions())
