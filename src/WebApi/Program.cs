@@ -1,5 +1,6 @@
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Infrastructure.Extensions;
+using GroupProject.Infrastructure.Identity;
 using GroupProject.Infrastructure.Persistence.Initializers;
 using GroupProject.WebApi.Extensions;
 
@@ -10,6 +11,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services
     .AddApplication()
     .AddInfrastructure(connectionString)
+    .AddBearerAuthentication(new AuthOptions())
     .AddEndpointsApiExplorer()
     .AddSwagger()
     .AddControllers();
@@ -32,6 +34,7 @@ app.UseCors(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 app.UseExceptionHandler("/error");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
