@@ -5,4 +5,5 @@ public record CommentaryResponse(
     string Description,
     string? Code,
     Guid UserId,
-    Guid TopicId);
+    Guid TopicId,
+    DateTime CreationTime);

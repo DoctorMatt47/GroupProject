@@ -6,4 +6,5 @@ public record TopicResponse(
     string Description,
     string? Code,
     Guid UserId,
-    string UserLogin);
+    string UserLogin,
+    DateTime CreationTime);
