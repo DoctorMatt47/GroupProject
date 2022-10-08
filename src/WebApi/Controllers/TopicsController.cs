@@ -170,7 +170,7 @@ public class TopicsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<IdResponse<Guid>>> Create(
-        CreateTopicRequest body,
+        CreateTopicBody body,
         CancellationToken cancellationToken)
     {
         var request = _mapper.Map<CreateTopicRequest>(body) with {UserId = Guid.Parse(User.Identity?.Name!)};
