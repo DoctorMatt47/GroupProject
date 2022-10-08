@@ -97,15 +97,12 @@ public class TopicService : ITopicService
         return _mapper.Map<TopicResponse>(topic) with {UserLogin = user.Login};
     }
 
-    public async Task<IdResponse<Guid>> Create(
-        CreateTopicRequest request,
-        Guid userId,
-        CancellationToken cancellationToken)
+    public async Task<IdResponse<Guid>> Create(CreateTopicRequest request, CancellationToken cancellationToken)
     {
         var isTopicExist = await _context.Set<Topic>().AnyAsync(t => t.Header == request.Header, cancellationToken);
         if (isTopicExist) throw new ConflictException($"There is already topic with header: {request.Header}");
 
-        var topic = new Topic(request.Header, request.Description, request.Code, userId);
+        var topic = new Topic(request.Header, request.Description, request.Code, request.UserId);
 
         _context.Set<Topic>().Add(topic);
         await _context.SaveChangesAsync(cancellationToken);

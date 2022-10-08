@@ -4,6 +4,6 @@ namespace GroupProject.Application.Commentaries;
 
 public interface ICommentaryService
 {
-    Task<IEnumerable<CommentaryResponse>> GetByTopicId(Guid id, CancellationToken cancellationToken);
-    Task<IdResponse<Guid>> Create(CreateCommentaryRequest request, Guid userId, CancellationToken cancellationToken);
+    Task<Page<CommentaryResponse>> GetByTopicId(Guid id, int perPage, int page, CancellationToken cancellationToken);
+    Task<IdResponse<Guid>> Create(CreateCommentaryRequest request, CancellationToken cancellationToken);
 }

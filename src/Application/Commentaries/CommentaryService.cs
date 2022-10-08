@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using GroupProject.Application.Common.Exceptions;
+using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
@@ -12,40 +13,48 @@ namespace GroupProject.Application.Commentaries;
 
 public class CommentaryService : ICommentaryService
 {
-    private readonly IAppDbContext _dbContext;
+    private readonly IAppDbContext _context;
     private readonly ILogger<CommentaryService> _logger;
     private readonly IMapper _mapper;
 
     public CommentaryService(
-        IAppDbContext dbContext,
+        IAppDbContext context,
         ILogger<CommentaryService> logger,
         IMapper mapper)
     {
-        _dbContext = dbContext;
+        _context = context;
         _logger = logger;
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<CommentaryResponse>> GetByTopicId(Guid id, CancellationToken cancellationToken)
+    public async Task<Page<CommentaryResponse>> GetByTopicId(
+        Guid id,
+        int perPage,
+        int page,
+        CancellationToken cancellationToken)
     {
-        return await _dbContext.Set<Commentary>()
+        var pageCount = await _context.Set<Commentary>().PageCountAsync(perPage, cancellationToken);
+
+        return await _context.Set<Commentary>()
             .Where(c => c.TopicId == id)
+            .OrderBy(c => c.CreationTime)
+            .Skip((page - 1) * perPage)
+            .Take(perPage)
             .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+            .ToPageAsync(pageCount, cancellationToken);
     }
 
     public async Task<IdResponse<Guid>> Create(
         CreateCommentaryRequest request,
-        Guid userId,
         CancellationToken cancellationToken)
     {
-        var topic = await _dbContext.Set<Topic>().FirstOrDefaultAsync(t => t.Id == request.TopicId, cancellationToken);
+        var topic = await _context.Set<Topic>().FirstOrDefaultAsync(t => t.Id == request.TopicId, cancellationToken);
         if (topic is null) throw new NotFoundException($"There is no topic with id: {request.TopicId}");
         if (topic.Status == TopicStatus.Closed) throw new ConflictException("Topic has been closed");
 
-        var commentary = new Commentary(request.Description, request.Code, request.TopicId, userId);
-        _dbContext.Set<Commentary>().Add(commentary);
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        var commentary = new Commentary(request.Description, request.Code, request.TopicId, request.UserId);
+        _context.Set<Commentary>().Add(commentary);
+        await _context.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation(
             "Created commentary with id: {CommentaryId} on topic: {TopicId}",

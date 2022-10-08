@@ -3,4 +3,5 @@
 public record CreateCommentaryRequest(
     string Description,
     string? Code,
-    Guid TopicId);
+    Guid TopicId,
+    Guid UserId);

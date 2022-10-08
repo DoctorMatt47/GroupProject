@@ -33,7 +33,9 @@ public class ComplaintService : IComplaintService
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IdResponse<Guid>> CreateComplaint(ComplaintRequest request, CancellationToken cancellationToken)
+    public async Task<IdResponse<Guid>> CreateComplaint(
+        CreateComplaintRequest request,
+        CancellationToken cancellationToken)
     {
         var isTopicExist = await _context.Set<Topic>().AnyAsync(t => t.Id == request.TopicId, cancellationToken);
         if (!isTopicExist) throw new NotFoundException($"There is no topic with id: {request.TopicId}");
