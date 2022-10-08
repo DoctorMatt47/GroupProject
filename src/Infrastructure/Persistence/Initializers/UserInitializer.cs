@@ -18,6 +18,8 @@ public class UserInitializer : IEntityInitializer
 
     public void Initialize()
     {
+        if (_context.Set<User>().Any()) return;
+
         var user = new User("user", "password", _passwordHash, UserRole.User);
         var moderator = new User("moderator", "password", _passwordHash, UserRole.Moderator);
         var admin = new User("admin", "password", _passwordHash, UserRole.Admin);
