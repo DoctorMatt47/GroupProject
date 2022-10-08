@@ -40,7 +40,7 @@ public class TopicService : ITopicService
         var topics = await _context.Set<Topic>()
             .OrderBy(t => t.CreationTime)
             .Skip((page - 1) * perPage)
-            .Take(page)
+            .Take(perPage)
             .ToListAsync(cancellationToken);
 
         var users = await topics
