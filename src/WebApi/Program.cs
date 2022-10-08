@@ -1,6 +1,7 @@
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Infrastructure.Extensions;
 using GroupProject.Infrastructure.Persistence.Initializers;
+using GroupProject.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ builder.Services
     .AddApplication()
     .AddInfrastructure(connectionString)
     .AddEndpointsApiExplorer()
-    .AddSwaggerGen()
+    .AddSwagger()
     .AddControllers();
 
 var app = builder.Build();
