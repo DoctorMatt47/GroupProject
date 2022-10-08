@@ -77,6 +77,7 @@ public class UserService : IUserService
         if (isUserExist) throw new ConflictException($"There is already user with login: {request.Login}");
 
         var user = new User(request.Login, request.Password, _passwordHash, role);
+
         _dbContext.Set<User>().Add(user);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
