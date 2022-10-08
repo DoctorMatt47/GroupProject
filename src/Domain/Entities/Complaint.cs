@@ -9,18 +9,18 @@ public class Complaint
     {
     }
 
-    public Complaint(string description, Guid questionId)
+    public Complaint(string description, Guid topicId)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
         Description = description;
-        QuestionId = questionId;
+        TopicId = topicId;
     }
 
     public Guid Id { get; protected set; }
     public DateTime CreationTime { get; protected set; }
     public string Description { get; protected set; } = null!;
 
-    public Guid QuestionId { get; protected set; }
+    public Guid TopicId { get; protected set; }
     public Topic Topic { get; protected set; } = null!;
 }
