@@ -66,7 +66,7 @@ public class UsersController : ApiControllerBase
         CancellationToken cancellationToken)
     {
         var response = await _users.CreateUser(body, cancellationToken);
-        return Created(response.Id.ToString(), response);
+        return Created("", response);
     }
 
     /// <summary>

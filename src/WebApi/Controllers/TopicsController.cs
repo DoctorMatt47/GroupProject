@@ -58,11 +58,11 @@ public class TopicsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public Task<Page<TopicInfoForUserResponse>> GetOrderedByComplaintCount(
+    public Task<Page<TopicInfoForModeratorResponse>> GetOrderedByComplaintCount(
         int perPage,
         int page,
         CancellationToken cancellationToken) =>
-        _topics.GetOrderedByCreationTime(perPage, page, cancellationToken);
+        _topics.GetOrderedByComplaintCount(perPage, page, cancellationToken);
 
     /// <summary>
     ///     Gets topic by id
@@ -152,7 +152,12 @@ public class TopicsController : ApiControllerBase
         CreateCommentaryBody body,
         CancellationToken cancellationToken)
     {
-        var request = _mapper.Map<CreateCommentaryRequest>(body) with {TopicId = id};
+        var request = _mapper.Map<CreateCommentaryRequest>(body) with
+        {
+            TopicId = id,
+            UserId = Guid.Parse(User.Identity?.Name!),
+        };
+
         var response = await _commentaries.Create(request, cancellationToken);
         return Created("", response);
     }
@@ -175,7 +180,7 @@ public class TopicsController : ApiControllerBase
     {
         var request = _mapper.Map<CreateTopicRequest>(body) with {UserId = Guid.Parse(User.Identity?.Name!)};
         var response = await _topics.Create(request, cancellationToken);
-        var location = new Uri($"~api/Topics/{response.Id}");
+        var location = $"~api/Topics/{response.Id}";
         return Created(location, response);
     }
 }
