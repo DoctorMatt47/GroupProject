@@ -99,6 +99,9 @@ public class TopicService : ITopicService
 
     public async Task<IdResponse<Guid>> Create(CreateTopicRequest request, CancellationToken cancellationToken)
     {
+        var isUserExist = await _context.Set<User>().AnyAsync(u => u.Id == request.UserId, cancellationToken);
+        if (!isUserExist) throw new NotFoundException($"There is no user with id: {request.UserId}");
+
         var isTopicExist = await _context.Set<Topic>().AnyAsync(t => t.Header == request.Header, cancellationToken);
         if (isTopicExist) throw new ConflictException($"There is already topic with header: {request.Header}");
 
