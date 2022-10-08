@@ -83,7 +83,7 @@ public class TopicsController : ApiControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns>Complaints of topic with passed id</returns>
     [Authorize(Roles = "Moderator, Admin")]
-    [HttpGet("{id:guid}/complaints")]
+    [HttpGet("{id:guid}/Complaints")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
