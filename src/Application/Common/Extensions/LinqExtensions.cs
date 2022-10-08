@@ -5,8 +5,16 @@ namespace GroupProject.Application.Common.Extensions;
 
 public static class LinqExtensions
 {
-    public static async Task<Page<T>> ToPageAsync<T>(this IQueryable<T> queryable, int pageCount) =>
-        new(await queryable.ToListAsync(), pageCount);
+    public static Page<T> ToPage<T>(
+        this IEnumerable<T> enumerable,
+        int pageCount) =>
+        new(enumerable.ToList(), pageCount);
+
+    public static async Task<Page<T>> ToPageAsync<T>(
+        this IQueryable<T> queryable,
+        int pageCount,
+        CancellationToken cancellationToken = default) =>
+        new(await queryable.ToListAsync(cancellationToken), pageCount);
 
     public static async Task<IEnumerable<TResponse>> WhenAllAsync<TResponse>(this IEnumerable<Task<TResponse>> tasks)
     {

@@ -12,8 +12,8 @@ public class TopicsController : ApiControllerBase
     public TopicsController(ITopicService topics) => _topics = topics;
 
     [HttpGet]
-    public Task<IEnumerable<TopicInfoResponse>> Get(CancellationToken cancellationToken) =>
-        _topics.Get(cancellationToken);
+    public Task<Page<TopicInfoResponse>> Get(int perPage, int page, CancellationToken cancellationToken) =>
+        _topics.Get(perPage, page, cancellationToken);
 
     [HttpGet("{id:guid}")]
     public Task<TopicResponse> Get(Guid id, CancellationToken cancellationToken) => _topics.Get(id, cancellationToken);

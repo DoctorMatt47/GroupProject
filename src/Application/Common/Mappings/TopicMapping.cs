@@ -6,7 +6,7 @@ namespace GroupProject.Application.Common.Mappings;
 
 public class TopicMapping : Profile
 {
-    protected TopicMapping()
+    public TopicMapping()
     {
         CreateMap<Topic, TopicResponse>();
         CreateMap<Topic, TopicInfoResponse>();
