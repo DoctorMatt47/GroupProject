@@ -11,9 +11,19 @@ public class TopicsController : ApiControllerBase
 
     public TopicsController(ITopicService topics) => _topics = topics;
 
-    [HttpGet]
-    public Task<Page<TopicInfoResponse>> Get(int perPage, int page, CancellationToken cancellationToken) =>
-        _topics.Get(perPage, page, cancellationToken);
+    [HttpGet("OrderedByCreationTime")]
+    public Task<Page<TopicInfoForUserResponse>> GetOrderedByCreationTime(
+        int perPage,
+        int page,
+        CancellationToken cancellationToken) =>
+        _topics.GetOrderedByCreationTime(perPage, page, cancellationToken);
+
+    [HttpGet("OrderedByComplaintCount")]
+    public Task<Page<TopicInfoForUserResponse>> GetOrderedByComplaintCount(
+        int perPage,
+        int page,
+        CancellationToken cancellationToken) =>
+        _topics.GetOrderedByCreationTime(perPage, page, cancellationToken);
 
     [HttpGet("{id:guid}")]
     public Task<TopicResponse> Get(Guid id, CancellationToken cancellationToken) => _topics.Get(id, cancellationToken);

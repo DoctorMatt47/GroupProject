@@ -30,23 +30,52 @@ public class TopicService : ITopicService
         _users = users;
     }
 
-    public async Task<Page<TopicInfoResponse>> Get(int perPage, int page, CancellationToken cancellationToken)
+    public async Task<Page<TopicInfoForUserResponse>> GetOrderedByCreationTime(
+        int perPage,
+        int page,
+        CancellationToken cancellationToken)
     {
-        var pageCount = (int) Math.Ceiling(_context.Set<Topic>().Count() / (float) perPage);
+        var pageCount = await _context.Set<Topic>().PageCountAsync(perPage, cancellationToken);
 
-        var topicPage = await _context.Set<Topic>()
+        var topics = await _context.Set<Topic>()
             .OrderBy(t => t.CreationTime)
             .Skip((page - 1) * perPage)
             .Take(page)
-            .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(pageCount, cancellationToken);
+            .ToListAsync(cancellationToken);
 
-        var users = await topicPage.List
+        var users = await topics
             .Select(t => _users.Get(t.UserId, cancellationToken))
             .WhenAllAsync();
 
-        return topicPage.List
-            .Zip(users, (t, u) => t with {UserLogin = u.Login})
+        return topics
+            .Zip(users, (topic, user) => _mapper.Map<TopicInfoForUserResponse>(topic) with {UserLogin = user.Login})
+            .ToPage(pageCount);
+    }
+
+    public async Task<Page<TopicInfoForModeratorResponse>> GetOrderedByComplaintCount(
+        int perPage,
+        int page,
+        CancellationToken cancellationToken)
+    {
+        var pageCount = await _context.Set<Topic>().PageCountAsync(perPage, cancellationToken);
+
+        var topics = await _context.Set<Topic>()
+            .Include(t => t.Complaints)
+            .OrderBy(t => t.Complaints.Count())
+            .Skip((page - 1) * perPage)
+            .Take(page)
+            .ToListAsync(cancellationToken);
+
+        var users = await topics
+            .Select(t => _users.Get(t.UserId, cancellationToken))
+            .WhenAllAsync();
+
+        return topics
+            .Zip(users, (topic, user) => _mapper.Map<TopicInfoForModeratorResponse>(topic) with
+            {
+                UserLogin = user.Login,
+                ComplaintCount = topic.Complaints.Count(),
+            })
             .ToPage(pageCount);
     }
 
@@ -77,6 +106,7 @@ public class TopicService : ITopicService
         if (isTopicExist) throw new ConflictException($"There is already topic with header: {request.Header}");
 
         var topic = new Topic(request.Header, request.Description, request.Code, userId);
+
         _context.Set<Topic>().Add(topic);
         await _context.SaveChangesAsync(cancellationToken);
 

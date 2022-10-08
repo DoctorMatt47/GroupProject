@@ -9,7 +9,8 @@ public class TopicMapping : Profile
     public TopicMapping()
     {
         CreateMap<Topic, TopicResponse>();
-        CreateMap<Topic, TopicInfoResponse>();
+        CreateMap<Topic, TopicInfoForUserResponse>();
+        CreateMap<Topic, TopicInfoForModeratorResponse>();
         CreateMap<Topic, TopicByUserIdResponse>();
     }
 }
