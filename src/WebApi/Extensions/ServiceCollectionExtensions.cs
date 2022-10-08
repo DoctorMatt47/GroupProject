@@ -1,4 +1,5 @@
-﻿using GroupProject.Application.Identity;
+﻿using System.Reflection;
+using GroupProject.Application.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -60,6 +61,9 @@ public static class ServiceCollectionExtensions
                     new List<string>()
                 },
             });
+
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         });
 
         return services;
