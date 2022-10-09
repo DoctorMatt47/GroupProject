@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hi-fi code - Create new topic</title>
+        <script src="../../JS/data.js"></script>
+        <script src="../../JS/languages.js"></script>
+        <script src="../../JS/topic.js"></script>
+        <script src="../../JS/httpFunctions.js"></script>
+        <script src="../../JS/user.js"></script>
+        <script src="../../JS/code.js"></script>
+    </head>
+    <body onload="authenticate('login', 'password'); addLanguagesToSelect('topic-code-language'); return false">
+        <div>
+            <form style="display:flex; flex-direction: column; width:80%;" onsubmit="submitTopic(); return false">
+                <label>Topic title</label>
+                <input id="topic-title" type="text" required>
+                <label>Topic body</label>
+                <textarea id="topic-body" required></textarea>
+                <label>Add code</label>
+                <input id="need-code" type="checkbox" checked="true" onclick="setVisible(checked, 'code', 'flex')">
+                <div id="code" style="display:flex; flex-direction: column;">
+                    <label>Language</label>
+                    <select id="topic-code-language" >
+                    </select>
+                    <label>Code</label>
+                    <textarea id="topic-code"></textarea>
+                </div>
+                
+                <input type="submit">
+            </form>
+        </div>
+    </body>
+</html>
