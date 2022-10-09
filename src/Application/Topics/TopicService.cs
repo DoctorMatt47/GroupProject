@@ -38,7 +38,7 @@ public class TopicService : ITopicService
         var pageCount = await _context.Set<Topic>().PageCountAsync(perPage, cancellationToken);
 
         var topics = await _context.Set<Topic>()
-            .OrderBy(t => t.CreationTime)
+            .OrderByDescending(t => t.CreationTime)
             .Skip((page - 1) * perPage)
             .Take(perPage)
             .ToListAsync(cancellationToken);
