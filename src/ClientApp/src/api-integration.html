@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>ApiIntegration</title>
+</head>
+<body>
+
+<label>
+    Login
+    <input id="reg-login" type="text">
+</label>
+<label>
+    Password
+    <input id="reg-password" type="text">
+</label>
+<button id="registration" onclick="register()">Registration</button>
+
+<br>
+
+<label>
+    Login
+    <input id="auth-login" type="text">
+</label>
+<label>
+    Password
+    <input id="auth-password" type="text">
+</label>
+<button onclick="authenticate()">Authentication</button>
+
+<div id="log">
+    
+</div>
+
+<script>
+    const registrationLoginInput = document.getElementById("reg-login");
+    const registrationPasswordInput = document.getElementById("reg-password");
+
+    const authenticationLoginInput = document.getElementById("auth-login");
+    const authenticationPasswordInput = document.getElementById("auth-password");
+    
+    const logElement = document.getElementById("log");
+
+    // TODO: Move to common js file
+    const baseUrl = "http://localhost:5000/api/";
+    const sendAsync = async (endpoint, request) => {
+        const response = await fetch(endpoint, request);
+        if (!response.ok) {
+            const text = await response.text()
+            throw new Error(text);
+        }
+        return response.json();
+    }
+
+    const register = () => {
+        const login = registrationLoginInput.value;
+        const password = registrationPasswordInput.value;
+
+        const body = {login: login, password: password}
+
+        const request = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        }
+        sendAsync(baseUrl + "Users", request)
+            .then(response => {
+                console.log(response);
+                logElement.innerText = `Registered! ${response.id}`;
+            })
+            .catch(error => {
+                const exception = JSON.parse(error.message)
+                console.log(exception);
+                logElement.innerText = `Error! ${exception.message}`;
+            })
+    }
+
+    const authenticate = () => {
+        const login = authenticationLoginInput.value;
+        const password = authenticationPasswordInput.value;
+        
+        const body = {login: login, password: password}
+
+        const request = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        }
+        sendAsync(baseUrl + "Users/Authenticate", request)
+            .then(response => {
+                console.log(response)
+                logElement.innerText = `Authenticated! ${response.id}`;
+                
+                // Push auth token to local storage
+                window.localStorage.setItem("token", response.token);
+            })
+            .catch(error => {
+                const exception = JSON.parse(error.message)
+                console.log(exception);
+                logElement.innerText = `Error! ${exception.message}`;
+            })
+    }
+</script>
+
+</body>
+</html>
