@@ -38,10 +38,8 @@ public class CommentaryService : ICommentaryService
         return await _context.Set<Commentary>()
             .Where(c => c.TopicId == id)
             .OrderBy(c => c.CreationTime)
-            .Skip((page - 1) * perPage)
-            .Take(perPage)
             .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(pageCount, cancellationToken);
+            .ToPageAsync(perPage, page, pageCount, cancellationToken);
     }
 
     public async Task<IdResponse<Guid>> Create(

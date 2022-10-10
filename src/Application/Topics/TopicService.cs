@@ -39,15 +39,11 @@ public class TopicService : ITopicService
 
         var topics = await _context.Set<Topic>()
             .OrderByDescending(t => t.CreationTime)
-            .Skip((page - 1) * perPage)
-            .Take(perPage)
-            .ToListAsync(cancellationToken);
+            .ToPageAsync(perPage, page, pageCount, cancellationToken);
 
-        var users = await topics
-            .Select(t => _users.Get(t.UserId, cancellationToken))
-            .WhenAllAsync();
+        var users = await topics.List.SelectAsync(t => _users.Get(t.UserId, cancellationToken));
 
-        return topics
+        return topics.List
             .Zip(users, (topic, user) => _mapper.Map<TopicInfoForUserResponse>(topic) with {UserLogin = user.Login})
             .ToPage(pageCount);
     }
@@ -61,16 +57,13 @@ public class TopicService : ITopicService
 
         var topics = await _context.Set<Topic>()
             .Include(t => t.Complaints)
+            .Where(t => t.Complaints.Count() != 0)
             .OrderBy(t => t.Complaints.Count())
-            .Skip((page - 1) * perPage)
-            .Take(perPage)
-            .ToListAsync(cancellationToken);
+            .ToPageAsync(perPage, page, pageCount, cancellationToken);
 
-        var users = await topics
-            .Select(t => _users.Get(t.UserId, cancellationToken))
-            .WhenAllAsync();
+        var users = await topics.List.SelectAsync(t => _users.Get(t.UserId, cancellationToken));
 
-        return topics
+        return topics.List
             .Zip(users, (topic, user) => _mapper.Map<TopicInfoForModeratorResponse>(topic) with
             {
                 UserLogin = user.Login,
