@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <title>Hi-fi code - Create new topic</title>
         <script src="../../JS/data.js"></script>
         <script src="../../JS/languages.js"></script>
@@ -9,13 +11,14 @@
         <script src="../../JS/user.js"></script>
         <script src="../../JS/code.js"></script>
     </head>
-    <body onload="authenticate('login', 'password'); addLanguagesToSelect('topic-code-language'); return false">
+    <body onload="addLoginToDiv('user-login'); addLanguagesToSelect('topic-code-language'); return false">
         <div>
+            <div id="user-login"></div>
             <form style="display:flex; flex-direction: column; width:80%;" onsubmit="submitTopic(); return false">
                 <label>Topic title</label>
                 <input id="topic-title" type="text" required>
-                <label>Topic body</label>
-                <textarea id="topic-body" required></textarea>
+                <label>Topic description</label>
+                <textarea id="topic-description" required></textarea>
                 <label>Add code</label>
                 <input id="need-code" type="checkbox" checked="true" onclick="setVisible(checked, 'code', 'flex')">
                 <div id="code" style="display:flex; flex-direction: column;">

@@ -10,16 +10,19 @@ function register(login, password){
     }
     sendAsync(URLS.Users, request)
         .then(response => {
-            console.log(response);
+            console.log(response)
+            putToStorage("token", response.token)
+            putToStorage("login", login)
         })
         .catch(error => {
             const exception = JSON.parse(error.message)
-            console.log(exception);
+            console.log(exception)
         })
 }
 
 function authenticate(login, password){
     const body = {login: login, password: password}
+
     const request = {
         method: "POST",
         headers: {
@@ -29,10 +32,14 @@ function authenticate(login, password){
     }
     sendAsync(URLS.UsersAuthenticate, request)
         .then(response => {
-            putToStorage("token", response.token);
+            putToStorage("token", response.token)
+            putToStorage("login", login)
         })
         .catch(error => {
             const exception = JSON.parse(error.message)
-            console.log(exception);
+            console.log(exception)
         })
+}
+function addLoginToDiv(divId){
+    document.getElementById(divId).textContent = "User: "+getFromStorage("login")
 }

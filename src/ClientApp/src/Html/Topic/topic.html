@@ -3,17 +3,20 @@
     <head>
         <meta charset="UTF-8">
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
-        <title>Hi-fi code - Topics</title>
+        <title>Hi-fi code - Topic</title>
         <script src="../../JS/data.js"></script>
         <script src="../../JS/topic.js"></script>
         <script src="../../JS/httpFunctions.js"></script>
         <script src="../../JS/user.js"></script>
         <script src="../../JS/code.js"></script>
     </head>
-    <body onload="addLoginToDiv('user-login'); addTopicsToContainer('topics', 10, 1); return false">
+    <body onload="addLoginToDiv('user-login'); addTopicToPage(getValueFromCurrentUrl('id'), 'topic-title', 'topic-description', 'topic-code','topic-commentaries'); return false;">
         <div id="user-login"></div>
-        <div id="topics"></div>
-        <button>Prev</button>
-        <button>Next</button>
+        <div>
+            <div id="topic-title"></div>
+            <div id="topic-description"></div>
+            <div id="topic-code"></div>
+            <div id="topic-commentaries"></div>
+        </div>
     </body>
 </html>
