@@ -1,5 +1,11 @@
-//Replace all functions to topic/script.js
 
+function openForm() {
+    document.getElementById("fullscreen-container").style.display = "block";
+}
+
+function closeForm() {
+    document.getElementById("fullscreen-container").style.display = "none";
+}
 function addLanguagesToSelect(selectId){
     let select = document.getElementById(selectId)
     for(let type in LANGUAGES){
@@ -14,9 +20,9 @@ function setVisible(visible, id, display){
 }
 function submitTopic(){
     createTopic(document.getElementById("topic-title").value,
-    document.getElementById("topic-description").value, 
-    document.getElementById("need-code").checked
-    ?document.getElementById("topic-code").value:"")
+        document.getElementById("topic-description").value,
+        document.getElementById("need-code").checked
+            ?document.getElementById("topic-code").value:"")
 }
 function createTopic(header, description, code){
     const body = {header: header, description: description, code:code}
@@ -78,18 +84,18 @@ function addTopicToPage(topicId, titleId, descriptionId, codeId, commentsId){
         }
     }
     sendAsync(URLS.Topics + `/${topicId}`, request)
-    .then(response => {
-        console.log(response)
-        document.getElementById(titleId).textContent = `Title: ${response.header}`
-        document.getElementById(descriptionId).textContent = `Description: ${response.description}`
-        document.getElementById(codeId).textContent = `Code: ${response.code}`
-        let openCode = document.createElement("button")
-        openCode.textContent = "Run code"
-        openCode.onclick = ()=> openPage("../code-runner.html", {"id": topicId})
-        document.getElementById(codeId).appendChild(openCode)
-    })
-    .catch(error => {
-        const exception = JSON.parse(error.message)
-        console.log(exception)
-    })
+        .then(response => {
+            console.log(response)
+            document.getElementById(titleId).textContent = `Title: ${response.header}`
+            document.getElementById(descriptionId).textContent = `Description: ${response.description}`
+            document.getElementById(codeId).textContent = `Code: ${response.code}`
+            let openCode = document.createElement("button")
+            openCode.textContent = "Run code"
+            openCode.onclick = ()=> openPage("../code-runner.html", {"id": topicId})
+            document.getElementById(codeId).appendChild(openCode)
+        })
+        .catch(error => {
+            const exception = JSON.parse(error.message)
+            console.log(exception)
+        })
 }

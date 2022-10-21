@@ -1,0 +1,26 @@
+<link href="style.css" rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div id="fullscreen-container">
+    <div id="topicForm">
+        <h2>Create new Topic</h2>
+        <form>
+            <label for="topic-title">Topic title</label>
+            <input id="topic-title" type="text" required>
+            <label for="topic-description">Topic description</label>
+            <textarea id="topic-description" required></textarea>
+            <label for="need-code">Add code</label>
+            <input id="need-code" type="checkbox" style="padding: 10px" checked="true"
+                   onclick="setVisible(checked, 'code', 'flex')">
+            <div id="code" style="display:flex; flex-direction: column;">
+                <label for="topic-code-language">Language</label>
+                <select id="topic-code-language">
+                </select>
+                <label for="topic-code">Code</label>
+                <textarea id="topic-code"></textarea>
+            </div>
+        </form>
+        <button type="submit" class="btn formBtn" onclick="">Submit</button>
+        <button type="button" class="btn formBtn" id="close-btn" onclick="closeForm()">Close</button>
+    </div>
+</div>
+<script src="script.js"></script>
