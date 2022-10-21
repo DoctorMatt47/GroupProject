@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
-    $(".navbar a, footer a[href='#mainPage']").on('click', function (event) {
+    $(".navbar a, footer a[href='#homePage']").on('click', function (event) {
         if (this.hash !== "") {
             event.preventDefault();
             var hash = this.hash;

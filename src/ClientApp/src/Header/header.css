@@ -45,6 +45,8 @@ h3, h4 {
     color: #f1f1f1;
     border-radius: 20px;
     transition: .2s;
+    height: 35px;
+    margin-bottom: 15px;
 }
 
 .btn:hover, .btn:focus {
