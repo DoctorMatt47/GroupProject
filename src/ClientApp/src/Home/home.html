@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - Main Forum Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="../Header/header.css" rel="stylesheet" type="text/css">
+    <link href="../Footer/footer.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function(){
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+        });
+    </script>
+</head>
+<body id="mainPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+<!--Hot topics-->
+<div class=" container-fluid  box mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="column col-sm-4">
+                    <div class="thumbnail thumbnail-topic">
+                        <p><strong> Topic</strong></p><br>
+                        <p>Topic description</p>
+                    </div>
+                </div>
+                <div class="column col-sm-4">
+                    <div class="thumbnail thumbnail-topic">
+                        <p><strong> Topic</strong></p><br>
+                        <p>Topic description</p>
+                    </div>
+                </div>
+                <div class="column col-sm-4">
+                    <div class="thumbnail thumbnail-topic">
+                        <p><strong> Topic</strong></p><br>
+                        <p>Topic description</p>
+                    </div>
+                </div>
+            </div>
+            <h3>Recomended for You</h3>
+            <div id="card-container"></div>
+            <div class="card-actions">
+                <button id="load-more">Load more</button>
+                <span>Showing <span id="card-count"></span> of
+                     <span id="card-total"></span> cards</span>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <!--About Forum -->
+            <div class="row thumbnail">
+                <div class="text-center">
+                    <h2 style="font-family:Courier New, Courier, monospace">HI-FI CODE</h2>
+                    <p>Since 2022</p>
+                </div>
+                <div class="about-box">A forum community dedicated to IT noobs, masters and enthusiasts.
+                    Come join the discussion about collections, displays, models, styles, scales, classifieds,
+                    and coding at all!
+                </div>
+                <button type="button" class="btn join-btn" style="align-items: center">JOIN COMMUNITY</button>
+            </div>
+            <!--Top Sections in forum-->
+            <div class="row thumbnail">
+                <h2 style="text-align: center">OUR TOP SECTIONS</h2>
+                <div class="view-all-link">
+                    <a href="#">View All-></a>
+                </div>
+                <ul class="list-group">
+                    <a href="#">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Section 1
+                            <span class="badge badge-primary badge-pill">14</span>
+                        </li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Section 2
+                            <span class="badge badge-primary badge-pill">2</span>
+                        </li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Section 3
+                            <span class="badge badge-primary badge-pill">1</span>
+                        </li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Section 4
+                            <span class="badge badge-primary badge-pill">123</span>
+                        </li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Section 5
+                            <span class="badge badge-primary badge-pill">21</span>
+                        </li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Section 6
+                            <span class="badge badge-primary badge-pill">12</span>
+                        </li>
+                    </a>
+                </ul>
+            </div>
+            <!--Top Languages in forum-->
+            <div class="row thumbnail">
+                <h2 style="text-align: center">OUR TOP LANGUAGES</h2>
+                <div class="view-all-link">
+                    <a href="#">View All-></a>
+                </div>
+                <ul class="list-group text-center">
+                    <a href="#">
+                        <li class="list-group-item language-list-item">HTML</li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item language-list-item">JAVA</li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item language-list-item">C++</li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item language-list-item">C#</li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item language-list-item">UNITY</li>
+                    </a>
+                    <a href="#">
+                        <li class="list-group-item language-list-item">JAVASCRIPT</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+<script src="script.js"></script>
+</html>

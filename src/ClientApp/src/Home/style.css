@@ -1,0 +1,133 @@
+h2{
+    color: black;
+}
+.about-box {
+    display: block;
+    overflow: hidden;
+    text-align: left;
+    padding: 40px;
+    color: black;
+    font-size: 20px;
+}
+
+.column {
+    float: left;
+    padding: 10px;
+}
+
+.jumbotron {
+    color: black;
+}
+
+.thumbnail {
+    position: relative;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.thumbnail:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.thumbnail p {
+    margin-top: 15px;
+    vertical-align: bottom;
+    color: #555;
+}
+
+.thumbnail-topic {
+    background: linear-gradient(to bottom, #ffffff 0%, #818674 100%);
+}
+
+.box {
+    padding: 80px 120px;
+    background-color: #F5F5F5;
+}
+
+.join-btn {
+    margin: 20px;
+    width: 90%;
+    height: 60px;
+    font-size: 20px;
+    padding: 20px;
+    border-radius: 3px;
+    background-color: #8A9A5B !important;
+}
+
+
+.language-list-item {
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    border: none;
+}
+
+
+.list-group span {
+    background-color: cadetblue;
+}
+
+.view-all-link a {
+    text-align: left;
+    color: #B0B0B0 !important;
+    text-decoration: none;
+}
+
+
+/*Card Container*/
+
+#card-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    height: 10vh;
+    width: 100%;
+    margin: 8px;
+    border-radius: 20px;
+    transition: all 200ms ease-in-out;
+    display: flex;
+    align-items: flex-end;
+    justify-content: left;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    background: linear-gradient(to bottom, #ffffff 0%, #E5E4E2 100%);
+}
+
+.card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.card-actions {
+    margin: 8px;
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#load-more {
+    width: calc((100% / 2) - 8px);
+    padding: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    background-color: #E5E4E2;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+}
+
+#load-more:not([disabled]):hover {
+    box-shadow: 0 1px 9px rgba(0, 0, 0, 0.2);
+}
+
+#load-more[disabled] {
+    background-color: #eaeaea !important;
+}
+
+
