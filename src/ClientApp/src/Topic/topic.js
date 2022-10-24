@@ -16,7 +16,11 @@ function submitTopic(){
     createTopic(document.getElementById("topic-title").value,
     document.getElementById("topic-description").value, 
     document.getElementById("need-code").checked
-    ?document.getElementById("topic-code").value:"")
+    ?document.getElementById("topic-code").value:"").then(response=>{
+        openPage("topic.html", {"id":response.id})
+    }).catch(error=>{
+        console.log(error.message)
+    })
 }
 function createTopic(header, description, code){
     const body = {header: header, description: description, code:code}
@@ -28,14 +32,7 @@ function createTopic(header, description, code){
         },
         body: JSON.stringify(body),
     }
-    sendAsync(URLS.Topics, request)
-        .then(response => {
-            openTopic(response.id)
-        })
-        .catch(error => {
-            const exception = JSON.parse(error.message)
-            console.log(exception)
-        })
+    return sendAsync(URLS.Topics, request)
 }
 function getTopics(perPage, page){
     const request = {

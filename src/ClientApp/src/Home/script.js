@@ -26,7 +26,7 @@ const createCard = (topicId) => {
     const card = document.createElement("a");
     card.className = "card";
     getTopic(topicId).then(response=>{
-        card.innerHTML = `${response.header}<br>${response.description}`;
+        card.innerHTML = `${response.header}<br>${cutTextForTopic(response.description)}`;
         card.href = addParameters(topicPage, {id:topicId});
     });
     cardContainer.appendChild(card);
@@ -57,7 +57,8 @@ const createPopularCard = (topicId)=>{
     card.className = "thumbnail thumbnail-topic";
 
     getTopic(topicId).then(response=>{
-        card.innerHTML = `<p>${response.userLogin}</p><a><strong>${response.header}</strong></a><p>${response.description}</p>`;
+        card.innerHTML = `<p>${response.userLogin}</p><a><strong>${response.header}</strong></a>
+        <p>${cutTextForTopic(response.description)}</p>`;
         card.href = addParameters(topicPage, {id:topicId});
     });
 

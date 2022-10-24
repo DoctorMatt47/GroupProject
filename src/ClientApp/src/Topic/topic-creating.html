@@ -4,14 +4,14 @@
         <meta charset="UTF-8">
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <title>Hi-fi code - Create new topic</title>
-        <script src="../../JS/data.js"></script>
-        <script src="../../JS/languages.js"></script>
-        <script src="../../JS/topic.js"></script>
-        <script src="../../JS/httpFunctions.js"></script>
-        <script src="../../JS/user.js"></script>
-        <script src="../../JS/code.js"></script>
+        <script src="../JS/data.js"></script>
+        <script src="../JS/languages.js"></script>
+        <script src="topic.js"></script>
+        <script src="../JS/httpFunctions.js"></script>
+        <script src="../JS/user.js"></script>
+        <script src="../JS/code.js"></script>
     </head>
-    <body onload="addLoginToDiv('user-login'); addLanguagesToSelect('topic-code-language'); return false">
+    <body onload="addLanguagesToSelect('topic-code-language'); return false">
         <div>
             <div id="user-login"></div>
             <form style="display:flex; flex-direction: column; width:80%;" onsubmit="submitTopic(); return false">
