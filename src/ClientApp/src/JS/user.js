@@ -33,3 +33,7 @@ function authenticate(login, password){
     })
     return res
 }
+function isLoggedIn(){
+    const token = getFromStorage("token")
+    return (token !== null && token !== undefined && token !== "")
+}

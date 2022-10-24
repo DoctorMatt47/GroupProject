@@ -18,3 +18,9 @@ function addParameters(url, params){
 function openPage(url, params){
     window.location.href = addParameters(url, params)
 }
+function textCutter(text, length){
+    return text.slice(0, length)
+}
+function cutTextForTopic(text){
+    return textCutter(text, 30) + "..."
+}
