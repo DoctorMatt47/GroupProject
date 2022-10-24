@@ -8,11 +8,13 @@ function getValueFromCurrentUrl(key){
     let url = new URL(window.location)
     return url.searchParams.get(key)
 }
-function openPage(url, params){
+function addParameters(url, params){
     let res = url + "?"
     for(let key in params){
         res += `${key}=${params[key]}&`
     }
-    res = res.slice(0, -1)
-    window.location.href = res
+    return res.slice(0, -1)
+}
+function openPage(url, params){
+    window.location.href = addParameters(url, params)
 }

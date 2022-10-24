@@ -10,8 +10,6 @@ function addCode(topicId, codePlaceId){
         console.log(response)
         let place = document.getElementById(codePlaceId)
         place.appendChild(createCode(response.code, "cpp"))
-        //place.children[0].setAttribute("data-language", "cpp")
-        //place.children[0].textContent = response.code
     })
     .catch(error => {
         console.log(error)
