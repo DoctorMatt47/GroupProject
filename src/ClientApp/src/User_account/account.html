@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Hi-fi code - User Accoun Page</title>
+    <title>Hi-fi code - User Account Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="style.css" rel="stylesheet" type="text/css">
     <link href="../Header/header.css" rel="stylesheet" type="text/css">
     <link href="../Footer/footer.css" rel="stylesheet" type="text/css">
-    <link href="../Topic/style.css" rel="stylesheet" type="text/css">
+    <link href="../Topic_Creation/style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -17,11 +17,11 @@
         $(function () {
             $("#header").load("../Header/header.html");
             $("#footer").load("../Footer/footer.html");
-            $("#topic").load("../Topic/topic.html");
+            $("#topic").load("../Topic_Creation/topic_creation.html");
         });
     </script>
 </head>
-<body id="mainPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+<body id="page-header" data-target=".navbar" data-offset="50">
 <div id="header"></div>
 <div class=" container-fluid  box mt-5">
     <div class="row">
@@ -40,19 +40,20 @@
             </div>
         </div>
         <div class="col-sm-4">
-            <div class="row thumbnail">
+            <div class="row panel">
                 <div class="panel-heading">
-                    <h2 style="font-family:Courier New, Courier, monospace">Username</h2>
-                    <p>Registration date</p>
+                    <h2 style="font-family:Courier New, Courier, monospace" id="username">Username</h2>
+                    <p id="registration-date">Registration date</p>
                 </div>
-                <div class="row panel-footer">
-                    <div class="col-sm-5 create-btn">
-                        <button type="button" class="btn cancel" onclick="openForm()"><img src="../../resources/static/plus.png" alt="create"></button><br>
-                            <a>Create New Duscussion</a>
+                <div class="panel-body text-center">
+                    <div id="topic"></div>
+                    <div class="col-sm-6 create-btn">
+                        <button type="button" onclick="openForm()">
+                            <img src="../../resources/static/plus.png" alt="create"></button><br>
+                            <p>Create New Discussion</p>
                     </div>
-                    <div id="topic" onload="addLoginToDiv('user-login'); addLanguagesToSelect('topic-code-language'); return false"></div>
-                    <div class="col-sm-5">
-                        <h2>6</h2>
+                    <div class="col-sm-6">
+                        <div id="created-discussions">6</div>
                         <p style="color: black">Created Discussions</p>
                     </div>
                 </div>
@@ -63,6 +64,7 @@
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
-<script src="../Topic/script.js"></script>
-<script src="../JS/user.js"></script>
+<script src="../Topic_Creation/script.js"></script>
+<script src="../Footer/footer.js"></script>
+<!--<script src="../JS/user.js"></script>-->
 </html>

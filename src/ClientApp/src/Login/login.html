@@ -39,48 +39,37 @@
                 </div>
             </div>
         </div>
-        <!--        -->
         <div class="container-form">
             <div class="form-item log-in">
                 <div class="table">
                     <div class="table-cell">
-                        <h3>LOG IN</h3>
-                        <div class="input-group">
-                            <label for="username">
-                                <input
-                                        id="username"
-                                        name="username"
-                                        placeholder="Username"
-                                        type="text"/>
-                            </label>
-                            <label>
-                                <input
-                                        id="password"
-                                        name="password"
-                                        placeholder="Password"
-                                        type="Password"/>
-                            </label>
-                            <button class="btn" onclick="authenticate()">
+                        <form>
+                            <label for="username"></label>
+                            <input id="username" name="username" placeholder="Username" type="text"/>
+
+                            <label for="password"></label>
+                            <input id="password" name="password" placeholder="Password" type="Password"/>
+
+                            <button class="btn">
                                 Log in
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <!--            Registration-->
             <div class="form-item sign-up">
                 <div class="table">
                     <div class="table-cell">
-                        <h3>SIGN UP</h3>
                         <form action="#" class="form">
                             <div class="input-group">
-                                <label for="registration-username">
-                                    <input
-                                    id="registration-username"
-                                    name="registration-username"
-                                    placeholder="Username"
-                                    type="text"/>
-                                </label>
+                                <label for="registration-username"></label>
+                                <input
+                                        id="registration-username"
+                                        name="registration-username"
+                                        placeholder="Username"
+                                        type="text"
+                                        minlength="2"
+                                        maxlength="32"/>
                                 <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" width="24"
                                      height="24" viewBox="0 0 24 24">
                                     <title>check-circle</title>
@@ -100,11 +89,14 @@
                                 </svg>
                             </div>
                             <div class="input-group">
-                                <label for="registration-password"></label><input
-                                    id="registration-password"
-                                    name="registration-password"
-                                    placeholder="Password"
-                                    type="Password"/>
+                                <label for="registration_password"></label>
+                                <input
+                                        id="registration_password"
+                                        name="registration_password"
+                                        placeholder="Password"
+                                        type="Password"
+                                        minlength="8"
+                                        maxlength="32"/>
                                 <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" width="24"
                                      height="24" viewBox="0 0 24 24">
                                     <title>check-circle</title>
@@ -129,7 +121,9 @@
                                         id="password_confirmation"
                                         name="password_confirmation"
                                         placeholder="Confirm Password"
-                                        type="Password"/>
+                                        type="Password"
+                                        minlength="8"
+                                        maxlength="32"/>
                                 <svg class="icon icon-success hidden" xmlns="http://www.w3.org/2000/svg" width="24"
                                      height="24" viewBox="0 0 24 24">
                                     <title>check-circle</title>
@@ -148,17 +142,18 @@
                                     </g>
                                 </svg>
                             </div>
-                            <button id="registration" class="btn" type="submit" onclick="register()">
+                            <button class="btn" type="submit">
                                 Sign up
                             </button>
                         </form>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div id="log"></div>
+
 <script src="script.js"></script>
 </body>
 

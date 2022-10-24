@@ -1,26 +1,131 @@
-<link href="style.css" rel="stylesheet" type="text/css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<div id="fullscreen-container">
-    <div id="topicForm">
-        <h2>Create new Topic</h2>
-        <form>
-            <label for="topic-title">Topic title</label>
-            <input id="topic-title" type="text" required>
-            <label for="topic-description">Topic description</label>
-            <textarea id="topic-description" required></textarea>
-            <label for="need-code">Add code</label>
-            <input id="need-code" type="checkbox" style="padding: 10px" checked="true"
-                   onclick="setVisible(checked, 'code', 'flex')">
-            <div id="code" style="display:flex; flex-direction: column;">
-                <label for="topic-code-language">Language</label>
-                <select id="topic-code-language">
-                </select>
-                <label for="topic-code">Code</label>
-                <textarea id="topic-code"></textarea>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - Topic Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="../Header/header.css" rel="stylesheet" type="text/css">
+    <link href="../Footer/footer.css" rel="stylesheet" type="text/css">
+    <link href="../Side_panel/style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+            $("#side-panel").load("../Side_panel/side-panel.html");
+        });
+    </script>
+</head>
+<body id="page-header" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+<div class=" container-fluid  box mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="panel">
+                <div class="panel-heading topic-panel-heading">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-11">
+                                <a href="#">
+                                    <div class="section" id="section">Javascript</div>
+                                </a>
+                            </div>
+                            <div class="col-sm-1 complaint-icon">
+                                <a data-toggle="tooltip" title="Create a complaint" href="#">
+                                    <span class="glyphicon glyphicon-bell" style="color:#d7ae54"></span>
+                                </a>
+                            </div>
+                        </div>
+                        <h3 style="font-style: inherit" id="topic-name"><strong>Create multiple elements</strong></h3>
+                        <hr>
+                    </div>
+                </div>
+                <div class="panel-body topic-panel-footer">
+                    <div id="topic-description">I want to create 4 elements with different text. The class needs to
+                        remain the same. I think I am doing this with too much code.
+                        Maybe anyone has some information how to make this code look more beautiful and more efficient?
+                        Best wishes and thank you!
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div id="panel-footer-code">
+                        Here should be your code<br>
+                        var textBlock = document.createElement('div');<br>
+                        textBlock.setAttribute('class', 'finalBlock');<br><br>
+                        var addFinalBlock = document.getElementsByClassName('block')[0];<br>
+                        addFinalBlock.appendChild(textBlock);<br><br>
+                        textBlock.innerHTML = "Make this block a text block";<br>
+                    </div>
+                </div>
             </div>
-        </form>
-        <button type="submit" class="btn formBtn" onclick="">Submit</button>
-        <button type="button" class="btn formBtn" id="close-btn" onclick="closeForm()">Close</button>
+            <div class="comment-group">
+                <div id="comment">
+                    <div class="complaint-icon">
+                        <a data-toggle="tooltip" title="Create a complaint" href="#">
+                            <span class="glyphicon glyphicon-bell" style="color:#d7ae54; margin-right: 15px"></span>
+                        </a>
+                    </div>
+                    <p id="answer">Here we have answer text<br>
+                        "Explanation:
+
+                        This is called event delegation and works as followed.
+                        The event is attached to a static parent (staticAncestors)
+                        of the element that should be handled. This jQuery handler
+                        is triggered every time the event triggers on this element
+                        or one of the descendant elements. The handler then checks
+                        if the element that triggered the event matches your selector
+                        (dynamicChild). When there is a match then your custom handler function is executed."
+                    </p>
+                    <div class="panel-footer">
+                        <div id="panel-footer-answer-code">
+                            Here should be your code<br>
+                            var textBlock = document.createElement('div');<br>
+                            textBlock.setAttribute('class', 'finalBlock');<br><br>
+                            var addFinalBlock = document.getElementsByClassName('block')[0];<br>
+                            addFinalBlock.appendChild(textBlock);<br><br>
+                            textBlock.innerHTML = "Make this block a text block";<br>
+                        </div>
+                    </div>
+                    <div  id="answer-username"><a href="#">username</a></div><br>
+                    <p id="answer-date">Answered:20.02.2022</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="row thumbnail panel align-left">
+                <div class="panel-heading text-center">
+                    <h2 style="font-family:Courier New, Courier, monospace">About discussion</h2>
+                </div>
+                <div class="panel-body">
+                    <div class="row text-center">
+                        <div class="col-sm-6">
+                            <div id="viewed" style="font-size: 20px;">26</div>
+                            <p>Viewed</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <div id="answers" style="font-size: 20px;">6</div>
+                            <p>Answers</p>
+                        </div>
+                    </div>
+                    <div id="topic-info">
+                        <hr>
+                        <div id="topic-username"><a href="#">username</a></div>
+                        <div id="creation-date">creation date: 22.03.2022</div>
+                    </div>
+                </div>
+            </div>
+            <div id="side-panel"></div>
+        </div>
     </div>
 </div>
+
+<div id="footer"></div>
+</body>
 <script src="script.js"></script>
+</html>

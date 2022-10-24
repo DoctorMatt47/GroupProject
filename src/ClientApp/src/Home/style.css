@@ -1,6 +1,7 @@
-h2{
+h2 {
     color: black;
 }
+
 .about-box {
     display: block;
     overflow: hidden;
@@ -38,7 +39,8 @@ h2{
 .thumbnail-topic {
     background: linear-gradient(to bottom, #ffffff 0%, #818674 100%);
 }
-.thumbnail-topic a{
+
+.thumbnail-topic a {
     text-decoration: none;
 }
 

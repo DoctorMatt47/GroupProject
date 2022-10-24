@@ -50,7 +50,7 @@ class FormValidator {
 
         // Password confirmation edge case
         if (field.id === "password_confirmation") {
-            const passwordField = this.form.querySelector('#registration-password')
+            const passwordField = this.form.querySelector('#registration_password')
 
             if (field.value.trim() == "") {
                 this.setStatus(field, "Password confirmation required", "error")
@@ -88,79 +88,6 @@ class FormValidator {
 }
 
 const form = document.querySelector('.form')
-const fields = ["registration-username", "registration-password", "password_confirmation"]
+const fields = ["registration-username", "registration_password", "password_confirmation"]
 const validator = new FormValidator(form, fields)
 validator.initialize()
-
-//Registration-Authentifiation
-const registrationLoginInput = document.getElementById("registration-username");
-const registrationPasswordInput = document.getElementById("registration-password");
-
-const authenticationLoginInput = document.getElementById("username");
-const authenticationPasswordInput = document.getElementById("password");
-
-const logElement = document.getElementById("log");
-
-// TODO: Move to common js file
-const baseUrl = "http://localhost:5000/api/";
-const sendAsync = async (endpoint, request) => {
-    const response = await fetch(endpoint, request);
-    if (!response.ok) {
-        const text = await response.text()
-        throw new Error(text);
-    }
-    return response.json();
-}
-
-const register = () => {
-    const login = registrationLoginInput.value;
-    const password = registrationPasswordInput.value;
-
-    const body = {login: login, password: password}
-
-    const request = {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-    }
-    sendAsync(baseUrl + "Users", request)
-        .then(response => {
-            console.log(response);
-            logElement.innerText = `Registered! ${response.id}`;
-        })
-        .catch(error => {
-            const exception = JSON.parse(error.message)
-            console.log(exception);
-            logElement.innerText = `Error! ${exception.message}`;
-        })
-}
-
-const authenticate = () => {
-    const login = authenticationLoginInput.value;
-    const password = authenticationPasswordInput.value;
-
-    const body = {login: login, password: password}
-
-    const request = {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-    }
-    sendAsync(baseUrl + "Users/Authenticate", request)
-        .then(response => {
-            console.log(response)
-            logElement.innerText = `Authenticated! ${response.id}`;
-
-            // Push auth token to local storage
-            window.localStorage.setItem("token", response.token);
-        })
-        .catch(error => {
-            const exception = JSON.parse(error.message)
-            console.log(exception);
-            logElement.innerText = `Error! ${exception.message}`;
-        })
-}
