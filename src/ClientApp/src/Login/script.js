@@ -21,10 +21,13 @@ class FormValidator {
 
         this.form.addEventListener('submit', event => {
             event.preventDefault()
+            let isValid = true
             self.fields.forEach(field => {
                 const input = document.querySelector(`#${field}`)
                 self.validateFields(input)
+                isValid = isValid && (input.getAttribute("meta-data") == "success")
             })
+            if(isValid) registrationSubmit()
         })
     }
 
@@ -63,6 +66,8 @@ class FormValidator {
     }
 
     setStatus(field, message, status) {
+        field.setAttribute("meta-data", status)
+
         const successIcon = field.parentElement.querySelector('.icon-success')
         const errorIcon = field.parentElement.querySelector('.icon-error')
         const errorMessage = field.parentElement.querySelector('.error-message')
@@ -92,9 +97,27 @@ const fields = ["registration-username", "registration_password", "password_conf
 const validator = new FormValidator(form, fields)
 validator.initialize()
 
+const errorContainer = document.getElementById("error-container")
+
+const inputUsernameRegistration = document.getElementById("registration-username")
+const inputPasswordRegistration = document.getElementById("registration_password")
 const registrationSubmit = ()=>{
-    console.log("registration")
+    register(inputUsernameRegistration.value, inputPasswordRegistration.value).then(response=>{
+        window.location.href = "../Home/home.html"
+    }).catch(error=>{
+        const message = JSON.parse(error.message)
+        errorContainer.textContent = message.message
+    })
+
 }
+
+const inputUsernameLogin = document.getElementById("username")
+const inputPasswordLogin = document.getElementById("password")
 const loginSubmit = ()=>{
-    console.log("login")
+    authenticate(inputUsernameLogin.value, inputPasswordLogin.value).then(response=>{
+        window.location.href = "../Home/home.html"
+    }).catch(error=>{
+        const message = JSON.parse(error.message)
+        errorContainer.textContent = message.message
+    })
 }
