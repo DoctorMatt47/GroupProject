@@ -37,55 +37,39 @@ function createTopic(header, description, code){
             console.log(exception)
         })
 }
-function addTopicsToContainer(containerID, perPage, page){
+function getTopics(perPage, page){
     const request = {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
         }
     }
-    sendAsync(URLS.TopicsOrderedByCreationTime + `?perPage=${perPage}&page=${page}`, request)
-        .then(response => {
-            let container = document.getElementById(containerID)
-            for(let i in response.list){
-                let topic = document.createElement("div")
-                topic.className = "topics-style"
-                let title = document.createElement("div")
-                title.className = "topics-title"
-                title.textContent = response.list[i].header
-                title.onclick = ()=>openTopic(response.list[i].id)
-                topic.appendChild(title)
-                let login = document.createElement("div")
-                login.className = "topics-login"
-                login.textContent = response.list[i].userLogin
-                topic.appendChild(login)
-                container.appendChild(topic)
-            }
-        })
-        .catch(error => {
-            const exception = JSON.parse(error.message)
-            console.log(exception)
-        })
+    return sendAsync(URLS.TopicsOrderedByCreationTime + `?perPage=${perPage}&page=${page}`, request)
 }
-function openTopic(topicId){
-    openPage("topic.html", {"id": topicId})
+function getRecommendedTopics(perPage, page){
+    return getTopics(perPage, page)
+}
+function getPopularTopics(perPage, page){
+    return getTopics(perPage, page)
+}
+function getTopic(topicId){
+    const request = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    return sendAsync(URLS.Topics + `/${topicId}`, request)
 }
 function addTopicToPage(topicId, titleId, descriptionId, codeId, commentsId){
-    const request = {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }
-    sendAsync(URLS.Topics + `/${topicId}`, request)
-    .then(response => {
+    getTopic(topicId).then(response => {
         console.log(response)
         document.getElementById(titleId).textContent = `Title: ${response.header}`
         document.getElementById(descriptionId).textContent = `Description: ${response.description}`
         document.getElementById(codeId).textContent = `Code: ${response.code}`
         let openCode = document.createElement("button")
         openCode.textContent = "Run code"
-        openCode.onclick = ()=> openPage("../code-runner.html", {"id": topicId})
+        openCode.onclick = ()=> openPage("../Html/code-runner.html", {"id": topicId})
         document.getElementById(codeId).appendChild(openCode)
     })
     .catch(error => {
