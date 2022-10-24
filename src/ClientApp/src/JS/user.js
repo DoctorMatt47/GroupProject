@@ -8,16 +8,12 @@ function register(login, password){
         },
         body: JSON.stringify(body),
     }
-    sendAsync(URLS.Users, request)
-        .then(response => {
-            console.log(response)
-            putToStorage("token", response.token)
-            putToStorage("login", login)
-        })
-        .catch(error => {
-            const exception = JSON.parse(error.message)
-            console.log(exception)
-        })
+    let res = sendAsync(URLS.Users, request)
+    res.then(response => {
+        putToStorage("token", response.token)
+        putToStorage("login", login)
+    })
+    return res
 }
 
 function authenticate(login, password){
@@ -30,16 +26,10 @@ function authenticate(login, password){
         },
         body: JSON.stringify(body),
     }
-    sendAsync(URLS.UsersAuthenticate, request)
-        .then(response => {
-            putToStorage("token", response.token)
-            putToStorage("login", login)
-        })
-        .catch(error => {
-            const exception = JSON.parse(error.message)
-            console.log(exception)
-        })
-}
-function addLoginToDiv(divId){
-    document.getElementById(divId).textContent = "User: "+getFromStorage("login")
+    let res =  sendAsync(URLS.UsersAuthenticate, request)
+    res.then(response => {
+        putToStorage("token", response.token)
+        putToStorage("login", login)
+    })
+    return res
 }
