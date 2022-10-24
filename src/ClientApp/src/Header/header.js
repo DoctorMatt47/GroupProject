@@ -5,6 +5,6 @@ const loginButton = ()=>{
     }
     window.location.href = "../Login/login.html"
 }
-window.onload = ()=>{
+window.addEventListener("load", ()=>{
     document.getElementById("login-button").textContent =  isLoggedIn()?"My Account":"LOGIN/JOIN"
-}
+})

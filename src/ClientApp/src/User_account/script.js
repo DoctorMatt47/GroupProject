@@ -37,9 +37,17 @@ const addCards = (pageIndex) => {
     }
 };
 
+const username = document.getElementById("username");
+
+const setUserData = (data)=>{
+    username.textContent = data
+}
+
 window.onload = function () {
+    setUserData(getFromStorage("login"));
     addCards(currentPage);
     loadMoreButton.addEventListener("click", () => {
         addCards(currentPage + 1);
     });
 };
+
