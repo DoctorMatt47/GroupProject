@@ -91,3 +91,10 @@ const form = document.querySelector('.form')
 const fields = ["registration-username", "registration_password", "password_confirmation"]
 const validator = new FormValidator(form, fields)
 validator.initialize()
+
+const registrationSubmit = ()=>{
+    console.log("registration")
+}
+const loginSubmit = ()=>{
+    console.log("login")
+}
