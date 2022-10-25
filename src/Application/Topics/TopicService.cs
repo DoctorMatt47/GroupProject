@@ -13,18 +13,18 @@ namespace GroupProject.Application.Topics;
 
 public class TopicService : ITopicService
 {
-    private readonly IAppDbContext _context;
+    private readonly IAppDbContext _dbContext;
     private readonly ILogger<TopicService> _logger;
     private readonly IMapper _mapper;
     private readonly IUserService _users;
 
     public TopicService(
-        IAppDbContext context,
+        IAppDbContext dbContext,
         ILogger<TopicService> logger,
         IMapper mapper,
         IUserService users)
     {
-        _context = context;
+        _dbContext = dbContext;
         _logger = logger;
         _mapper = mapper;
         _users = users;
@@ -35,17 +35,12 @@ public class TopicService : ITopicService
         int page,
         CancellationToken cancellationToken)
     {
-        var pageCount = await _context.Set<Topic>().PageCountAsync(perPage, cancellationToken);
+        var pageCount = await _dbContext.Set<Topic>().PageCountAsync(perPage, cancellationToken);
 
-        var topics = await _context.Set<Topic>()
+        return await _dbContext.Set<Topic>()
             .OrderByDescending(t => t.CreationTime)
+            .ProjectTo<TopicInfoForUserResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(perPage, page, pageCount, cancellationToken);
-
-        var users = await topics.List.SelectAsync(t => _users.Get(t.UserId, cancellationToken));
-
-        return topics.List
-            .Zip(users, (topic, user) => _mapper.Map<TopicInfoForUserResponse>(topic) with {UserLogin = user.Login})
-            .ToPage(pageCount);
     }
 
     public async Task<Page<TopicInfoForModeratorResponse>> GetOrderedByComplaintCount(
@@ -53,28 +48,19 @@ public class TopicService : ITopicService
         int page,
         CancellationToken cancellationToken)
     {
-        var pageCount = await _context.Set<Topic>().PageCountAsync(perPage, cancellationToken);
+        var pageCount = await _dbContext.Set<Topic>().PageCountAsync(perPage, cancellationToken);
 
-        var topics = await _context.Set<Topic>()
+        return await _dbContext.Set<Topic>()
             .Include(t => t.Complaints)
             .Where(t => t.Complaints.Count() != 0)
             .OrderBy(t => t.Complaints.Count())
+            .ProjectTo<TopicInfoForModeratorResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(perPage, page, pageCount, cancellationToken);
-
-        var users = await topics.List.SelectAsync(t => _users.Get(t.UserId, cancellationToken));
-
-        return topics.List
-            .Zip(users, (topic, user) => _mapper.Map<TopicInfoForModeratorResponse>(topic) with
-            {
-                UserLogin = user.Login,
-                ComplaintCount = topic.Complaints.Count(),
-            })
-            .ToPage(pageCount);
     }
 
     public async Task<IEnumerable<TopicByUserIdResponse>> GetByUserId(Guid userId, CancellationToken cancellationToken)
     {
-        return await _context.Set<Topic>()
+        return await _dbContext.Set<Topic>()
             .Where(t => t.UserId == userId)
             .ProjectTo<TopicByUserIdResponse>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
@@ -82,26 +68,30 @@ public class TopicService : ITopicService
 
     public async Task<TopicResponse> Get(Guid id, CancellationToken cancellationToken)
     {
-        var topic = await _context.Set<Topic>().FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+        var topic = await _dbContext.Set<Topic>().FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
         if (topic is null) throw new NotFoundException($"There is no topic with id: {id}");
 
-        var user = await _users.Get(topic.UserId, cancellationToken);
-
-        return _mapper.Map<TopicResponse>(topic) with {UserLogin = user.Login};
+        return _mapper.Map<TopicResponse>(topic);
     }
 
     public async Task<IdResponse<Guid>> Create(CreateTopicRequest request, CancellationToken cancellationToken)
     {
-        var isUserExist = await _context.Set<User>().AnyAsync(u => u.Id == request.UserId, cancellationToken);
+        var isUserExist = await _dbContext.Set<User>().AnyAsync(u => u.Id == request.UserId, cancellationToken);
         if (!isUserExist) throw new NotFoundException($"There is no user with id: {request.UserId}");
 
-        var isTopicExist = await _context.Set<Topic>().AnyAsync(t => t.Header == request.Header, cancellationToken);
+        var isSectionExist = await _dbContext.Set<Section>().AnyAsync(
+            s => s.Id == request.SectionId,
+            cancellationToken);
+
+        if (!isSectionExist) throw new NotFoundException($"There is no section with id: {request.SectionId}");
+
+        var isTopicExist = await _dbContext.Set<Topic>().AnyAsync(t => t.Header == request.Header, cancellationToken);
         if (isTopicExist) throw new ConflictException($"There is already topic with header: {request.Header}");
 
-        var topic = new Topic(request.Header, request.Description, request.Code, request.UserId);
+        var topic = new Topic(request.Header, request.Description, request.Code, request.UserId, request.SectionId);
 
-        _context.Set<Topic>().Add(topic);
-        await _context.SaveChangesAsync(cancellationToken);
+        _dbContext.Set<Topic>().Add(topic);
+        await _dbContext.SaveChangesAsync(cancellationToken);
 
         _logger.LogInformation("Created topic with id: {Id}", topic.Id);
 

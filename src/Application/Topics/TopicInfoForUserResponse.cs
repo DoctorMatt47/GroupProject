@@ -4,4 +4,7 @@ public record TopicInfoForUserResponse(
     Guid Id,
     string Header,
     Guid UserId,
-    string UserLogin);
+    string UserLogin,
+    DateTime CreationTime,
+    int SectionId,
+    string SectionHeader);

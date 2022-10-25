@@ -5,4 +5,7 @@ public record TopicInfoForModeratorResponse(
     string Header,
     Guid UserId,
     string UserLogin,
-    int ComplaintCount);
+    DateTime CreationTime,
+    int ComplaintCount,
+    int SectionId,
+    string SectionHeader);
