@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using GroupProject.Application.Users;
 using GroupProject.Domain.Entities;
 
-namespace GroupProject.Application.Common.Mappings;
+namespace GroupProject.Application.Users;
 
 public class UserMapping : Profile
 {
