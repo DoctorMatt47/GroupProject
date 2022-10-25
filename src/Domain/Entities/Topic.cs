@@ -14,7 +14,7 @@ public class Topic
     {
     }
 
-    public Topic(string header, string description, string? code, Guid userId)
+    public Topic(string header, string description, string? code, Guid userId, int sectionId)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
@@ -22,6 +22,7 @@ public class Topic
         Header = header;
         Description = description;
         Code = code;
+        SectionId = sectionId;
     }
 
     public Guid Id { get; protected set; }
@@ -33,6 +34,9 @@ public class Topic
 
     public Guid UserId { get; protected set; }
     public User User { get; protected set; } = null!;
+
+    public int SectionId { get; protected set; }
+    public Section Section { get; protected set; } = null!;
 
     public IEnumerable<Complaint> Complaints => _complaints.ToList();
 }

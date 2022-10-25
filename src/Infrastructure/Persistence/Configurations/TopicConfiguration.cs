@@ -9,6 +9,7 @@ public class TopicConfiguration : IEntityTypeConfiguration<Topic>
     public void Configure(EntityTypeBuilder<Topic> builder)
     {
         builder.HasOne(t => t.User).WithMany(u => u.Topics);
+        builder.HasOne(t => t.Section).WithMany(s => s.Topics);
         builder.HasMany(t => t.Complaints).WithOne(c => c.Topic);
     }
 }
