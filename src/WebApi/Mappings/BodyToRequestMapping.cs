@@ -19,6 +19,7 @@ public class BodyToRequestMapping : Profile
             .MapRecordMember(r => r.TopicId, _ => Guid.Empty);
 
         CreateMap<CreateTopicBody, CreateTopicRequest>()
-            .MapRecordMember(r => r.UserId, _ => Guid.Empty);
+            .MapRecordMember(r => r.UserId, _ => Guid.Empty)
+            .MapRecordMember(r => r.SectionId, _ => 0);
     }
 }
