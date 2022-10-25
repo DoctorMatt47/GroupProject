@@ -4,4 +4,5 @@ public record CreateTopicRequest(
     string Header,
     string Description,
     string? Code,
-    Guid UserId);
+    Guid UserId,
+    int SectionId);
