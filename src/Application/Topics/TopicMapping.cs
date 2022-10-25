@@ -11,10 +11,11 @@ public class TopicMapping : Profile
         CreateMap<Topic, TopicResponse>();
         CreateMap<Topic, TopicByUserIdResponse>();
         CreateMap<Topic, TopicInfoForUserResponse>()
-            .MapRecordMember(r => r.UserLogin, _ => string.Empty);
+            .MapRecordMember(r => r.UserLogin, t => t.User.Login);
 
         CreateMap<Topic, TopicInfoForModeratorResponse>()
-            .MapRecordMember(r => r.UserLogin, _ => string.Empty)
-            .MapRecordMember(r => r.ComplaintCount, _ => 0);
+            .MapRecordMember(r => r.UserLogin, t => t.User.Login)
+            .MapRecordMember(r => r.ComplaintCount, t => t.Complaints.Count())
+            .MapRecordMember(r => r.SectionHeader, t => t.Section.Header);
     }
 }
