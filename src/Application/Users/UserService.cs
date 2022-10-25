@@ -54,13 +54,13 @@ public class UserService : IUserService
         AuthenticateUserRequest request,
         CancellationToken cancellationToken)
     {
-        var badRequestException = new BadRequestException("Incorrect password or login");
+        const string exceptionMessage = "Incorrect password or login";
 
         var user = await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == request.Login, cancellationToken);
-        if (user is null) throw badRequestException;
+        if (user is null) throw new BadRequestException(exceptionMessage);
 
         var passwordHash = _passwordHash.Encode(request.Password, user.PasswordSalt);
-        if (!user.PasswordHash.SequenceEqual(passwordHash)) throw badRequestException;
+        if (!user.PasswordHash.SequenceEqual(passwordHash)) throw new BadRequestException(exceptionMessage);
 
         _logger.LogInformation("Authenticated {Role} with id: {Id}", user.Role, user.Id);
 
