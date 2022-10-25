@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
-using GroupProject.Application.Complaints;
 using GroupProject.Domain.Entities;
 
-namespace GroupProject.Application.Common.Mappings;
+namespace GroupProject.Application.Complaints;
 
 public class ComplaintMapping : Profile
 {

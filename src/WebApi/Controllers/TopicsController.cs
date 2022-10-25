@@ -39,7 +39,7 @@ public class TopicsController : ApiControllerBase
     [AllowAnonymous]
     [HttpGet("OrderedByCreationTime")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public Task<Page<TopicInfoForUserResponse>> GetOrderedByCreationTime(
+    public Task<Page<TopicInfoForUserResponse>> GetTopicsOrderedByCreationTime(
         int perPage,
         int page,
         CancellationToken cancellationToken) =>
@@ -58,7 +58,7 @@ public class TopicsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public Task<Page<TopicInfoForModeratorResponse>> GetOrderedByComplaintCount(
+    public Task<Page<TopicInfoForModeratorResponse>> GetTopicsOrderedByComplaintCount(
         int perPage,
         int page,
         CancellationToken cancellationToken) =>
@@ -74,7 +74,8 @@ public class TopicsController : ApiControllerBase
     [HttpGet("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<TopicResponse> Get(Guid id, CancellationToken cancellationToken) => _topics.Get(id, cancellationToken);
+    public Task<TopicResponse> GetTopicById(Guid id, CancellationToken cancellationToken) =>
+        _topics.Get(id, cancellationToken);
 
     /// <summary>
     ///     Gets complains by topic id. Should be used in moderator menu. Is not available for user.
@@ -88,7 +89,9 @@ public class TopicsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<IEnumerable<ComplaintResponse>> GetComplaints(Guid id, CancellationToken cancellationToken) =>
+    public Task<IEnumerable<ComplaintResponse>> GetComplaintsByTopicId(
+        Guid id,
+        CancellationToken cancellationToken) =>
         _complaints.GetByTopicId(id, cancellationToken);
 
     /// <summary>
@@ -123,14 +126,14 @@ public class TopicsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IdResponse<Guid>>> CreateComplaint(
+    public async Task<ActionResult<IdResponse<Guid>>> CreateComplaintOnTopic(
         Guid id,
         CreateComplaintBody body,
         CancellationToken cancellationToken)
     {
         var request = _mapper.Map<CreateComplaintRequest>(body) with {TopicId = id};
         var response = await _complaints.CreateComplaint(request, cancellationToken);
-        return Created("", response);
+        return Created(string.Empty, response);
     }
 
     /// <summary>
@@ -147,7 +150,7 @@ public class TopicsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<IdResponse<Guid>>> CreateCommentary(
+    public async Task<ActionResult<IdResponse<Guid>>> CreateCommentaryOnTopic(
         Guid id,
         CreateCommentaryBody body,
         CancellationToken cancellationToken)
@@ -159,28 +162,6 @@ public class TopicsController : ApiControllerBase
         };
 
         var response = await _commentaries.Create(request, cancellationToken);
-        return Created("", response);
-    }
-
-    /// <summary>
-    ///     Creates topic
-    /// </summary>
-    /// <param name="body">Topic parameters</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>Created topic id</returns>
-    [Authorize(Roles = "User")]
-    [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<IdResponse<Guid>>> Create(
-        CreateTopicBody body,
-        CancellationToken cancellationToken)
-    {
-        var request = _mapper.Map<CreateTopicRequest>(body) with {UserId = Guid.Parse(User.Identity?.Name!)};
-        var response = await _topics.Create(request, cancellationToken);
-        var location = $"~api/Topics/{response.Id}";
-        return Created(location, response);
+        return Created(string.Empty, response);
     }
 }
