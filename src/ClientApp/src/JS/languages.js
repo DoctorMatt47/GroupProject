@@ -75,4 +75,4 @@ const LANGUAGES = {
     algol: 'Algol 68',
     befunge: 'Befunge',
     blockly: 'Blockly'
-}
+};
