@@ -1,6 +1,6 @@
 //Replace all functions to topic/script.js
 
-function addLanguagesToSelect(selectId){
+const addLanguagesToSelect = (selectId)=>{
     let select = document.getElementById(selectId)
     for(let type in LANGUAGES){
         let option = document.createElement("option")
@@ -9,10 +9,10 @@ function addLanguagesToSelect(selectId){
         select.appendChild(option)
     }
 }
-function setVisible(visible, id, display){
+const setVisible = (visible, id, display)=>{
     document.getElementById(id).style.display = visible?display:'none'
 }
-function submitTopic(){
+const submitTopic = ()=>{
     createTopic(document.getElementById("topic-title").value,
     document.getElementById("topic-description").value, 
     document.getElementById("need-code").checked
@@ -22,7 +22,7 @@ function submitTopic(){
         console.log(error.message)
     })
 }
-function createTopic(header, description, code){
+const createTopic= (header, description, code)=>{
     const body = {header: header, description: description, code:code}
     const request = {
         method: "POST",
@@ -34,27 +34,50 @@ function createTopic(header, description, code){
     }
     return sendAsync(URLS.Topics, request)
 }
-function getTopics(perPage, page){
+/**
+ * 
+ * @param {number} perPage - count of pages in current page
+ * @param {number}  page - number of page
+ * @returns promise to response with list of topic data or error
+ */
+const getTopics = (perPage, page)=>{
     const request = {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
         }
-    }
-    return sendAsync(URLS.TopicsOrderedByCreationTime + `?perPage=${perPage}&page=${page}`, request)
-}
-function getRecommendedTopics(perPage, page){
-    return getTopics(perPage, page)
-}
-function getPopularTopics(perPage, page){
-    return getTopics(perPage, page)
-}
-function getTopic(topicId){
+    };
+    return sendAsync(URLS.TopicsOrderedByCreationTime + `?perPage=${perPage}&page=${page}`, request);
+};
+/**
+ * 
+ * @param {number} perPage - count of pages in current page
+ * @param {number}  page - number of page  
+ * @returns promise to response with list of recommended topics or error
+ */
+const getRecommendedTopics = (perPage, page)=>{
+    return getTopics(perPage, page);
+};
+/**
+ * 
+ * @param {number} perPage - count of pages in current page
+ * @param {number}  page - number of page
+ * @returns promise to response with list of popular topics or error
+ */
+const getPopularTopics=(perPage, page)=>{
+    return getTopics(perPage, page);
+};
+/**
+ * 
+ * @param {number} topicId - id of topic
+ * @returns promise to response with topic data or error
+ */
+const getTopic = (topicId)=>{
     const request = {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
         }
-    }
-    return sendAsync(URLS.Topics + `/${topicId}`, request)
+    };
+    return sendAsync(URLS.Topics + `/${topicId}`, request);
 }

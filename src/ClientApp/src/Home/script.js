@@ -22,13 +22,11 @@ const handleButtonStatus = () => {
     }
 };
 
-const createCard = (topicId) => {
+const createCard = (topic) => {
     const card = document.createElement("a");
     card.className = "card";
-    getTopic(topicId).then(response=>{
-        card.innerHTML = `${response.header}<br>${cutTextForTopic(response.description)}`;
-        card.href = addParameters(topicPage, {id:topicId});
-    });
+    card.innerHTML = `${topic.header}<br>${cutTextForTopic(topic.description)}`;
+    card.href = addParameters(topicPage, {id:topic.id});
     cardContainer.appendChild(card);
 };
 
@@ -43,32 +41,38 @@ const addCards = (pageIndex) => {
     cardCountElem.innerHTML = endRange;
     getRecommendedTopics(cardIncrease, currentPage).then(response=>{
         for(let i in response.list){
-            createCard(response.list[i].id);
+            getTopic(response.list[i].id).then(response=>{
+                createCard(response);
+            }).catch(error => {
+                const exception = JSON.parse(error.message);
+                console.log(exception);
+            });
         }
     }).catch(error => {
         const exception = JSON.parse(error.message);
         console.log(exception);
     });
 };
-const createPopularCard = (topicId)=>{
+const createPopularCard = (topic)=>{
     const column = document.createElement("div");
     column.className = "column col-sm-4";
     const card = document.createElement("div");
     card.className = "thumbnail thumbnail-topic";
-
-    getTopic(topicId).then(response=>{
-        card.innerHTML = `<p>${response.userLogin}</p><a><strong>${response.header}</strong></a>
-        <p>${cutTextForTopic(response.description)}</p>`;
-        column.onclick = ()=>openPage(addParameters(topicPage, {id:topicId}));
-    });
-
+    card.innerHTML = `<p>${topic.userLogin}</p><a><strong>${topic.header}</strong></a>
+    <p>${cutTextForTopic(topic.description)}</p>`;
+    column.onclick = ()=>openPage(addParameters(topicPage, {id:topic.id}));
     column.appendChild(card);
     popularCardContainer.appendChild(column);
 };
 const addPopularCards =()=>{
     getPopularTopics(popularTopicCount, 1).then(response=>{
         for(let i in response.list){
-            createPopularCard(response.list[i].id)
+            getTopic(response.list[i].id).then(response=>{
+                createPopularCard(response);
+            }).catch(error => {
+                const exception = JSON.parse(error.message);
+                console.log(exception);
+            });; 
         }
     }).catch(error=>{
         const exception = JSON.parse(error.message);
