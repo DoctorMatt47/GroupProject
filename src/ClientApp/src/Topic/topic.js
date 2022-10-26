@@ -58,19 +58,3 @@ function getTopic(topicId){
     }
     return sendAsync(URLS.Topics + `/${topicId}`, request)
 }
-function addTopicToPage(topicId, titleId, descriptionId, codeId, commentsId){
-    getTopic(topicId).then(response => {
-        console.log(response)
-        document.getElementById(titleId).textContent = `Title: ${response.header}`
-        document.getElementById(descriptionId).textContent = `Description: ${response.description}`
-        document.getElementById(codeId).textContent = `Code: ${response.code}`
-        let openCode = document.createElement("button")
-        openCode.textContent = "Run code"
-        openCode.onclick = ()=> openPage("../Html/code-runner.html", {"id": topicId})
-        document.getElementById(codeId).appendChild(openCode)
-    })
-    .catch(error => {
-        const exception = JSON.parse(error.message)
-        console.log(exception)
-    })
-}

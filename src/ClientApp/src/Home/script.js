@@ -59,7 +59,7 @@ const createPopularCard = (topicId)=>{
     getTopic(topicId).then(response=>{
         card.innerHTML = `<p>${response.userLogin}</p><a><strong>${response.header}</strong></a>
         <p>${cutTextForTopic(response.description)}</p>`;
-        card.href = addParameters(topicPage, {id:topicId});
+        column.onclick = ()=>openPage(addParameters(topicPage, {id:topicId}));
     });
 
     column.appendChild(card);
