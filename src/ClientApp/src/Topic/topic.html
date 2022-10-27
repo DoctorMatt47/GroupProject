@@ -9,6 +9,7 @@
     <link href="../Header/header.css" rel="stylesheet" type="text/css">
     <link href="../Footer/footer.css" rel="stylesheet" type="text/css">
     <link href="../Side_panel/style.css" rel="stylesheet" type="text/css">
+    <link href="../Complaint/style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -18,6 +19,7 @@
             $("#header").load("../Header/header.html");
             $("#footer").load("../Footer/footer.html");
             $("#side-panel").load("../Side_panel/side-panel.html");
+            $("#complaint").load("../Complaint/complaint.html")
         });
     </script>
 </head>
@@ -36,9 +38,9 @@
                                 </a>
                             </div>
                             <div class="col-sm-1 complaint-icon">
-                                <a data-toggle="tooltip" title="Create a complaint" href="#">
-                                    <span class="glyphicon glyphicon-bell" style="color:#d7ae54"></span>
-                                </a>
+                                <button data-toggle="tooltip" title="Create a complaint" onclick="openForm()">
+                                    <span class="glyphicon glyphicon-comment" style="color:#d7ae54"></span>
+                                </button>
                             </div>
                         </div>
                         <h3 style="font-style: inherit" id="topic-name"><strong>Create multiple elements</strong></h3>
@@ -65,10 +67,11 @@
             </div>
             <div class="comment-group">
                 <div id="comment">
+                    <div id = "complaint"></div>
                     <div class="complaint-icon">
-                        <a data-toggle="tooltip" title="Create a complaint" href="#">
-                            <span class="glyphicon glyphicon-bell" style="color:#d7ae54; margin-right: 15px"></span>
-                        </a>
+                        <button data-toggle="tooltip" title="Create a complaint"  onclick="openForm()">
+                            <span class="glyphicon glyphicon-comment" style="color:#d7ae54; margin-right: 15px"></span>
+                        </button>
                     </div>
                     <p id="answer">Here we have answer text<br>
                         "Explanation:
@@ -91,7 +94,7 @@
                             textBlock.innerHTML = "Make this block a text block";<br>
                         </div>
                     </div>
-                    <div  id="answer-username"><a href="#">username</a></div><br>
+                    <div  id="answer-username"><a href="#">username</a></div>
                     <p id="answer-date">Answered:20.02.2022</p>
                 </div>
             </div>
@@ -124,8 +127,8 @@
         </div>
     </div>
 </div>
-
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
+<script src="../Complaint/script.js"></script>
 </html>

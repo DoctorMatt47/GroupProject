@@ -6,6 +6,7 @@ function openForm() {
 function closeForm() {
     document.getElementById("fullscreen-container").style.display = "none";
 }
+
 function addLanguagesToSelect(selectId){
     let select = document.getElementById(selectId)
     for(let type in LANGUAGES){
