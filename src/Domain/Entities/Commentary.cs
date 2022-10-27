@@ -1,7 +1,12 @@
-﻿namespace GroupProject.Domain.Entities;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace GroupProject.Domain.Entities;
+
+[SuppressMessage("ReSharper", "CollectionNeverUpdated.Local")]
 public class Commentary
 {
+    private readonly List<Complaint> _complaints = new();
+
     /// <summary>
     ///     Parameterless constructor, intended only for orm usage.
     /// </summary>
@@ -28,5 +33,7 @@ public class Commentary
     public User User { get; protected set; } = null!;
 
     public Guid TopicId { get; protected set; }
-    public User Topic { get; protected set; } = null!;
+    public Topic Topic { get; protected set; } = null!;
+
+    public IEnumerable<Complaint> Complaints => _complaints.ToList();
 }
