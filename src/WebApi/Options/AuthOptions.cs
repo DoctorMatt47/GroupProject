@@ -1,8 +1,8 @@
 ﻿using System.Text;
-using GroupProject.Application.Identity;
+using GroupProject.Infrastructure.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace GroupProject.Infrastructure.Identity;
+namespace GroupProject.WebApi.Options;
 
 public class AuthOptions : IAuthOptions
 {

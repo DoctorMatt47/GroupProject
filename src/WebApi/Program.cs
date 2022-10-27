@@ -1,9 +1,9 @@
 using System.Reflection;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Infrastructure.Extensions;
-using GroupProject.Infrastructure.Identity;
 using GroupProject.Infrastructure.Persistence.Initializers;
 using GroupProject.WebApi.Extensions;
+using GroupProject.WebApi.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 

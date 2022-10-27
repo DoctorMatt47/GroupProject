@@ -18,12 +18,12 @@ public static class ServiceCollectionExtensions
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
         services.AddTransient<IPasswordHashService, PasswordHashService>();
-        services.AddTransient<IJwtTokenService, JwtTokenService>();
         services.AddTransient<IUserService, UserService>();
         services.AddTransient<ICommentaryService, CommentaryService>();
         services.AddTransient<ITopicService, TopicService>();
         services.AddTransient<IComplaintService, ComplaintService>();
         services.AddTransient<ISectionService, SectionService>();
+        services.AddTransient<IIdentityService, IdentityService>();
 
         return services;
     }

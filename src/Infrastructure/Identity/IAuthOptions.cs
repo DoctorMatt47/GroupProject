@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 
-namespace GroupProject.Application.Identity;
+namespace GroupProject.Infrastructure.Identity;
 
 public interface IAuthOptions
 {
