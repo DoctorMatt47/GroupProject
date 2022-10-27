@@ -58,7 +58,7 @@ public class TopicServiceTests
 
             for (var j = 0; j < random.Next(5); j++)
             {
-                var complaint = new Complaint(fixture.Create<string>(), topic.Id);
+                var complaint = new Complaint(fixture.Create<string>(), ComplaintTarget.Topic, topic.Id);
                 _dbContext.Set<Complaint>().Add(complaint);
             }
         }
