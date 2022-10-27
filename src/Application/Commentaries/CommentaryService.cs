@@ -33,8 +33,10 @@ public class CommentaryService : ICommentaryService
         int page,
         CancellationToken cancellationToken)
     {
-        var pageCount = await _dbContext.Set<Commentary>().PageCountAsync(perPage, cancellationToken);
+        var isTopicExist = await _dbContext.Set<Topic>().AnyAsync(t => t.Id == id, cancellationToken);
+        if (!isTopicExist) throw new NotFoundException($"There is no topic with id: {id}");
 
+        var pageCount = await _dbContext.Set<Commentary>().PageCountAsync(perPage, cancellationToken);
         return await _dbContext.Set<Commentary>()
             .Where(c => c.TopicId == id)
             .OrderBy(c => c.CreationTime)
