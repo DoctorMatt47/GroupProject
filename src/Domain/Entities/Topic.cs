@@ -1,10 +1,12 @@
-﻿using GroupProject.Domain.Enums;
+﻿using System.Diagnostics.CodeAnalysis;
+using GroupProject.Domain.Enums;
 
 namespace GroupProject.Domain.Entities;
 
+[SuppressMessage("ReSharper", "CollectionNeverUpdated.Local")]
 public class Topic
 {
-    // ReSharper disable once CollectionNeverUpdated.Local
+    private readonly List<Commentary> _commentaries = new();
     private readonly List<Complaint> _complaints = new();
 
     /// <summary>

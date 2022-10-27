@@ -1,8 +1,10 @@
-﻿namespace GroupProject.Domain.Entities;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace GroupProject.Domain.Entities;
+
+[SuppressMessage("ReSharper", "CollectionNeverUpdated.Local")]
 public class Section
 {
-    // ReSharper disable once CollectionNeverUpdated.Local
     private readonly List<Topic> _topics = new();
 
     /// <summary>

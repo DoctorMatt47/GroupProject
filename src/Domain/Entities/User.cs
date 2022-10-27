@@ -1,10 +1,15 @@
-﻿using GroupProject.Domain.Enums;
+﻿using System.Diagnostics.CodeAnalysis;
+using GroupProject.Domain.Enums;
 using GroupProject.Domain.Interfaces;
 
 namespace GroupProject.Domain.Entities;
 
+[SuppressMessage("ReSharper", "CollectionNeverUpdated.Local")]
 public class User
 {
+    private readonly List<Commentary> _commentaries = new();
+    private readonly List<Topic> _questions = new();
+
     /// <summary>
     ///     Parameterless constructor, intended only for orm usage.
     /// </summary>
@@ -30,10 +35,4 @@ public class User
 
     public IEnumerable<Topic> Topics => _questions.ToList();
     public IEnumerable<Commentary> Commentaries => _commentaries.ToList();
-
-    // ReSharper disable CollectionNeverUpdated.Local
-    private readonly List<Commentary> _commentaries = new();
-
-    private readonly List<Topic> _questions = new();
-    // ReSharper restore CollectionNeverUpdated.Local
 }
