@@ -41,4 +41,5 @@ public class Topic
     public Section Section { get; protected set; } = null!;
 
     public IEnumerable<Complaint> Complaints => _complaints.ToList();
+    public IEnumerable<Commentary> Commentaries => _commentaries.ToList();
 }
