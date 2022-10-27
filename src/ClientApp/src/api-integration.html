@@ -30,7 +30,7 @@
 <button onclick="authenticate()">Authentication</button>
 
 <div id="log">
-    
+
 </div>
 
 <script>
@@ -39,7 +39,7 @@
 
     const authenticationLoginInput = document.getElementById("auth-login");
     const authenticationPasswordInput = document.getElementById("auth-password");
-    
+
     const logElement = document.getElementById("log");
 
     // TODO: Move to common js file
@@ -81,7 +81,7 @@
     const authenticate = () => {
         const login = authenticationLoginInput.value;
         const password = authenticationPasswordInput.value;
-        
+
         const body = {login: login, password: password}
 
         const request = {
@@ -95,7 +95,7 @@
             .then(response => {
                 console.log(response)
                 logElement.innerText = `Authenticated! ${response.id}`;
-                
+
                 // Push auth token to local storage
                 window.localStorage.setItem("token", response.token);
             })
