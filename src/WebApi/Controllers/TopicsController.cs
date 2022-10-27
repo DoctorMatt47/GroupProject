@@ -131,7 +131,7 @@ public class TopicsController : ApiControllerBase
         CreateComplaintBody body,
         CancellationToken cancellationToken)
     {
-        var request = _mapper.Map<CreateComplaintRequest>(body) with {TopicId = id};
+        var request = _mapper.Map<CreateComplaintRequest>(body) with {ElementId = id};
         var response = await _complaints.CreateComplaint(request, cancellationToken);
         return Created(string.Empty, response);
     }

@@ -1,3 +1,5 @@
-﻿namespace GroupProject.Application.Complaints;
+﻿using GroupProject.Domain.Enums;
 
-public record CreateComplaintRequest(string Description, Guid TopicId);
+namespace GroupProject.Application.Complaints;
+
+public record CreateComplaintRequest(string Description, ComplaintTarget Target, Guid ElementId);
