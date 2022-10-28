@@ -1,10 +1,12 @@
-﻿namespace GroupProject.Application.Topics;
+﻿using GroupProject.Domain.ValueObjects;
+
+namespace GroupProject.Application.Topics;
 
 public record TopicResponse(
     Guid Id,
     string Header,
     string Description,
-    string? Code,
+    CompileOptions CompileOptions,
     DateTime CreationTime,
     int ComplaintCount,
     Guid UserId,
