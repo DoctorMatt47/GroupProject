@@ -29,15 +29,15 @@ public class DatabaseFixture : IDisposable
     {
         using var scope = _scopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetService<IAppDbContext>()!;
-
-        dbContext.Database.EnsureDeleted();
-        dbContext.Database.EnsureCreated();
     }
 
     private async Task Initialize()
     {
         using var scope = _scopeFactory.CreateScope();
         var dbContext = scope.ServiceProvider.GetService<IAppDbContext>()!;
+
+        await dbContext.Database.EnsureDeletedAsync();
+        await dbContext.Database.EnsureCreatedAsync();
 
         var fixture = new Fixture();
 

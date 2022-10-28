@@ -6,6 +6,7 @@ using GroupProject.Application.IntegrationTests.Common.Fixtures;
 using GroupProject.Application.Topics;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
+using GroupProject.Domain.ValueObjects;
 
 namespace GroupProject.Application.IntegrationTests.Topics;
 
@@ -108,7 +109,8 @@ public class TopicServiceTests
         topic.Should().NotBeNull();
         topic!.Header.Should().Be(request.Header);
         topic.Description.Should().Be(request.Description);
-        topic.Code.Should().Be(request.Code);
+        topic.CompileOptions!.Code.Should().Be(topic.CompileOptions.Code);
+        topic.CompileOptions.Language.Should().Be(topic.CompileOptions.Language);
         topic.Status.Should().Be(TopicStatus.Active);
         topic.CreationTime.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
     }
@@ -167,7 +169,7 @@ public class TopicServiceTests
         return new Topic(
             fixture.Create<string>(),
             fixture.Create<string>(),
-            fixture.Create<string>(),
+            fixture.Create<CompileOptions>(),
             _db.DefaultUser.Id,
             _db.DefaultSection.Id);
     }

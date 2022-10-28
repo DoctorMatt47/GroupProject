@@ -5,6 +5,7 @@ using GroupProject.Application.Complaints;
 using GroupProject.Application.IntegrationTests.Common.Fixtures;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
+using GroupProject.Domain.ValueObjects;
 
 namespace GroupProject.Application.IntegrationTests.Complaints;
 
@@ -86,7 +87,7 @@ public class ComplaintServiceTests
         return new Topic(
             fixture.Create<string>(),
             fixture.Create<string>(),
-            fixture.Create<string>(),
+            fixture.Create<CompileOptions>(),
             _db.DefaultUser.Id,
             _db.DefaultSection.Id);
     }
