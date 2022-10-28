@@ -8,8 +8,8 @@ public class AuthOptions : IAuthOptions
 {
     private const string Key = "GroupProject-SecretKey";
 
-    public string Issuer => "GroupProject-SecretKey";
-    public string Audience => "GroupProject-SecretKey";
+    public string Issuer => "GroupProject-Issuer";
+    public string Audience => "GroupProject-Audience";
 
     public SymmetricSecurityKey GetSymmetricSecurityKey() => new(Encoding.ASCII.GetBytes(Key));
 }

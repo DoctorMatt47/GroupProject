@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using GroupProject.Infrastructure.Identity;
-using GroupProject.WebApi.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -9,11 +8,9 @@ namespace GroupProject.WebApi.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddWebApi(IServiceCollection services) =>
-        services.AddSingleton<IAuthOptions, AuthOptions>();
-
     public static IServiceCollection AddBearerAuthentication(this IServiceCollection services, IAuthOptions authOptions)
     {
+        services.AddSingleton(authOptions);
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(opts =>
             {
