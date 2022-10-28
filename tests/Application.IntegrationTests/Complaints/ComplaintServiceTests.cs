@@ -76,7 +76,7 @@ public class ComplaintServiceTests
         var fixture = new Fixture();
         return new Commentary(
             fixture.Create<string>(),
-            fixture.Create<string>(),
+            fixture.Create<CompileOptions>(),
             topicId,
             _db.DefaultUser.Id);
     }

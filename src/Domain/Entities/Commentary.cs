@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using GroupProject.Domain.Interfaces;
+using GroupProject.Domain.ValueObjects;
 
 namespace GroupProject.Domain.Entities;
 
@@ -18,12 +19,12 @@ public class Commentary : IHasComplaintCount
     {
     }
 
-    public Commentary(string description, string? code, Guid topicId, Guid userId)
+    public Commentary(string description, CompileOptions? compileOptions, Guid topicId, Guid userId)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
         Description = description;
-        Code = code;
+        CompileOptions = compileOptions;
         TopicId = topicId;
         UserId = userId;
     }
@@ -31,7 +32,7 @@ public class Commentary : IHasComplaintCount
     public Guid Id { get; private set; }
     public DateTime CreationTime { get; private set; }
     public string Description { get; private set; } = null!;
-    public string? Code { get; private set; }
+    public CompileOptions? CompileOptions { get; private set; }
 
     public Guid UserId { get; private set; }
     public User User { get; private set; } = null!;

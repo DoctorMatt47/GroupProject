@@ -65,7 +65,7 @@ public class CommentaryService : ICommentaryService
         if (topic is null) throw new NotFoundException($"There is no topic with id: {request.TopicId}");
         if (topic.Status == TopicStatus.Closed) throw new ConflictException("Topic has been closed");
 
-        var commentary = new Commentary(request.Description, request.Code, request.TopicId, request.UserId);
+        var commentary = new Commentary(request.Description, request.CompileOptions, request.TopicId, request.UserId);
         _dbContext.Set<Commentary>().Add(commentary);
         await _dbContext.SaveChangesAsync(cancellationToken);
 

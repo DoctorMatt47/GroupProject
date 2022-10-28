@@ -11,5 +11,6 @@ public class CommentaryConfiguration : IEntityTypeConfiguration<Commentary>
         builder.HasOne(c => c.User).WithMany(u => u.Commentaries);
         builder.HasOne(c => c.Topic).WithMany(t => t.Commentaries);
         builder.HasMany(c => c.Complaints).WithOne(c => c.Commentary);
+        builder.OwnsOne(c => c.CompileOptions);
     }
 }

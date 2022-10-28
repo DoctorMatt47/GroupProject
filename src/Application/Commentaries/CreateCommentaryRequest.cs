@@ -1,7 +1,9 @@
-﻿namespace GroupProject.Application.Commentaries;
+﻿using GroupProject.Domain.ValueObjects;
+
+namespace GroupProject.Application.Commentaries;
 
 public record CreateCommentaryRequest(
     string Description,
-    string? Code,
+    CompileOptions CompileOptions,
     Guid TopicId,
     Guid UserId);

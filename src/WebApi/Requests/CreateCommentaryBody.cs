@@ -1,3 +1,5 @@
-﻿namespace GroupProject.WebApi.Requests;
+﻿using GroupProject.Domain.ValueObjects;
 
-public record CreateCommentaryBody(string Description, string? Code);
+namespace GroupProject.WebApi.Requests;
+
+public record CreateCommentaryBody(string Description, CompileOptions CompileOptions);
