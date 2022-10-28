@@ -1,4 +1,5 @@
 ﻿using GroupProject.Domain.Entities;
+using GroupProject.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,5 +11,6 @@ public class ComplaintConfiguration : IEntityTypeConfiguration<Complaint>
     {
         builder.HasOne(c => c.Topic).WithMany(t => t.Complaints);
         builder.HasOne(c => c.Commentary).WithMany(t => t.Complaints);
+        builder.Property(c => c.Target).HasEnumConversion();
     }
 }
