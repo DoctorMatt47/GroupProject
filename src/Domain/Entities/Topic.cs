@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using GroupProject.Domain.Enums;
+using GroupProject.Domain.Interfaces;
 
 namespace GroupProject.Domain.Entities;
 
 [SuppressMessage("ReSharper", "CollectionNeverUpdated.Local")]
-public class Topic
+public class Topic : IHasComplaintCount
 {
     private readonly List<Commentary> _commentaries = new();
     private readonly List<Complaint> _complaints = new();
@@ -42,4 +43,15 @@ public class Topic
 
     public IEnumerable<Complaint> Complaints => _complaints.ToList();
     public IEnumerable<Commentary> Commentaries => _commentaries.ToList();
+    public int ComplaintCount { get; protected set; }
+
+    public void IncrementComplaintCount()
+    {
+        ComplaintCount++;
+    }
+
+    public void DecrementComplaintCount()
+    {
+        if (ComplaintCount != 0) ComplaintCount--;
+    }
 }

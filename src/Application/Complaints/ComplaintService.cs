@@ -4,6 +4,8 @@ using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
+using GroupProject.Domain.Enums;
+using GroupProject.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -49,8 +51,11 @@ public class ComplaintService : IComplaintService
         CreateComplaintRequest request,
         CancellationToken cancellationToken)
     {
-        var isTopicExist = await _dbContext.Set<Topic>().AnyAsync(t => t.Id == request.ElementId, cancellationToken);
-        if (!isTopicExist) throw new NotFoundException($"There is no topic with id: {request.ElementId}");
+        var target = await GetTargetAsync(request, cancellationToken);
+        if (target is null)
+            throw new NotFoundException($"There is no {Enum.GetName(request.Target)} with id: {request.ElementId}");
+
+        target.IncrementComplaintCount();
 
         var complaint = new Complaint(request.Description, request.Target, request.ElementId);
 
@@ -64,5 +69,21 @@ public class ComplaintService : IComplaintService
             request.ElementId);
 
         return new IdResponse<Guid>(complaint.Id);
+    }
+
+    private async Task<IHasComplaintCount?> GetTargetAsync(
+        CreateComplaintRequest request,
+        CancellationToken cancellationToken)
+    {
+        return request.Target switch
+        {
+            ComplaintTarget.Topic => await _dbContext.Set<Topic>()
+                .FirstOrDefaultAsync(t => t.Id == request.ElementId, cancellationToken),
+
+            ComplaintTarget.Commentary => await _dbContext.Set<Commentary>()
+                .FirstOrDefaultAsync(t => t.Id == request.ElementId, cancellationToken),
+
+            _ => throw new ArgumentOutOfRangeException(),
+        };
     }
 }
