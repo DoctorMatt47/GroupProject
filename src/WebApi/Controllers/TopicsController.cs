@@ -55,7 +55,7 @@ public class TopicsController : ApiControllerBase
     [AllowAnonymous]
     [HttpGet("OrderedByCreationTime")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public Task<Page<TopicInfoForUserResponse>> GetTopicsOrderedByCreationTime(
+    public Task<Page<TopicInfoResponse>> GetTopicsOrderedByCreationTime(
         int perPage,
         int page,
         CancellationToken cancellationToken) =>
@@ -74,7 +74,7 @@ public class TopicsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public Task<Page<TopicInfoForModeratorResponse>> GetTopicsOrderedByComplaintCount(
+    public Task<Page<TopicInfoResponse>> GetTopicsOrderedByComplaintCount(
         int perPage,
         int page,
         CancellationToken cancellationToken) =>

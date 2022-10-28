@@ -1,11 +1,11 @@
 ﻿namespace GroupProject.Application.Topics;
 
-public record TopicInfoForModeratorResponse(
+public record TopicInfoResponse(
     Guid Id,
     string Header,
-    Guid UserId,
-    string UserLogin,
     DateTime CreationTime,
     int ComplaintCount,
+    Guid UserId,
+    string UserLogin,
     int SectionId,
     string SectionHeader);

@@ -4,12 +4,12 @@ namespace GroupProject.Application.Topics;
 
 public interface ITopicService
 {
-    Task<Page<TopicInfoForUserResponse>> GetOrderedByCreationTime(
+    Task<Page<TopicInfoResponse>> GetOrderedByCreationTime(
         int perPage,
         int page,
         CancellationToken cancellationToken);
 
-    Task<Page<TopicInfoForModeratorResponse>> GetOrderedByComplaintCount(
+    Task<Page<TopicInfoResponse>> GetOrderedByComplaintCount(
         int perPage,
         int page,
         CancellationToken cancellationToken);

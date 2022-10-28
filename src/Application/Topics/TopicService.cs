@@ -4,7 +4,6 @@ using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
-using GroupProject.Application.Users;
 using GroupProject.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -16,21 +15,18 @@ public class TopicService : ITopicService
     private readonly IAppDbContext _dbContext;
     private readonly ILogger<TopicService> _logger;
     private readonly IMapper _mapper;
-    private readonly IUserService _users;
 
     public TopicService(
         IAppDbContext dbContext,
         ILogger<TopicService> logger,
-        IMapper mapper,
-        IUserService users)
+        IMapper mapper)
     {
         _dbContext = dbContext;
         _logger = logger;
         _mapper = mapper;
-        _users = users;
     }
 
-    public async Task<Page<TopicInfoForUserResponse>> GetOrderedByCreationTime(
+    public async Task<Page<TopicInfoResponse>> GetOrderedByCreationTime(
         int perPage,
         int page,
         CancellationToken cancellationToken)
@@ -39,11 +35,11 @@ public class TopicService : ITopicService
 
         return await _dbContext.Set<Topic>()
             .OrderByDescending(t => t.CreationTime)
-            .ProjectTo<TopicInfoForUserResponse>(_mapper.ConfigurationProvider)
+            .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(perPage, page, pageCount, cancellationToken);
     }
 
-    public async Task<Page<TopicInfoForModeratorResponse>> GetOrderedByComplaintCount(
+    public async Task<Page<TopicInfoResponse>> GetOrderedByComplaintCount(
         int perPage,
         int page,
         CancellationToken cancellationToken)
@@ -52,9 +48,9 @@ public class TopicService : ITopicService
 
         return await _dbContext.Set<Topic>()
             .Include(t => t.Complaints)
-            .Where(t => t.Complaints.Count() != 0)
-            .OrderBy(t => t.Complaints.Count())
-            .ProjectTo<TopicInfoForModeratorResponse>(_mapper.ConfigurationProvider)
+            .Where(t => t.ComplaintCount != 0)
+            .OrderBy(t => t.ComplaintCount)
+            .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(perPage, page, pageCount, cancellationToken);
     }
 

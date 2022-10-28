@@ -5,6 +5,9 @@ public record TopicResponse(
     string Header,
     string Description,
     string? Code,
+    DateTime CreationTime,
+    int ComplaintCount,
     Guid UserId,
     string UserLogin,
-    DateTime CreationTime);
+    int SectionId,
+    string SectionHeader);
