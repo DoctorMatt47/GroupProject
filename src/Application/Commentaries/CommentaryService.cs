@@ -27,7 +27,7 @@ public class CommentaryService : ICommentaryService
         _mapper = mapper;
     }
 
-    public async Task<Page<CommentaryResponse>> GetByTopicId(
+    public async Task<Page<CommentaryResponse>> GetByTopicIdOrderedByCreationTime(
         Guid id,
         int perPage,
         int page,
@@ -40,6 +40,19 @@ public class CommentaryService : ICommentaryService
         return await _dbContext.Set<Commentary>()
             .Where(c => c.TopicId == id)
             .OrderBy(c => c.CreationTime)
+            .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
+            .ToPageAsync(perPage, page, pageCount, cancellationToken);
+    }
+
+    public async Task<Page<CommentaryResponse>> GetOrderedByComplaintCount(
+        int perPage,
+        int page,
+        CancellationToken cancellationToken)
+    {
+        var pageCount = await _dbContext.Set<Commentary>().PageCountAsync(perPage, cancellationToken);
+        return await _dbContext.Set<Commentary>()
+            .Where(c => c.ComplaintCount != 0)
+            .OrderBy(c => c.ComplaintCount)
             .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(perPage, page, pageCount, cancellationToken);
     }

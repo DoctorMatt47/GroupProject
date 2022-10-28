@@ -61,10 +61,28 @@ public class CommentariesController : ApiControllerBase
     [HttpGet("ByTopic/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<Page<CommentaryResponse>> GetCommentariesByTopicId(
+    public Task<Page<CommentaryResponse>> GetCommentariesByTopicIdOrderedByCreationTime(
         Guid id,
         int perPage,
         int page,
         CancellationToken cancellationToken) =>
-        _commentaries.GetByTopicId(id, perPage, page, cancellationToken);
+        _commentaries.GetByTopicIdOrderedByCreationTime(id, perPage, page, cancellationToken);
+
+    /// <summary>
+    ///     Gets paged commentaries by topic id
+    /// </summary>
+    /// <param name="id">Topic id</param>
+    /// <param name="perPage">Number of commentary per page</param>
+    /// <param name="page">Number of pages</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Commentary page</returns>
+    [AllowAnonymous]
+    [HttpGet("OrderedByComplaintCount")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public Task<Page<CommentaryResponse>> GetCommentariesOrderedByComplaintCount(
+        int perPage,
+        int page,
+        CancellationToken cancellationToken) =>
+        _commentaries.GetOrderedByComplaintCount(perPage, page, cancellationToken);
 }
