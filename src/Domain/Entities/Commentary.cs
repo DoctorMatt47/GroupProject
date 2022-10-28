@@ -4,6 +4,9 @@ using GroupProject.Domain.Interfaces;
 namespace GroupProject.Domain.Entities;
 
 [SuppressMessage("ReSharper", "CollectionNeverUpdated.Local")]
+[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Local")]
 public class Commentary : IHasComplaintCount
 {
     private readonly List<Complaint> _complaints = new();
@@ -11,7 +14,7 @@ public class Commentary : IHasComplaintCount
     /// <summary>
     ///     Parameterless constructor, intended only for orm usage.
     /// </summary>
-    protected Commentary()
+    private Commentary()
     {
     }
 
@@ -25,19 +28,19 @@ public class Commentary : IHasComplaintCount
         UserId = userId;
     }
 
-    public Guid Id { get; protected set; }
-    public DateTime CreationTime { get; protected set; }
-    public string Description { get; protected set; } = null!;
-    public string? Code { get; protected set; }
+    public Guid Id { get; private set; }
+    public DateTime CreationTime { get; private set; }
+    public string Description { get; private set; } = null!;
+    public string? Code { get; private set; }
 
-    public Guid UserId { get; protected set; }
-    public User User { get; protected set; } = null!;
+    public Guid UserId { get; private set; }
+    public User User { get; private set; } = null!;
 
-    public Guid TopicId { get; protected set; }
-    public Topic Topic { get; protected set; } = null!;
+    public Guid TopicId { get; private set; }
+    public Topic Topic { get; private set; } = null!;
 
     public IEnumerable<Complaint> Complaints => _complaints.ToList();
-    public int ComplaintCount { get; protected set; }
+    public int ComplaintCount { get; private set; }
 
     public void IncrementComplaintCount()
     {

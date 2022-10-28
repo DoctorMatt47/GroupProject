@@ -5,6 +5,9 @@ using GroupProject.Domain.Interfaces;
 namespace GroupProject.Domain.Entities;
 
 [SuppressMessage("ReSharper", "CollectionNeverUpdated.Local")]
+[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Local")]
 public class User
 {
     private readonly List<Commentary> _commentaries = new();
@@ -13,7 +16,7 @@ public class User
     /// <summary>
     ///     Parameterless constructor, intended only for orm usage.
     /// </summary>
-    protected User()
+    private User()
     {
     }
 
@@ -26,10 +29,10 @@ public class User
         Role = role;
     }
 
-    public Guid Id { get; protected set; }
-    public string Login { get; protected set; } = null!;
-    public byte[] PasswordHash { get; protected set; } = null!;
-    public byte[] PasswordSalt { get; protected set; } = null!;
+    public Guid Id { get; private set; }
+    public string Login { get; private set; } = null!;
+    public byte[] PasswordHash { get; private set; } = null!;
+    public byte[] PasswordSalt { get; private set; } = null!;
     public UserRole Role { get; set; } = UserRole.User;
     public UserStatus Status { get; set; } = UserStatus.Active;
 
