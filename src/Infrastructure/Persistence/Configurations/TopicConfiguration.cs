@@ -13,5 +13,6 @@ public class TopicConfiguration : IEntityTypeConfiguration<Topic>
         builder.HasOne(t => t.Section).WithMany(s => s.Topics);
         builder.HasMany(t => t.Complaints).WithOne(c => c.Topic);
         builder.Property(t => t.Status).HasEnumConversion();
+        builder.OwnsOne(t => t.CompileOptions);
     }
 }

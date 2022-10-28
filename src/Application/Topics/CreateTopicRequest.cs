@@ -1,8 +1,10 @@
-﻿namespace GroupProject.Application.Topics;
+﻿using GroupProject.Domain.ValueObjects;
+
+namespace GroupProject.Application.Topics;
 
 public record CreateTopicRequest(
     string Header,
     string Description,
-    string? Code,
+    CompileOptions? CompileOptions,
     Guid UserId,
     int SectionId);

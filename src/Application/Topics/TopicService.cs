@@ -84,7 +84,12 @@ public class TopicService : ITopicService
         var isTopicExist = await _dbContext.Set<Topic>().AnyAsync(t => t.Header == request.Header, cancellationToken);
         if (isTopicExist) throw new ConflictException($"There is already topic with header: {request.Header}");
 
-        var topic = new Topic(request.Header, request.Description, request.Code, request.UserId, request.SectionId);
+        var topic = new Topic(
+            request.Header,
+            request.Description,
+            request.CompileOptions,
+            request.UserId,
+            request.SectionId);
 
         _dbContext.Set<Topic>().Add(topic);
         await _dbContext.SaveChangesAsync(cancellationToken);
