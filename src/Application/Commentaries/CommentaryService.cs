@@ -5,7 +5,6 @@ using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
-using GroupProject.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -61,9 +60,8 @@ public class CommentaryService : ICommentaryService
         CreateCommentaryRequest request,
         CancellationToken cancellationToken)
     {
-        var topic = await _dbContext.Set<Topic>().FirstOrDefaultAsync(t => t.Id == request.TopicId, cancellationToken);
-        if (topic is null) throw new NotFoundException($"There is no topic with id: {request.TopicId}");
-        if (topic.Status == TopicStatus.Closed) throw new ConflictException("Topic has been closed");
+        var topic = await _dbContext.Set<Topic>().AssertFoundAsync(request.TopicId, cancellationToken);
+        if (topic.IsClosed) throw new ConflictException("Topic has been closed");
 
         var commentary = new Commentary(request.Description, request.CompileOptions, request.TopicId, request.UserId);
         _dbContext.Set<Commentary>().Add(commentary);

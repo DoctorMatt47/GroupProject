@@ -46,6 +46,13 @@ public class UserService : IUserService
         CancellationToken cancellationToken) =>
         await CreateUserImplAsync(request, UserRole.Moderator, cancellationToken);
 
+    public async Task AddWarningToUser(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await _dbContext.Set<User>().AssertFoundAsync(id, cancellationToken);
+        var configuration = await _dbContext.Set<Configuration>().FirstAsync(cancellationToken);
+
+        user.AddWarning(configuration.WarningCountForBan, configuration.BanDuration);
+    }
 
     private async Task<IdResponse<Guid>> CreateUserImplAsync(
         CreateUserRequest request,

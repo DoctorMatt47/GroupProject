@@ -111,7 +111,8 @@ public class TopicServiceTests
         topic.Description.Should().Be(request.Description);
         topic.CompileOptions!.Code.Should().Be(topic.CompileOptions.Code);
         topic.CompileOptions.Language.Should().Be(topic.CompileOptions.Language);
-        topic.Status.Should().Be(TopicStatus.Active);
+        topic.IsClosed.Should().BeFalse();
+        topic.IsVerificationRequired.Should().BeFalse();
         topic.CreationTime.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
     }
 

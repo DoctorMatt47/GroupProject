@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using GroupProject.Domain.Enums;
 using GroupProject.Domain.Interfaces;
 using GroupProject.Domain.ValueObjects;
 
@@ -25,7 +24,6 @@ public class Topic : IHasComplaintCount
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
-        Status = TopicStatus.Active;
         UserId = userId;
         Header = header;
         Description = description;
@@ -37,7 +35,8 @@ public class Topic : IHasComplaintCount
     public DateTime CreationTime { get; private set; }
     public string Header { get; private set; } = null!;
     public string Description { get; private set; } = null!;
-    public TopicStatus Status { get; private set; }
+    public bool IsClosed { get; set; }
+    public bool IsVerificationRequired { get; set; }
     public CompileOptions? CompileOptions { get; private set; }
 
     public Guid UserId { get; private set; }
