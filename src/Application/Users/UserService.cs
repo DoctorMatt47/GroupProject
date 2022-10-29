@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GroupProject.Application.Common.Exceptions;
+using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
@@ -31,9 +32,7 @@ public class UserService : IUserService
 
     public async Task<UserResponse> Get(Guid id, CancellationToken cancellationToken)
     {
-        var user = await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
-        if (user is null) throw new NotFoundException($"There is no user with id: {id}");
-
+        var user = await _dbContext.Set<User>().AssertFoundAsync(id, cancellationToken);
         return _mapper.Map<UserResponse>(user);
     }
 
