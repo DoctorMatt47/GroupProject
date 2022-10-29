@@ -12,6 +12,5 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasMany(u => u.Topics).WithOne(c => c.User);
         builder.HasMany(u => u.Commentaries).WithOne(c => c.User);
         builder.Property(u => u.Role).HasEnumConversion();
-        builder.Property(u => u.Status).HasEnumConversion();
     }
 }
