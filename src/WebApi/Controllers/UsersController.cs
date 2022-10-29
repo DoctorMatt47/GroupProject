@@ -11,7 +11,6 @@ public class UsersController : ApiControllerBase
 
     public UsersController(IUserService users) => _users = users;
 
-
     /// <summary>
     ///     Creates new user with passed parameters
     /// </summary>
@@ -54,5 +53,13 @@ public class UsersController : ApiControllerBase
     {
         var response = await _users.CreateModerator(body, cancellationToken);
         return Created("", response);
+    }
+
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpPost("{id:guid}/Warning")]
+    public async Task<ActionResult> AddWarningToUser(Guid id, CancellationToken cancellationToken)
+    {
+        await _users.AddWarningToUser(id, cancellationToken);
+        return NoContent();
     }
 }
