@@ -1,7 +1,6 @@
 using System.Reflection;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Infrastructure.Extensions;
-using GroupProject.Infrastructure.Persistence.Initializers;
 using GroupProject.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,11 +18,7 @@ builder.Services
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var initializers = scope.ServiceProvider.GetServices<IEntityInitializer>();
-    foreach (var initializer in initializers) initializer.Initialize();
-}
+app.Services.CallEntityInitializers();
 
 if (app.Environment.IsDevelopment())
 {
