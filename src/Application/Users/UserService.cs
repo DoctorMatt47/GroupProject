@@ -52,6 +52,7 @@ public class UserService : IUserService
         var configuration = await _dbContext.Set<Configuration>().FirstAsync(cancellationToken);
 
         user.AddWarning(configuration.WarningCountForBan, configuration.BanDuration);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
     private async Task<IdResponse<Guid>> CreateUserImplAsync(
