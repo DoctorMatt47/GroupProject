@@ -13,11 +13,12 @@ public class ConfigurationInitializer : IEntityInitializer
     {
         if (_dbContext.Set<Configuration>().Any()) return;
 
-        var configuration = (Configuration) Activator.CreateInstance(typeof(Configuration))!;
-
-        configuration.Rules = string.Empty;
-        configuration.BanDuration = TimeSpan.FromMinutes(2);
-        configuration.WarningCountForBan = 2;
+        var configuration = new Configuration
+        {
+            Rules = string.Empty,
+            BanDuration = TimeSpan.FromMinutes(2),
+            WarningCountForBan = 2,
+        };
 
         _dbContext.Set<Configuration>().Add(configuration);
         _dbContext.SaveChangesAsync().GetAwaiter().GetResult();

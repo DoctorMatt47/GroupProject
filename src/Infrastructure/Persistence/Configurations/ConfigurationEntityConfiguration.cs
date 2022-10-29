@@ -8,6 +8,5 @@ public class ConfigurationEntityConfiguration : IEntityTypeConfiguration<Configu
 {
     public void Configure(EntityTypeBuilder<Configuration> builder)
     {
-        builder.HasNoKey();
     }
 }

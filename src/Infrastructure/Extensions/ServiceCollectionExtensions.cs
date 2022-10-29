@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ITokenRepository, TokenRepository>();
         services.AddTransient<IIdentityRepository, IdentityRepository>();
         services.AddScoped<IEntityInitializer, UserInitializer>();
+        services.AddScoped<IEntityInitializer, ConfigurationInitializer>();
 
         return services;
     }
