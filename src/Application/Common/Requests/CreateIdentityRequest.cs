@@ -3,5 +3,5 @@
 namespace GroupProject.Application.Common.Requests;
 
 public record CreateIdentityRequest(
-    Guid UserId,
+    Guid Id,
     UserRole Role);
