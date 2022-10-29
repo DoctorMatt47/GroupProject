@@ -49,9 +49,12 @@ public class IdentityService : IIdentityService
 
         _logger.LogInformation("Authenticated {Role} with id: {Id}", user.Role, user.Id);
 
+        if (user.BanEndTime is not null)
+            return new IdentityResponse(null, user.Id, Enum.GetName(user.Role)!, user.BanEndTime);
+
         var identity = _identities.Create(_mapper.Map<CreateIdentityRequest>(user));
         var token = _tokens.Get(identity);
 
-        return new IdentityResponse(token, user.Id, Enum.GetName(user.Role)!, Enum.GetName(user.Status)!);
+        return new IdentityResponse(token, user.Id, Enum.GetName(user.Role)!, null);
     }
 }

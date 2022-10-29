@@ -23,6 +23,7 @@ public class User
     public User(string login, string password, IPasswordHashService passwordHash, UserRole role)
     {
         Id = Guid.NewGuid();
+        WarningCount = 0;
         Login = login;
         PasswordSalt = passwordHash.GenerateSalt();
         PasswordHash = passwordHash.Encode(password, PasswordSalt);
@@ -34,8 +35,16 @@ public class User
     public byte[] PasswordHash { get; private set; } = null!;
     public byte[] PasswordSalt { get; private set; } = null!;
     public UserRole Role { get; set; } = UserRole.User;
-    public UserStatus Status { get; set; } = UserStatus.Active;
+    public DateTime? BanEndTime { get; private set; }
+    public int WarningCount { get; private set; }
 
     public IEnumerable<Topic> Topics => _questions.ToList();
     public IEnumerable<Commentary> Commentaries => _commentaries.ToList();
+
+    public void AddWarning(int minWarningCountForBan, TimeSpan banDuration)
+    {
+        WarningCount++;
+        if (WarningCount < minWarningCountForBan) return;
+        BanEndTime = (BanEndTime is null || BanEndTime <= DateTime.UtcNow ? DateTime.UtcNow : BanEndTime) + banDuration;
+    }
 }
