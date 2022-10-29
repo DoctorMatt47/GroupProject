@@ -1,29 +1,13 @@
-//Replace all functions to topic/script.js
-
-const addLanguagesToSelect = (selectId)=>{
-    let select = document.getElementById(selectId)
-    for(let type in LANGUAGES){
-        let option = document.createElement("option")
-        option.value = type
-        option.textContent = LANGUAGES[type]
-        select.appendChild(option)
-    }
-}
-const setVisible = (visible, id, display)=>{
-    document.getElementById(id).style.display = visible?display:'none'
-}
-const submitTopic = ()=>{
-    createTopic(document.getElementById("topic-title").value,
-    document.getElementById("topic-description").value, 
-    document.getElementById("need-code").checked
-    ?document.getElementById("topic-code").value:"").then(response=>{
-        openPage("topic.html", {"id":response.id})
-    }).catch(error=>{
-        console.log(error.message)
-    })
-}
-const createTopic= (header, description, code)=>{
-    const body = {header: header, description: description, code:code}
+/**
+ * @param {string} section - section of topic
+ * @param {string} header - header or title of topic
+ * @param {string} description - description of topic
+ * @param {string} code - code to add it to topic
+ * @param {string} language - key of programing language from languages.js
+ * @returns promise to response with new topic or error
+ */
+const createTopic= (section, header, description, code, language)=>{
+    const body = {header: header, description: description, code:code};
     const request = {
         method: "POST",
         headers: {
@@ -31,9 +15,9 @@ const createTopic= (header, description, code)=>{
             "Authorization":"Bearer "+getFromStorage("token")
         },
         body: JSON.stringify(body),
-    }
-    return sendAsync(URLS.Topics, request)
-}
+    };
+    return sendAsync(URLS.Topics, request);
+};
 /**
  * 
  * @param {number} perPage - count of pages in current page

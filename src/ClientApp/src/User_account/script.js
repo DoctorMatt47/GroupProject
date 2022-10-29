@@ -43,11 +43,11 @@ const setUserData = (data)=>{
     username.textContent = data
 }
 
-window.onload = function () {
+window.addEventListener("load", ()=>{
     setUserData(getFromStorage("login"));
     addCards(currentPage);
     loadMoreButton.addEventListener("click", () => {
         addCards(currentPage + 1);
     });
-};
+});
 
