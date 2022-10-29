@@ -109,7 +109,7 @@ public class TopicsController : ApiControllerBase
     }
 
     [Authorize]
-    [HttpPut]
+    [HttpPut("{id:guid}/Close")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
