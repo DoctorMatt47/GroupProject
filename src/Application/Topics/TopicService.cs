@@ -5,6 +5,7 @@ using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
+using GroupProject.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -95,5 +96,16 @@ public class TopicService : ITopicService
         _logger.LogInformation("Created topic with id: {Id}", topic.Id);
 
         return new IdResponse<Guid>(topic.Id);
+    }
+
+    public async Task Close(Guid id, Guid userId, CancellationToken cancellationToken)
+    {
+        var user = await _dbContext.Set<User>().AssertFoundAsync(userId, cancellationToken);
+        var topic = await _dbContext.Set<Topic>().AssertFoundAsync(id, cancellationToken);
+
+        if (user.Role is UserRole.User && topic.UserId != user.Id)
+            throw new ForbiddenException("You don't have permission for closing this topic");
+
+        topic.IsClosed = true;
     }
 }

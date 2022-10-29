@@ -17,4 +17,5 @@ public interface ITopicService
     Task<TopicResponse> Get(Guid id, CancellationToken cancellationToken);
     Task<IEnumerable<TopicByUserIdResponse>> GetByUserId(Guid userId, CancellationToken cancellationToken);
     Task<IdResponse<Guid>> Create(CreateTopicRequest request, CancellationToken cancellationToken);
+    Task Close(Guid id, Guid userId, CancellationToken cancellationToken);
 }
