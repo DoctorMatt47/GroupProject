@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupProject.WebApi.Controllers;
 
-[Authorize]
 public class TopicsController : ApiControllerBase
 {
     private readonly IMapper _mapper;

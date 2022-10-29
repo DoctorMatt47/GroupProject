@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupProject.WebApi.Controllers;
 
-[Authorize]
 public class UsersController : ApiControllerBase
 {
     private readonly IUserService _users;

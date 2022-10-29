@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupProject.WebApi.Controllers;
 
-[Authorize]
 public class IdentitiesController : ApiControllerBase
 {
     private readonly IIdentityService _identities;
