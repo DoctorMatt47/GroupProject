@@ -10,7 +10,7 @@ public class IdentityRepository : IIdentityRepository
     {
         var claims = new List<Claim>
         {
-            new(ClaimsIdentity.DefaultNameClaimType, request.UserId.ToString()),
+            new(ClaimsIdentity.DefaultNameClaimType, request.Id.ToString()),
             new(ClaimsIdentity.DefaultRoleClaimType, Enum.GetName(request.Role)!),
         };
 

@@ -3,7 +3,6 @@ using GroupProject.Application.Common.Extensions;
 using GroupProject.Infrastructure.Extensions;
 using GroupProject.Infrastructure.Persistence.Initializers;
 using GroupProject.WebApi.Extensions;
-using GroupProject.WebApi.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +12,7 @@ builder.Services
     .AddAutoMapper(Assembly.GetExecutingAssembly())
     .AddApplication()
     .AddInfrastructure(connectionString)
-    .AddBearerAuthentication(new AuthOptions())
+    .AddBearerAuthentication(builder.Configuration)
     .AddEndpointsApiExplorer()
     .AddSwagger()
     .AddControllers();
