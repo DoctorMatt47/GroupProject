@@ -2,6 +2,7 @@
 using GroupProject.Application.Commentaries;
 using GroupProject.Application.Common.Services;
 using GroupProject.Application.Complaints;
+using GroupProject.Application.Configurations;
 using GroupProject.Application.Identity;
 using GroupProject.Application.Sections;
 using GroupProject.Application.Topics;
@@ -24,6 +25,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IComplaintService, ComplaintService>();
         services.AddTransient<ISectionService, SectionService>();
         services.AddTransient<IIdentityService, IdentityService>();
+        services.AddTransient<IConfigurationService, ConfigurationService>();
 
         return services;
     }
