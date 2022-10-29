@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace GroupProject.Application.IntegrationTests.Common.Fixtures;
 
-public class DatabaseFixture : IDisposable
+public class DatabaseFixture
 {
     private readonly IPasswordHashService _passwordHash;
     private readonly IServiceScopeFactory _scopeFactory;
@@ -25,12 +25,6 @@ public class DatabaseFixture : IDisposable
     public User DefaultUser { get; private set; } = null!;
     public Section DefaultSection { get; private set; } = null!;
 
-    public void Dispose()
-    {
-        using var scope = _scopeFactory.CreateScope();
-        var dbContext = scope.ServiceProvider.GetService<IAppDbContext>()!;
-    }
-
     private async Task Initialize()
     {
         using var scope = _scopeFactory.CreateScope();
@@ -47,6 +41,14 @@ public class DatabaseFixture : IDisposable
         DefaultUser = new User(fixture.Create<string>(), fixture.Create<string>(), _passwordHash, UserRole.User);
         dbContext.Set<User>().Add(DefaultUser);
 
+        var configuration = new Configuration
+        {
+            Rules = "",
+            BanDuration = TimeSpan.Zero,
+            WarningCountForBan = int.MaxValue,
+        };
+
+        dbContext.Set<Configuration>().Add(configuration);
         await dbContext.SaveChangesAsync(CancellationToken.None);
     }
 }
