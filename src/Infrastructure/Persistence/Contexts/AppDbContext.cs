@@ -17,6 +17,7 @@ public sealed class AppDbContext : DbContext, IAppDbContext
     public DbSet<Complaint> Complaints { get; set; } = null!;
     public DbSet<Commentary> Commentaries { get; set; } = null!;
     public DbSet<Section> Sections { get; set; } = null!;
+    public DbSet<Configuration> Configurations { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
