@@ -1,4 +1,5 @@
-﻿using GroupProject.Application.Users;
+﻿using GroupProject.Application.Identity;
+using GroupProject.Application.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
