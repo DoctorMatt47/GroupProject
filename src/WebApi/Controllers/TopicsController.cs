@@ -108,4 +108,16 @@ public class TopicsController : ApiControllerBase
         var location = $"~api/Topics/{response.Id}";
         return Created(location, response);
     }
+
+    [Authorize]
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> CloseTopic(Guid id, CancellationToken cancellationToken)
+    {
+        await _topics.Close(id, Guid.Parse(User.Identity!.Name!), cancellationToken);
+        return NoContent();
+    }
 }
