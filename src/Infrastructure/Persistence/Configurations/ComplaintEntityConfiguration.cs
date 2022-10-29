@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GroupProject.Infrastructure.Persistence.Configurations;
 
-public class ComplaintConfiguration : IEntityTypeConfiguration<Complaint>
+public class ComplaintEntityConfiguration : IEntityTypeConfiguration<Complaint>
 {
     public void Configure(EntityTypeBuilder<Complaint> builder)
     {

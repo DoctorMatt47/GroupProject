@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GroupProject.Infrastructure.Persistence.Configurations;
 
-public class TopicConfiguration : IEntityTypeConfiguration<Topic>
+public class TopicEntityConfiguration : IEntityTypeConfiguration<Topic>
 {
     public void Configure(EntityTypeBuilder<Topic> builder)
     {

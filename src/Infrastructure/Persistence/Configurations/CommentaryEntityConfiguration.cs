@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GroupProject.Infrastructure.Persistence.Configurations;
 
-public class CommentaryConfiguration : IEntityTypeConfiguration<Commentary>
+public class CommentaryEntityConfiguration : IEntityTypeConfiguration<Commentary>
 {
     public void Configure(EntityTypeBuilder<Commentary> builder)
     {
