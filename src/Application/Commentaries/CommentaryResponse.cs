@@ -7,5 +7,6 @@ public record CommentaryResponse(
     string Description,
     CompileOptionsResponse? CompileOptions,
     Guid UserId,
+    string UserLogin,
     Guid TopicId,
     DateTime CreationTime);
