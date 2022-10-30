@@ -45,6 +45,6 @@ public class User
     {
         WarningCount++;
         if (WarningCount < minWarningCountForBan) return;
-        BanEndTime = (BanEndTime is null || BanEndTime <= DateTime.UtcNow ? DateTime.UtcNow : BanEndTime) + banDuration;
+        BanEndTime = (BanEndTime > DateTime.UtcNow ? BanEndTime : DateTime.UtcNow) + banDuration;
     }
 }
