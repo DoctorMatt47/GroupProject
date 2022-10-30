@@ -10,7 +10,7 @@
     <script src="../JS/httpFunctions.js"></script>
     <script src="../JS/data.js"></script>
 </head>
-<body onload="addCode(getValueFromCurrentUrl('id'), 'code-place'); return false;">
+<body onload="addCode(getValueFromCurrentUrl('id'),getValueFromCurrentUrl('type'), 'code-place'); return false;">
     <div id="user-login"></div>
     <div style="width: 50%;" id = "code-place">
     </div>

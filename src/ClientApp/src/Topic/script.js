@@ -4,19 +4,108 @@ const viewedContainer = document.getElementById("viewed");
 const answersContainer = document.getElementById("answers");
 const titleContainer = document.getElementById("topic-name");
 const descriptionContainer = document.getElementById("topic-description");
-const commentsContainer = document.getElementById("comment-group");
 const sectionContainer = document.getElementById("section");
 const allCodeContainer = document.getElementById("all-code");
 const codeContainer = document.getElementById("user-code");
 const codeLanguageContainer = document.getElementById("topic-language");
 const codeButton = document.getElementById("run-code");
+const commentsContainer = document.getElementById("comment-group");
 
+/**
+ * Opens page to run code there
+ * @param {string} type - topic or comment
+ * @param {*} id - id of topic or comment 
+ */
+const runCode = (type, id)=>{
+    openPage("../Html/code-runner.html", {"id": id, "type": type});
+};
+/**
+ * 
+ * @param {Object} comment 
+ * @returns DOM object with items to display code of comment
+ */
+const createCommentCode = (comment)=>{
+    const panelFooter = document.createElement("div");
+    panelFooter.className = "panel-footer"
+
+    const panelFooterCode = document.createElement("div");
+    panelFooterCode.id = "panel-footer-answer-code";
+    panelFooter.appendChild(panelFooterCode);
+
+    const language = document.createElement("div");
+    language.id = "answer-language";
+    language.className = "language";
+    language.textContent = LANGUAGES[comment.compileOptions.language.toLowerCase()];
+    panelFooterCode.appendChild(language);
+
+    const code = document.createElement("div");
+    code.textContent = comment.compileOptions.code;
+    panelFooterCode.appendChild(code);
+
+    const buttonContainer = document.createElement("div");
+    buttonContainer.style = "width: 100%;";
+    panelFooter.appendChild(buttonContainer);
+
+    const run = document.createElement("button");
+    run.className = "code-btn";
+    run.onclick = ()=> runCode("comment", comment.id);
+    run.textContent = "Run";
+    buttonContainer.appendChild(run);
+
+    return panelFooter;
+};
+/**
+ * Creates comment object and adds comment data to comment list in page 
+ * @param {Object} comment 
+ */
+const createCommentObject = (comment)=>{
+    const com = document.createElement("div");
+    com.id = "comment";
+    const complain = document.createElement("div");
+    complain.innerHTML = '<div class="complaint-icon">'
+    +'<button data-toggle="tooltip" title="Create a complaint" onclick="openForm()">'
+    +'<span class="glyphicon glyphicon-comment" style="color:#d7ae54; margin-right: 15px"></span></button></div>';
+    com.appendChild(complain);
+
+    const answer = document.createElement("p");
+    answer.id = "answer";
+    answer.textContent = comment.description;
+    com.appendChild(answer);
+
+    if(comment.compileOptions.code !== ""){
+        com.appendChild(createCommentCode(comment));
+    }
+
+    const username = document.createElement("div");
+    username.id = "answer-username";
+    username.textContent = comment.userLogin;
+    com.appendChild(username);
+
+    const date = document.createElement("p");
+    date.id = "answer-date";
+    date.textContent = "Answered: " + new Date(comment.creationTime).toLocaleDateString();
+    com.appendChild(date);
+
+    commentsContainer.appendChild(com);
+};
+/**
+ * Adds comments of topic to topic page
+ * @param {string} topicId - id of topic
+ */
+const addCommentsToPage = (topicId) =>{
+    commentsContainer.innerHTML = "";
+    getComments(topicId, 20, 1).then(response=>{
+        for(let i in response.list){
+            createCommentObject(response.list[i]);
+        }
+    });
+};
 /**
  * Adds data from topic to page
  * @param {Object} topic - topic data from server
  */
 const addTopicToPage = (topic)=>{
-    console.log(topic)
+    //createComment(topic.id, "Try use python, it is easy!", '"Hello world"', "python3");
     titleContainer.textContent = topic.header;
     descriptionContainer.textContent = topic.description;
     usernameContainer.textContent = topic.userLogin;
@@ -26,7 +115,7 @@ const addTopicToPage = (topic)=>{
     let code = topic.compileOptions.code.replaceAll('\n','<br>');
     if(code !== ""){
         codeContainer.innerHTML = code;
-        codeButton.onclick = ()=> openPage("../Html/code-runner.html", {"id": topic.id});  
+        codeButton.onclick = ()=> runCode("topic", topic.id);
     }else{
         allCodeContainer.style.display = "none";
     }
@@ -35,6 +124,7 @@ const addTopicToPage = (topic)=>{
 window.addEventListener("load", ()=>{
     getTopic(getValueFromCurrentUrl("id")).then(response => {
         addTopicToPage(response);
+        addCommentsToPage(response.id);
     })
     .catch(error => {
         console.log(error);

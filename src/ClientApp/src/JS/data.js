@@ -7,4 +7,6 @@ const URLS = {
     TopicsOrderedByCreationTime:BASE_URL + "Topics/OrderedByCreationTime",
     TopicsByUser: BASE_URL+"Topics/ByUser/",
     Section: BASE_URL + "Section",
+    CommentsByTopic: BASE_URL + "Commentaries/ByTopic/",
+    CommentsCreate: BASE_URL + "Commentaries/OnTopic/"
 };
