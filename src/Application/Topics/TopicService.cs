@@ -65,7 +65,7 @@ public class TopicService : ITopicService
 
     public async Task<TopicResponse> Get(Guid id, CancellationToken cancellationToken)
     {
-        var topic = await _dbContext.Set<Topic>().AssertFoundAsync(id, cancellationToken);
+        var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
         return _mapper.Map<TopicResponse>(topic);
     }
 
@@ -98,10 +98,17 @@ public class TopicService : ITopicService
         return new IdResponse<Guid>(topic.Id);
     }
 
+    public async Task Delete(Guid id, CancellationToken cancellationToken)
+    {
+        var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
+        _dbContext.Set<Topic>().Remove(topic);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task Close(Guid id, Guid userId, CancellationToken cancellationToken)
     {
-        var user = await _dbContext.Set<User>().AssertFoundAsync(userId, cancellationToken);
-        var topic = await _dbContext.Set<Topic>().AssertFoundAsync(id, cancellationToken);
+        var user = await _dbContext.Set<User>().FindOrThrowAsync(userId, cancellationToken);
+        var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
 
         if (user.Role is UserRole.User && topic.UserId != user.Id)
             throw new ForbiddenException("You don't have permission for closing this topic");

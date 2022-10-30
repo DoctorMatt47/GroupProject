@@ -112,11 +112,22 @@ public class TopicsController : ApiControllerBase
     [HttpPut("{id:guid}/Close")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> CloseTopic(Guid id, CancellationToken cancellationToken)
     {
         await _topics.Close(id, Guid.Parse(User.Identity!.Name!), cancellationToken);
+        return NoContent();
+    }
+
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        await _topics.Delete(id, cancellationToken);
         return NoContent();
     }
 }
