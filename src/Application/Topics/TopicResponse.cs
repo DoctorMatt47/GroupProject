@@ -1,4 +1,4 @@
-﻿using GroupProject.Domain.ValueObjects;
+﻿using GroupProject.Application.Common.Responses;
 
 namespace GroupProject.Application.Topics;
 
@@ -6,7 +6,7 @@ public record TopicResponse(
     Guid Id,
     string Header,
     string Description,
-    CompileOptions CompileOptions,
+    CompileOptionsResponse? CompileOptions,
     DateTime CreationTime,
     int ComplaintCount,
     Guid UserId,

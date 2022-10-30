@@ -6,6 +6,7 @@ using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
+using GroupProject.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -83,10 +84,11 @@ public class TopicService : ITopicService
         var isTopicExist = await _dbContext.Set<Topic>().AnyAsync(t => t.Header == request.Header, cancellationToken);
         if (isTopicExist) throw new ConflictException($"There is already topic with header: {request.Header}");
 
+        var compileOptions = _mapper.Map<CompileOptions>(request.CompileOptions);
         var topic = new Topic(
             request.Header,
             request.Description,
-            request.CompileOptions,
+            compileOptions,
             request.UserId,
             request.SectionId);
 

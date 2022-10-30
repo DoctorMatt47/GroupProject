@@ -5,6 +5,7 @@ using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
+using GroupProject.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -63,7 +64,8 @@ public class CommentaryService : ICommentaryService
         var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(request.TopicId, cancellationToken);
         if (topic.IsClosed) throw new ConflictException("Topic has been closed");
 
-        var commentary = new Commentary(request.Description, request.CompileOptions, request.TopicId, request.UserId);
+        var compileOptions = _mapper.Map<CompileOptions>(request.CompileOptions);
+        var commentary = new Commentary(request.Description, compileOptions, request.TopicId, request.UserId);
         _dbContext.Set<Commentary>().Add(commentary);
         await _dbContext.SaveChangesAsync(cancellationToken);
 
