@@ -38,6 +38,7 @@ const authenticate = (login, password)=>{
     res.then(response => {
         putToStorage("token", response.token)
         putToStorage("login", login)
+        putToStorage("password", password)
     });
     return res;
 };

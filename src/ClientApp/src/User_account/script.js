@@ -15,18 +15,18 @@ const handleButtonStatus = () => {
     }
 };
 
-const createCard = () => {
+const createCard = (data) => {
     const card = document.createElement("a");
     card.className = "card";
-    card.innerHTML = "Topic name<br>Topic description"; //should be specified
-    card.href = "#";
+    card.innerHTML = `${data.header}<br>${cutTextForTopic(data.description)}`;
+    card.href = addParameters("../Topic/topic.html", {id:data.id});
     cardContainer.appendChild(card);
 };
 
-const addCards = (pageIndex) => {
+const addCards = (userId, pageIndex) => {
     currentPage = pageIndex;
 
-    handleButtonStatus();
+    /*handleButtonStatus();
 
     const startRange = (pageIndex - 1) * cardIncrease;
     const endRange =
@@ -34,18 +34,32 @@ const addCards = (pageIndex) => {
 
     for (let i = startRange + 1; i <= endRange; i++) {
         createCard();
-    }
+    }*/
+    const err = (error)=>{
+        console.log(error);
+    };
+    getUserTopics(userId).then(response=>{
+        for(let i in response){
+            getTopic(response[i].id).then(resp =>{
+                createCard(resp);
+            }).catch(err);
+        }
+    }).catch(err);
 };
 
 const username = document.getElementById("username");
 
 const setUserData = (data)=>{
-    username.textContent = data
-}
+    username.textContent = getFromStorage("login");
+};
 
 window.addEventListener("load", ()=>{
-    setUserData(getFromStorage("login"));
-    addCards(currentPage);
+    authenticate(getFromStorage("login"), getFromStorage("password")).then(response=>{
+        setUserData(response);
+        addCards(response.id, currentPage);
+    }).catch(error=>{
+        console.log(error);
+    });
     loadMoreButton.addEventListener("click", () => {
         addCards(currentPage + 1);
     });
