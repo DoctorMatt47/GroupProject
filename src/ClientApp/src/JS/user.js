@@ -15,12 +15,7 @@ const register = (login, password)=>{
         },
         body: JSON.stringify(body),
     };
-    let res = sendAsync(URLS.Users, request);
-    res.then(response => {
-        putToStorage("token", response.token)
-        putToStorage("login", login)
-    });
-    return res;
+    return sendAsync(URLS.Users, request);
 };
 /**
  * Sends request to server to get already created user. 

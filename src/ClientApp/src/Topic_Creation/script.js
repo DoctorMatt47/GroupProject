@@ -16,13 +16,30 @@ const closeForm = () => {
  */
 const addLanguagesToSelect = (selectId) => {
     let select = document.getElementById(selectId);
-    console.log(select)
     for(let type in LANGUAGES){
         let option = document.createElement("option");
         option.value = type;
         option.textContent = LANGUAGES[type];
         select.appendChild(option);
     }
+};
+/**
+ * Adds options (sections) from server to select by id
+ * @param {string} selectId - id of `select` html tag to add to it options
+ */
+const addSectionToSelect = (selectId) =>{
+    let select = document.getElementById(selectId);
+    getSections().then(response=>{
+        for(let type in response){
+            let option = document.createElement("option");
+            option.value = response[type].id;
+            option.textContent = response[type].header;
+            select.appendChild(option);
+        }
+    }).catch(error=>{
+        const exception = JSON.parse(error.message);
+        console.log(exception);
+    });
 };
 /**
  * 

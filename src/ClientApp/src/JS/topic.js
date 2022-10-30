@@ -1,13 +1,19 @@
 /**
- * @param {string} section - section of topic
+ * @param {number} sectionId - id of section of topic
  * @param {string} header - header or title of topic
  * @param {string} description - description of topic
  * @param {string} code - code to add it to topic
  * @param {string} language - key of programing language from languages.js
  * @returns promise to response with new topic or error
  */
-const createTopic= (section, header, description, code, language)=>{
-    const body = {header: header, description: description, code:code};
+const createTopic = (sectionId, header, description, code, language)=>{
+    const body = {
+        header: header, 
+        description: description, 
+        compileOptions:{
+            code:code,
+            language: language
+    }};
     const request = {
         method: "POST",
         headers: {
@@ -16,7 +22,7 @@ const createTopic= (section, header, description, code, language)=>{
         },
         body: JSON.stringify(body),
     };
-    return sendAsync(URLS.Topics, request);
+    return sendAsync(URLS.TopicsCreate + sectionId, request);
 };
 /**
  * 
