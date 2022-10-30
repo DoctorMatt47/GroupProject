@@ -1,38 +1,62 @@
-﻿using GroupProject.Domain.Enums;
+﻿using System.Diagnostics.CodeAnalysis;
+using GroupProject.Domain.Interfaces;
+using GroupProject.Domain.ValueObjects;
 
 namespace GroupProject.Domain.Entities;
 
-public class Topic
+[SuppressMessage("ReSharper", "CollectionNeverUpdated.Local")]
+[SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Local")]
+public class Topic : IHasComplaintCount
 {
-    // ReSharper disable once CollectionNeverUpdated.Local
+    private readonly List<Commentary> _commentaries = new();
     private readonly List<Complaint> _complaints = new();
 
     /// <summary>
     ///     Parameterless constructor, intended only for orm usage.
     /// </summary>
-    protected Topic()
+    private Topic()
     {
     }
 
-    public Topic(string header, string description, string? code, Guid userId)
+    public Topic(string header, string description, CompileOptions? compileOptions, Guid userId, int sectionId)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
         UserId = userId;
         Header = header;
         Description = description;
-        Code = code;
+        SectionId = sectionId;
+        CompileOptions = compileOptions;
     }
 
-    public Guid Id { get; protected set; }
-    public DateTime CreationTime { get; protected set; }
-    public string Header { get; protected set; } = null!;
-    public string Description { get; protected set; } = null!;
-    public string? Code { get; protected set; }
-    public TopicStatus Status { get; protected set; } = TopicStatus.Active;
+    public Guid Id { get; private set; }
+    public DateTime CreationTime { get; private set; }
+    public string Header { get; private set; } = null!;
+    public string Description { get; private set; } = null!;
+    public bool IsClosed { get; set; }
+    public bool IsVerificationRequired { get; set; }
+    public CompileOptions? CompileOptions { get; private set; }
 
-    public Guid UserId { get; protected set; }
-    public User User { get; protected set; } = null!;
+    public Guid UserId { get; private set; }
+    public User User { get; private set; } = null!;
+
+    public int SectionId { get; private set; }
+    public Section Section { get; private set; } = null!;
 
     public IEnumerable<Complaint> Complaints => _complaints.ToList();
+    public IEnumerable<Commentary> Commentaries => _commentaries.ToList();
+
+    public int ComplaintCount { get; private set; }
+
+    public void IncrementComplaintCount()
+    {
+        ComplaintCount++;
+    }
+
+    public void DecrementComplaintCount()
+    {
+        if (ComplaintCount != 0) ComplaintCount--;
+    }
 }

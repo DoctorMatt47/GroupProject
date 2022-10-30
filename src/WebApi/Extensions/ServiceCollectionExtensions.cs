@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using GroupProject.Application.Identity;
+using GroupProject.Infrastructure.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -8,12 +8,17 @@ namespace GroupProject.WebApi.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddBearerAuthentication(this IServiceCollection services, IAuthOptions authOptions)
+    public static IServiceCollection AddBearerAuthentication(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
+        var section = configuration.GetSection("AuthOptions");
+        services.Configure<AuthOptions>(section);
+
+        var authOptions = section.Get<AuthOptions>();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(opts =>
             {
-                // For test can be toggled to false
                 opts.RequireHttpsMetadata = true;
                 opts.TokenValidationParameters = new TokenValidationParameters
                 {

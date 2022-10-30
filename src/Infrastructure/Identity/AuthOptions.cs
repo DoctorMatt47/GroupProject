@@ -1,15 +1,14 @@
 ﻿using System.Text;
-using GroupProject.Application.Identity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace GroupProject.Infrastructure.Identity;
 
-public class AuthOptions : IAuthOptions
+public class AuthOptions
 {
-    private const string Key = "GroupProject-SecretKey";
+    private const string SecretKey = "GroupProject-SecretKey";
 
-    public string Issuer => "GroupProject-SecretKey";
-    public string Audience => "GroupProject-SecretKey";
+    public string Issuer { get; set; } = null!;
+    public string Audience { get; set; } = null!;
 
-    public SymmetricSecurityKey GetSymmetricSecurityKey() => new(Encoding.ASCII.GetBytes(Key));
+    public SymmetricSecurityKey GetSymmetricSecurityKey() => new(Encoding.ASCII.GetBytes(SecretKey));
 }

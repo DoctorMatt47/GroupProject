@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using GroupProject.Application.Common.Exceptions;
+using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
-using GroupProject.Application.Identity;
+using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
 using GroupProject.Domain.Interfaces;
@@ -13,20 +14,17 @@ namespace GroupProject.Application.Users;
 public class UserService : IUserService
 {
     private readonly IAppDbContext _dbContext;
-    private readonly IJwtTokenService _jwtToken;
     private readonly ILogger<UserService> _logger;
     private readonly IMapper _mapper;
     private readonly IPasswordHashService _passwordHash;
 
     public UserService(
         IAppDbContext dbContext,
-        IJwtTokenService jwtToken,
         IPasswordHashService passwordHash,
         ILogger<UserService> logger,
         IMapper mapper)
     {
         _dbContext = dbContext;
-        _jwtToken = jwtToken;
         _passwordHash = passwordHash;
         _logger = logger;
         _mapper = mapper;
@@ -34,41 +32,30 @@ public class UserService : IUserService
 
     public async Task<UserResponse> Get(Guid id, CancellationToken cancellationToken)
     {
-        var user = await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
-        if (user is null) throw new NotFoundException($"There is no user with id: {id}");
-
+        var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
         return _mapper.Map<UserResponse>(user);
     }
 
-    public async Task<AuthenticateUserResponse> CreateUser(
+    public async Task<IdResponse<Guid>> CreateUser(
         CreateUserRequest request,
         CancellationToken cancellationToken) =>
         await CreateUserImplAsync(request, UserRole.User, cancellationToken);
 
-    public async Task<AuthenticateUserResponse> CreateModerator(
+    public async Task<IdResponse<Guid>> CreateModerator(
         CreateUserRequest request,
         CancellationToken cancellationToken) =>
         await CreateUserImplAsync(request, UserRole.Moderator, cancellationToken);
 
-    public async Task<AuthenticateUserResponse> Authenticate(
-        AuthenticateUserRequest request,
-        CancellationToken cancellationToken)
+    public async Task AddWarningToUser(Guid id, CancellationToken cancellationToken)
     {
-        var badRequestException = new BadRequestException("Incorrect password or login");
+        var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
+        var configuration = await _dbContext.Set<Configuration>().FirstAsync(cancellationToken);
 
-        var user = await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == request.Login, cancellationToken);
-        if (user is null) throw badRequestException;
-
-        var passwordHash = _passwordHash.Encode(request.Password, user.PasswordSalt);
-        if (!user.PasswordHash.SequenceEqual(passwordHash)) throw badRequestException;
-
-        _logger.LogInformation("Authenticated {Role} with id: {Id}", user.Role, user.Id);
-
-        var token = _jwtToken.Get(user.Id, user.Role);
-        return new AuthenticateUserResponse(token, user.Id, Enum.GetName(user.Role)!, Enum.GetName(user.Status)!);
+        user.AddWarning(configuration.WarningCountForBan, configuration.BanDuration);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    private async Task<AuthenticateUserResponse> CreateUserImplAsync(
+    private async Task<IdResponse<Guid>> CreateUserImplAsync(
         CreateUserRequest request,
         UserRole role,
         CancellationToken cancellationToken)
@@ -83,7 +70,6 @@ public class UserService : IUserService
 
         _logger.LogInformation("Created {Role} with id: {Id}", role, user.Id);
 
-        var token = _jwtToken.Get(user.Id, user.Role);
-        return new AuthenticateUserResponse(token, user.Id, Enum.GetName(user.Role)!, Enum.GetName(user.Status)!);
+        return new IdResponse<Guid>(user.Id);
     }
 }

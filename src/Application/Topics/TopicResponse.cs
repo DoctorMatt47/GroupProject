@@ -1,10 +1,15 @@
-﻿namespace GroupProject.Application.Topics;
+﻿using GroupProject.Application.Common.Responses;
+
+namespace GroupProject.Application.Topics;
 
 public record TopicResponse(
     Guid Id,
     string Header,
     string Description,
-    string? Code,
+    CompileOptionsResponse? CompileOptions,
+    DateTime CreationTime,
+    int ComplaintCount,
     Guid UserId,
     string UserLogin,
-    DateTime CreationTime);
+    int SectionId,
+    string SectionHeader);

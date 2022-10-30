@@ -1,0 +1,45 @@
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using GroupProject.Application.Common.Exceptions;
+using GroupProject.Application.Common.Interfaces;
+using GroupProject.Application.Common.Responses;
+using GroupProject.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
+namespace GroupProject.Application.Sections;
+
+public class SectionService : ISectionService
+{
+    private readonly IAppDbContext _dbContext;
+    private readonly ILogger<SectionService> _logger;
+    private readonly IMapper _mapper;
+
+    public SectionService(IAppDbContext dbContext, IMapper mapper, ILogger<SectionService> logger)
+    {
+        _dbContext = dbContext;
+        _mapper = mapper;
+        _logger = logger;
+    }
+
+    public async Task<IEnumerable<SectionResponse>> Get(CancellationToken cancellationToken) =>
+        await _dbContext.Set<Section>()
+            .ProjectTo<SectionResponse>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+
+    public async Task<IdResponse<int>> Create(CreateSectionRequest request, CancellationToken cancellationToken)
+    {
+        var isSectionExist =
+            await _dbContext.Set<Section>().AnyAsync(s => s.Header == request.Header, cancellationToken);
+        if (isSectionExist) throw new ConflictException("There is already section with same header");
+
+        var section = new Section(request.Header, request.Description);
+
+        await _dbContext.Set<Section>().AddAsync(section, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+
+        _logger.LogInformation("Created section with id: {Id}", section.Id);
+
+        return new IdResponse<int>(section.Id);
+    }
+}
