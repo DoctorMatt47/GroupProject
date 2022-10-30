@@ -71,7 +71,12 @@ public class TopicService : ITopicService
 
     public async Task<TopicResponse> Get(Guid id, CancellationToken cancellationToken)
     {
-        var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
+        var topic = await _dbContext.Set<Topic>()
+            .Include(t => t.Section)
+            .Include(t => t.User)
+            .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+
+        if (topic is null) throw new NotFoundException($"There is no topic with id: {id}");
         return _mapper.Map<TopicResponse>(topic);
     }
 
