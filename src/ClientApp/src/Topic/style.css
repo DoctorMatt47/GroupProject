@@ -101,6 +101,9 @@ h4 {
     background-color: #e8e8e8;
     border-radius: 0 0 10px 10px;
     color: black;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 #panel-footer-code #panel-footer-answer-code{
     width: 100%;
@@ -157,14 +160,28 @@ h4 {
     display: flex;
     font-size: 15px;
     justify-content: right !important;
-    /*width: fit-content;*/
 }
 .complaint-icon{
     display: flex;
     justify-content: flex-end;
     font-size: 20px;
 }
+.code-btn {
+    display: flex;
+    margin-top: 10px;
+    padding: 5px 20px;
+    background-color: #333;
+    color: #f1f1f1;
+    border-radius: 20px;
+    transition: .2s;
+    height: 35px;
+}
 
+.code-btn:hover, .code-btn:focus {
+    border: 1px solid #333;
+    background-color: #fff;
+    color: #000;
+}
 
 
 
