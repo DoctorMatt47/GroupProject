@@ -32,7 +32,7 @@ public class UserService : IUserService
 
     public async Task<UserResponse> Get(Guid id, CancellationToken cancellationToken)
     {
-        var user = await _dbContext.Set<User>().AssertFoundAsync(id, cancellationToken);
+        var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
         return _mapper.Map<UserResponse>(user);
     }
 
@@ -48,7 +48,7 @@ public class UserService : IUserService
 
     public async Task AddWarningToUser(Guid id, CancellationToken cancellationToken)
     {
-        var user = await _dbContext.Set<User>().AssertFoundAsync(id, cancellationToken);
+        var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
         var configuration = await _dbContext.Set<Configuration>().FirstAsync(cancellationToken);
 
         user.AddWarning(configuration.WarningCountForBan, configuration.BanDuration);

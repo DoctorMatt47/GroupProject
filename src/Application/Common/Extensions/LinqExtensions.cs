@@ -10,7 +10,7 @@ public static class LinqExtensions
     public static Page<T> ToPage<T>(this IEnumerable<T> enumerable, int pageCount) =>
         new(enumerable.ToList(), pageCount);
 
-    public static async Task<TEntity> AssertFoundAsync<TEntity>(
+    public static async Task<TEntity> FindOrThrowAsync<TEntity>(
         this DbSet<TEntity> set,
         object id,
         CancellationToken cancellationToken)

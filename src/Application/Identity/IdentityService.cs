@@ -49,7 +49,7 @@ public class IdentityService : IIdentityService
 
         _logger.LogInformation("Authenticated {Role} with id: {Id}", user.Role, user.Id);
 
-        if (user.BanEndTime is not null)
+        if (user.BanEndTime > DateTime.UtcNow)
             return new IdentityResponse(null, user.Id, Enum.GetName(user.Role)!, user.BanEndTime);
 
         var identity = _identities.Create(_mapper.Map<CreateIdentityRequest>(user));

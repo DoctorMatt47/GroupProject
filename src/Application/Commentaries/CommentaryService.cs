@@ -60,7 +60,7 @@ public class CommentaryService : ICommentaryService
         CreateCommentaryRequest request,
         CancellationToken cancellationToken)
     {
-        var topic = await _dbContext.Set<Topic>().AssertFoundAsync(request.TopicId, cancellationToken);
+        var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(request.TopicId, cancellationToken);
         if (topic.IsClosed) throw new ConflictException("Topic has been closed");
 
         var commentary = new Commentary(request.Description, request.CompileOptions, request.TopicId, request.UserId);

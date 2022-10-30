@@ -75,10 +75,10 @@ public class ComplaintService : IComplaintService
         return request.Target switch
         {
             ComplaintTarget.Topic =>
-                await _dbContext.Set<Topic>().AssertFoundAsync(request.ElementId, cancellationToken),
+                await _dbContext.Set<Topic>().FindOrThrowAsync(request.ElementId, cancellationToken),
 
             ComplaintTarget.Commentary =>
-                await _dbContext.Set<Commentary>().AssertFoundAsync(request.ElementId, cancellationToken),
+                await _dbContext.Set<Commentary>().FindOrThrowAsync(request.ElementId, cancellationToken),
 
             _ => throw new ArgumentOutOfRangeException(),
         };
