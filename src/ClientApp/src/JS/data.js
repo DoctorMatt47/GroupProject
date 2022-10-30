@@ -5,5 +5,6 @@ const URLS = {
     Topics:BASE_URL + "Topics",
     TopicsCreate:BASE_URL + "Topics/OnSection/",
     TopicsOrderedByCreationTime:BASE_URL + "Topics/OrderedByCreationTime",
+    TopicsByUser: BASE_URL+"Topics/ByUser/",
     Section: BASE_URL + "Section",
 };

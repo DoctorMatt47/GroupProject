@@ -59,6 +59,21 @@ const getPopularTopics=(perPage, page)=>{
 };
 /**
  * 
+ * @param {number} perPage - count of pages in current page
+ * @param {number}  page - number of page
+ * @returns promise to response with list of popular topics or error
+ */
+ const getUserTopics=(userId)=>{
+    const request = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+    return sendAsync(URLS.TopicsByUser + userId, request);
+};
+/**
+ * 
  * @param {number} topicId - id of topic
  * @returns promise to response with topic data or error
  */
