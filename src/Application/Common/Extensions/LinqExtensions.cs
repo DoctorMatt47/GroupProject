@@ -37,7 +37,7 @@ public static class LinqExtensions
     {
         var list = await queryable
             .Skip((page - 1) * perPage)
-            .Take(page)
+            .Take(perPage)
             .ToListAsync(cancellationToken);
 
         return new Page<T>(list, pageCount);
