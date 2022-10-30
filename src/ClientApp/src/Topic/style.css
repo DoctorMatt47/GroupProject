@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "montserrat",sans-serif;
+}
 .class {
     display: block;
     overflow: hidden;
@@ -9,6 +15,26 @@
 button{
     border: beige;
     background-color: white;
+}
+#close-btn{
+    display: flex;
+    text-align: center !important;
+    align-self: center;
+    text-transform: uppercase;
+    background-color: orange;
+    width: 100%;
+    height: 50px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+}
+#close-btn:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+#close-btn:active{
+    background-color: #ff8c08;
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
 }
 a:hover{
     color: #8f8c8c;
@@ -59,6 +85,9 @@ h4 {
 }
 
 .panel-heading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #9cad6b;
     text-align: center;
     border-radius: 10px 10px 0 0;

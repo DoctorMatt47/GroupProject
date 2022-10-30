@@ -39,7 +39,6 @@ h3, h4 {
 }
 
 .btn {
-    margin-bottom: 13px;
     padding: 5px 20px;
     background-color: #333;
     color: #f1f1f1;
@@ -54,6 +53,11 @@ h3, h4 {
     color: #000;
 }
 
+.input-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .nav-tabs li a {
     color: #777;
 }
@@ -99,6 +103,9 @@ h3, h4 {
 }
 
 .form-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 20px;
 }
 

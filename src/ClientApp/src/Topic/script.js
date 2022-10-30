@@ -31,3 +31,8 @@ window.addEventListener("load", ()=>{
         console.log(exception);
     });
 });
+
+
+$(".close-btn").click(function(){
+    $(this).prop('disabled',true)
+});

@@ -89,7 +89,7 @@ input {
 }
 .info-item p {
     font-size: 25px;
-    font-family: arial;
+    font-family: arial, serif;
     margin: 20px;
 }
 .info-item .btn {
@@ -175,7 +175,6 @@ input {
 .label {
     font-weight: bold;
     display: block;
-    color: #333;
     margin-bottom: 0.25rem;
     color: #2d3748;
 }

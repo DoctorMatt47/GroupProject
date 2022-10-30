@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "montserrat",sans-serif;
+}
 .class {
     display: block;
     overflow: hidden;
@@ -71,7 +77,15 @@
     background-color: white;
 
 }
-
+.create-btn button:hover {
+    border-radius: 100px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.create-btn button:active{
+    background-color: #ececdc;
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
 .create-btn img {
     padding: 10px;
     height: 50px;
@@ -122,8 +136,12 @@
     color: black;
     text-transform: uppercase;
     letter-spacing: 0.15rem;
+    box-shadow: 0 5px #00000033;
 }
-
+#load-more:active{
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
 #load-more:not([disabled]):hover {
     box-shadow: 0 1px 9px rgba(0, 0, 0, 0.2);
 }

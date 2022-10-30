@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "montserrat",sans-serif;
+}
 h2 {
     color: black;
 }
@@ -55,8 +61,12 @@ h2 {
     height: 60px !important;
     font-size: 20px;
     padding: 20px;
-    border-radius: 3px;
     background-color: #8A9A5B !important;
+}
+.join-btn:active{
+    background-color: green;
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
 }
 
 
