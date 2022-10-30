@@ -1,11 +1,11 @@
-function addCode(topicId, codePlaceId){
+function addCode(id, type, codePlaceId){
     const request = {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
         }
     }
-    sendAsync(URLS.Topics + `/${topicId}`, request)
+    sendAsync(URLS.Topics + `/${id}`, request)
     .then(response => {
         console.log(response)
         let place = document.getElementById(codePlaceId)

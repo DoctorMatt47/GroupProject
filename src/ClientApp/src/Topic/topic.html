@@ -15,6 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="../JS/topic.js"></script>
+    <script src="../JS/comment.js"></script>
     <script src="../JS/languages.js"></script>
     <script>
         $(function () {
@@ -34,13 +35,14 @@
                 <div class="panel-heading topic-panel-heading">
                     <div class="col-sm-12">
                         <div class="row">
+                            <div id="complaint"></div>
                             <div class="col-sm-11">
                                 <a href="#">
                                     <div class="section" id="section">Javascript</div>
                                 </a>
                             </div>
                             <div class="col-sm-1 complaint-icon">
-                                <button data-toggle="tooltip" title="Create a complaint" onclick="openForm()">
+                                <button data-toggle="tooltip" title="Create a complaint" onclick="openForm('topic', getValueFromCurrentUrl('id')); return false;">
                                     <span class="glyphicon glyphicon-comment" style="color:#d7ae54"></span>
                                 </button>
                             </div>
@@ -56,22 +58,23 @@
                         Best wishes and thank you!
                     </div>
                 </div>
-                <div class="panel-footer">
+                <div class="panel-footer" id="all-code">
                     <div id="panel-footer-code">
                         <div class="language" id="topic-language">Javascript</div>
-                        Here should be your code<br>
-                        var textBlock = document.createElement('div');<br>
-                        textBlock.setAttribute('class', 'finalBlock');<br><br>
-                        var addFinalBlock = document.getElementsByClassName('block')[0];<br>
-                        addFinalBlock.appendChild(textBlock);<br><br>
-                        textBlock.innerHTML = "Make this block a text block";<br>
+                        <div id="user-code">Here should be your code<br>
+                            var textBlock = document.createElement('div');<br>
+                            textBlock.setAttribute('class', 'finalBlock');<br><br>
+                            var addFinalBlock = document.getElementsByClassName('block')[0];<br>
+                            addFinalBlock.appendChild(textBlock);<br><br>
+                            textBlock.innerHTML = "Make this block a text block";</div>
+                            <br>
                     </div>
                     <div style="width: 100%;">
                         <button type="button" class="code-btn" id="run-code">Run</button>
                     </div>
                 </div>
             </div>
-            <div class="comment-group">
+            <div class="comment-group" id = "comment-group">
                 <div id="comment">
                     <div id="complaint"></div>
                     <div class="complaint-icon">
@@ -143,5 +146,4 @@
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
-<script src="../Complaint/script.js"></script>
 </html>

@@ -63,7 +63,7 @@ const getPopularTopics=(perPage, page)=>{
  * @param {number}  page - number of page
  * @returns promise to response with list of popular topics or error
  */
- const getUserTopics=(userId)=>{
+const getUserTopics=(userId)=>{
     const request = {
         method: "GET",
         headers: {
