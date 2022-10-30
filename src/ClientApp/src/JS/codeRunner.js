@@ -9,7 +9,7 @@ function addCode(topicId, codePlaceId){
     .then(response => {
         console.log(response)
         let place = document.getElementById(codePlaceId)
-        place.appendChild(createCode(response.code, "cpp"))
+        place.appendChild(createCode(response.compileOptions.code, response.compileOptions.language.toLowerCase()))
     })
     .catch(error => {
         console.log(error)
