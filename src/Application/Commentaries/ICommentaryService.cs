@@ -16,4 +16,5 @@ public interface ICommentaryService
         CancellationToken cancellationToken);
 
     Task<IdResponse<Guid>> Create(CreateCommentaryRequest request, CancellationToken cancellationToken);
+    Task Delete(Guid id, CancellationToken cancellationToken);
 }

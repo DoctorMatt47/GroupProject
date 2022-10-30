@@ -75,4 +75,11 @@ public class CommentaryService : ICommentaryService
 
         return new IdResponse<Guid>(commentary.Id);
     }
+
+    public async Task Delete(Guid id, CancellationToken cancellationToken)
+    {
+        var commentary = await _dbContext.Set<Commentary>().FindOrThrowAsync(id, cancellationToken);
+        _dbContext.Set<Commentary>().Remove(commentary);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
 }

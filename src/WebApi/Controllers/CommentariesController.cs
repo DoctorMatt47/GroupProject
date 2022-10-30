@@ -85,4 +85,14 @@ public class CommentariesController : ApiControllerBase
         int page,
         CancellationToken cancellationToken) =>
         _commentaries.GetOrderedByComplaintCount(perPage, page, cancellationToken);
+
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        await _commentaries.Delete(id, cancellationToken);
+        return NoContent();
+    }
 }
