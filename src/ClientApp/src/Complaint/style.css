@@ -65,7 +65,7 @@
 }
 
 
-.complaint-section button{
+#submit-btn{
     background: none;
     color: #fff;
     border: 1px solid #FF8066;
@@ -74,16 +74,27 @@
     background: #FF8066;
     text-transform: uppercase;
     font-size: 14px;
-    /*transition: 0.4s linear;*/
     cursor: pointer;
 }
 
-.complaint-section button:hover{
+#submit-btn:hover{
     background: #fff;
     color: #FF8066;
 }
-
-
+#close-complaint{
+    display: flex;
+    align-self: flex-end !important;
+    color: #fc9e5b;
+}
+#close-complaint:hover {
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+#close-complaint:active{
+    background-color: white;
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
 @media screen and (max-width:500px){
     .name,.email{
         width: 100%;
