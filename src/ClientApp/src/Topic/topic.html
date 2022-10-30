@@ -35,13 +35,14 @@
                 <div class="panel-heading topic-panel-heading">
                     <div class="col-sm-12">
                         <div class="row">
+                            <div id="complaint"></div>
                             <div class="col-sm-11">
                                 <a href="#">
                                     <div class="section" id="section">Javascript</div>
                                 </a>
                             </div>
                             <div class="col-sm-1 complaint-icon">
-                                <button data-toggle="tooltip" title="Create a complaint" onclick="openForm()">
+                                <button data-toggle="tooltip" title="Create a complaint" onclick="openForm('topic', getValueFromCurrentUrl('id')); return false;">
                                     <span class="glyphicon glyphicon-comment" style="color:#d7ae54"></span>
                                 </button>
                             </div>
@@ -145,5 +146,4 @@
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
-<script src="../Complaint/script.js"></script>
 </html>

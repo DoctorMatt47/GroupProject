@@ -59,13 +59,19 @@ const createCommentCode = (comment)=>{
  * @param {Object} comment 
  */
 const createCommentObject = (comment)=>{
+    /*console.log(comment.id)
+    getCommentComplaint(comment.id).then(response=>{
+        console.log(response);
+    }).catch(error=>{
+        console.log(error);
+    })*/
     const com = document.createElement("div");
     com.id = "comment";
-    const complain = document.createElement("div");
-    complain.innerHTML = '<div class="complaint-icon">'
-    +'<button data-toggle="tooltip" title="Create a complaint" onclick="openForm()">'
-    +'<span class="glyphicon glyphicon-comment" style="color:#d7ae54; margin-right: 15px"></span></button></div>';
-    com.appendChild(complain);
+    const complaint = document.createElement("div");
+    complaint.innerHTML = `<div class="complaint-icon">
+    <button data-toggle="tooltip" title="Create a complaint" onclick="openForm('comment', '${comment.id}'); return false;">
+    <span class="glyphicon glyphicon-comment" style="color:#d7ae54; margin-right: 15px"></span></button></div>`;
+    com.appendChild(complaint);
 
     const answer = document.createElement("p");
     answer.id = "answer";
