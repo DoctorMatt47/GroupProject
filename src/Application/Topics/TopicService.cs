@@ -36,6 +36,8 @@ public class TopicService : ITopicService
         var pageCount = await _dbContext.Set<Topic>().PageCountAsync(perPage, cancellationToken);
 
         return await _dbContext.Set<Topic>()
+            .Include(t => t.Section)
+            .Include(t => t.User)
             .OrderByDescending(t => t.CreationTime)
             .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(perPage, page, pageCount, cancellationToken);
@@ -49,7 +51,8 @@ public class TopicService : ITopicService
         var pageCount = await _dbContext.Set<Topic>().PageCountAsync(perPage, cancellationToken);
 
         return await _dbContext.Set<Topic>()
-            .Include(t => t.Complaints)
+            .Include(t => t.Section)
+            .Include(t => t.User)
             .Where(t => t.ComplaintCount != 0)
             .OrderBy(t => t.ComplaintCount)
             .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
@@ -59,6 +62,8 @@ public class TopicService : ITopicService
     public async Task<IEnumerable<TopicByUserIdResponse>> GetByUserId(Guid userId, CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Topic>()
+            .Include(t => t.Section)
+            .Include(t => t.User)
             .Where(t => t.UserId == userId)
             .ProjectTo<TopicByUserIdResponse>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
