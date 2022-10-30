@@ -56,15 +56,16 @@
                         Best wishes and thank you!
                     </div>
                 </div>
-                <div class="panel-footer">
+                <div class="panel-footer" id="all-code">
                     <div id="panel-footer-code">
                         <div class="language" id="topic-language">Javascript</div>
-                        Here should be your code<br>
-                        var textBlock = document.createElement('div');<br>
-                        textBlock.setAttribute('class', 'finalBlock');<br><br>
-                        var addFinalBlock = document.getElementsByClassName('block')[0];<br>
-                        addFinalBlock.appendChild(textBlock);<br><br>
-                        textBlock.innerHTML = "Make this block a text block";<br>
+                        <div id="user-code">Here should be your code<br>
+                            var textBlock = document.createElement('div');<br>
+                            textBlock.setAttribute('class', 'finalBlock');<br><br>
+                            var addFinalBlock = document.getElementsByClassName('block')[0];<br>
+                            addFinalBlock.appendChild(textBlock);<br><br>
+                            textBlock.innerHTML = "Make this block a text block";</div>
+                            <br>
                     </div>
                     <div style="width: 100%;">
                         <button type="button" class="code-btn" id="run-code">Run</button>

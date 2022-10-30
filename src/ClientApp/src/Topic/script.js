@@ -4,9 +4,11 @@ const viewedContainer = document.getElementById("viewed");
 const answersContainer = document.getElementById("answers");
 const titleContainer = document.getElementById("topic-name");
 const descriptionContainer = document.getElementById("topic-description");
-const codeContainer = document.getElementById("panel-footer-code");
 const commentsContainer = document.getElementById("comment-group");
 const sectionContainer = document.getElementById("section");
+const allCodeContainer = document.getElementById("all-code");
+const codeContainer = document.getElementById("user-code");
+const codeLanguageContainer = document.getElementById("topic-language");
 const codeButton = document.getElementById("run-code");
 
 /**
@@ -17,12 +19,17 @@ const addTopicToPage = (topic)=>{
     console.log(topic)
     titleContainer.textContent = topic.header;
     descriptionContainer.textContent = topic.description;
-    codeContainer.innerHTML = topic.compileOptions.code.replaceAll('\n','<br>');
     usernameContainer.textContent = topic.userLogin;
-    //sectionContainer.textContent = LANGUAGES[topic.compileOptions.language.toLowerCase()];
+    codeLanguageContainer.textContent = LANGUAGES[topic.compileOptions.language.toLowerCase()];
     sectionContainer.textContent = topic.sectionHeader;
     dateContainer.textContent = new Date(topic.creationTime).toLocaleDateString();
-    codeButton.onclick = ()=> openPage("../Html/code-runner.html", {"id": topic.id});  
+    let code = topic.compileOptions.code.replaceAll('\n','<br>');
+    if(code !== ""){
+        codeContainer.innerHTML = code;
+        codeButton.onclick = ()=> openPage("../Html/code-runner.html", {"id": topic.id});  
+    }else{
+        allCodeContainer.style.display = "none";
+    }
 };
 
 window.addEventListener("load", ()=>{
