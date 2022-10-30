@@ -51,6 +51,7 @@ const openPage = (url, params)=>{
  * @returns string with new length
  */
 const textCutter = (text, length)=>{
+    if(text === null || text === undefined) return "";
     return text.slice(0, length);
 };
 /**
