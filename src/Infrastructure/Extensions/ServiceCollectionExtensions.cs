@@ -14,8 +14,10 @@ public static class ServiceCollectionExtensions
     {
         services.AddDbContext<IAppDbContext, AppDbContext>(opts => opts.UseSqlite(connectionString));
 
+        services.AddTransient<ITokenRepository, TokenRepository>();
+        services.AddTransient<IIdentityRepository, IdentityRepository>();
         services.AddScoped<IEntityInitializer, UserInitializer>();
-        services.AddSingleton<IAuthOptions, AuthOptions>();
+        services.AddScoped<IEntityInitializer, ConfigurationInitializer>();
 
         return services;
     }

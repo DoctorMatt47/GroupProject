@@ -2,5 +2,4 @@
 
 public record UserResponse(
     string Login,
-    string Role,
-    string Status);
+    string Role);

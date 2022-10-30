@@ -1,52 +1,15 @@
-﻿using GroupProject.Application.Topics;
+﻿using GroupProject.Application.Identity;
 using GroupProject.Application.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GroupProject.WebApi.Controllers;
 
-[Authorize]
 public class UsersController : ApiControllerBase
 {
-    private readonly ITopicService _topics;
     private readonly IUserService _users;
 
-    public UsersController(IUserService users, ITopicService topics)
-    {
-        _users = users;
-        _topics = topics;
-    }
-
-    /// <summary>
-    ///     Authenticates user by returning JWT authorization token
-    /// </summary>
-    /// <param name="body">User login and password</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>
-    ///     User information and JWT token which should be passed in the 'Authentication' header in API requests that
-    ///     require authentication
-    /// </returns>
-    [AllowAnonymous]
-    [HttpPost("Authenticate")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public Task<AuthenticateUserResponse> Authenticate(
-        AuthenticateUserRequest body,
-        CancellationToken cancellationToken) =>
-        _users.Authenticate(body, cancellationToken);
-
-    /// <summary>
-    ///     Gets topics created of specific user
-    /// </summary>
-    /// <param name="id">User id</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>Topics created by specific user</returns>
-    [AllowAnonymous]
-    [HttpGet("{id:guid}/Topics")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<IEnumerable<TopicByUserIdResponse>> GetByUserId(Guid id, CancellationToken cancellationToken) =>
-        _topics.GetByUserId(id, cancellationToken);
+    public UsersController(IUserService users) => _users = users;
 
     /// <summary>
     ///     Creates new user with passed parameters
@@ -61,7 +24,7 @@ public class UsersController : ApiControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<AuthenticateUserResponse>> CreateUser(
+    public async Task<ActionResult<IdentityResponse>> CreateUser(
         CreateUserRequest body,
         CancellationToken cancellationToken)
     {
@@ -84,11 +47,19 @@ public class UsersController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public async Task<ActionResult<AuthenticateUserResponse>> CreateModerator(
+    public async Task<ActionResult<IdentityResponse>> CreateModerator(
         CreateUserRequest body,
         CancellationToken cancellationToken)
     {
         var response = await _users.CreateModerator(body, cancellationToken);
         return Created("", response);
+    }
+
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpPost("{id:guid}/Warning")]
+    public async Task<ActionResult> AddWarningToUser(Guid id, CancellationToken cancellationToken)
+    {
+        await _users.AddWarningToUser(id, cancellationToken);
+        return NoContent();
     }
 }

@@ -4,4 +4,5 @@ public enum TopicStatus
 {
     Active,
     Closed,
+    Verification,
 }

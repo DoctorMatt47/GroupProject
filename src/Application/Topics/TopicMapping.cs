@@ -10,11 +10,9 @@ public class TopicMapping : Profile
     {
         CreateMap<Topic, TopicResponse>();
         CreateMap<Topic, TopicByUserIdResponse>();
-        CreateMap<Topic, TopicInfoForUserResponse>()
-            .MapRecordMember(r => r.UserLogin, _ => string.Empty);
 
-        CreateMap<Topic, TopicInfoForModeratorResponse>()
-            .MapRecordMember(r => r.UserLogin, _ => string.Empty)
-            .MapRecordMember(r => r.ComplaintCount, _ => 0);
+        CreateMap<Topic, TopicInfoResponse>()
+            .MapRecordMember(r => r.UserLogin, t => t.User.Login)
+            .MapRecordMember(r => r.SectionHeader, t => t.Section.Header);
     }
 }

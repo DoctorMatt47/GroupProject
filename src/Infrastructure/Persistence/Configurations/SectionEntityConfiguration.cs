@@ -4,10 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GroupProject.Infrastructure.Persistence.Configurations;
 
-public class CommentaryConfiguration : IEntityTypeConfiguration<Commentary>
+public class SectionEntityConfiguration : IEntityTypeConfiguration<Section>
 {
-    public void Configure(EntityTypeBuilder<Commentary> builder)
+    public void Configure(EntityTypeBuilder<Section> builder)
     {
-        builder.HasOne(c => c.User).WithMany(u => u.Commentaries);
+        builder.HasMany(s => s.Topics).WithOne(t => t.Section);
     }
 }

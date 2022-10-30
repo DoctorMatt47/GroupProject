@@ -1,7 +1,10 @@
-﻿namespace GroupProject.Application.Topics;
+﻿using GroupProject.Application.Common.Requests;
+
+namespace GroupProject.Application.Topics;
 
 public record CreateTopicRequest(
     string Header,
     string Description,
-    string? Code,
-    Guid UserId);
+    CompileOptionsRequest? CompileOptions,
+    Guid UserId,
+    int SectionId);

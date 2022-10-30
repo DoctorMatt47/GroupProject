@@ -1,6 +1,8 @@
-﻿namespace GroupProject.WebApi.Requests;
+﻿using GroupProject.Application.Common.Requests;
+
+namespace GroupProject.WebApi.Requests;
 
 public record CreateTopicBody(
     string Header,
     string Description,
-    string? Code);
+    CompileOptionsRequest? CompileOptions);
