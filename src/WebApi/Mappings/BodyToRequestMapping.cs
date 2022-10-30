@@ -18,7 +18,7 @@ public class BodyToRequestMapping : Profile
 
         CreateMap<CreateComplaintBody, CreateComplaintRequest>()
             .MapRecordMember(r => r.Target, _ => ComplaintTarget.Topic)
-            .MapRecordMember(r => r.ElementId, _ => Guid.Empty);
+            .MapRecordMember(r => r.TargetId, _ => Guid.Empty);
 
         CreateMap<CreateTopicBody, CreateTopicRequest>()
             .MapRecordMember(r => r.UserId, _ => Guid.Empty)

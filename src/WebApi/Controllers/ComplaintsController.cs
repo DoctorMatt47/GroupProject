@@ -73,7 +73,7 @@ public class ComplaintsController : ApiControllerBase
         CreateComplaintBody body,
         CancellationToken cancellationToken)
     {
-        var request = _mapper.Map<CreateComplaintRequest>(body) with {ElementId = id};
+        var request = _mapper.Map<CreateComplaintRequest>(body) with {TargetId = id};
         var response = await _complaints.Create(request, cancellationToken);
         return Created(string.Empty, response);
     }
@@ -99,10 +99,22 @@ public class ComplaintsController : ApiControllerBase
         var request = _mapper.Map<CreateComplaintRequest>(body) with
         {
             Target = ComplaintTarget.Commentary,
-            ElementId = id,
+            TargetId = id,
         };
 
         var response = await _complaints.Create(request, cancellationToken);
         return Created(string.Empty, response);
+    }
+
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    {
+        await _complaints.Delete(id, cancellationToken);
+        return NoContent();
     }
 }

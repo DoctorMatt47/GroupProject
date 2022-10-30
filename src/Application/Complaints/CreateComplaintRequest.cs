@@ -2,4 +2,4 @@
 
 namespace GroupProject.Application.Complaints;
 
-public record CreateComplaintRequest(string Description, ComplaintTarget Target, Guid ElementId);
+public record CreateComplaintRequest(string Description, ComplaintTarget Target, Guid TargetId);
