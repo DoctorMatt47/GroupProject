@@ -6,20 +6,23 @@ const titleContainer = document.getElementById("topic-name");
 const descriptionContainer = document.getElementById("topic-description");
 const codeContainer = document.getElementById("panel-footer-code");
 const commentsContainer = document.getElementById("comment-group");
+const sectionContainer = document.getElementById("section");
+const codeButton = document.getElementById("run-code");
 
 /**
  * Adds data from topic to page
  * @param {Object} topic - topic data from server
  */
 const addTopicToPage = (topic)=>{
+    console.log(topic)
     titleContainer.textContent = topic.header;
     descriptionContainer.textContent = topic.description;
-    codeContainer.innerHTML = topic.code.replaceAll('\n','<br>');
+    codeContainer.innerHTML = topic.compileOptions.code.replaceAll('\n','<br>');
     usernameContainer.textContent = topic.userLogin;
-    /*let openCode = document.createElement("button");
-    openCode.textContent = "Run code";
-    openCode.onclick = ()=> openPage("../Html/code-runner.html", {"id": topicId});
-    document.getElementById(codeId).appendChild(openCode);*/    
+    //sectionContainer.textContent = LANGUAGES[topic.compileOptions.language.toLowerCase()];
+    sectionContainer.textContent = topic.sectionHeader;
+    dateContainer.textContent = new Date(topic.creationTime).toLocaleDateString();
+    codeButton.onclick = ()=> openPage("../Html/code-runner.html", {"id": topic.id});  
 };
 
 window.addEventListener("load", ()=>{
@@ -27,6 +30,7 @@ window.addEventListener("load", ()=>{
         addTopicToPage(response);
     })
     .catch(error => {
+        console.log(error);
         const exception = JSON.parse(error.message);
         console.log(exception);
     });

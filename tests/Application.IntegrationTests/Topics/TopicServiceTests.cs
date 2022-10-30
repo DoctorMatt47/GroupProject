@@ -2,6 +2,7 @@
 using FluentAssertions;
 using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Interfaces;
+using GroupProject.Application.Common.Requests;
 using GroupProject.Application.IntegrationTests.Common.Fixtures;
 using GroupProject.Application.Topics;
 using GroupProject.Domain.Entities;
@@ -42,7 +43,7 @@ public class TopicServiceTests
 
         for (var i = 0; i < topics.Count - 1; i++)
         {
-            topics[i].CreationTime.Should().BeOnOrBefore(topics[i + 1].CreationTime);
+            topics[i].CreationTime.Should().BeOnOrAfter(topics[i + 1].CreationTime);
         }
     }
 
@@ -160,6 +161,7 @@ public class TopicServiceTests
         {
             SectionId = _db.DefaultSection.Id,
             UserId = _db.DefaultUser.Id,
+            CompileOptions = new CompileOptionsRequest(fixture.Create<string>(), "R"),
         };
     }
 

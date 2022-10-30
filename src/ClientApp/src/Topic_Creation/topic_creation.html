@@ -6,7 +6,6 @@
         <form onsubmit="submitTopic(); return false;">
             <label for="topic-section">Section</label><br>
             <select id="topic-section" required>
-                <option>Main section</option>
             </select><br>
             <label for="topic-title">Topic title</label>
             <input id="topic-title" type="text" minlength="2" maxlength="32" required>
@@ -25,11 +24,14 @@
             <button type="submit" class="btn formBtn" onclick="">Submit</button>
             <button type="button" class="btn formBtn" id="close-btn" onclick="closeForm()">Close</button>
         </form>
+        <button onclick = "submitTopic(); return false;">test</button>
     </div>
 </div>
-<script src="../Topic_Creation/script.js"></script>
 <script src="../JS/topic.js"></script>
+<script src="../JS/section.js"></script>
 <script src="../JS/languages.js"></script>
+<script src="../Topic_Creation/script.js"></script>
 <script>
     addLanguagesToSelect('topic-code-language');
+    addSectionToSelect('topic-section');
 </script>

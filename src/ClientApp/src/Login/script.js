@@ -102,8 +102,9 @@ const errorContainer = document.getElementById("error-container")
 const inputUsernameRegistration = document.getElementById("registration-username")
 const inputPasswordRegistration = document.getElementById("registration_password")
 const registrationSubmit = ()=>{
-    register(inputUsernameRegistration.value, inputPasswordRegistration.value).then(response=>{
-        window.location.href = "../Home/home.html"
+    const login = inputUsernameRegistration.value, password = inputPasswordRegistration.value
+    register(login, password).then(response=>{
+        auth(login, password);
     }).catch(error=>{
         const message = JSON.parse(error.message)
         errorContainer.textContent = message.message
@@ -114,10 +115,13 @@ const registrationSubmit = ()=>{
 const inputUsernameLogin = document.getElementById("username")
 const inputPasswordLogin = document.getElementById("password")
 const loginSubmit = ()=>{
-    authenticate(inputUsernameLogin.value, inputPasswordLogin.value).then(response=>{
-        window.location.href = "../Home/home.html"
-    }).catch(error=>{
-        const message = JSON.parse(error.message)
-        errorContainer.textContent = message.message
-    })
+    auth(inputUsernameLogin.value, inputPasswordLogin.value);
 }
+const auth = (login, password)=>{
+    authenticate(login, password).then(response=>{
+        window.location.href = "../Home/home.html";
+    }).catch(error=>{
+        const message = JSON.parse(error.message);
+        errorContainer.textContent = message.message;
+    });
+};
