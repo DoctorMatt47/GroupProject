@@ -74,7 +74,7 @@ public class ComplaintsController : ApiControllerBase
         CancellationToken cancellationToken)
     {
         var request = _mapper.Map<CreateComplaintRequest>(body) with {ElementId = id};
-        var response = await _complaints.CreateComplaint(request, cancellationToken);
+        var response = await _complaints.Create(request, cancellationToken);
         return Created(string.Empty, response);
     }
 
@@ -102,7 +102,7 @@ public class ComplaintsController : ApiControllerBase
             ElementId = id,
         };
 
-        var response = await _complaints.CreateComplaint(request, cancellationToken);
+        var response = await _complaints.Create(request, cancellationToken);
         return Created(string.Empty, response);
     }
 }

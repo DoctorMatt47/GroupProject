@@ -47,7 +47,7 @@ public class ComplaintService : IComplaintService
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IdResponse<Guid>> CreateComplaint(
+    public async Task<IdResponse<Guid>> Create(
         CreateComplaintRequest request,
         CancellationToken cancellationToken)
     {
