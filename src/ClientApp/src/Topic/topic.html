@@ -14,9 +14,6 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="../JS/topic.js"></script>
-    <script src="../JS/comment.js"></script>
-    <script src="../JS/languages.js"></script>
     <script>
         $(function () {
             $("#header").load("../Header/header.html");
@@ -74,6 +71,7 @@
                         <button type="button" class="code-btn" id="run-code">Run<span class="glyphicon glyphicon-play run-span"></span></button>
                     </div>
                 </div>
+                <button type="submit" class="comment-btn">Add Comment</button>
             </div>
             <div class="comment-group" id = "comment-group">
                 <div id="comment">
@@ -153,7 +151,6 @@
                         </div>
                     </div>
                     <button type="submit" id="close-btn" onclick="openVerificationWindow()">Close</button>
-                    <button type="submit" id="comment-btn">Add Comment</button>
                 </div>
             </div>
             <div id="side-panel"></div>
@@ -163,6 +160,9 @@
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
+<script src="../JS/topic.js"></script>
+<script src="../JS/comment.js"></script>
+<script src="../JS/languages.js"></script>
 <script>
     const openVerificationWindow = () => {
         document.getElementById("verificationWindow").style.display = "flex";

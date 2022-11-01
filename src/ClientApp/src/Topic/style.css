@@ -52,13 +52,12 @@ h4 {
     transform: translateY(2px);
 }
 
-#comment-btn {
-    /*display: none;*/
+.comment-btn {
     display: flex;
     text-align: center !important;
     align-self: center;
     text-transform: uppercase;
-    background-color: #7fcc7f;
+    background-color:#c8d79c;
     width: 100%;
     height: 50px;
     border-radius: 20px;
@@ -66,12 +65,12 @@ h4 {
     align-items: center;
 }
 
-#comment-btn:hover {
+.comment-btn:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-#comment-btn:active {
-    background-color: rgba(4, 157, 4, 0.68);
+.comment-btn:active {
+    background-color: #bbce84;
     box-shadow: 0 5px rgba(0, 0, 0, 0.2);
     transform: translateY(2px);
 }
@@ -126,17 +125,20 @@ h4 {
 }
 
 .panel {
+    background: none;
     position: relative;
     margin: 20px 40px auto;
     color: black;
     border-radius: 10px;
 }
-
+.panel-body{
+    background: white;
+}
 .panel-heading {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #9cad6b;
+    background-color: #95b731;
     text-align: center;
     border-radius: 10px 10px 0 0;
     color: black;
