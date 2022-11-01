@@ -2,21 +2,34 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "montserrat",sans-serif;
+    font-family: "montserrat", sans-serif;
 }
-.class {
-    display: block;
-    overflow: hidden;
-    text-align: left;
-    padding: 40px;
-    color: black;
-    font-size: 20px;
-}
-button{
+
+button {
     border: beige;
     background-color: white;
 }
-#close-btn{
+
+a:hover {
+    color: #8f8c8c;
+    text-decoration: none;
+}
+
+a:active {
+    color: #8f8c8c;
+    text-decoration: none;
+}
+
+p {
+    color: #000000;
+}
+
+h4 {
+    display: flex;
+    align-self: flex-start;
+}
+
+#close-btn {
     display: flex;
     text-align: center !important;
     align-self: center;
@@ -28,28 +41,63 @@ button{
     justify-content: center;
     align-items: center;
 }
+
 #close-btn:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-#close-btn:active{
+
+#close-btn:active {
     background-color: #ff8c08;
     box-shadow: 0 5px rgba(0, 0, 0, 0.2);
     transform: translateY(2px);
 }
-a:hover{
-    color: #8f8c8c;
-    text-decoration: none;
-}
-a:active{
-    color: #8f8c8c;
-    text-decoration: none;
-}
-p{
-    color: #000000;
-}
-h4 {
+
+#comment-btn {
+    /*display: none;*/
     display: flex;
-    align-self: flex-start;
+    text-align: center !important;
+    align-self: center;
+    text-transform: uppercase;
+    background-color: #7fcc7f;
+    width: 100%;
+    height: 50px;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+#comment-btn:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#comment-btn:active {
+    background-color: rgba(4, 157, 4, 0.68);
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+
+.comment-group {
+    padding: 40px 40px;
+    background-color: #F5F5F5;
+    display: flex;
+    align-items: flex-end;
+    justify-content: right;
+    flex-direction: column;
+}
+
+#comment {
+    width: 80%;
+    border-radius: 20px;
+    border: 1px solid gainsboro;
+    padding: 10px;
+    color: black;
+    background-color: white !important;
+    margin: 10px;
+}
+
+.comment-span {
+    color: #d7ae54;
+    margin-right: 15px;
 }
 
 .column {
@@ -93,7 +141,8 @@ h4 {
     border-radius: 10px 10px 0 0;
     color: black;
 }
-.language{
+
+.language {
     width: fit-content;
     display: flex;
     border: 1px solid gainsboro;
@@ -105,6 +154,7 @@ h4 {
     background-color: #c8d993;
     font-size: 10px;
 }
+
 .panel-footer {
     display: flex;
     text-align: left;
@@ -116,7 +166,8 @@ h4 {
     flex-wrap: wrap;
     justify-content: flex-end;
 }
-#panel-footer-code #panel-footer-answer-code{
+
+#panel-footer-code #panel-footer-answer-code {
     width: 100%;
     margin: 10px;
     padding: 10px;
@@ -131,10 +182,12 @@ h4 {
     text-align: left;
 
 }
-#side-panel{
+
+#side-panel {
     margin: 100px 10px auto !important;
 }
-#topic-description{
+
+#topic-description {
     margin: 0 15px;
 }
 
@@ -152,41 +205,25 @@ h4 {
 .section div:active {
     text-decoration: none;
 }
-.comment-group{
-    padding: 40px 40px;
-    background-color: #F5F5F5;
-    display: flex;
-    align-items: flex-end;
-    justify-content: right;
-    flex-direction: column;
-}
-#comment{
-    width: 80%;
-    border-radius: 20px;
-    border: 1px solid gainsboro;
-    padding: 10px;
-    color: black;
-    background-color: white !important;
 
 
-    
-    margin: 10px;
-}
-#answer-info{
+#answer-info {
     display: flex;
     font-size: 15px;
     justify-content: right !important;
 }
-.complaint-icon{
+
+.complaint-icon {
     display: flex;
     justify-content: flex-end;
     font-size: 20px;
 }
+
 .code-btn {
     display: flex;
     margin-top: 10px;
     margin-bottom: 10px;
-    padding: 5px 20px;
+    padding: 4px 20px;
     background-color: #333;
     color: #f1f1f1;
     border-radius: 20px;
@@ -200,5 +237,36 @@ h4 {
     color: #000;
 }
 
+.run-span {
+    padding: 6px;
+}
+
+/*Verification popup window*/
+#verificationWindow{
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(90, 90, 90, 0.5);
+    z-index: 9999;
+}
+.verification-section{
+    background: #fff;
+    padding: 80px 0;
+    text-align: center;
+    width: 35%;
+    margin: 250px auto auto;
+    border-top-right-radius: 300px;
+    border-bottom-left-radius: 300px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 6px 12px -2px, rgba(0, 0, 0, 0.8) 0 3px 7px -3px;
+
+}
+.verification-section:hover{
+    border-top-left-radius: 300px;
+    border-bottom-right-radius: 300px;
+    transition: .5s;
+}
 
 

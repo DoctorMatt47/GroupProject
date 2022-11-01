@@ -71,7 +71,7 @@
                             <br>
                     </div>
                     <div style="width: 100%;">
-                        <button type="button" class="code-btn" id="run-code">Run</button>
+                        <button type="button" class="code-btn" id="run-code">Run<span class="glyphicon glyphicon-play run-span"></span></button>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                     <div id="complaint2"></div>
                     <div class="complaint-icon">
                         <button data-toggle="tooltip" title="Create a complaint" onclick="openForm()">
-                            <span class="glyphicon glyphicon-comment" style="color:#d7ae54; margin-right: 15px"></span>
+                            <span class="glyphicon glyphicon-comment comment-span"></span>
                         </button>
                     </div>
                     <p id="answer">Here we have answer text<br>
@@ -105,7 +105,7 @@
                             textBlock.innerHTML = "Make this block a text block";<br>
                         </div>
                         <div style="width: 100%;">
-                            <button type="button" class="code-btn">Run</button>
+                            <button type="button" class="code-btn">Run<span class="glyphicon glyphicon-play run-span"></span></button>
                         </div>
                     </div>
                     <div id="answer-username"><a href="#">username</a></div>
@@ -119,7 +119,7 @@
                 <div class="panel-heading text-center">
                     <h2 style="font-family:Courier New, Courier, monospace">About discussion</h2>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" style="padding-top: 30px">
                     <div class="row text-center">
                         <div class="col-sm-6">
                             <div id="viewed" style="font-size: 20px;">26</div>
@@ -137,7 +137,23 @@
                     </div>
                 </div>
                 <div class="panel-footer" style="background-color: white; text-align: center">
-                    <button type="submit" id="close-btn">Close</button>
+                    <div id="verificationWindow">
+                        <div class="verification-section">
+                            <div class="inner-width">
+                                <div class="row">
+                                    <div class="col-sm-11"></div>
+                                    <div class="col-sm-1">
+                                        <button id="close-complaint" onclick="closeVerificationWindow()"><span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <h3>ARE YOU SURE?</h3>
+                                <button id="submit-btn" onclick="closeVerificationWindow();">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" id="close-btn" onclick="openVerificationWindow()">Close</button>
+                    <button type="submit" id="comment-btn">Add Comment</button>
                 </div>
             </div>
             <div id="side-panel"></div>
@@ -147,4 +163,12 @@
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
+<script>
+    const openVerificationWindow = () => {
+        document.getElementById("verificationWindow").style.display = "flex";
+    };
+    const closeVerificationWindow = () => {
+        document.getElementById("verificationWindow").style.display = "none";
+    };
+</script>
 </html>
