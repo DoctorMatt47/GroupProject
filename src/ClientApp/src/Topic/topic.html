@@ -10,6 +10,8 @@
     <link href="../Footer/footer.css" rel="stylesheet" type="text/css">
     <link href="../Side_panel/style.css" rel="stylesheet" type="text/css">
     <link href="../Complaint/style.css" rel="stylesheet" type="text/css">
+    <link href="../Code-Compiler/style.css" rel="stylesheet" type="text/css">
+    <link href="../Comment-Creation/style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -21,6 +23,8 @@
             $("#side-panel").load("../Side_panel/side-panel.html");
             $("#complaint1").load("../Complaint/complaint.html")
             $("#complaint2").load("../Complaint/complaint.html")
+            $("#compiler").load("../Code-Compiler/code-compiler.html")
+            $("#commentForm").load("../Comment-Creation/comment-creation.html")
         });
     </script>
 </head>
@@ -68,11 +72,15 @@
                             <br>
                     </div>
                     <div style="width: 100%;">
-                        <button type="button" class="code-btn" id="run-code">Run<span class="glyphicon glyphicon-play run-span"></span></button>
+                        <button type="button" class="code-btn" id="run-code" onclick="openCompiler()">Run<span class="glyphicon glyphicon-play run-span"></span></button>
                     </div>
                 </div>
-                <button type="submit" class="comment-btn">Add Comment</button>
+                <button type="submit" class="comment-btn" onclick="openCommentForm()">Add Comment</button>
             </div>
+
+            <div id="compiler"></div>
+            <div id="commentForm"></div>
+
             <div class="comment-group" id = "comment-group">
                 <div id="comment">
                     <div id="complaint2"></div>
@@ -103,7 +111,7 @@
                             textBlock.innerHTML = "Make this block a text block";<br>
                         </div>
                         <div style="width: 100%;">
-                            <button type="button" class="code-btn">Run<span class="glyphicon glyphicon-play run-span"></span></button>
+                            <button type="button" class="code-btn" onclick="openCompiler()">Run<span class="glyphicon glyphicon-play run-span"></span></button>
                         </div>
                     </div>
                     <div id="answer-username"><a href="#">username</a></div>
@@ -111,7 +119,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-sm-4">
             <div class="row thumbnail panel align-left">
                 <div class="panel-heading text-center">
@@ -135,6 +142,7 @@
                     </div>
                 </div>
                 <div class="panel-footer" style="background-color: white; text-align: center">
+
                     <div id="verificationWindow">
                         <div class="verification-section">
                             <div class="inner-width">
@@ -150,6 +158,7 @@
                             </div>
                         </div>
                     </div>
+
                     <button type="submit" id="close-btn" onclick="openVerificationWindow()">Close</button>
                 </div>
             </div>
@@ -163,12 +172,14 @@
 <script src="../JS/topic.js"></script>
 <script src="../JS/comment.js"></script>
 <script src="../JS/languages.js"></script>
+<script src="../Comment-Creation/script.js"></script>
+<script src="../Code-Compiler/script.js"></script>
 <script>
     const openVerificationWindow = () => {
-        document.getElementById("verificationWindow").style.display = "flex";
+        document.getElementById("verificationWindow").style.display = "block";
     };
     const closeVerificationWindow = () => {
         document.getElementById("verificationWindow").style.display = "none";
     };
-</script>
+    </script>
 </html>

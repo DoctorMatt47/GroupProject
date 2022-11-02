@@ -82,8 +82,6 @@
     color: #FF8066;
 }
 #close-complaint{
-    display: flex;
-    align-self: flex-end !important;
     color: #fc9e5b;
 }
 #close-complaint:hover {
@@ -96,7 +94,7 @@
     transform: translateY(2px);
 }
 @media screen and (max-width:500px){
-    .name,.email{
+    .name{
         width: 100%;
     }
 }

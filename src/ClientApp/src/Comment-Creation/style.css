@@ -10,33 +10,29 @@ label {
     text-transform: uppercase;
 }
 
-.formBtn {
+.comment-formBtn {
     width: 140px !important;
     display: inline-flex;
     justify-content: center;
-    align-items: center;
     background: #f67969 !important;
     color: #fff;
     font-weight: 100;
     font-size: 1.2em;
-    transition: .2s;
     border: none;
-    border-radius: 20px;
-    height: 35px;
-    padding: 5px 20px;
+    height: 30px;
     margin-top: 20px;
 }
 
-.formBtn:hover {
+.comment-formBtn:hover {
     opacity: 0.6;
     background: #666;
 }
 
-.formBtn:active {
+.comment-formBtn:active {
     background: #444;
 }
 
-#fullscreen-container {
+#comment-container {
     display: none;
     position: fixed;
     top: 0;
@@ -47,36 +43,36 @@ label {
     z-index: 9999;
 }
 
-#commentForm {
-    background: #fff;
+#comment-section {
     border: 10px solid #f67969;
-    text-align: center;
-    position: fixed;
     padding: 5em;
-    width: 500px;
+    width: 600px;
+    border-radius: 200px;
+    text-align: center;
+    background: #fff;
+    position: fixed;
     top: 50%;
     left: 50%;
-    border-radius: 200px;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%)
 
 }
 
-textarea, select {
+textarea, select{
+    margin: .8em auto;
+    font-family: inherit;
+    text-transform: inherit;
+    font-size: inherit;
     display: block;
     width: 400px;
-    margin: .8em auto;
     padding: .4em;
-    font-family: inherit;
-    font-size: inherit;
-    text-transform: inherit;
     border: none;
     border-radius: 20px;
     background-color: #c5c5f6;
 }
 
 textarea {
-    height: 100px;
+    height: 80px;
     resize: none;
 }
 
