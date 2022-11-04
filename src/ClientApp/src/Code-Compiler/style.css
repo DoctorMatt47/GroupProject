@@ -21,16 +21,17 @@ label {
     z-index: 9999;
 }
 
-#compilerForm {
+#compiler-form {
     background: #fff;
     border: 10px solid #f67969;
     text-align: center;
     position: fixed;
-    padding: 5em;
+    padding: 0;
     width: 30%;
     height: 90%;
     top: 52%;
     left: 80%;
+    overflow: hidden;
     border-radius: 50px;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%)

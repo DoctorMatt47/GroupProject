@@ -1,26 +1,3 @@
-/**
- *
- * @param {boolean} visible - true to make visible else false
- * @param {string} id - id of html tag
- * @param {string} display - type of display if it will be visible
- */
-const setVisible = (visible, id, display) => {
-    document.getElementById(id).style.display = visible?display:'none';
-};
-
-/**
- * Adds options (languages) from LANGUAGES to select by id
- * @param {string} selectId - id of `select` html tag to add to it options
- */
-const addLanguagesToSelect = (selectId) => {
-    let select = document.getElementById(selectId);
-    for(let type in LANGUAGES){
-        let option = document.createElement("option");
-        option.value = type;
-        option.textContent = LANGUAGES[type];
-        select.appendChild(option);
-    }
-};
 const openCommentForm = () => {
     const container = document.getElementById("comment-container");
     container.style.display = "block";
@@ -30,4 +7,27 @@ const openCommentForm = () => {
 };
 const closeCommentForm = () => {
     document.getElementById("comment-container").style.display = "none";
+};
+
+const commentDescription = document.getElementById("comment-description");
+const commentNeedCode = document.getElementById("need-code");
+const commentCode = document.getElementById("comment-code");
+const commentLanguage = document.getElementById("topic-code-language");
+/**
+ * Gets data from from and sends http request to server.
+ * If request is successful than open topic page else gets error
+ */
+const submitComment = ()=>{
+
+    createComment(getValueFromCurrentUrl("id"),
+        commentDescription.value, 
+        commentNeedCode.checked ?commentCode.value:"", 
+        commentLanguage.value)
+    .then(response=>{
+        
+    })
+    .catch(error=>{
+        const exception = JSON.parse(error.message);
+        console.log(exception);
+    });
 };

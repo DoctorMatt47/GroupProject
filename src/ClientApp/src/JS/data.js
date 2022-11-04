@@ -13,4 +13,5 @@ const URLS = {
     ComplaintCommentCreate: BASE_URL + "Complaints/OnCommentary/",
     ComplaintByTopic: BASE_URL + "Complaints/ByTopic/",
     ComplaintByComment: BASE_URL + "Complaints/ByCommentary/",
+    Comments: BASE_URL + "Commentaries/",
 };

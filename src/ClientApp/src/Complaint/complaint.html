@@ -4,16 +4,16 @@
             <div class="row">
                 <div class="col-sm-11"></div>
                 <div class="col-sm-1">
-                    <button id="close-complaint" onclick="closeForm()"><span class="glyphicon glyphicon-remove"></span>
+                    <button id="close-complaint" onclick="closeForm(); return false;"><span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>
             </div>
             <h3>OMG! Did You find a violation? Describe it and we will consider your complaint!</h3>
             <label for="message"></label>
             <textarea rows="1" placeholder="Message" class="message" id="message"></textarea>
-            <button id="submit-btn" onclick="submitComplaint(); return false;">Get in touch</button>
+            <button id="submit-btn" onclick="submitComplaint(); closeForm(); return false;">Get in touch</button>
         </div>
     </div>
 </div>
-<script src="../JS/complains.js"></script>
 <script src="../Complaint/script.js"></script>
+<script src="../JS/complains.js"></script>

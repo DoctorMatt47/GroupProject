@@ -86,3 +86,18 @@ const getTopic = (topicId)=>{
     };
     return sendAsync(URLS.Topics + `/${topicId}`, request);
 }
+/**
+ * 
+ * @param {string} topicId - id of topic to close
+ * @returns 
+ */
+const closeTopic = (topicId)=>{
+    const request = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(URLS.Topics + `/${topicId}/Close`, request);
+};

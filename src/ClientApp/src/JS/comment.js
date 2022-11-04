@@ -37,3 +37,17 @@ const createComment = (topicId, description, code, language)=>{
     };
     return sendAsync(URLS.CommentsCreate + topicId, request);
 };
+/**
+ * 
+ * @param {string} commentId - id of comment
+ * @returns promise to response with the comment data or error
+ */
+const getComment = (commentId)=>{
+    const request = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+    return sendAsync(URLS.Comments + `${commentId}`, request);
+};
