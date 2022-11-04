@@ -12,14 +12,6 @@ const codeButton = document.getElementById("run-code");
 const commentsContainer = document.getElementById("comment-group");
 
 /**
- * Opens page to run code there
- * @param {string} type - topic or comment
- * @param {*} id - id of topic or comment 
- */
-const runCode = (type, id)=>{
-    openPage("../Html/code-runner.html", {"id": id, "type": type});
-};
-/**
  * 
  * @param {Object} comment 
  * @returns DOM object with items to display code of comment
@@ -48,7 +40,7 @@ const createCommentCode = (comment)=>{
 
     const run = document.createElement("button");
     run.className = "code-btn";
-    run.onclick = ()=> runCode("comment", comment.id);
+    run.onclick = ()=> openCompiler(comment.compileOptions.code, comment.compileOptions.language);
     run.textContent = "Run";
     buttonContainer.appendChild(run);
 
@@ -105,7 +97,6 @@ const addCommentsToPage = (topicId) =>{
  * @param {Object} topic - topic data from server
  */
 const addTopicToPage = (topic)=>{
-    //createComment(topic.id, "Try use python, it is easy!", '"Hello world"', "python3");
     titleContainer.textContent = topic.header;
     descriptionContainer.textContent = topic.description;
     usernameContainer.textContent = topic.userLogin;
@@ -115,7 +106,7 @@ const addTopicToPage = (topic)=>{
     let code = topic.compileOptions.code.replaceAll('\n','<br>');
     if(code !== ""){
         codeContainer.innerHTML = code;
-        codeButton.onclick = ()=> runCode("topic", topic.id);
+        codeButton.onclick = ()=> openCompiler(topic.compileOptions.code, topic.compileOptions.language);
     }else{
         allCodeContainer.style.display = "none";
     }
