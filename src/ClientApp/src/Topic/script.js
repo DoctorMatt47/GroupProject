@@ -112,10 +112,20 @@ const addTopicToPage = (topic)=>{
     }
 };
 
+const closeCurrentTopic = ()=>{
+    closeTopic(getValueFromCurrentUrl('id')).then(response=>{
+        console.log(response);
+    }).catch(error=>{
+        console.log(error);
+    });
+};
+
 window.addEventListener("load", ()=>{
     getTopic(getValueFromCurrentUrl("id")).then(response => {
+        console.log(response);
         addTopicToPage(response);
         addCommentsToPage(response.id);
+        document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";
     })
     .catch(error => {
         console.log(error);
