@@ -3,12 +3,12 @@
 <div id="comment-container">
     <div id="comment-section">
         <h2>Comment Topic</h2>
-        <form onsubmit="">
+        <form onsubmit="submitComment(); return false;">
             <label for="comment-description">Comment description</label>
             <textarea id="comment-description" minlength="2" maxlength="32000" required></textarea>
             <label for="need-code">Add code</label>
             <input id="need-code" type="checkbox" style="padding: 10px" checked="true"
-                   onclick="setVisible(checked, 'code', 'flex')">
+                    onclick="setVisible(checked, 'code', 'flex')">
             <div id="code" style="display:flex; flex-direction: column;">
                 <label for="topic-code-language">Language</label>
                 <select id="topic-code-language" required>
@@ -18,14 +18,11 @@
             </div>
             <button type="submit" class="btn comment-formBtn" onclick="">Submit</button>
             <button type="button" class="btn comment-formBtn" onclick="closeCommentForm()">Close</button>
+            <button type="button" class="btn comment-formBtn" onclick="submitComment(); return false;">Test</button>
         </form>
     </div>
 </div>
-<script src="../JS/topic.js"></script>
-<script src="../JS/section.js"></script>
-<script src="../JS/languages.js"></script>
-<script src="../Topic_Creation/script.js"></script>
+<script src="../Comment-Creation/script.js"></script>
 <script>
     addLanguagesToSelect('topic-code-language');
-    addSectionToSelect('topic-section');
 </script>

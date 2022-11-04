@@ -27,7 +27,7 @@ const submitComplaint = () =>{
     const create = type === "topic"?createTopicComplaint:createCommentComplaint;
     create(id, document.getElementById("message").value)
         .then(response=>{
-            console.log("Created!");
+            console.log("Complaint was created!");
         }).catch(error=>{
             console.log(error);
         });

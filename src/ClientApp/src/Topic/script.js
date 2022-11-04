@@ -59,12 +59,6 @@ const createCommentCode = (comment)=>{
  * @param {Object} comment 
  */
 const createCommentObject = (comment)=>{
-    /*console.log(comment.id)
-    getCommentComplaint(comment.id).then(response=>{
-        console.log(response);
-    }).catch(error=>{
-        console.log(error);
-    })*/
     const com = document.createElement("div");
     com.id = "comment";
     const complaint = document.createElement("div");
