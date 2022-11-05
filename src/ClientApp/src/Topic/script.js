@@ -103,9 +103,9 @@ const addTopicToPage = (topic)=>{
     codeLanguageContainer.textContent = LANGUAGES[topic.compileOptions.language.toLowerCase()];
     sectionContainer.textContent = topic.sectionHeader;
     dateContainer.textContent = new Date(topic.creationTime).toLocaleDateString();
-    let code = topic.compileOptions.code.replaceAll('\n','<br>');
+    let code = topic.compileOptions.code;
     if(code !== ""){
-        codeContainer.innerHTML = code;
+        codeContainer.textContent = code;
         codeButton.onclick = ()=> openCompiler(topic.compileOptions.code, topic.compileOptions.language);
     }else{
         allCodeContainer.style.display = "none";
