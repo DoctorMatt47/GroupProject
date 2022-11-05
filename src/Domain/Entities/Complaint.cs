@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using GroupProject.Domain.Enums;
+using GroupProject.Domain.Interfaces;
 
 namespace GroupProject.Domain.Entities;
 
@@ -7,7 +8,7 @@ namespace GroupProject.Domain.Entities;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Local")]
-public class Complaint
+public class Complaint : IHasId<Guid>
 {
     /// <summary>
     ///     Parameterless constructor, intended only for orm usage.
@@ -31,7 +32,6 @@ public class Complaint
         };
     }
 
-    public Guid Id { get; private set; }
     public DateTime CreationTime { get; private set; }
     public string Description { get; private set; } = null!;
     public ComplaintTarget Target { get; private set; }
@@ -41,4 +41,6 @@ public class Complaint
 
     public Guid? CommentaryId { get; private set; }
     public Commentary? Commentary { get; private set; } = null!;
+
+    public Guid Id { get; private set; }
 }

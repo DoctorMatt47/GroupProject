@@ -8,7 +8,7 @@ namespace GroupProject.Domain.Entities;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Local")]
-public class User
+public class User : IHasId<Guid>
 {
     private readonly List<Commentary> _commentaries = new();
     private readonly List<Topic> _questions = new();
@@ -30,7 +30,6 @@ public class User
         Role = role;
     }
 
-    public Guid Id { get; private set; }
     public string Login { get; private set; } = null!;
     public byte[] PasswordHash { get; private set; } = null!;
     public byte[] PasswordSalt { get; private set; } = null!;
@@ -40,6 +39,8 @@ public class User
 
     public IEnumerable<Topic> Topics => _questions.ToList();
     public IEnumerable<Commentary> Commentaries => _commentaries.ToList();
+
+    public Guid Id { get; private set; }
 
     public void AddWarning(int minWarningCountForBan, TimeSpan banDuration)
     {

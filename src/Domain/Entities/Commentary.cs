@@ -8,7 +8,7 @@ namespace GroupProject.Domain.Entities;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Local")]
-public class Commentary : IHasComplaintCount
+public class Commentary : IHasComplaintCount, IHasId<Guid>
 {
     private readonly List<Complaint> _complaints = new();
 
@@ -29,7 +29,6 @@ public class Commentary : IHasComplaintCount
         UserId = userId;
     }
 
-    public Guid Id { get; private set; }
     public DateTime CreationTime { get; private set; }
     public string Description { get; private set; } = null!;
     public CompileOptions? CompileOptions { get; private set; }
@@ -52,4 +51,6 @@ public class Commentary : IHasComplaintCount
     {
         if (ComplaintCount != 0) ComplaintCount--;
     }
+
+    public Guid Id { get; private set; }
 }
