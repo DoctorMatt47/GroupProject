@@ -101,7 +101,12 @@ h3, h4 {
 .dropdown-menu li a:hover {
     background-color: goldenrod !important;
 }
-
+.login-dropdown{
+    display: none;
+}
+.account-dropdown{
+    display: block;
+}
 .form-control {
     display: flex;
     justify-content: center;
