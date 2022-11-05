@@ -22,14 +22,14 @@
                 <textarea id="topic-code" minlength="2" maxlength="32000"></textarea>
             </div>
             <button type="submit" class="btn formBtn" onclick="">Submit</button>
-            <button type="button" class="btn formBtn" id="close-btn" onclick="closeForm()">Close</button>
+            <button type="button" class="btn formBtn" id="close-btn" onclick="closeForm(); return false;">Close</button>
+            <button type="button" class="btn formBtn" onclick="submitTopic();">Test</button>
         </form>
     </div>
 </div>
 <script src="../JS/code.js"></script>
 <script src="../JS/topic.js"></script>
 <script src="../JS/section.js"></script>
-<script src="../JS/languages.js"></script>
 <script src="../Topic_Creation/script.js"></script>
 <script>
     addLanguagesToSelect('topic-code-language');

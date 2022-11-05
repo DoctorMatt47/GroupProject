@@ -29,18 +29,18 @@ const addSectionToSelect = (selectId) =>{
     });
 };
 
-const sectionCreate = document.getElementById("topic-section");
-const titleCreate = document.getElementById("topic-title");
-const descriptionCreate = document.getElementById("topic-description");
-const needCodeCreate = document.getElementById("need-code");
-const codeCreate = document.getElementById("topic-code");
-const languageCreate = document.getElementById("topic-code-language");
-
 /**
  * Gets data from from and sends http request to server.
  * If request is successful than open topic page else gets error
  */
 const submitTopic = () => {
+    const sectionCreate = document.getElementById("topic-section");
+    const titleCreate = document.getElementById("topic-title");
+    const descriptionCreate = document.getElementById("topic-description");
+    const needCodeCreate = document.getElementById("need-code");
+    const codeCreate = document.getElementById("topic-code");
+    const languageCreate = document.getElementById("topic-code-language");
+
     createTopic(sectionCreate.value,
         titleCreate.value, 
         descriptionCreate.value, 

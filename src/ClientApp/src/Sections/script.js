@@ -30,7 +30,7 @@ const createSection = (section) =>{
     return column;
 };
 
-const perPage = 10;
+const perPage = 5;
 let currentPage = 1;
 
 /**
@@ -39,10 +39,9 @@ let currentPage = 1;
  * @param {Array} sections - list of section data
  * @param {Number} page - page number of sections to add it to html page
  */
-const addSectionsPage = (container, sections, page) =>{
-    currentPage = page;
+const addSectionsPage = (container, sections) =>{
     container.innerHTML = "";
-    const objects = sections.slice((page - 1)*perPage, Math.min(sections.length, page*perPage));
+    const objects = sections.slice((currentPage - 1)*perPage, Math.min(sections.length, currentPage*perPage));
     for(let i in objects){
         container.appendChild(createSection(objects[i]));
     }
@@ -63,7 +62,8 @@ const createPageButtons = (navBar, pagesNumber, container, sections) =>{
         pageButton.onclick = ()=>{
             document.getElementById(`page-button${currentPage}`).classList.remove("active");
             pageButton.classList.add("active");
-            addSectionsPage(container, sections, i + 1);
+            currentPage = i + 1;
+            addSectionsPage(container, sections);
         }
         navBar.appendChild(pageButton);
     }
@@ -78,13 +78,17 @@ const addPagesBar = (container, sections)=>{
 
     const prev = document.createElement("a");
     prev.innerHTML = `<a>&laquo;</a>`;
-    pages.appendChild(prev);
-    pages.onclick = ()=>{
+    prev.onclick = ()=>{
+        console.log(currentPage)
         if(currentPage - 1 >= 1){
+            document.getElementById(`page-button${currentPage}`).classList.remove("active");
             currentPage--;
-            addSectionsPage(container, sections, currentPage);
+            document.getElementById(`page-button${currentPage}`).classList.add("active");
+            addSectionsPage(container, sections);
         }
     }
+    pages.appendChild(prev);
+    
     const pagesNumber = Math.ceil(sections.length / perPage);
     createPageButtons(pages, pagesNumber, container, sections);
 
@@ -92,8 +96,10 @@ const addPagesBar = (container, sections)=>{
     next.innerHTML = `<a>&raquo;</a>`;
     next.onclick = ()=>{
         if(currentPage + 1 <= pagesNumber){
+            document.getElementById(`page-button${currentPage}`).classList.remove("active");
             currentPage++;
-            addSectionsPage(container, sections, currentPage);
+            document.getElementById(`page-button${currentPage}`).classList.add("active");
+            addSectionsPage(container, sections);
         }
     }
     pages.appendChild(next);
