@@ -272,5 +272,6 @@ h4 {
     border-bottom-right-radius: 300px;
     transition: .5s;
 }
-
-
+.code-container-wrap{
+    white-space: pre-wrap;
+}

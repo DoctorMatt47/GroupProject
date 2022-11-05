@@ -32,6 +32,7 @@ const createCommentCode = (comment)=>{
 
     const code = document.createElement("div");
     code.textContent = comment.compileOptions.code;
+    code.style="white-space: pre-wrap;"
     panelFooterCode.appendChild(code);
 
     const buttonContainer = document.createElement("div");
