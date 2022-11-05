@@ -126,5 +126,7 @@ public class TopicService : ITopicService
             throw new ForbiddenException("You don't have permission for closing this topic");
 
         topic.IsClosed = true;
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }
