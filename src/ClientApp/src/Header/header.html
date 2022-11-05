@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="../Home/home.html">HOME</a></li>
-                <li><a href="#">SECTIONS</a></li>
+                <li><a href="../Sections/sections.html">SECTIONS</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">MORE
                         <span class="caret"></span></a>
@@ -22,16 +22,18 @@
                     </ul>
                 </li>
                 <li><a href="#">HELP</a></li>
-                <li><a class="dropdown-toggle" data-toggle="dropdown"  id="login-button" href="#" onclick="loginButton(); return false;">LOGIN/JOIN
+                <li id = "guest-menu-item" onclick="guestButton(); return false;"><a href="#">LOGIN/JOIN</a></li>
+                <li id = "user-menu-item"><a class="dropdown-toggle" data-toggle="dropdown"  id="login-button" href="#">Username
                     <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" >Your Profile</a></li>
-                        <li><a href="#" >Create Topic</a></li>
+                        <li><a href="#" onclick="userButton(); return false;">Your Profile</a></li>
+                        <li><a href="#" onclick="openForm(); return false;" >Create Topic</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a href="#"  onclick="openForm()" >Create Topic</a></li>
-                        <li><a href="#">Sign out</a></li>
+                        <li><a href="#" onclick="signOutButton(); return false;">Sign out</a></li>
                     </ul>
                 </li>
+                <li id = "admin-menu-item"></li>
+                <li id = "moderator-menu-item"></li>
             </ul>
         </div>
         <div id="topic-creation"></div>

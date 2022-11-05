@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../JS/section.js"></script>
     <script>
         $(function () {
             $("#header").load("../Header/header.html");
@@ -32,14 +33,14 @@
         </div>
     </div>
     <div class="sections">
-        <div class="row">
+        <div id="page-sections" class="row">
             <div class="col-sm-3">
                 <a>
                     <div class="block">
                         <div class="section-title">
                             <h4><strong>Title</strong></h4>
                         </div>
-                        <div class=" section-info">
+                        <div class="section-info">
                             <p>number of topics: 254</p>
                             <p>Maybe we can add here some info about
                                 section. One sentence from Wikipedia</p>
@@ -63,15 +64,7 @@
         </div>
     </div>
 
-    <div class="pagination">
-        <a href="#">&laquo;</a>
-        <a href="#">1</a>
-        <a href="#" class="active">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-        <a href="#">6</a>
-        <a href="#">&raquo;</a>
+    <div class="pagination" id="pages">
     </div>
 </div>
 

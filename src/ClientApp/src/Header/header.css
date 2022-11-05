@@ -1,3 +1,8 @@
+#guest-menu-item, #user-menu-item, #admin-menu-item, #moderator-menu-item{
+    display: none;
+}
+
+
 html {
     scroll-behavior: smooth;
 }
