@@ -26,12 +26,13 @@
                     <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" >Your Profile</a></li>
-                        <li><a href="#" >Create Topic</a></li>
+                        <li><a href="#"  onclick="openForm()" >Create Topic</a></li>
                         <li><a href="#">Sign out</a></li>
                     </ul>
                 </li>
             </ul>
         </div>
+        <div id="topic-creation"></div>
     </div>
 </nav>
 <!--Banner with Search field-->
@@ -56,3 +57,9 @@
 <script src="../JS/code.js"></script>
 <script src="../JS/httpFunctions.js"></script>
 <script src="../JS/data.js"></script>
+<script src="../Topic_Creation/script.js"></script>
+<script>
+    $(function () {
+        $("#topic").load("../Topic_Creation/topic_creation.html");
+    });
+</script>
