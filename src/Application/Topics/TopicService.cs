@@ -74,22 +74,15 @@ public class TopicService : ITopicService
         var topic = await _dbContext.Set<Topic>()
             .Include(t => t.Section)
             .Include(t => t.User)
-            .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+            .FirstOrThrowAsync(id, cancellationToken);
 
-        if (topic is null) throw new NotFoundException($"There is no topic with id: {id}");
         return _mapper.Map<TopicResponse>(topic);
     }
 
     public async Task<IdResponse<Guid>> Create(CreateTopicRequest request, CancellationToken cancellationToken)
     {
-        var isUserExist = await _dbContext.Set<User>().AnyAsync(u => u.Id == request.UserId, cancellationToken);
-        if (!isUserExist) throw new NotFoundException($"There is no user with id: {request.UserId}");
-
-        var isSectionExist = await _dbContext.Set<Section>().AnyAsync(
-            s => s.Id == request.SectionId,
-            cancellationToken);
-
-        if (!isSectionExist) throw new NotFoundException($"There is no section with id: {request.SectionId}");
+        await _dbContext.Set<User>().AnyOrThrowAsync(request.UserId, cancellationToken);
+        await _dbContext.Set<Section>().AnyOrThrowAsync(request.SectionId, cancellationToken);
 
         var isTopicExist = await _dbContext.Set<Topic>().AnyAsync(t => t.Header == request.Header, cancellationToken);
         if (isTopicExist) throw new ConflictException($"There is already topic with header: {request.Header}");

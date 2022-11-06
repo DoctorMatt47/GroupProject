@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Responses;
+using GroupProject.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace GroupProject.Application.Common.Extensions;
@@ -9,6 +10,20 @@ public static class LinqExtensions
 {
     public static Page<T> ToPage<T>(this IEnumerable<T> enumerable, int pageCount) =>
         new(enumerable.ToList(), pageCount);
+
+    public static async Task<TEntity> FirstOrThrowAsync<TEntity, TId>(
+        this IQueryable<TEntity> set,
+        TId id,
+        CancellationToken cancellationToken)
+        where TEntity : class, IHasId<TId>
+    {
+        var parameter = Expression.Parameter(typeof(TEntity), nameof(TEntity));
+        var equal = Expression.Equal(Expression.Property(parameter, "Id"), Expression.Constant(id));
+        var lambda = Expression.Lambda<Func<TEntity, bool>>(equal, parameter);
+        var entity = await set.FirstOrDefaultAsync(lambda, cancellationToken);
+        if (entity is null) throw new NotFoundException($"There is no {typeof(TEntity).Name} with id: {id}");
+        return entity;
+    }
 
     public static async Task<TEntity> FindOrThrowAsync<TEntity>(
         this DbSet<TEntity> set,
@@ -21,12 +36,18 @@ public static class LinqExtensions
         return entity;
     }
 
-    public static async Task AssertAnyAsync<TEntity>(
-        this DbSet<TEntity> set,
-        Expression<Func<TEntity, bool>> predicate,
+    public static async Task AnyOrThrowAsync<TEntity, TId>(
+        this IQueryable<TEntity> set,
+        TId id,
         CancellationToken cancellationToken)
-        where TEntity : class =>
-        throw new NotImplementedException();
+        where TEntity : class, IHasId<TId>
+    {
+        var parameter = Expression.Parameter(typeof(TEntity), nameof(TEntity));
+        var equal = Expression.Equal(Expression.Property(parameter, "Id"), Expression.Constant(id));
+        var lambda = Expression.Lambda<Func<TEntity, bool>>(equal, parameter);
+        var isExist = await set.AnyAsync(lambda, cancellationToken);
+        if (!isExist) throw new NotFoundException($"There is no {typeof(TEntity).Name} with id: {id}");
+    }
 
     public static async Task<Page<T>> ToPageAsync<T>(
         this IQueryable<T> queryable,
