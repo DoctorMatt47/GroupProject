@@ -59,12 +59,10 @@ label {
     border-radius: 200px;
     text-align: center;
     background: #fff;
-    opacity: 1 !important;
-
 }
 
 #topic-title, textarea, select, #topic-selection {
-    position: relative;
+box-sizing: border-box;
     margin: .8em auto;
     font-family: inherit;
     text-transform: inherit;
