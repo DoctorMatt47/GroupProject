@@ -4,6 +4,7 @@
  * @param {string} objectId - id of topic or comment
  */
 const openComplainForm = (type, objectId) =>{
+    document.getElementById("message").value = "";
     const container = document.getElementById("complaint-container");
     container.style.display = "block";
     container.onclick = (event)=>{
