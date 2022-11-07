@@ -1,37 +1,44 @@
-#guest-menu-item, #user-menu-item, #admin-menu-item, #moderator-menu-item{
+#guest-menu-item, #user-menu-item, #admin-menu-item, #moderator-menu-item {
     display: none;
 }
-
 
 html {
     scroll-behavior: smooth;
 }
+
 body {
     font: 400 15px/1.8 Lato, sans-serif;
 }
+
 a {
     color: black;
 }
+
 .nav-tabs a:hover {
     text-decoration: none;
 }
+
 .nav-tabs a:active {
     color: gray;
     text-decoration: none;
 }
+
 .banner {
     color: ghostwhite;
     background: url('../../resources/static/banner.jpg') top left/cover no-repeat;
     height: 400px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.navbar-brand img{
+
+.navbar-brand img {
     height: 30px;
     display: flex;
     justify-content: left;
 }
+
 ul {
     list-style: none;
 }
@@ -46,8 +53,7 @@ h3, h4 {
     padding: 5px 20px;
     background-color: #333;
     color: #f1f1f1;
-    border-radius: 20px;
-    transition: .2s;
+    border-radius: 0 20px 20px 0;
     height: 35px;
 }
 
@@ -57,11 +63,18 @@ h3, h4 {
     color: #000;
 }
 
-.input-group{
+.input-group {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
+
+.input-form {
+    width: 50%;
+}
+
 .nav-tabs li a {
     color: #777;
 }
@@ -73,7 +86,7 @@ h3, h4 {
     border: 0;
     font-size: 11px !important;
     letter-spacing: 4px;
-    opacity: 0.9;
+    /*opacity: 0.9;*/
 }
 
 .navbar li a, .navbar .navbar-brand {
@@ -105,12 +118,15 @@ h3, h4 {
 .dropdown-menu li a:hover {
     background-color: goldenrod !important;
 }
-.login-dropdown{
+
+.login-dropdown {
     display: none;
 }
-.account-dropdown{
+
+.account-dropdown {
     display: block;
 }
+
 .form-control {
     display: flex;
     justify-content: center;

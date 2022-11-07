@@ -1,10 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Hi-fi code - Topic Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+            $("#side-panel").load("../Side_panel/side-panel.html");
+        });
+    </script>
 </head>
-<body>
+<body id="page-header" data-spy="scroll" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+<div class=" container  box mt-5">
+    <div id="section-name">Coffeescript</div>
+    <div id="section-description">JavaScript is a high-level,
+        often just-in-time compiled language that conforms to the ECMAScript standard.
+        It has dynamic typing, prototype-based object-orientation, and first-class functions.
+        It is multi-paradigm, supporting event-driven, functional, and imperative programming styles. It has application
+        programming interfaces (APIs)
+        for working with text, dates, regular expressions, standard data structures, and the Document Object Model
+        (DOM).
+    </div>
+    <hr class="line">
+    <div class="col-sm-12" id="topics-container">
+        <div class="topic">
+            <div class="col-sm-2 user-info">
+                <a href="#">
+                    <div class="language">Coffeescript</div>
+                </a>
+                <a href="#" id= "username">username</a>
+                <p class="topic-p">creation date</p>
+            </div>
+            <div class="vertical-line"></div>
+            <a href="#">
+                <div class="col-sm-12">
+                    <div class="topic-name">Topic Name</div>
+                    <div class="topic-description">Here we have Topic Description.
+                        BTW we have a problem. The blocks may have different sizes.... So description should be shorter
+                        than three lines
+                        Or we should show only two sentences and then "..." Same with description in sections blocks
+                    </div>
+                    <div class="topic-info">
+                        <p class="topic-p">answered:</p>
+                        <p class="topic-p">views:</p>
+                    </div>
+                </div>
+            </a>
+        </div>
 
+        <button id="load-more">Load more</button>
+    </div>
+</div>
+<div id="footer"></div>
 </body>
 </html>

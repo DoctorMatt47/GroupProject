@@ -1,6 +1,6 @@
-<link href="style.css" rel="stylesheet" type="text/css">
+<link href="../Topic_Creation/style.css" rel="stylesheet" type="text/css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<div id="fullscreen-container">
+<div id="topic-container">
     <div id="topicForm">
         <h2>Create new Topic</h2>
         <form onsubmit="submitTopic(); return false;">
@@ -21,8 +21,8 @@
                 <label for="topic-code">Code</label>
                 <textarea id="topic-code" minlength="2" maxlength="32000"></textarea>
             </div>
-            <button type="submit" class="btn formBtn" onclick="">Submit</button>
-            <button type="button" class="btn formBtn" id="close-btn" onclick="closeForm(); return false;">Close</button>
+            <button type="submit" class=" formBtn" onclick="">Submit</button>
+            <button type="button" class=" formBtn" id="close-btn" onclick="closeForm(); return false;">Close</button>
         </form>
     </div>
 </div>

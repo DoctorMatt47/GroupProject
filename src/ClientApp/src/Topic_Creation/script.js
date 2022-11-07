@@ -2,13 +2,13 @@
  * Makes topic creation form visible
  */
 const openForm = () => {
-    document.getElementById("fullscreen-container").style.display = "block";
+    document.getElementById("topic-container").style.display = "flex";
 };
 /**
  * Makes topic creation form invisible
  */
 const closeForm = () => {
-    document.getElementById("fullscreen-container").style.display = "none";
+    document.getElementById("topic-container").style.display = "none";
 };
 /**
  * Adds options (sections) from server to select by id
