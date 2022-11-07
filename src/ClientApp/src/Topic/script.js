@@ -123,7 +123,6 @@ const closeCurrentTopic = ()=>{
 
 window.addEventListener("load", ()=>{
     getTopic(getValueFromCurrentUrl("id")).then(response => {
-        console.log(response);
         addTopicToPage(response);
         addCommentsToPage(response.id);
         document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";

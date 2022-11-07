@@ -54,3 +54,7 @@ const submitTopic = () => {
         console.log(exception);
     });
 };
+window.addEventListener("load", ()=>{
+    addLanguagesToSelect('topic-code-language');
+    addSectionToSelect('topic-section');
+});
