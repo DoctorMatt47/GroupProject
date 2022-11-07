@@ -76,6 +76,7 @@ const createPageButtons = (navBar, pagesNumber, container, sections) =>{
 const addPagesBar = (container, sections)=>{
     const pages = document.getElementById("pages");
 
+    //Creates button LEFT
     const prev = document.createElement("a");
     prev.innerHTML = `&laquo;`;
     prev.onclick = ()=>{
@@ -92,6 +93,7 @@ const addPagesBar = (container, sections)=>{
     const pagesNumber = Math.ceil(sections.length / perPage);
     createPageButtons(pages, pagesNumber, container, sections);
 
+    //Creates button RIGHT
     const next = document.createElement("a");
     next.innerHTML = `&raquo;`;
     next.onclick = ()=>{
@@ -104,6 +106,9 @@ const addPagesBar = (container, sections)=>{
     }
     pages.appendChild(next);
 }
+/**
+ * Adds sections to page
+ */
 const addSections = ()=>{
     getSections().then((response) => {
         const container = document.getElementById("page-sections");
