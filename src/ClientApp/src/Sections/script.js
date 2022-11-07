@@ -30,7 +30,7 @@ const createSection = (section) =>{
     return column;
 };
 
-const perPage = 5;
+const perPage = 10;
 let currentPage = 1;
 
 /**
@@ -77,7 +77,7 @@ const addPagesBar = (container, sections)=>{
     const pages = document.getElementById("pages");
 
     const prev = document.createElement("a");
-    prev.innerHTML = `<a>&laquo;</a>`;
+    prev.innerHTML = `&laquo;`;
     prev.onclick = ()=>{
         console.log(currentPage)
         if(currentPage - 1 >= 1){
@@ -93,7 +93,7 @@ const addPagesBar = (container, sections)=>{
     createPageButtons(pages, pagesNumber, container, sections);
 
     const next = document.createElement("a");
-    next.innerHTML = `<a>&raquo;</a>`;
+    next.innerHTML = `&raquo;`;
     next.onclick = ()=>{
         if(currentPage + 1 <= pagesNumber){
             document.getElementById(`page-button${currentPage}`).classList.remove("active");

@@ -56,7 +56,7 @@ const createCommentObject = (comment)=>{
     com.id = "comment";
     const complaint = document.createElement("div");
     complaint.innerHTML = `<div class="complaint-icon">
-    <button data-toggle="tooltip" title="Create a complaint" onclick="openForm('comment', '${comment.id}'); return false;">
+    <button data-toggle="tooltip" title="Create a complaint" onclick="openComplainForm('comment', '${comment.id}'); return false;">
     <span class="glyphicon glyphicon-comment" style="color:#d7ae54; margin-right: 15px"></span></button></div>`;
     com.appendChild(complaint);
 
@@ -139,3 +139,9 @@ window.addEventListener("load", ()=>{
 $(".close-btn").click(function(){
     $(this).prop('disabled',true)
 });
+const openVerificationWindow = () => {
+    document.getElementById("verificationWindow").style.display = "block";
+};
+const closeVerificationWindow = () => {
+    document.getElementById("verificationWindow").style.display = "none";
+};

@@ -6,12 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link href="style.css" rel="stylesheet" type="text/css">
-    <link href="../Header/header.css" rel="stylesheet" type="text/css">
-    <link href="../Footer/footer.css" rel="stylesheet" type="text/css">
-    <link href="../Side_panel/style.css" rel="stylesheet" type="text/css">
-    <link href="../Complaint/style.css" rel="stylesheet" type="text/css">
-    <link href="../Code-Compiler/style.css" rel="stylesheet" type="text/css">
-    <link href="../Comment-Creation/style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -21,10 +15,10 @@
             $("#header").load("../Header/header.html");
             $("#footer").load("../Footer/footer.html");
             $("#side-panel").load("../Side_panel/side-panel.html");
-            $("#complaint1").load("../Complaint/complaint.html")
-            $("#complaint2").load("../Complaint/complaint.html")
-            $("#compiler").load("../Code-Compiler/code-compiler.html")
-            $("#commentForm").load("../Comment-Creation/comment-creation.html")
+            $("#complaint1").load("../Complaint/complaint.html");
+            $("#complaint2").load("../Complaint/complaint.html");
+            $("#compiler").load("../Code-Compiler/code-compiler.html");
+            $("#commentForm").load("../Comment-Creation/comment-creation.html");
         });
     </script>
 </head>
@@ -44,7 +38,7 @@
                                 </a>
                             </div>
                             <div class="col-sm-1 complaint-icon">
-                                <button data-toggle="tooltip" title="Create a complaint" onclick="openForm('topic', getValueFromCurrentUrl('id')); return false;">
+                                <button data-toggle="tooltip" title="Create a complaint" onclick="openComplainForm('topic', getValueFromCurrentUrl('id')); return false;">
                                     <span class="glyphicon glyphicon-comment" style="color:#d7ae54"></span>
                                 </button>
                             </div>
@@ -169,16 +163,4 @@
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
-<script src="../Code-Compiler/script.js"></script>
-<script src="../JS/topic.js"></script>
-<script src="../JS/comment.js"></script>
-<script src="../JS/languages.js"></script>
-<script>
-    const openVerificationWindow = () => {
-        document.getElementById("verificationWindow").style.display = "block";
-    };
-    const closeVerificationWindow = () => {
-        document.getElementById("verificationWindow").style.display = "none";
-    };
-    </script>
 </html>

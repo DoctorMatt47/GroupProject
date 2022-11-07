@@ -24,7 +24,8 @@ const submitComment = ()=>{
         commentNeedCode.checked ?commentCode.value:"", 
         commentLanguage.value)
     .then(response=>{
-        
+        closeCommentForm();
+        //TODO: get comment by id and add it to page
     })
     .catch(error=>{
         const exception = JSON.parse(error.message);

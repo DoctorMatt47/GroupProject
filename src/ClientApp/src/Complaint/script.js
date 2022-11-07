@@ -3,7 +3,7 @@
  * @param {string} type - topic or comment
  * @param {string} objectId - id of topic or comment
  */
-const openForm = (type, objectId) =>{
+const openComplainForm = (type, objectId) =>{
     const container = document.getElementById("fullscreen-container");
     container.style.display = "block";
     container.onclick = (event)=>{
@@ -14,7 +14,7 @@ const openForm = (type, objectId) =>{
     container.setAttribute("object-id", objectId);
 };
 
-const closeForm = () => {
+const closeComplainForm = () => {
     document.getElementById("fullscreen-container").style.display = "none";
 };
 /**
