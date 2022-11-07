@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "montserrat", sans-serif;
+}
+
+body {
+    background-color: #F5F5F5;
+
+}
+
+button {
+    border: beige;
+    background-color: white;
+}
+a{
+    width: 100%;
+}
+a:hover,
+a:active {
+    color: #8f8c8c;
+    text-decoration: none;
+}
+
+.topic-p {
+    color: #000000;
+    font-size: 10px;
+}
+
+a {
+    font-size: 11px;
+}
+
+h4 {
+    display: flex;
+    align-self: flex-start;
+}
+
+.column {
+    float: left;
+    padding: 10px;
+}
+
+
+.box {
+    padding: 80px 120px;
+    background-color: white;
+}
+
+.language {
+    width: fit-content;
+    display: flex;
+    justify-items: center;
+    border: 1px solid gainsboro;
+    padding: 5px;
+    border-radius: 50px;
+    text-align: center;
+    margin-bottom: 10px;
+    color: black;
+    background-color: #eac770;
+    font-size: 10px;
+}
+.language-item{
+    display: flex;
+}
+#side-panel {
+    margin: 100px 10px auto !important;
+}
+
+#section-name {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#section-description {
+
+}
+
+.line {
+    height: 1px;
+    border-width: 0;
+    color: gray;
+    background-color: gray;
+}
+
+.vertical-line {
+    border-left: 1px solid gray;
+    height: 90%;
+}
+
+.topic {
+    /*height: 10vh;*/
+    width: 100%;
+    margin: 8px;
+    border-radius: 20px;
+    transition: all 200ms ease-in-out;
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    background-color: rgba(229, 228, 226, 0.39);
+}
+
+#username{
+    text-align: center;
+}
+#topic-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.topic{
+    height: 160px;
+}
+.topic:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.topic-actions {
+    margin: 8px;
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+.topic-info{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-end;
+}
+.topic-name{
+    font-size: 15px;
+
+}
+.topic-description{
+    font-size: 12px;
+    height: 70px;
+    overflow: hidden;
+}
+#load-more {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    background-color: rgb(92, 161, 127);
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+}
+
+#load-more:not([disabled]):hover {
+    box-shadow: 0 1px 9px rgba(0, 0, 0, 0.2);
+}
+
+#load-more[disabled] {
+    background-color: #eaeaea !important;
+}
+
+
+
+
