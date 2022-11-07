@@ -59,8 +59,6 @@ label {
     border-radius: 200px;
     text-align: center;
     background: #fff;
-    opacity: 1 !important;
-
 }
 
 #topic-title, textarea, select, #topic-selection {
