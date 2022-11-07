@@ -10,11 +10,7 @@ button {
     background-color: white;
 }
 
-a:hover {
-    color: #8f8c8c;
-    text-decoration: none;
-}
-
+a:hover,
 a:active {
     color: #8f8c8c;
     text-decoration: none;

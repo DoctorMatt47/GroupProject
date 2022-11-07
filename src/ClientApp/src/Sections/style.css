@@ -38,7 +38,7 @@ a:active {
 
 .box {
     padding: 80px 120px;
-    background-color: #F5F5F5;
+    background-color: white;
 }
 
 .section-form {
@@ -96,12 +96,12 @@ a:active {
 
 .block {
     display: inline-list-item;
-    height: 200px;
+    height: 220px;
     width: 100%;
     border-radius: 20px;
     border: 1px solid cadetblue;
     margin-top: 20px;
-    padding: 15px;
+    padding: 20px;
     text-decoration: none;
 }
 
@@ -117,6 +117,7 @@ a:active {
 
 .section-info {
     display: flex;
+    overflow: hidden;
     flex-direction: column;
     align-content: flex-start;
     align-items: flex-start;
@@ -125,12 +126,22 @@ a:active {
 }
 
 .section-title {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    overflow: hidden;
+    margin-bottom: 10px;
     border-radius: 30px;
     border: 1px solid #e0a53a;
     color: #000;
     background-color: #e0a53a;
-    margin-bottom: 5px;
+
+}
+.section-title h4{
+    padding-left: 7px;
+    padding-right: 7px;
 }
 
 .pagination {
@@ -144,6 +155,7 @@ a:active {
     float: left;
     padding: 8px 16px;
     text-decoration: none;
+    text-align: center;
     transition: background-color .3s;
 }
 
