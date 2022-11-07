@@ -107,7 +107,7 @@ h4 {
 #username{
     text-align: center;
 }
-#topic-container {
+#topics-container {
     display: flex;
     flex-wrap: wrap;
 }
