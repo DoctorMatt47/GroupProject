@@ -79,7 +79,18 @@ const addPopularCards =()=>{
         console.log(exception);
     });
 };
+/**
+ * Hides join button for authorized users
+ */
+const hideJoinButton = ()=>{
+    if(isLoggedIn()){
+        const join = document.getElementById("join-button");
+        join.style = "display:none";
+    } 
+};
+
 window.onload = function () {
+    hideJoinButton();
     addPopularCards();
     addCards(currentPage);
     loadMoreButton.addEventListener("click", () => {
