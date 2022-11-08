@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div id="error-container" style="position:fixed; top:0;left:0;"></div>
+<!--    <div id="error-container" style="position:fixed; top:0;left:0; color: red">Server Error</div>-->
 <div class="container">
     <div class="container-forms">
         <div class="container-info">
@@ -47,12 +47,15 @@
             <div class="form-item log-in">
                 <div class="table">
                     <div class="table-cell">
+                        <div id="login-error" class="error-message">Server Error</div>
                         <form action="#" onsubmit="loginSubmit(); return false;">
                             <label for="username"></label>
-                            <input id="username" name="username" placeholder="Username" type="text" minlength="2"maxlength="32"/>
+                            <input id="username" name="username" placeholder="Username" type="text" minlength="2"
+                                   maxlength="32"/>
 
                             <label for="password"></label>
-                            <input id="password" name="password" placeholder="Password" type="Password" minlength="8" maxlength="32"/>
+                            <input id="password" name="password" placeholder="Password" type="Password" minlength="8"
+                                   maxlength="32"/>
 
                             <button class="btn" type="submit">
                                 Log in
@@ -64,6 +67,7 @@
             <div class="form-item sign-up">
                 <div class="table">
                     <div class="table-cell">
+                        <div id="registration-error" class="error-message">Server Error</div>
                         <form action="#" class="form">
                             <div class="input-group">
                                 <label for="registration-username"></label>
@@ -150,15 +154,12 @@
                                 Sign up
                             </button>
                         </form>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script src="script.js"></script>
 </body>
-
 </html>
