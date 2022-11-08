@@ -23,10 +23,11 @@ const submitComment = ()=>{
         commentLanguage.value)
     .then(response=>{
         closeCommentForm();
+        openErrorWindow(response);
         //TODO: get comment by id and add it to page
     })
     .catch(error=>{
         const exception = JSON.parse(error.message);
-        console.log(exception);
+        openErrorWindow(exception.message);
     });
 };
