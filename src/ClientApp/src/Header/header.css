@@ -137,3 +137,44 @@ h3, h4 {
 textarea {
     resize: none;
 }
+/*Error popup window*/
+#error-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(90, 90, 90, 0.32);
+    z-index: 9999;
+}
+.error-section{
+    overflow: hidden;
+    background: #fff;
+    padding: 80px 0;
+    text-align: center;
+    width: 50%;
+    opacity: 1 !important;
+    margin: 250px auto auto;
+    border-radius: 300px 100px 300px 100px;
+    border: 8px solid crimson;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 6px 12px -2px, rgba(0, 0, 0, 0.8) 0 3px 7px -3px;
+
+}
+.error-inner-width{
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: auto;
+    padding: 0 20px;
+
+}
+.error-section h3{
+    font-size: 22px;
+    color: #862525;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 500;
+}
+
