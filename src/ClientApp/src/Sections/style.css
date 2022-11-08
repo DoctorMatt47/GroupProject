@@ -95,9 +95,9 @@ a:active {
 }
 
 .block {
-    display: inline-list-item;
     height: 220px;
     width: 100%;
+    overflow: hidden;
     border-radius: 20px;
     border: 1px solid cadetblue;
     margin-top: 20px;
@@ -117,7 +117,6 @@ a:active {
 
 .section-info {
     display: flex;
-    overflow: hidden;
     flex-direction: column;
     align-content: flex-start;
     align-items: flex-start;
