@@ -84,3 +84,13 @@ const addLanguagesToSelect = (selectId) => {
 const setVisible = (visible, id, display) => {
     document.getElementById(id).style.display = visible?display:'none';
 };
+/**
+ * 
+ * @param {Object} container - html object to hide it
+ * @param {Function} closeFunction - function of closing
+ */
+const addBackgroundClosing = (container, closeFunction)=>{
+    container.addEventListener("click",  (event)=> {
+        if (event.target.id === container.id) closeFunction();
+    });
+}

@@ -1,9 +1,7 @@
 const openCommentForm = () => {
     const container = document.getElementById("comment-container");
     container.style.display = "block";
-    container.onclick = (event)=> {
-        if (event.target.id === container.id) closeCommentForm();
-    };
+    addBackgroundClosing(container, closeCommentForm);
 };
 const closeCommentForm = () => {
     document.getElementById("comment-container").style.display = "none";

@@ -3,9 +3,7 @@ const openCompiler = (code, language) => {
     const form = document.getElementById("compiler-form");
     container.style.display = "block";
     createCode(form, code, language.toLowerCase());
-    container.onclick = (event)=> {
-        if (event.target.id === container.id) closeCompiler();
-    };
+    addBackgroundClosing(container, closeCompiler);
 };
 const closeCompiler = () => {
     document.getElementById("compiler-form").innerHTML = "";
