@@ -205,3 +205,12 @@ input {
 .button:hover {
     filter: brightness(110%);
 }
+.error-message{
+    color: red;
+    display: flex;
+    background-color: inherit;
+    align-content: center;
+    justify-content: space-around;
+    margin-bottom: 50px;
+
+}

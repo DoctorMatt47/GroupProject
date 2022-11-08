@@ -19,6 +19,7 @@ label {
     font-weight: 100;
     font-size: 1.2em;
     border: none;
+    border-radius: 20px;
     height: 30px;
     margin-top: 20px;
 }
@@ -44,9 +45,13 @@ label {
 }
 
 #comment-section {
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     border: 10px solid #f67969;
     padding: 5em;
     width: 600px;
+    max-height: 100% !important;
     border-radius: 200px;
     text-align: center;
     background: #fff;
@@ -57,7 +62,9 @@ label {
     -webkit-transform: translate(-50%, -50%)
 
 }
-
+#comment-section::-webkit-scrollbar {
+    display: none;
+}
 textarea, select{
     margin: .8em auto;
     font-family: inherit;
@@ -69,6 +76,9 @@ textarea, select{
     border: none;
     border-radius: 20px;
     background-color: #c5c5f6;
+}
+select{
+    text-align: center;
 }
 
 textarea {
