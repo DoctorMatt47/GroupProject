@@ -52,15 +52,20 @@ label {
     align-items: center;
     align-content: space-between;
     position: center;
+    overflow-y: scroll;
     border: 10px solid #f67969;
     padding: 5em;
     width: 600px;
-    max-height: 90% !important;
+    max-height: 100% !important;
     border-radius: 200px;
     text-align: center;
     background: #fff;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
-
+#topicForm::-webkit-scrollbar {
+    display: none;
+}
 #topic-title, textarea, select, #topic-selection {
 box-sizing: border-box;
     margin: .8em auto;
