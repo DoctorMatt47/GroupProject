@@ -2,16 +2,8 @@
 <div id="complaint-container">
     <div class="complaint-section">
         <div class="inner-width">
-<!--            <div class="row">-->
-<!--                <div class="col-sm-8"></div>-->
-<!--                <div class="col-sm-4">-->
-<!--                    <button id="close-complaint" onclick="closeComplainForm(); return false;"><span class="glyphicon glyphicon-remove"></span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--            </div>-->
             <h3>OMG! Did You find a violation? Describe it and we will consider your complaint!</h3>
-            <label for="message"></label>
-            <textarea rows="1" placeholder="Message" class="message" id="message"></textarea>
+            <textarea placeholder="Message" class="complaint-message" id="message"></textarea>
             <button id="submit-btn" onclick="submitComplaint(); closeComplainForm(); return false;">Get in touch</button>
             <a href="#" onclick="closeComplainForm()" style="color: grey">close</a>
         </div>
