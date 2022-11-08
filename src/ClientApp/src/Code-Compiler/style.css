@@ -22,6 +22,9 @@ label {
 }
 
 #compiler-form {
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     background: #fff;
     border: 10px solid #f67969;
     text-align: center;
@@ -31,11 +34,11 @@ label {
     height: 90%;
     top: 52%;
     left: 80%;
-    overflow: hidden;
     border-radius: 50px;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%)
-
 }
-
+#compiler-form::-webkit-scrollbar {
+    display: none;
+}
 
