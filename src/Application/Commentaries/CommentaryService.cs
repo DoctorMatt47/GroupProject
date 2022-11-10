@@ -27,6 +27,22 @@ public class CommentaryService : ICommentaryService
         _mapper = mapper;
     }
 
+    public async Task<Page<CommentaryByUserResponse>> GetByUserIdOrderedByCreationTime(
+        Guid id,
+        int perPage,
+        int page,
+        CancellationToken cancellationToken)
+    {
+        await _dbContext.Set<User>().AnyOrThrowAsync(id, cancellationToken);
+
+        var pageCount = await _dbContext.Set<Commentary>().PageCountAsync(perPage, cancellationToken);
+        return await _dbContext.Set<Commentary>()
+            .Where(c => c.UserId == id)
+            .OrderBy(c => c.CreationTime)
+            .ProjectTo<CommentaryByUserResponse>(_mapper.ConfigurationProvider)
+            .ToPageAsync(perPage, page, pageCount, cancellationToken);
+    }
+
     public async Task<Page<CommentaryResponse>> GetByTopicIdOrderedByCreationTime(
         Guid id,
         int perPage,

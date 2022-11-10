@@ -20,34 +20,16 @@ public class CommentariesController : ApiControllerBase
         _mapper = mapper;
     }
 
-    /// <summary>
-    ///     Creates commentary for specific topic
-    /// </summary>
-    /// <param name="id">Topic id</param>
-    /// <param name="body">Commentary parameters</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>Created commentary id</returns>
-    [Authorize(Roles = "User")]
-    [HttpPost("OnTopic/{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [AllowAnonymous]
+    [HttpGet("ByUser/{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<IdResponse<Guid>>> CreateCommentaryOnTopic(
+    public Task<Page<CommentaryByUserResponse>> GetCommentariesByUserIdOrderedByCreationTime(
         Guid id,
-        CreateCommentaryBody body,
-        CancellationToken cancellationToken)
-    {
-        var request = _mapper.Map<CreateCommentaryRequest>(body) with
-        {
-            TopicId = id,
-            UserId = Guid.Parse(User.Identity?.Name!),
-        };
-
-        var response = await _commentaries.Create(request, cancellationToken);
-        return Created(string.Empty, response);
-    }
+        int perPage,
+        int page,
+        CancellationToken cancellationToken) =>
+        _commentaries.GetByUserIdOrderedByCreationTime(id, perPage, page, cancellationToken);
 
     /// <summary>
     ///     Gets paged commentaries by topic id
@@ -85,6 +67,35 @@ public class CommentariesController : ApiControllerBase
         int page,
         CancellationToken cancellationToken) =>
         _commentaries.GetOrderedByComplaintCount(perPage, page, cancellationToken);
+
+    /// <summary>
+    ///     Creates commentary for specific topic
+    /// </summary>
+    /// <param name="id">Topic id</param>
+    /// <param name="body">Commentary parameters</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Created commentary id</returns>
+    [Authorize(Roles = "User")]
+    [HttpPost("OnTopic/{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<ActionResult<IdResponse<Guid>>> CreateCommentaryOnTopic(
+        Guid id,
+        CreateCommentaryBody body,
+        CancellationToken cancellationToken)
+    {
+        var request = _mapper.Map<CreateCommentaryRequest>(body) with
+        {
+            TopicId = id,
+            UserId = Guid.Parse(User.Identity?.Name!)
+        };
+
+        var response = await _commentaries.Create(request, cancellationToken);
+        return Created(string.Empty, response);
+    }
 
     [Authorize(Roles = "Moderator, Admin")]
     [HttpDelete("{id:guid}")]

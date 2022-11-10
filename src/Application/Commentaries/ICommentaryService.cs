@@ -4,6 +4,12 @@ namespace GroupProject.Application.Commentaries;
 
 public interface ICommentaryService
 {
+    Task<Page<CommentaryByUserResponse>> GetByUserIdOrderedByCreationTime(
+        Guid id,
+        int perPage,
+        int page,
+        CancellationToken cancellationToken);
+
     Task<Page<CommentaryResponse>> GetByTopicIdOrderedByCreationTime(
         Guid id,
         int perPage,
