@@ -11,7 +11,7 @@ public class TopicMapping : Profile
         CreateMap<Topic, TopicResponse>();
         CreateMap<Topic, TopicByUserIdResponse>();
 
-        CreateMap<Topic, TopicInfoResponse>()
+        CreateMap<Topic, TopicHeaderResponse>()
             .MapRecordMember(r => r.UserLogin, t => t.User.Login)
             .MapRecordMember(r => r.SectionHeader, t => t.Section.Header);
     }

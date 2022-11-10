@@ -29,7 +29,7 @@ public class TopicService : ITopicService
         _mapper = mapper;
     }
 
-    public async Task<Page<TopicInfoResponse>> GetOrderedByComplaintCount(
+    public async Task<Page<TopicHeaderResponse>> GetOrderedByComplaintCount(
         PageParameters parameters,
         CancellationToken cancellationToken)
     {
@@ -38,11 +38,11 @@ public class TopicService : ITopicService
             .Include(t => t.User)
             .Where(t => t.ComplaintCount != 0)
             .OrderBy(t => t.ComplaintCount)
-            .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
+            .ProjectTo<TopicHeaderResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(parameters, cancellationToken);
     }
 
-    public async Task<Page<TopicInfoResponse>> GetOrderedByCreationTime(
+    public async Task<Page<TopicHeaderResponse>> GetOrderedByCreationTime(
         PageParameters parameters,
         CancellationToken cancellationToken)
     {
@@ -50,11 +50,11 @@ public class TopicService : ITopicService
             .Include(t => t.Section)
             .Include(t => t.User)
             .OrderByDescending(t => t.CreationTime)
-            .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
+            .ProjectTo<TopicHeaderResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(parameters, cancellationToken);
     }
 
-    public async Task<Page<TopicInfoResponse>> GetBySectionIdOrderedByCreationTime(
+    public async Task<Page<TopicHeaderResponse>> GetBySectionIdOrderedByCreationTime(
         int sectionId,
         PageParameters parameters,
         CancellationToken cancellationToken)
@@ -64,7 +64,7 @@ public class TopicService : ITopicService
             .Include(t => t.User)
             .Where(t => t.Section.Id == sectionId)
             .OrderByDescending(t => t.CreationTime)
-            .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
+            .ProjectTo<TopicHeaderResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(parameters, cancellationToken);
     }
 

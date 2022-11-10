@@ -5,15 +5,15 @@ namespace GroupProject.Application.Topics;
 
 public interface ITopicService
 {
-    Task<Page<TopicInfoResponse>> GetOrderedByCreationTime(
+    Task<Page<TopicHeaderResponse>> GetOrderedByCreationTime(
         PageParameters parameters,
         CancellationToken cancellationToken);
 
-    Task<Page<TopicInfoResponse>> GetOrderedByComplaintCount(
+    Task<Page<TopicHeaderResponse>> GetOrderedByComplaintCount(
         PageParameters parameters,
         CancellationToken cancellationToken);
 
-    Task<Page<TopicInfoResponse>> GetBySectionIdOrderedByCreationTime(
+    Task<Page<TopicHeaderResponse>> GetBySectionIdOrderedByCreationTime(
         int sectionId,
         PageParameters parameters,
         CancellationToken cancellationToken);

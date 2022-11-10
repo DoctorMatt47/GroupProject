@@ -13,3 +13,17 @@ public record TopicResponse(
     string UserLogin,
     int SectionId,
     string SectionHeader);
+
+public record TopicHeaderResponse(
+    Guid Id,
+    string Header,
+    DateTime CreationTime,
+    int ComplaintCount,
+    Guid UserId,
+    string UserLogin,
+    int SectionId,
+    string SectionHeader);
+
+public record TopicByUserIdResponse(
+    Guid Id,
+    string Header);

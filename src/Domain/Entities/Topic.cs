@@ -37,6 +37,7 @@ public class Topic : IHasComplaintCount, IHasId<Guid>
     public bool IsClosed { get; set; }
     public bool IsVerificationRequired { get; set; }
     public CompileOptions? CompileOptions { get; private set; }
+    public int ViewCount { get; private set; }
 
     public Guid UserId { get; private set; }
     public User User { get; private set; } = null!;
@@ -59,5 +60,11 @@ public class Topic : IHasComplaintCount, IHasId<Guid>
         if (ComplaintCount != 0) ComplaintCount--;
     }
 
+
     public Guid Id { get; private set; }
+
+    public void IncrementViewCount()
+    {
+        ViewCount++;
+    }
 }
