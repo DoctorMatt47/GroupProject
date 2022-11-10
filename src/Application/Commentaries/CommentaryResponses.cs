@@ -10,3 +10,10 @@ public record CommentaryResponse(
     string UserLogin,
     Guid TopicId,
     DateTime CreationTime);
+
+public record CommentaryByUserResponse(
+    Guid Id,
+    string Description,
+    CompileOptionsResponse? CompileOptions,
+    Guid TopicId,
+    DateTime CreationTime);
