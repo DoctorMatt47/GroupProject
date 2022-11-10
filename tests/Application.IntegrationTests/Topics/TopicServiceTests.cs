@@ -38,7 +38,7 @@ public class TopicServiceTests
 
         await _dbContext.SaveChangesAsync(CancellationToken.None);
 
-        var topicPage = await _topics.GetOrderedByCreationTime(10, 1, CancellationToken.None);
+        var topicPage = await _topics.GetOrderedByCreationTime(new PageParameters(10, 1), CancellationToken.None);
         var topics = topicPage.List.ToList();
 
         for (var i = 0; i < topics.Count - 1; i++)
@@ -67,7 +67,7 @@ public class TopicServiceTests
 
         await _dbContext.SaveChangesAsync(CancellationToken.None);
 
-        var topicPage = await _topics.GetOrderedByComplaintCount(10, 1, CancellationToken.None);
+        var topicPage = await _topics.GetOrderedByComplaintCount(new PageParameters(10, 1), CancellationToken.None);
         var topics = topicPage.List.ToList();
 
         for (var i = 0; i < topics.Count - 1; i++)

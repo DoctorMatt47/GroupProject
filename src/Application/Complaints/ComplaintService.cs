@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
+using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
@@ -28,15 +29,13 @@ public class ComplaintService : IComplaintService
     }
 
     public async Task<Page<ComplaintResponse>> Get(
-        int perPage,
-        int page,
+        PageParameters parameters,
         CancellationToken cancellationToken)
     {
-        var pageCount = await _dbContext.Set<Complaint>().PageCountAsync(perPage, cancellationToken);
         return await _dbContext.Set<Complaint>()
             .OrderByDescending(c => c.CreationTime)
             .ProjectTo<ComplaintResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(perPage, page, pageCount, cancellationToken);
+            .ToPageAsync(parameters, cancellationToken);
     }
 
     public async Task<IEnumerable<ComplaintByTargetResponse>> GetByTopicId(

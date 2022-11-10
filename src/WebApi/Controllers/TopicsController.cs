@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Application.Topics;
 using GroupProject.WebApi.Requests;
@@ -35,8 +36,7 @@ public class TopicsController : ApiControllerBase
     ///     Gets topics created of specific user
     /// </summary>
     /// <param name="id">User id</param>
-    /// <param name="perPage">Number of users per page</param>
-    /// <param name="page">Page number</param>
+    /// <param name="parameters">Number of elements per page and page number</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Topics created by specific user</returns>
     [AllowAnonymous]
@@ -45,33 +45,29 @@ public class TopicsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public Task<Page<TopicByUserIdResponse>> GetByUserIdOrderedByCreationTime(
         Guid id,
-        int perPage,
-        int page,
+        [FromQuery] PageParameters parameters,
         CancellationToken cancellationToken) =>
-        _topics.GetByUserIdOrderedByCreationTime(id, perPage, page, cancellationToken);
+        _topics.GetByUserIdOrderedByCreationTime(id, parameters, cancellationToken);
 
     /// <summary>
     ///     Gets paged information about topics ordered by creation time
     /// </summary>
-    /// <param name="perPage">Number of topics per page</param>
-    /// <param name="page">Page number</param>
+    /// <param name="parameters"></param>
     /// <param name="cancellationToken"></param>
     /// <returns>Topics page</returns>
     [AllowAnonymous]
     [HttpGet("OrderedByCreationTime")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public Task<Page<TopicInfoResponse>> GetTopicsOrderedByCreationTime(
-        int perPage,
-        int page,
+        [FromQuery] PageParameters parameters,
         CancellationToken cancellationToken) =>
-        _topics.GetOrderedByCreationTime(perPage, page, cancellationToken);
+        _topics.GetOrderedByCreationTime(parameters, cancellationToken);
 
     /// <summary>
     ///     Gets information about topics ordered by complaint count. Should be used in moderator menu. Is not available
     ///     for user
     /// </summary>
-    /// <param name="perPage">Number of topics per page</param>
-    /// <param name="page">Page number</param>
+    /// <param name="parameters">Number of elements per page and page number</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Topics page</returns>
     [Authorize(Roles = "Moderator, Admin")]
@@ -80,10 +76,9 @@ public class TopicsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public Task<Page<TopicInfoResponse>> GetTopicsOrderedByComplaintCount(
-        int perPage,
-        int page,
+        [FromQuery] PageParameters parameters,
         CancellationToken cancellationToken) =>
-        _topics.GetOrderedByComplaintCount(perPage, page, cancellationToken);
+        _topics.GetOrderedByComplaintCount(parameters, cancellationToken);
 
     /// <summary>
     ///     Creates topic

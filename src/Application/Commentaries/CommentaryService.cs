@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
+using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.ValueObjects;
@@ -38,49 +39,41 @@ public class CommentaryService : ICommentaryService
 
     public async Task<Page<CommentaryByUserResponse>> GetByUserIdOrderedByCreationTime(
         Guid id,
-        int perPage,
-        int page,
+        PageParameters parameters,
         CancellationToken cancellationToken)
     {
         await _dbContext.Set<User>().AnyOrThrowAsync(id, cancellationToken);
-
-        var pageCount = await _dbContext.Set<Commentary>().PageCountAsync(perPage, cancellationToken);
         return await _dbContext.Set<Commentary>()
             .Where(c => c.UserId == id)
             .OrderByDescending(c => c.CreationTime)
             .ProjectTo<CommentaryByUserResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(perPage, page, pageCount, cancellationToken);
+            .ToPageAsync(parameters, cancellationToken);
     }
 
     public async Task<Page<CommentaryResponse>> GetByTopicIdOrderedByCreationTime(
         Guid id,
-        int perPage,
-        int page,
+        PageParameters parameters,
         CancellationToken cancellationToken)
     {
         await _dbContext.Set<Topic>().AnyOrThrowAsync(id, cancellationToken);
-
-        var pageCount = await _dbContext.Set<Commentary>().PageCountAsync(perPage, cancellationToken);
         return await _dbContext.Set<Commentary>()
             .Include(c => c.User)
             .Where(c => c.TopicId == id)
             .OrderByDescending(c => c.CreationTime)
             .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(perPage, page, pageCount, cancellationToken);
+            .ToPageAsync(parameters, cancellationToken);
     }
 
     public async Task<Page<CommentaryResponse>> GetOrderedByComplaintCount(
-        int perPage,
-        int page,
+        PageParameters parameters,
         CancellationToken cancellationToken)
     {
-        var pageCount = await _dbContext.Set<Commentary>().PageCountAsync(perPage, cancellationToken);
         return await _dbContext.Set<Commentary>()
             .Include(c => c.User)
             .Where(c => c.ComplaintCount != 0)
             .OrderBy(c => c.ComplaintCount)
             .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(perPage, page, pageCount, cancellationToken);
+            .ToPageAsync(parameters, cancellationToken);
     }
 
     public async Task<IdResponse<Guid>> Create(

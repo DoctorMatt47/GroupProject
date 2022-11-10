@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using GroupProject.Application.Common.Exceptions;
+using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -70,11 +71,12 @@ public static class LinqExtensions
 
     public static async Task<Page<T>> ToPageAsync<T>(
         this IQueryable<T> queryable,
-        int perPage,
-        int page,
-        int pageCount,
+        PageParameters parameters,
         CancellationToken cancellationToken = default)
     {
+        var (perPage, page) = parameters;
+
+        var pageCount = await queryable.PageCountAsync(page, cancellationToken);
         var list = await queryable
             .Skip((page - 1) * perPage)
             .Take(perPage)
@@ -83,7 +85,7 @@ public static class LinqExtensions
         return new Page<T>(list, pageCount);
     }
 
-    public static async Task<int> PageCountAsync<T>(
+    private static async Task<int> PageCountAsync<T>(
         this IQueryable<T> queryable,
         int perPage,
         CancellationToken cancellationToken = default) =>
@@ -95,18 +97,6 @@ public static class LinqExtensions
     {
         var tasks = enumerable.Select(selectTask);
 
-        var responses = new List<TResponse>();
-        foreach (var task in tasks)
-        {
-            var response = await task;
-            responses.Add(response);
-        }
-
-        return responses;
-    }
-
-    public static async Task<IEnumerable<TResponse>> WhenAllAsync<TResponse>(this IEnumerable<Task<TResponse>> tasks)
-    {
         var responses = new List<TResponse>();
         foreach (var task in tasks)
         {

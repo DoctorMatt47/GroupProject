@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GroupProject.Application.Commentaries;
+using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
 using GroupProject.WebApi.Requests;
 using Microsoft.AspNetCore.Authorization;
@@ -33,17 +34,15 @@ public class CommentariesController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public Task<Page<CommentaryByUserResponse>> GetCommentariesByUserIdOrderedByCreationTime(
         Guid id,
-        int perPage,
-        int page,
+        [FromQuery] PageParameters parameters,
         CancellationToken cancellationToken) =>
-        _commentaries.GetByUserIdOrderedByCreationTime(id, perPage, page, cancellationToken);
+        _commentaries.GetByUserIdOrderedByCreationTime(id, parameters, cancellationToken);
 
     /// <summary>
     ///     Gets paged commentaries by topic id
     /// </summary>
     /// <param name="id">Topic id</param>
-    /// <param name="perPage">Number of commentary per page</param>
-    /// <param name="page">Number of pages</param>
+    /// <param name="parameters">Number of elements per page and page number</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Commentary page</returns>
     [AllowAnonymous]
@@ -52,17 +51,14 @@ public class CommentariesController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public Task<Page<CommentaryResponse>> GetCommentariesByTopicIdOrderedByCreationTime(
         Guid id,
-        int perPage,
-        int page,
+        [FromQuery] PageParameters parameters,
         CancellationToken cancellationToken) =>
-        _commentaries.GetByTopicIdOrderedByCreationTime(id, perPage, page, cancellationToken);
+        _commentaries.GetByTopicIdOrderedByCreationTime(id, parameters, cancellationToken);
 
     /// <summary>
-    ///     Gets paged commentaries by topic id
+    ///     Gets paged commentaries ordered by complaint count
     /// </summary>
-    /// <param name="id">Topic id</param>
-    /// <param name="perPage">Number of commentary per page</param>
-    /// <param name="page">Number of pages</param>
+    /// <param name="parameters">Number of elements per page and page number</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Commentary page</returns>
     [AllowAnonymous]
@@ -70,10 +66,9 @@ public class CommentariesController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public Task<Page<CommentaryResponse>> GetCommentariesOrderedByComplaintCount(
-        int perPage,
-        int page,
+        [FromQuery] PageParameters parameters,
         CancellationToken cancellationToken) =>
-        _commentaries.GetOrderedByComplaintCount(perPage, page, cancellationToken);
+        _commentaries.GetOrderedByComplaintCount(parameters, cancellationToken);
 
     /// <summary>
     ///     Creates commentary for specific topic

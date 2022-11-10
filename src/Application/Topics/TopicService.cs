@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
+using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
@@ -29,64 +30,56 @@ public class TopicService : ITopicService
     }
 
     public async Task<Page<TopicInfoResponse>> GetOrderedByComplaintCount(
-        int perPage,
-        int page,
+        PageParameters parameters,
         CancellationToken cancellationToken)
     {
-        var pageCount = await _dbContext.Set<Topic>().PageCountAsync(perPage, cancellationToken);
         return await _dbContext.Set<Topic>()
             .Include(t => t.Section)
             .Include(t => t.User)
             .Where(t => t.ComplaintCount != 0)
             .OrderBy(t => t.ComplaintCount)
             .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(perPage, page, pageCount, cancellationToken);
+            .ToPageAsync(parameters, cancellationToken);
     }
 
     public async Task<Page<TopicInfoResponse>> GetOrderedByCreationTime(
-        int perPage,
-        int page,
+        PageParameters parameters,
         CancellationToken cancellationToken)
     {
-        var pageCount = await _dbContext.Set<Topic>().PageCountAsync(perPage, cancellationToken);
         return await _dbContext.Set<Topic>()
             .Include(t => t.Section)
             .Include(t => t.User)
             .OrderByDescending(t => t.CreationTime)
             .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(perPage, page, pageCount, cancellationToken);
+            .ToPageAsync(parameters, cancellationToken);
     }
 
     public async Task<Page<TopicInfoResponse>> GetBySectionIdOrderedByCreationTime(
         int sectionId,
-        int perPage,
-        int page,
+        PageParameters parameters,
         CancellationToken cancellationToken)
     {
-        var pageCount = await _dbContext.Set<Topic>().PageCountAsync(perPage, cancellationToken);
         return await _dbContext.Set<Topic>()
             .Include(t => t.Section)
             .Include(t => t.User)
             .Where(t => t.Section.Id == sectionId)
             .OrderByDescending(t => t.CreationTime)
             .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(perPage, page, pageCount, cancellationToken);
+            .ToPageAsync(parameters, cancellationToken);
     }
 
     public async Task<Page<TopicByUserIdResponse>> GetByUserIdOrderedByCreationTime(
         Guid userId,
-        int perPage,
-        int page,
+        PageParameters parameters,
         CancellationToken cancellationToken)
     {
-        var pageCount = await _dbContext.Set<Topic>().PageCountAsync(perPage, cancellationToken);
         return await _dbContext.Set<Topic>()
             .Include(t => t.Section)
             .Include(t => t.User)
             .Where(t => t.UserId == userId)
             .OrderByDescending(t => t.CreationTime)
             .ProjectTo<TopicByUserIdResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(perPage, page, pageCount, cancellationToken);
+            .ToPageAsync(parameters, cancellationToken);
     }
 
     public async Task<TopicResponse> Get(Guid id, CancellationToken cancellationToken)

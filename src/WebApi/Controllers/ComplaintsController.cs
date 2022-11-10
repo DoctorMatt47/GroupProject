@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Application.Complaints;
 using GroupProject.Domain.Enums;
@@ -24,8 +25,7 @@ public class ComplaintsController : ApiControllerBase
     /// <summary>
     ///     Gets paged complaints
     /// </summary>
-    /// <param name="perPage">Number of complaints per page</param>
-    /// <param name="page">Number of page</param>
+    /// <param name="parameters">Number of elements per page and page number</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Paged complaints</returns>
     [Authorize(Roles = "Moderator, Admin")]
@@ -34,10 +34,9 @@ public class ComplaintsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public Task<Page<ComplaintResponse>> GetComplaints(
-        int perPage,
-        int page,
+        [FromQuery] PageParameters parameters,
         CancellationToken cancellationToken) =>
-        _complaints.Get(perPage, page, cancellationToken);
+        _complaints.Get(parameters, cancellationToken);
 
     /// <summary>
     ///     Gets complaints by topic id. Should be used in moderator menu. Is not available for user
