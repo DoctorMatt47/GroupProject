@@ -109,6 +109,14 @@ public class TopicsController : ApiControllerBase
         return Created(location, response);
     }
 
+    [AllowAnonymous]
+    [HttpPost("View")]
+    public async Task<ActionResult> IncrementViewCount(Guid id, CancellationToken cancellationToken)
+    {
+        await _topics.IncrementViewCount(id, cancellationToken);
+        return NoContent();
+    }
+
     [Authorize]
     [HttpPut("{id:guid}/Close")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]

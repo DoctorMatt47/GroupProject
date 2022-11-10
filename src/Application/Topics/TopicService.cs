@@ -116,6 +116,13 @@ public class TopicService : ITopicService
         return new IdResponse<Guid>(topic.Id);
     }
 
+    public async Task IncrementViewCount(Guid id, CancellationToken cancellationToken)
+    {
+        var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
+        topic.IncrementViewCount();
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     public async Task Delete(Guid id, CancellationToken cancellationToken)
     {
         var topic = await _dbContext.Set<Topic>()

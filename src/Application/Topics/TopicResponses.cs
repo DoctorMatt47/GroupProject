@@ -12,7 +12,9 @@ public record TopicResponse(
     Guid UserId,
     string UserLogin,
     int SectionId,
-    string SectionHeader);
+    string SectionHeader,
+    int ViewCount,
+    bool IsClosed);
 
 public record TopicHeaderResponse(
     Guid Id,
@@ -22,8 +24,15 @@ public record TopicHeaderResponse(
     Guid UserId,
     string UserLogin,
     int SectionId,
-    string SectionHeader);
+    string SectionHeader,
+    int ViewCount,
+    bool IsClosed);
 
 public record TopicByUserIdResponse(
     Guid Id,
-    string Header);
+    string Header,
+    DateTime CreationTime,
+    int SectionId,
+    string SectionHeader,
+    int ViewCount,
+    bool IsClosed);
