@@ -4,6 +4,7 @@ using GroupProject.Application.Common.Services;
 using GroupProject.Application.Complaints;
 using GroupProject.Application.Configurations;
 using GroupProject.Application.Identity;
+using GroupProject.Application.Phrases;
 using GroupProject.Application.Sections;
 using GroupProject.Application.Topics;
 using GroupProject.Application.Users;
@@ -26,6 +27,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ISectionService, SectionService>();
         services.AddTransient<IIdentityService, IdentityService>();
         services.AddTransient<IConfigurationService, ConfigurationService>();
+        services.AddTransient<IPhraseService, PhraseService>();
 
         return services;
     }
