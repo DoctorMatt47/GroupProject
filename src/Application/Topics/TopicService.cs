@@ -82,8 +82,10 @@ public class TopicService : ITopicService
     public async Task<IdResponse<Guid>> Create(CreateTopicRequest request, CancellationToken cancellationToken)
     {
         await _dbContext.Set<User>().AnyOrThrowAsync(request.UserId, cancellationToken);
-        await _dbContext.Set<Section>().AnyOrThrowAsync(request.SectionId, cancellationToken);
         await _dbContext.Set<Topic>().NoOneOrThrowAsync(t => t.Header == request.Header, cancellationToken);
+
+        var section = await _dbContext.Set<Section>().FindOrThrowAsync(request.SectionId, cancellationToken);
+        section.IncrementTopicCount();
 
         var compileOptions = _mapper.Map<CompileOptions>(request.CompileOptions);
         var topic = new Topic(
@@ -103,7 +105,12 @@ public class TopicService : ITopicService
 
     public async Task Delete(Guid id, CancellationToken cancellationToken)
     {
-        var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
+        var topic = await _dbContext.Set<Topic>()
+            .Include(t => t.Section)
+            .FirstOrThrowAsync(id, cancellationToken);
+
+        topic.Section.DecrementTopicCount();
+
         _dbContext.Set<Topic>().Remove(topic);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }

@@ -26,8 +26,19 @@ public class Section : IHasId<int>
 
     public string Header { get; private set; } = null!;
     public string Description { get; private set; } = null!;
+    public int TopicCount { get; private set; }
 
     public IEnumerable<Topic> Topics => _topics.ToList();
 
     public int Id { get; private set; } = 0;
+
+    public void IncrementTopicCount()
+    {
+        TopicCount++;
+    }
+
+    public void DecrementTopicCount()
+    {
+        TopicCount--;
+    }
 }
