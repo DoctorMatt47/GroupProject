@@ -27,6 +27,15 @@ public class CommentaryService : ICommentaryService
         _mapper = mapper;
     }
 
+    public async Task<CommentaryResponse> Get(Guid id, CancellationToken cancellationToken)
+    {
+        var commentary = await _dbContext.Set<Commentary>()
+            .Include(c => c.User)
+            .FirstOrThrowAsync(id, cancellationToken);
+
+        return _mapper.Map<CommentaryResponse>(commentary);
+    }
+
     public async Task<Page<CommentaryByUserResponse>> GetByUserIdOrderedByCreationTime(
         Guid id,
         int perPage,

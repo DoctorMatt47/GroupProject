@@ -21,6 +21,13 @@ public class CommentariesController : ApiControllerBase
     }
 
     [AllowAnonymous]
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<CommentaryResponse> Get(Guid id, CancellationToken cancellationToken) =>
+        await _commentaries.Get(id, cancellationToken);
+
+    [AllowAnonymous]
     [HttpGet("ByUser/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
