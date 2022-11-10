@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
@@ -60,8 +59,7 @@ public class UserService : IUserService
         UserRole role,
         CancellationToken cancellationToken)
     {
-        var isUserExist = await _dbContext.Set<User>().AnyAsync(u => u.Login == request.Login, cancellationToken);
-        if (isUserExist) throw new ConflictException($"There is already user with login: {request.Login}");
+        await _dbContext.Set<User>().NoOneOrThrowAsync(u => u.Login == request.Login, cancellationToken);
 
         var user = new User(request.Login, request.Password, _passwordHash, role);
 

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using GroupProject.Application.Common.Exceptions;
+using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
@@ -29,9 +29,7 @@ public class SectionService : ISectionService
 
     public async Task<IdResponse<int>> Create(CreateSectionRequest request, CancellationToken cancellationToken)
     {
-        var isSectionExist =
-            await _dbContext.Set<Section>().AnyAsync(s => s.Header == request.Header, cancellationToken);
-        if (isSectionExist) throw new ConflictException("There is already section with same header");
+        await _dbContext.Set<Section>().NoOneOrThrowAsync(s => s.Header == request.Header, cancellationToken);
 
         var section = new Section(request.Header, request.Description);
 

@@ -16,10 +16,9 @@ public static class LinqExtensions
         TId id,
         CancellationToken cancellationToken)
         where TEntity : class, IHasId<TId>
+        where TId : notnull
     {
-        var parameter = Expression.Parameter(typeof(TEntity), nameof(TEntity));
-        var equal = Expression.Equal(Expression.Property(parameter, "Id"), Expression.Constant(id));
-        var lambda = Expression.Lambda<Func<TEntity, bool>>(equal, parameter);
+        var lambda = EqualsLambdaExpression<TEntity>(id, "Id");
         var entity = await set.FirstOrDefaultAsync(lambda, cancellationToken);
         if (entity is null) throw new NotFoundException($"There is no {typeof(TEntity).Name} with id: {id}");
         return entity;
@@ -36,17 +35,37 @@ public static class LinqExtensions
         return entity;
     }
 
+    public static async Task NoOneOrThrowAsync<TEntity>(
+        this IQueryable<TEntity> set,
+        Expression<Func<TEntity, bool>> predicate,
+        CancellationToken cancellationToken)
+        where TEntity : class
+    {
+        var isExist = await set.AnyAsync(predicate, cancellationToken);
+        if (isExist)
+            throw new ConflictException($"There is already {typeof(TEntity).Name} with condition: {predicate}");
+    }
+
     public static async Task AnyOrThrowAsync<TEntity, TId>(
         this IQueryable<TEntity> set,
         TId id,
         CancellationToken cancellationToken)
         where TEntity : class, IHasId<TId>
+        where TId : notnull
     {
-        var parameter = Expression.Parameter(typeof(TEntity), nameof(TEntity));
-        var equal = Expression.Equal(Expression.Property(parameter, "Id"), Expression.Constant(id));
-        var lambda = Expression.Lambda<Func<TEntity, bool>>(equal, parameter);
+        var lambda = EqualsLambdaExpression<TEntity>(id, "Id");
         var isExist = await set.AnyAsync(lambda, cancellationToken);
         if (!isExist) throw new NotFoundException($"There is no {typeof(TEntity).Name} with id: {id}");
+    }
+
+    private static Expression<Func<TEntity, bool>> EqualsLambdaExpression<TEntity>(
+        object? constant,
+        string propertyName)
+        where TEntity : class
+    {
+        var parameter = Expression.Parameter(typeof(TEntity), nameof(TEntity));
+        var equal = Expression.Equal(Expression.Property(parameter, propertyName), Expression.Constant(constant));
+        return Expression.Lambda<Func<TEntity, bool>>(equal, parameter);
     }
 
     public static async Task<Page<T>> ToPageAsync<T>(
