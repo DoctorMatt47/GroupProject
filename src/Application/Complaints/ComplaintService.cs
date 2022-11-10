@@ -27,23 +27,36 @@ public class ComplaintService : IComplaintService
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ComplaintResponse>> GetByTopicId(
+    public async Task<Page<ComplaintResponse>> Get(
+        int perPage,
+        int page,
+        CancellationToken cancellationToken)
+    {
+        var pageCount = await _dbContext.Set<Complaint>().PageCountAsync(perPage, cancellationToken);
+        return await _dbContext.Set<Complaint>()
+            .OrderBy(c => c.CreationTime)
+            .ProjectTo<ComplaintResponse>(_mapper.ConfigurationProvider)
+            .ToPageAsync(perPage, page, pageCount, cancellationToken);
+    }
+
+    public async Task<IEnumerable<ComplaintByTargetResponse>> GetByTopicId(
         Guid topicId,
         CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Complaint>()
             .Where(c => c.TopicId == topicId)
-            .ProjectTo<ComplaintResponse>(_mapper.ConfigurationProvider)
+            .ProjectTo<ComplaintByTargetResponse>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<ComplaintResponse>> GetByCommentaryId(
+
+    public async Task<IEnumerable<ComplaintByTargetResponse>> GetByCommentaryId(
         Guid commentaryId,
         CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Complaint>()
             .Where(c => c.CommentaryId == commentaryId)
-            .ProjectTo<ComplaintResponse>(_mapper.ConfigurationProvider)
+            .ProjectTo<ComplaintByTargetResponse>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
     }
 

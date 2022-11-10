@@ -1,9 +1,7 @@
 ﻿namespace GroupProject.Application.Complaints;
 
-public record ComplaintResponse(
+public record ComplaintByTargetResponse(
     Guid Id,
     string Description,
     Guid UserId,
-    DateTime CreationTime,
-    Guid TargetId,
-    string Target);
+    DateTime CreationTime);

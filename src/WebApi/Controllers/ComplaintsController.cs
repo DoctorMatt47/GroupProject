@@ -22,7 +22,25 @@ public class ComplaintsController : ApiControllerBase
     }
 
     /// <summary>
-    ///     Gets complains by topic id. Should be used in moderator menu. Is not available for user
+    ///     Gets paged complaints
+    /// </summary>
+    /// <param name="perPage">Number of complaints per page</param>
+    /// <param name="page">Number of page</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Paged complaints</returns>
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public Task<Page<ComplaintResponse>> GetComplaints(
+        int perPage,
+        int page,
+        CancellationToken cancellationToken) =>
+        _complaints.Get(perPage, page, cancellationToken);
+
+    /// <summary>
+    ///     Gets complaints by topic id. Should be used in moderator menu. Is not available for user
     /// </summary>
     /// <param name="id">Topic id</param>
     /// <param name="cancellationToken"></param>
@@ -33,13 +51,13 @@ public class ComplaintsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<IEnumerable<ComplaintResponse>> GetComplaintsByTopic(
+    public Task<IEnumerable<ComplaintByTargetResponse>> GetComplaintsByTopic(
         Guid id,
         CancellationToken cancellationToken) =>
         _complaints.GetByTopicId(id, cancellationToken);
 
     /// <summary>
-    ///     Gets complains by commentary id. Should be used in moderator menu. Is not available for user
+    ///     Gets complaints by commentary id. Should be used in moderator menu. Is not available for user
     /// </summary>
     /// <param name="id">Commentary id</param>
     /// <param name="cancellationToken"></param>
@@ -50,7 +68,7 @@ public class ComplaintsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<IEnumerable<ComplaintResponse>> GetComplaintsByCommentary(
+    public Task<IEnumerable<ComplaintByTargetResponse>> GetComplaintsByCommentary(
         Guid id,
         CancellationToken cancellationToken) =>
         _complaints.GetByCommentaryId(id, cancellationToken);
