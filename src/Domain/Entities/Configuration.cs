@@ -12,4 +12,5 @@ public class Configuration
     public string Rules { get; set; } = null!;
     public int WarningCountForBan { get; set; }
     public TimeSpan BanDuration { get; set; }
+    public TimeSpan ComplaintDuration { get; set; }
 }
