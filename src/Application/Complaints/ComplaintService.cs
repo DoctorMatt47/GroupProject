@@ -34,7 +34,7 @@ public class ComplaintService : IComplaintService
     {
         var pageCount = await _dbContext.Set<Complaint>().PageCountAsync(perPage, cancellationToken);
         return await _dbContext.Set<Complaint>()
-            .OrderBy(c => c.CreationTime)
+            .OrderByDescending(c => c.CreationTime)
             .ProjectTo<ComplaintResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(perPage, page, pageCount, cancellationToken);
     }

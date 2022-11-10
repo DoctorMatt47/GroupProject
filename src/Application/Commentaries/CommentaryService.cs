@@ -38,7 +38,7 @@ public class CommentaryService : ICommentaryService
         var pageCount = await _dbContext.Set<Commentary>().PageCountAsync(perPage, cancellationToken);
         return await _dbContext.Set<Commentary>()
             .Where(c => c.UserId == id)
-            .OrderBy(c => c.CreationTime)
+            .OrderByDescending(c => c.CreationTime)
             .ProjectTo<CommentaryByUserResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(perPage, page, pageCount, cancellationToken);
     }
@@ -55,7 +55,7 @@ public class CommentaryService : ICommentaryService
         return await _dbContext.Set<Commentary>()
             .Include(c => c.User)
             .Where(c => c.TopicId == id)
-            .OrderBy(c => c.CreationTime)
+            .OrderByDescending(c => c.CreationTime)
             .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(perPage, page, pageCount, cancellationToken);
     }
