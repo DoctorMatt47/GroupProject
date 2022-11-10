@@ -35,14 +35,20 @@ public class TopicsController : ApiControllerBase
     ///     Gets topics created of specific user
     /// </summary>
     /// <param name="id">User id</param>
+    /// <param name="perPage">Number of users per page</param>
+    /// <param name="page">Page number</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Topics created by specific user</returns>
     [AllowAnonymous]
     [HttpGet("ByUser/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<IEnumerable<TopicByUserIdResponse>> GetByUserId(Guid id, CancellationToken cancellationToken) =>
-        _topics.GetByUserId(id, cancellationToken);
+    public Task<Page<TopicByUserIdResponse>> GetByUserIdOrderedByCreationTime(
+        Guid id,
+        int perPage,
+        int page,
+        CancellationToken cancellationToken) =>
+        _topics.GetByUserIdOrderedByCreationTime(id, perPage, page, cancellationToken);
 
     /// <summary>
     ///     Gets paged information about topics ordered by creation time
