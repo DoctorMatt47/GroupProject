@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Interfaces;
-using GroupProject.Application.Common.Requests;
-using GroupProject.Application.Users;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -36,7 +34,7 @@ public class IdentityService : IIdentityService
     }
 
     public async Task<IdentityResponse> Create(
-        AuthenticateUserRequest request,
+        CreateIdentityRequest request,
         CancellationToken cancellationToken)
     {
         const string exceptionMessage = "Incorrect password or login";
@@ -52,7 +50,7 @@ public class IdentityService : IIdentityService
         if (user.BanEndTime > DateTime.UtcNow)
             return new IdentityResponse(null, user.Id, Enum.GetName(user.Role)!, user.BanEndTime);
 
-        var identity = _identities.Create(_mapper.Map<CreateIdentityRequest>(user));
+        var identity = _identities.Create(_mapper.Map<Identity>(user));
         var token = _tokens.Get(identity);
 
         return new IdentityResponse(token, user.Id, Enum.GetName(user.Role)!, null);
