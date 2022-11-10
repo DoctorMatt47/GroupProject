@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using GroupProject.Domain.Enums;
 using GroupProject.Domain.Interfaces;
 
@@ -17,10 +18,11 @@ public class Complaint : IHasId<Guid>
     {
     }
 
-    public Complaint(string description, ComplaintTarget target, Guid elementId)
+    public Complaint(string description, ComplaintTarget target, Guid elementId, TimeSpan complaintDuration)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
+        ExpirationTime = DateTime.UtcNow + complaintDuration;
         Description = description;
         Target = target;
 
@@ -33,6 +35,7 @@ public class Complaint : IHasId<Guid>
     }
 
     public DateTime CreationTime { get; private set; }
+    public DateTime ExpirationTime { get; private set; }
     public string Description { get; private set; } = null!;
     public ComplaintTarget Target { get; private set; }
 
@@ -42,5 +45,12 @@ public class Complaint : IHasId<Guid>
     public Guid? CommentaryId { get; private set; }
     public Commentary? Commentary { get; private set; } = null!;
 
+    public static Expression<Func<Complaint, bool>> Active => complaint => complaint.ExpirationTime >= DateTime.UtcNow;
+
     public Guid Id { get; private set; }
+
+    public void Close()
+    {
+        ExpirationTime = DateTime.UtcNow;
+    }
 }

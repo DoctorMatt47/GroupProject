@@ -33,6 +33,7 @@ public class ComplaintService : IComplaintService
         CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Complaint>()
+            .Where(Complaint.Active)
             .OrderByDescending(c => c.CreationTime)
             .ProjectTo<ComplaintResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(parameters, cancellationToken);
@@ -43,17 +44,18 @@ public class ComplaintService : IComplaintService
         CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Complaint>()
+            .Where(Complaint.Active)
             .Where(c => c.TopicId == topicId)
             .ProjectTo<ComplaintByTargetResponse>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
     }
-
 
     public async Task<IEnumerable<ComplaintByTargetResponse>> GetByCommentaryId(
         Guid commentaryId,
         CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Complaint>()
+            .Where(Complaint.Active)
             .Where(c => c.CommentaryId == commentaryId)
             .ProjectTo<ComplaintByTargetResponse>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
@@ -66,7 +68,12 @@ public class ComplaintService : IComplaintService
         var target = await FindTargetOrThrowAsync(request.Target, request.TargetId, cancellationToken);
         target.IncrementComplaintCount();
 
-        var complaint = new Complaint(request.Description, request.Target, request.TargetId);
+        var configuration = await _dbContext.Set<Configuration>().FirstAsync(cancellationToken);
+        var complaint = new Complaint(
+            request.Description,
+            request.Target,
+            request.TargetId,
+            configuration.ComplaintDuration);
 
         _dbContext.Set<Complaint>().Add(complaint);
         await _dbContext.SaveChangesAsync(cancellationToken);
