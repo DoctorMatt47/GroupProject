@@ -24,6 +24,7 @@ public class User : IHasId<Guid>
     {
         Id = Guid.NewGuid();
         WarningCount = 0;
+        CreatedTime = DateTime.UtcNow;
         Login = login;
         PasswordSalt = passwordHash.GenerateSalt();
         PasswordHash = passwordHash.Encode(password, PasswordSalt);
@@ -34,6 +35,7 @@ public class User : IHasId<Guid>
     public byte[] PasswordHash { get; private set; } = null!;
     public byte[] PasswordSalt { get; private set; } = null!;
     public UserRole Role { get; set; } = UserRole.User;
+    public DateTime CreatedTime { get; set; }
     public DateTime? BanEndTime { get; private set; }
     public int WarningCount { get; private set; }
 
