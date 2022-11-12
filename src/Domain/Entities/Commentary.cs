@@ -1,4 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using GroupProject.Domain.Interfaces;
 using GroupProject.Domain.ValueObjects;
 
@@ -8,7 +11,7 @@ namespace GroupProject.Domain.Entities;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Local")]
-public class Commentary : IHasComplaintCount, IHasId<Guid>
+public class Commentary : IHasId<Guid>, IHasComplaintCount, IVerifiable
 {
     private readonly List<Complaint> _complaints = new();
 
@@ -53,4 +56,11 @@ public class Commentary : IHasComplaintCount, IHasId<Guid>
     }
 
     public Guid Id { get; private set; }
+
+    public DateTime? VerifyBefore { get; private set; }
+
+    public void Verify()
+    {
+        VerifyBefore = null;
+    }
 }
