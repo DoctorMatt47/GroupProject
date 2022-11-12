@@ -34,10 +34,12 @@ public class Complaint : IHasId<Guid>
         };
     }
 
+    public static Expression<Func<Complaint, bool>> Active => complaint => complaint.ExpirationTime >= DateTime.UtcNow;
+
     public DateTime CreationTime { get; private set; }
-    public DateTime ExpirationTime { get; private set; }
     public string Description { get; private set; } = null!;
     public ComplaintTarget Target { get; private set; }
+    public DateTime ExpirationTime { get; private set; }
 
     public Guid? TopicId { get; private set; }
     public Topic? Topic { get; private set; } = null!;
@@ -45,12 +47,5 @@ public class Complaint : IHasId<Guid>
     public Guid? CommentaryId { get; private set; }
     public Commentary? Commentary { get; private set; } = null!;
 
-    public static Expression<Func<Complaint, bool>> Active => complaint => complaint.ExpirationTime >= DateTime.UtcNow;
-
     public Guid Id { get; private set; }
-
-    public void Close()
-    {
-        ExpirationTime = DateTime.UtcNow;
-    }
 }
