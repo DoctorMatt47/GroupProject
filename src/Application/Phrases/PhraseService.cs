@@ -53,4 +53,12 @@ public class PhraseService : IPhraseService
 
         await _context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<IReadOnlyCollection<PhraseResponse>> GetForbiddenWhere(
+        Expression<Func<ForbiddenPhrase, bool>> predicate,
+        CancellationToken cancellationToken) =>
+        await _context.Set<ForbiddenPhrase>()
+            .Where(predicate)
+            .ProjectTo<PhraseResponse>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
 }
