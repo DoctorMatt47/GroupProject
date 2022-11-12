@@ -29,57 +29,34 @@ public class TopicService : ITopicService
         _mapper = mapper;
     }
 
-    public async Task<Page<TopicHeaderResponse>> GetOrderedByComplaintCount(
-        PageParameters parameters,
-        CancellationToken cancellationToken)
+    public async Task<Page<TopicResponse>> Get(GetTopicsRequest request, CancellationToken cancellationToken)
     {
-        return await _dbContext.Set<Topic>()
+        var topics = _dbContext.Set<Topic>()
             .Include(t => t.Section)
             .Include(t => t.User)
-            .Where(t => t.ComplaintCount != 0)
-            .OrderBy(t => t.ComplaintCount)
-            .ProjectTo<TopicHeaderResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(parameters, cancellationToken);
-    }
+            .AsQueryable();
 
-    public async Task<Page<TopicHeaderResponse>> GetOrderedByCreationTime(
-        PageParameters parameters,
-        CancellationToken cancellationToken)
-    {
-        return await _dbContext.Set<Topic>()
-            .Include(t => t.Section)
-            .Include(t => t.User)
-            .OrderByDescending(t => t.CreationTime)
-            .ProjectTo<TopicHeaderResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(parameters, cancellationToken);
-    }
+        var (substring, sectionId, userId, orderedBy, pageRequest, isVerificationRequired, isOpen) = request;
+        if (substring is not null) topics = topics.Where(t => t.Header.Contains(substring));
+        if (sectionId is not null) topics = topics.Where(t => t.SectionId == sectionId);
+        if (userId is not null) topics = topics.Where(t => t.UserId == userId);
+        if (isVerificationRequired) topics = topics.Where(t => t.VerificationRequiredBefore != null);
+        if (isOpen) topics = topics.Where(Topic.IsOpen);
 
-    public async Task<Page<TopicHeaderResponse>> GetBySectionIdOrderedByCreationTime(
-        int sectionId,
-        PageParameters parameters,
-        CancellationToken cancellationToken)
-    {
-        return await _dbContext.Set<Topic>()
-            .Include(t => t.Section)
-            .Include(t => t.User)
-            .Where(t => t.Section.Id == sectionId)
-            .OrderByDescending(t => t.CreationTime)
-            .ProjectTo<TopicHeaderResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(parameters, cancellationToken);
-    }
+        topics = orderedBy switch
+        {
+            TopicsOrderedByParameter.CreationTime => topics.OrderByDescending(t => t.CreationTime),
+            TopicsOrderedByParameter.ViewCount => topics.OrderByDescending(t => t.ViewCount),
+            TopicsOrderedByParameter.ComplaintCount => topics
+                .Where(t => t.ComplaintCount != 0)
+                .OrderByDescending(t => t.ComplaintCount),
 
-    public async Task<Page<TopicByUserIdResponse>> GetByUserIdOrderedByCreationTime(
-        Guid userId,
-        PageParameters parameters,
-        CancellationToken cancellationToken)
-    {
-        return await _dbContext.Set<Topic>()
-            .Include(t => t.Section)
-            .Include(t => t.User)
-            .Where(t => t.UserId == userId)
-            .OrderByDescending(t => t.CreationTime)
-            .ProjectTo<TopicByUserIdResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(parameters, cancellationToken);
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+
+        return await topics
+            .ProjectTo<TopicResponse>(_mapper.ConfigurationProvider)
+            .ToPageAsync(pageRequest, cancellationToken);
     }
 
     public async Task<TopicResponse> Get(Guid id, CancellationToken cancellationToken)
