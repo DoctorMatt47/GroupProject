@@ -30,7 +30,7 @@ public class PhraseService : IPhraseService
             .ProjectTo<PhraseResponse>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 
-    public async Task PutForbidden(
+    public async Task UpdateForbidden(
         IEnumerable<PutPhraseRequest> request,
         CancellationToken cancellationToken)
     {
@@ -42,7 +42,7 @@ public class PhraseService : IPhraseService
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task PutVerificationRequired(
+    public async Task UpdateVerificationRequired(
         IEnumerable<PutPhraseRequest> request,
         CancellationToken cancellationToken)
     {

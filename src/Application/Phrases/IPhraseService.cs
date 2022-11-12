@@ -5,11 +5,11 @@ public interface IPhraseService
     Task<IEnumerable<PhraseResponse>> GetForbidden(CancellationToken cancellationToken);
     Task<IEnumerable<PhraseResponse>> GetVerificationRequired(CancellationToken cancellationToken);
 
-    Task PutForbidden(
+    Task UpdateForbidden(
         IEnumerable<PutPhraseRequest> request,
         CancellationToken cancellationToken);
 
-    Task PutVerificationRequired(
+    Task UpdateVerificationRequired(
         IEnumerable<PutPhraseRequest> request,
         CancellationToken cancellationToken);
 }

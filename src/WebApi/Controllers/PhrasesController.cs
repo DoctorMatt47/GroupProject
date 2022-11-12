@@ -29,7 +29,7 @@ public class PhrasesController : ApiControllerBase
         IEnumerable<PutPhraseRequest> request,
         CancellationToken cancellationToken)
     {
-        await _phrases.PutForbidden(request, cancellationToken);
+        await _phrases.UpdateForbidden(request, cancellationToken);
         return NoContent();
     }
 
@@ -39,7 +39,7 @@ public class PhrasesController : ApiControllerBase
         IEnumerable<PutPhraseRequest> request,
         CancellationToken cancellationToken)
     {
-        await _phrases.PutVerificationRequired(request, cancellationToken);
+        await _phrases.UpdateVerificationRequired(request, cancellationToken);
         return NoContent();
     }
 }
