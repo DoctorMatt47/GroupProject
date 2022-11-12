@@ -35,7 +35,7 @@ public class ConfigurationService : IConfigurationService
         if (request.Rules is not null) configuration.Rules = request.Rules;
         if (request.BanDuration is not null) configuration.BanDuration = request.BanDuration.Value;
         if (request.WarningCountForBan is not null) configuration.WarningCountForBan = request.WarningCountForBan.Value;
-        if (request.ComplaintDuration is not null) configuration.ComplaintDuration = request.ComplaintDuration.Value;
+        if (request.ComplaintDuration is not null) configuration.VerificationDuration = request.ComplaintDuration.Value;
 
         await _dbContext.SaveChangesAsync(cancellationToken);
 

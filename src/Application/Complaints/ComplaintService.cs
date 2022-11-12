@@ -73,7 +73,7 @@ public class ComplaintService : IComplaintService
             request.Description,
             request.Target,
             request.TargetId,
-            configuration.ComplaintDuration);
+            configuration.VerificationDuration);
 
         _dbContext.Set<Complaint>().Add(complaint);
         await _dbContext.SaveChangesAsync(cancellationToken);
