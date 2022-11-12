@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using GroupProject.Domain.Interfaces;
 using GroupProject.Domain.ValueObjects;
 
@@ -31,13 +32,18 @@ public class Topic : IHasComplaintCount, IHasId<Guid>
         CompileOptions = compileOptions;
     }
 
+    public static Expression<Func<Topic, bool>> IsOpen => topic => !topic.IsClosed;
+
+    public static Expression<Func<Topic, bool>> IsVerificationRequired =>
+        topic => topic.VerificationRequiredBefore != null && topic.VerificationRequiredBefore > DateTime.UtcNow;
+
     public DateTime CreationTime { get; private set; }
     public string Header { get; private set; } = null!;
     public string Description { get; private set; } = null!;
-    public bool IsClosed { get; set; }
-    public bool IsVerificationRequired { get; set; }
+    public bool IsClosed { get; private set; }
     public CompileOptions? CompileOptions { get; private set; }
     public int ViewCount { get; private set; }
+    public DateTime? VerificationRequiredBefore { get; private set; }
 
     public Guid UserId { get; private set; }
     public User User { get; private set; } = null!;
@@ -60,8 +66,22 @@ public class Topic : IHasComplaintCount, IHasId<Guid>
         if (ComplaintCount != 0) ComplaintCount--;
     }
 
-
     public Guid Id { get; private set; }
+
+    public void Close()
+    {
+        IsClosed = true;
+    }
+
+    public void Verify()
+    {
+        VerificationRequiredBefore = null;
+    }
+
+    public void RequireVerification(TimeSpan verificationDuration)
+    {
+        VerificationRequiredBefore = DateTime.UtcNow + verificationDuration;
+    }
 
     public void IncrementViewCount()
     {
