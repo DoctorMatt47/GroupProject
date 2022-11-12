@@ -9,7 +9,7 @@ namespace GroupProject.Domain.Entities;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Local")]
-public class Topic : IHasComplaintCount, IHasId<Guid>
+public class Topic : IHasId<Guid>, IHasComplaintCount, IVerifiable
 {
     private readonly List<Commentary> _commentaries = new();
     private readonly List<Complaint> _complaints = new();
@@ -21,7 +21,13 @@ public class Topic : IHasComplaintCount, IHasId<Guid>
     {
     }
 
-    public Topic(string header, string description, CompileOptions? compileOptions, Guid userId, int sectionId)
+    public Topic(
+        string header,
+        string description,
+        CompileOptions? compileOptions,
+        Guid userId,
+        int sectionId,
+        TimeSpan? verificationDuration = null)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
@@ -30,12 +36,13 @@ public class Topic : IHasComplaintCount, IHasId<Guid>
         Description = description;
         SectionId = sectionId;
         CompileOptions = compileOptions;
+        VerifyBefore = DateTime.UtcNow + verificationDuration;
     }
 
     public static Expression<Func<Topic, bool>> IsOpen => topic => !topic.IsClosed;
 
-    public static Expression<Func<Topic, bool>> IsVerificationRequired =>
-        topic => topic.VerificationRequiredBefore != null && topic.VerificationRequiredBefore > DateTime.UtcNow;
+    public static Expression<Func<Topic, bool>> IsVerified =>
+        topic => topic.VerifyBefore != null && topic.VerifyBefore > DateTime.UtcNow;
 
     public DateTime CreationTime { get; private set; }
     public string Header { get; private set; } = null!;
@@ -43,7 +50,6 @@ public class Topic : IHasComplaintCount, IHasId<Guid>
     public bool IsClosed { get; private set; }
     public CompileOptions? CompileOptions { get; private set; }
     public int ViewCount { get; private set; }
-    public DateTime? VerificationRequiredBefore { get; private set; }
 
     public Guid UserId { get; private set; }
     public User User { get; private set; } = null!;
@@ -68,22 +74,19 @@ public class Topic : IHasComplaintCount, IHasId<Guid>
 
     public Guid Id { get; private set; }
 
+    public DateTime? VerifyBefore { get; private set; }
+
+    public void Verify()
+    {
+        VerifyBefore = null;
+    }
+
     public void Close()
     {
         IsClosed = true;
     }
 
-    public void Verify()
-    {
-        VerificationRequiredBefore = null;
-    }
-
-    public void RequireVerification(TimeSpan verificationDuration)
-    {
-        VerificationRequiredBefore = DateTime.UtcNow + verificationDuration;
-    }
-
-    public void IncrementViewCount()
+    public void View()
     {
         ViewCount++;
     }
