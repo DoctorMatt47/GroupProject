@@ -16,7 +16,6 @@ public class ErrorController : ControllerBase
         var responseCode = exception switch
         {
             BadRequestException => 400,
-            UnauthorizedException => 401,
             ForbiddenException => 403,
             NotFoundException => 404,
             ConflictException => 409,
