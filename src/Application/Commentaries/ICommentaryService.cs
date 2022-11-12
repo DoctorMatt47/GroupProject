@@ -9,16 +9,16 @@ public interface ICommentaryService
 
     Task<Page<CommentaryByUserResponse>> GetByUserIdOrderedByCreationTime(
         Guid id,
-        PageParameters parameters,
+        PageRequest request,
         CancellationToken cancellationToken);
 
     Task<Page<CommentaryResponse>> GetByTopicIdOrderedByCreationTime(
         Guid id,
-        PageParameters parameters,
+        PageRequest request,
         CancellationToken cancellationToken);
 
     Task<Page<CommentaryResponse>> GetOrderedByComplaintCount(
-        PageParameters parameters,
+        PageRequest request,
         CancellationToken cancellationToken);
 
     Task<IdResponse<Guid>> Create(CreateCommentaryRequest request, CancellationToken cancellationToken);

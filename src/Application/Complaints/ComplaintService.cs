@@ -29,14 +29,14 @@ public class ComplaintService : IComplaintService
     }
 
     public async Task<Page<ComplaintResponse>> Get(
-        PageParameters parameters,
+        PageRequest request,
         CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Complaint>()
             .Where(Complaint.Active)
             .OrderByDescending(c => c.CreationTime)
             .ProjectTo<ComplaintResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(parameters, cancellationToken);
+            .ToPageAsync(request, cancellationToken);
     }
 
     public async Task<IEnumerable<ComplaintByTargetResponse>> GetByTopicId(

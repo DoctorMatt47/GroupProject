@@ -39,7 +39,7 @@ public class CommentaryService : ICommentaryService
 
     public async Task<Page<CommentaryByUserResponse>> GetByUserIdOrderedByCreationTime(
         Guid id,
-        PageParameters parameters,
+        PageRequest request,
         CancellationToken cancellationToken)
     {
         await _dbContext.Set<User>().AnyOrThrowAsync(id, cancellationToken);
@@ -47,12 +47,12 @@ public class CommentaryService : ICommentaryService
             .Where(c => c.UserId == id)
             .OrderByDescending(c => c.CreationTime)
             .ProjectTo<CommentaryByUserResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(parameters, cancellationToken);
+            .ToPageAsync(request, cancellationToken);
     }
 
     public async Task<Page<CommentaryResponse>> GetByTopicIdOrderedByCreationTime(
         Guid id,
-        PageParameters parameters,
+        PageRequest request,
         CancellationToken cancellationToken)
     {
         await _dbContext.Set<Topic>().AnyOrThrowAsync(id, cancellationToken);
@@ -61,11 +61,11 @@ public class CommentaryService : ICommentaryService
             .Where(c => c.TopicId == id)
             .OrderByDescending(c => c.CreationTime)
             .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(parameters, cancellationToken);
+            .ToPageAsync(request, cancellationToken);
     }
 
     public async Task<Page<CommentaryResponse>> GetOrderedByComplaintCount(
-        PageParameters parameters,
+        PageRequest request,
         CancellationToken cancellationToken)
     {
         return await _dbContext.Set<Commentary>()
@@ -73,7 +73,7 @@ public class CommentaryService : ICommentaryService
             .Where(c => c.ComplaintCount != 0)
             .OrderBy(c => c.ComplaintCount)
             .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(parameters, cancellationToken);
+            .ToPageAsync(request, cancellationToken);
     }
 
     public async Task<IdResponse<Guid>> Create(

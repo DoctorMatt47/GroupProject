@@ -25,7 +25,7 @@ public class ComplaintsController : ApiControllerBase
     /// <summary>
     ///     Gets paged complaints
     /// </summary>
-    /// <param name="parameters">Number of elements per page and page number</param>
+    /// <param name="request">Number of elements per page and page number</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Paged complaints</returns>
     [Authorize(Roles = "Moderator, Admin")]
@@ -34,9 +34,9 @@ public class ComplaintsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public Task<Page<ComplaintResponse>> GetComplaints(
-        [FromQuery] PageParameters parameters,
+        [FromQuery] PageRequest request,
         CancellationToken cancellationToken) =>
-        _complaints.Get(parameters, cancellationToken);
+        _complaints.Get(request, cancellationToken);
 
     /// <summary>
     ///     Gets complaints by topic id. Should be used in moderator menu. Is not available for user

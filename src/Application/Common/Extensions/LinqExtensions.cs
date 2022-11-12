@@ -71,10 +71,10 @@ public static class LinqExtensions
 
     public static async Task<Page<T>> ToPageAsync<T>(
         this IQueryable<T> queryable,
-        PageParameters parameters,
+        PageRequest request,
         CancellationToken cancellationToken = default)
     {
-        var (perPage, page) = parameters;
+        var (perPage, page) = request;
 
         var pageCount = await queryable.PageCountAsync(page, cancellationToken);
         var list = await queryable
