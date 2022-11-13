@@ -74,7 +74,7 @@ public static class LinqExtensions
         PageRequest request,
         CancellationToken cancellationToken = default)
     {
-        var (perPage, page) = request;
+        var (page, perPage) = request;
 
         var pageCount = await queryable.PageCountAsync(page, cancellationToken);
         var list = await queryable
