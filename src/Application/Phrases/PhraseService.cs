@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Domain.Entities;
@@ -54,11 +55,16 @@ public class PhraseService : IPhraseService
         await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<IReadOnlyCollection<PhraseResponse>> GetForbiddenWhere(
+    public async Task<IReadOnlyCollection<PhraseResponse>> GetForbidden(
         Expression<Func<ForbiddenPhrase, bool>> predicate,
         CancellationToken cancellationToken) =>
         await _context.Set<ForbiddenPhrase>()
             .Where(predicate)
             .ProjectTo<PhraseResponse>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
+
+    public async Task<bool> AnyVerificationRequired(
+        Expression<Func<ForbiddenPhrase, bool>> predicate,
+        CancellationToken cancellationToken) =>
+        await _context.Set<ForbiddenPhrase>().AnyAsync(predicate, cancellationToken);
 }

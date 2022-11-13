@@ -16,7 +16,11 @@ public interface IPhraseService
         IEnumerable<PutPhraseRequest> request,
         CancellationToken cancellationToken);
 
-    Task<IReadOnlyCollection<PhraseResponse>> GetForbiddenWhere(
+    Task<IReadOnlyCollection<PhraseResponse>> GetForbidden(
+        Expression<Func<ForbiddenPhrase, bool>> predicate,
+        CancellationToken cancellationToken);
+
+    Task<bool> AnyVerificationRequired(
         Expression<Func<ForbiddenPhrase, bool>> predicate,
         CancellationToken cancellationToken);
 }
