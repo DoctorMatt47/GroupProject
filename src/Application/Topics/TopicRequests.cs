@@ -10,17 +10,17 @@ public record CreateTopicRequest(
     int SectionId);
 
 public record GetTopicsRequest(
-    string? Substring,
-    int? SectionId,
-    Guid? UserId,
-    TopicsOrderedByParameter OrderBy,
     PageRequest PageRequest,
-    bool IsVerificationRequired,
-    bool IsOpen);
+    TopicsOrderedBy OrderBy,
+    bool OnlyOpen = false,
+    string? Substring = null,
+    int? SectionId = null,
+    Guid? UserId = null);
 
-public enum TopicsOrderedByParameter
+public enum TopicsOrderedBy
 {
     CreationTime,
     ViewCount,
     ComplaintCount,
+    VerifyBefore,
 }

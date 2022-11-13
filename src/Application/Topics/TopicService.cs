@@ -4,6 +4,7 @@ using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
+using GroupProject.Application.Configurations;
 using GroupProject.Application.Phrases;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
@@ -15,6 +16,7 @@ namespace GroupProject.Application.Topics;
 
 public class TopicService : ITopicService
 {
+    private readonly IConfigurationService _configuration;
     private readonly IAppDbContext _dbContext;
     private readonly ILogger<TopicService> _logger;
     private readonly IMapper _mapper;
@@ -23,42 +25,51 @@ public class TopicService : ITopicService
     public TopicService(
         IAppDbContext dbContext,
         IPhraseService phrases,
+        IConfigurationService configuration,
         ILogger<TopicService> logger,
         IMapper mapper)
     {
         _dbContext = dbContext;
         _phrases = phrases;
+        _configuration = configuration;
         _logger = logger;
         _mapper = mapper;
     }
 
-    public async Task<Page<TopicResponse>> Get(GetTopicsRequest request, CancellationToken cancellationToken)
+    public async Task<Page<TopicHeaderResponse>> Get(GetTopicsRequest request, CancellationToken cancellationToken)
     {
         var topics = _dbContext.Set<Topic>()
             .Include(t => t.Section)
             .Include(t => t.User)
             .AsQueryable();
 
-        var (substring, sectionId, userId, orderedBy, pageRequest, isVerificationRequired, isOpen) = request;
+        var (pageRequest, orderBy, onlyOpen, substring, sectionId, userId) = request;
         if (substring is not null) topics = topics.Where(t => t.Header.Contains(substring));
         if (sectionId is not null) topics = topics.Where(t => t.SectionId == sectionId);
         if (userId is not null) topics = topics.Where(t => t.UserId == userId);
-        if (isVerificationRequired) topics = topics.Where(t => t.VerificationRequiredBefore != null);
-        if (isOpen) topics = topics.Where(Topic.IsOpen);
+        if (onlyOpen) topics = topics.Where(Topic.IsOpen);
 
-        topics = orderedBy switch
+        topics = orderBy switch
         {
-            TopicsOrderedByParameter.CreationTime => topics.OrderByDescending(t => t.CreationTime),
-            TopicsOrderedByParameter.ViewCount => topics.OrderByDescending(t => t.ViewCount),
-            TopicsOrderedByParameter.ComplaintCount => topics
+            TopicsOrderedBy.CreationTime => topics
+                .OrderByDescending(t => t.CreationTime),
+
+            TopicsOrderedBy.ViewCount => topics
+                .OrderByDescending(t => t.ViewCount),
+
+            TopicsOrderedBy.ComplaintCount => topics
                 .Where(t => t.ComplaintCount != 0)
                 .OrderByDescending(t => t.ComplaintCount),
+
+            TopicsOrderedBy.VerifyBefore => topics
+                .Where(Topic.VerificationRequired)
+                .OrderBy(t => t.VerifyBefore),
 
             _ => throw new ArgumentOutOfRangeException(),
         };
 
         return await topics
-            .ProjectTo<TopicResponse>(_mapper.ConfigurationProvider)
+            .ProjectTo<TopicHeaderResponse>(_mapper.ConfigurationProvider)
             .ToPageAsync(pageRequest, cancellationToken);
     }
 
@@ -77,16 +88,12 @@ public class TopicService : ITopicService
         await _dbContext.Set<User>().AnyOrThrowAsync(request.UserId, cancellationToken);
         await _dbContext.Set<Topic>().NoOneOrThrowAsync(t => t.Header == request.Header, cancellationToken);
 
+        await ThrowIfContainsForbiddenPhrasesAsync(request, cancellationToken);
+
         var section = await _dbContext.Set<Section>().FindOrThrowAsync(request.SectionId, cancellationToken);
-
-        var forbiddenPhrases = await _phrases.GetForbiddenWhere(
-            p => request.Header.Contains(p.Phrase) || request.Description.Contains(p.Phrase),
-            cancellationToken);
-
-        if (forbiddenPhrases.Any())
-            throw new BadRequestException($"Topic contains forbidden words: {string.Join(',', forbiddenPhrases)}");
-
         section.IncrementTopicCount();
+
+        var verificationDuration = await VerificationDurationAsync(request, cancellationToken);
 
         var compileOptions = _mapper.Map<CompileOptions>(request.CompileOptions);
         var topic = new Topic(
@@ -94,14 +101,8 @@ public class TopicService : ITopicService
             request.Description,
             compileOptions,
             request.UserId,
-            request.SectionId);
-
-        var verificationRequired = await ContainsVerificationRequiredPhrases(request, cancellationToken);
-        if (verificationRequired)
-        {
-            var configuration = await _dbContext.Set<Configuration>().FirstAsync(cancellationToken);
-            topic.RequireVerification(configuration.VerificationDuration);
-        }
+            request.SectionId,
+            verificationDuration);
 
         _dbContext.Set<Topic>().Add(topic);
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -111,7 +112,7 @@ public class TopicService : ITopicService
         return new IdResponse<Guid>(topic.Id);
     }
 
-    public async Task IncrementViewCount(Guid id, CancellationToken cancellationToken)
+    public async Task View(Guid id, CancellationToken cancellationToken)
     {
         var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
         topic.IncrementViewCount();
@@ -133,7 +134,7 @@ public class TopicService : ITopicService
     public async Task Verify(Guid id, CancellationToken cancellationToken)
     {
         var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
-        topic.Verify();
+        topic.SetVerified();
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
@@ -150,12 +151,29 @@ public class TopicService : ITopicService
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    private async Task<bool> ContainsVerificationRequiredPhrases(
+    private async Task ThrowIfContainsForbiddenPhrasesAsync(
         CreateTopicRequest request,
         CancellationToken cancellationToken)
     {
-        return await _dbContext.Set<VerificationRequiredPhrase>().AnyAsync(
+        var forbiddenPhrases = await _phrases.GetForbidden(
             p => request.Header.Contains(p.Phrase) || request.Description.Contains(p.Phrase),
             cancellationToken);
+
+        if (forbiddenPhrases.Any())
+            throw new BadRequestException($"Topic contains forbidden words: {string.Join(',', forbiddenPhrases)}");
+    }
+
+    private async Task<TimeSpan?> VerificationDurationAsync(
+        CreateTopicRequest request,
+        CancellationToken cancellationToken)
+    {
+        var verificationRequired = await _phrases.AnyVerificationRequired(
+            p => request.Header.Contains(p.Phrase) || request.Description.Contains(p.Phrase),
+            cancellationToken);
+
+        if (!verificationRequired) return null;
+
+        var configuration = await _configuration.Get(cancellationToken);
+        return configuration.VerificationDuration;
     }
 }

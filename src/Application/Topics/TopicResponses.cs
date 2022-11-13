@@ -14,7 +14,8 @@ public record TopicResponse(
     int SectionId,
     string SectionHeader,
     int ViewCount,
-    bool IsClosed);
+    bool IsClosed,
+    DateTime? VerifyBefore);
 
 public record TopicHeaderResponse(
     Guid Id,
@@ -26,7 +27,8 @@ public record TopicHeaderResponse(
     int SectionId,
     string SectionHeader,
     int ViewCount,
-    bool IsClosed);
+    bool IsClosed,
+    DateTime? VerifyBefore);
 
 public record TopicByUserIdResponse(
     Guid Id,

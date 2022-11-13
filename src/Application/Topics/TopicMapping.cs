@@ -9,7 +9,6 @@ public class TopicMapping : Profile
     public TopicMapping()
     {
         CreateMap<Topic, TopicResponse>();
-        CreateMap<Topic, TopicByUserIdResponse>();
 
         CreateMap<Topic, TopicHeaderResponse>()
             .MapRecordMember(r => r.UserLogin, t => t.User.Login)
