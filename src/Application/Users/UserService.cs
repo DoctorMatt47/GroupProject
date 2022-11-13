@@ -66,12 +66,9 @@ public class UserService : IUserService
     {
         await _dbContext.Set<User>().NoOneOrThrowAsync(u => u.Login == request.Login, cancellationToken);
 
-        var forbiddenPhrases = await _phrases.GetForbidden(
-            p => request.Login.Contains(p.Phrase),
-            cancellationToken);
-
-        if (forbiddenPhrases.Any())
-            throw new BadRequestException($"Login contains forbidden words: {string.Join(',', forbiddenPhrases)}");
+        var forbidden = await _phrases.GetForbidden(p => request.Login.Contains(p.Phrase), cancellationToken);
+        if (forbidden.Any())
+            throw new BadRequestException($"Login contains forbidden words: {string.Join(',', forbidden)}");
 
         var user = new User(request.Login, request.Password, _passwordHash, role);
 
