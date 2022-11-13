@@ -19,7 +19,12 @@ public class Commentary : IHasId<Guid>, IHasComplaintCount, IVerifiable
     {
     }
 
-    public Commentary(string description, CompileOptions? compileOptions, Guid topicId, Guid userId)
+    public Commentary(
+        string description,
+        CompileOptions? compileOptions,
+        Guid topicId,
+        Guid userId,
+        TimeSpan? verificationDuration)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
@@ -27,6 +32,7 @@ public class Commentary : IHasId<Guid>, IHasComplaintCount, IVerifiable
         CompileOptions = compileOptions;
         TopicId = topicId;
         UserId = userId;
+        VerifyBefore = DateTime.UtcNow + verificationDuration;
     }
 
     public DateTime CreationTime { get; private set; }

@@ -11,6 +11,7 @@ public record CreateCommentaryRequest(
 public record GetCommentariesRequest(
     PageRequest PageRequest,
     CommentariesOrderedBy OrderBy,
+    Guid? TopicId = null,
     Guid? UserId = null);
 
 public enum CommentariesOrderedBy

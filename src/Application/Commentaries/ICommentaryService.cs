@@ -8,4 +8,5 @@ public interface ICommentaryService
     Task<CommentaryResponse> Get(Guid id, CancellationToken cancellationToken);
     Task<IdResponse<Guid>> Create(CreateCommentaryRequest request, CancellationToken cancellationToken);
     Task Delete(Guid id, CancellationToken cancellationToken);
+    Task Verify(Guid id, CancellationToken cancellationToken);
 }
