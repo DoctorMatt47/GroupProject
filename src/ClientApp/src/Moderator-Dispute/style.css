@@ -1,3 +1,9 @@
+a,
+a:active,
+a:hover,
+a::after{
+    text-decoration: none;
+}
 
 .box {
     padding: 80px 80px;
