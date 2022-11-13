@@ -146,7 +146,7 @@ public class TopicService : ITopicService
         if (user.Role is UserRole.User && topic.UserId != user.Id)
             throw new ForbiddenException("You don't have permission for closing this topic");
 
-        topic.Close();
+        topic.SetClosed();
 
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
