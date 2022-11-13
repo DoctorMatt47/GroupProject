@@ -34,7 +34,7 @@ public class CommentaryService : ICommentaryService
             .Include(c => c.User)
             .AsQueryable();
 
-        var (userId, orderBy, pageRequest) = request;
+        var (pageRequest, orderBy, userId) = request;
         if (userId is not null) commentaries = commentaries.Where(c => c.UserId == userId);
 
         commentaries = orderBy switch

@@ -9,9 +9,9 @@ public record CreateCommentaryRequest(
     Guid UserId);
 
 public record GetCommentariesRequest(
-    Guid? UserId,
+    PageRequest PageRequest,
     CommentariesOrderedBy OrderBy,
-    PageRequest PageRequest);
+    Guid? UserId = null);
 
 public enum CommentariesOrderedBy
 {
