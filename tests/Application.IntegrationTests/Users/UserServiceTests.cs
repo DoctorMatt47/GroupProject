@@ -37,7 +37,7 @@ public class UserServiceTests
 
         var response = await _users.Get(user.Id, CancellationToken.None);
         response.Login.Should().Be(user.Login);
-        response.Role.Should().Be(user.Login);
+        response.Role.Should().Be(Enum.GetName(user.Role));
         response.CreationTime.Should().Be(user.CreationTime);
     }
 
