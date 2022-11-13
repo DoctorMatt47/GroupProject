@@ -39,7 +39,7 @@ public class ConfigurationServiceTests
         configuration.Rules = rules;
         configuration.BanDuration = banDuration;
         configuration.WarningCountForBan = warningCountForBan;
-        configuration.ComplaintDuration = complainDuration;
+        configuration.VerificationDuration = complainDuration;
 
         await _dbContext.SaveChangesAsync();
 
@@ -47,7 +47,7 @@ public class ConfigurationServiceTests
         response.Rules.Should().Be(rules);
         response.BanDuration.Should().Be(banDuration);
         response.WarningCountForBan.Should().Be(warningCountForBan);
-        response.ComplaintDuration.Should().Be(complainDuration);
+        response.VerificationDuration.Should().Be(complainDuration);
     }
 
     [Fact]
@@ -63,6 +63,6 @@ public class ConfigurationServiceTests
         configuration.Rules.Should().Be(request.Rules);
         configuration.WarningCountForBan.Should().Be(request.WarningCountForBan);
         configuration.BanDuration.Should().Be(request.BanDuration!.Value);
-        configuration.ComplaintDuration.Should().Be(request.ComplaintDuration!.Value);
+        configuration.VerificationDuration.Should().Be(request.ComplaintDuration!.Value);
     }
 }
