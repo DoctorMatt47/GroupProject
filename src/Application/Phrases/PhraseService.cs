@@ -40,6 +40,8 @@ public class PhraseService : IPhraseService
         var phrases = request.Select(p => new ForbiddenPhrase(p.Phrase));
         await _context.Set<ForbiddenPhrase>().AddRangeAsync(phrases, cancellationToken);
 
+        _logger.LogInformation("Updated forbidden phrases");
+
         await _context.SaveChangesAsync(cancellationToken);
     }
 
@@ -51,6 +53,8 @@ public class PhraseService : IPhraseService
 
         var phrases = request.Select(p => new VerificationRequiredPhrase(p.Phrase));
         await _context.Set<VerificationRequiredPhrase>().AddRangeAsync(phrases, cancellationToken);
+
+        _logger.LogInformation("Updated verification required phrases");
 
         await _context.SaveChangesAsync(cancellationToken);
     }
