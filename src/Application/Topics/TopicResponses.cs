@@ -29,12 +29,3 @@ public record TopicHeaderResponse(
     int ViewCount,
     bool IsClosed,
     DateTime? VerifyBefore);
-
-public record TopicByUserIdResponse(
-    Guid Id,
-    string Header,
-    DateTime CreationTime,
-    int SectionId,
-    string SectionHeader,
-    int ViewCount,
-    bool IsClosed);

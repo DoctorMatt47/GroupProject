@@ -1,3 +1,7 @@
 ﻿namespace GroupProject.Application.Sections;
 
-public record SectionResponse(int Id, string Header, string Description);
+public record SectionResponse(
+    int Id,
+    string Header,
+    string Description,
+    int TopicCount);

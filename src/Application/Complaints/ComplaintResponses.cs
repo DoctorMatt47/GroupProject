@@ -6,10 +6,12 @@ public record ComplaintResponse(
     Guid UserId,
     DateTime CreationTime,
     Guid TargetId,
-    string Target);
+    string Target,
+    DateTime ExpirationTime);
 
 public record ComplaintByTargetResponse(
     Guid Id,
     string Description,
     Guid UserId,
-    DateTime CreationTime);
+    DateTime CreationTime,
+    DateTime ExpirationTime);
