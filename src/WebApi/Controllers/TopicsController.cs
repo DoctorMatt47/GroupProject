@@ -23,7 +23,9 @@ public class TopicsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public Task<Page<TopicResponse>> GetTopics(GetTopicsParameters parameters, CancellationToken cancellationToken)
+    public Task<Page<TopicHeaderResponse>> GetTopics(
+        GetTopicsParameters parameters,
+        CancellationToken cancellationToken)
     {
         var request = _mapper.Map<GetTopicsRequest>(parameters);
         return _topics.Get(request, cancellationToken);
@@ -62,7 +64,7 @@ public class TopicsController : ApiControllerBase
     [HttpPost("View")]
     public async Task<ActionResult> IncrementViewCount(Guid id, CancellationToken cancellationToken)
     {
-        await _topics.IncrementViewCount(id, cancellationToken);
+        await _topics.View(id, cancellationToken);
         return NoContent();
     }
 

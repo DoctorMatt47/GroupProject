@@ -4,10 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace GroupProject.WebApi.Requests;
 
 public record GetTopicsParameters(
+    [FromQuery] PageRequest PageRequest,
+    string OrderBy,
+    bool OnlyOpen,
     string? Substring,
     int? SectionId,
-    Guid? UserId,
-    string OrderBy,
-    [FromQuery] PageRequest PageRequest,
-    bool IsVerificationRequired,
-    bool IsOpen);
+    Guid? UserId);

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using GroupProject.Application.Commentaries;
-using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
 using GroupProject.WebApi.Requests;
 using Microsoft.AspNetCore.Authorization;
@@ -22,53 +21,21 @@ public class CommentariesController : ApiControllerBase
     }
 
     [AllowAnonymous]
+    [HttpGet]
+    public async Task<Page<CommentaryResponse>> Get(
+        GetCommentariesParameters parameters,
+        CancellationToken cancellationToken)
+    {
+        var request = _mapper.Map<GetCommentariesRequest>(parameters);
+        return await _commentaries.Get(request, cancellationToken);
+    }
+
+    [AllowAnonymous]
     [HttpGet("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<CommentaryResponse> Get(Guid id, CancellationToken cancellationToken) =>
         await _commentaries.Get(id, cancellationToken);
-
-    [AllowAnonymous]
-    [HttpGet("ByUser/{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<Page<CommentaryByUserResponse>> GetCommentariesByUserIdOrderedByCreationTime(
-        Guid id,
-        [FromQuery] PageRequest request,
-        CancellationToken cancellationToken) =>
-        _commentaries.GetByUserIdOrderedByCreationTime(id, request, cancellationToken);
-
-    /// <summary>
-    ///     Gets paged commentaries by topic id
-    /// </summary>
-    /// <param name="id">Topic id</param>
-    /// <param name="request">Number of elements per page and page number</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>Commentary page</returns>
-    [AllowAnonymous]
-    [HttpGet("ByTopic/{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<Page<CommentaryResponse>> GetCommentariesByTopicIdOrderedByCreationTime(
-        Guid id,
-        [FromQuery] PageRequest request,
-        CancellationToken cancellationToken) =>
-        _commentaries.GetByTopicIdOrderedByCreationTime(id, request, cancellationToken);
-
-    /// <summary>
-    ///     Gets paged commentaries ordered by complaint count
-    /// </summary>
-    /// <param name="request">Number of elements per page and page number</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>Commentary page</returns>
-    [AllowAnonymous]
-    [HttpGet("OrderedByComplaintCount")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<Page<CommentaryResponse>> GetCommentariesOrderedByComplaintCount(
-        [FromQuery] PageRequest request,
-        CancellationToken cancellationToken) =>
-        _commentaries.GetOrderedByComplaintCount(request, cancellationToken);
 
     /// <summary>
     ///     Creates commentary for specific topic
