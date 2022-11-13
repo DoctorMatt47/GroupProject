@@ -55,7 +55,7 @@ const createCommentObject = (comment)=>{
     const com = document.createElement("div");
     com.id = "comment";
     const complaint = document.createElement("div");
-    complaint.innerHTML = `<div class="complaint-icon">
+    complaint.innerHTML = `<div class="complaint-icon" style="margin-top: 10px;">
     <button data-toggle="tooltip" title="Create a complaint" onclick="openComplainForm('comment', '${comment.id}'); return false;">
     <span class="glyphicon glyphicon-comment" style="color:#d7ae54; margin-right: 15px"></span></button></div>`;
     com.appendChild(complaint);
