@@ -4,4 +4,4 @@ public record ConfigurationResponse(
     string Rules,
     int WarningCountForBan,
     TimeSpan BanDuration,
-    TimeSpan ComplaintDuration);
+    TimeSpan VerificationDuration);
