@@ -3,7 +3,6 @@ using AutoMapper.QueryableExtensions;
 using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
-using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.ValueObjects;
@@ -24,8 +23,39 @@ public class CommentaryService : ICommentaryService
         IMapper mapper)
     {
         _dbContext = dbContext;
+
         _logger = logger;
         _mapper = mapper;
+    }
+
+    public async Task<Page<CommentaryResponse>> Get(GetCommentariesRequest request, CancellationToken cancellationToken)
+    {
+        var commentaries = _dbContext.Set<Commentary>()
+            .Include(c => c.User)
+            .AsQueryable();
+
+        var (userId, orderBy, pageRequest) = request;
+        if (userId is not null) commentaries = commentaries.Where(c => c.UserId == userId);
+
+        commentaries = orderBy switch
+        {
+            CommentariesOrderedBy.CreationTime => commentaries
+                .OrderByDescending(c => c.CreationTime),
+
+            CommentariesOrderedBy.ComplaintCount => commentaries
+                .Where(c => c.ComplaintCount != 0)
+                .OrderByDescending(c => c.ComplaintCount),
+
+            CommentariesOrderedBy.VerifyBefore => commentaries
+                .Where(c => c.VerifyBefore != null)
+                .OrderByDescending(c => c.VerifyBefore),
+
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+
+        return await commentaries
+            .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
+            .ToPageAsync(pageRequest, cancellationToken);
     }
 
     public async Task<CommentaryResponse> Get(Guid id, CancellationToken cancellationToken)
@@ -35,45 +65,6 @@ public class CommentaryService : ICommentaryService
             .FirstOrThrowAsync(id, cancellationToken);
 
         return _mapper.Map<CommentaryResponse>(commentary);
-    }
-
-    public async Task<Page<CommentaryByUserResponse>> GetByUserIdOrderedByCreationTime(
-        Guid id,
-        PageRequest request,
-        CancellationToken cancellationToken)
-    {
-        await _dbContext.Set<User>().AnyOrThrowAsync(id, cancellationToken);
-        return await _dbContext.Set<Commentary>()
-            .Where(c => c.UserId == id)
-            .OrderByDescending(c => c.CreationTime)
-            .ProjectTo<CommentaryByUserResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(request, cancellationToken);
-    }
-
-    public async Task<Page<CommentaryResponse>> GetByTopicIdOrderedByCreationTime(
-        Guid id,
-        PageRequest request,
-        CancellationToken cancellationToken)
-    {
-        await _dbContext.Set<Topic>().AnyOrThrowAsync(id, cancellationToken);
-        return await _dbContext.Set<Commentary>()
-            .Include(c => c.User)
-            .Where(c => c.TopicId == id)
-            .OrderByDescending(c => c.CreationTime)
-            .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(request, cancellationToken);
-    }
-
-    public async Task<Page<CommentaryResponse>> GetOrderedByComplaintCount(
-        PageRequest request,
-        CancellationToken cancellationToken)
-    {
-        return await _dbContext.Set<Commentary>()
-            .Include(c => c.User)
-            .Where(c => c.ComplaintCount != 0)
-            .OrderBy(c => c.ComplaintCount)
-            .ProjectTo<CommentaryResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(request, cancellationToken);
     }
 
     public async Task<IdResponse<Guid>> Create(
