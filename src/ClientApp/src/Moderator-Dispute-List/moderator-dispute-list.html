@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - Main Forum Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+        });
+    </script>
+</head>
+<body id="page-header" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+<div class=" container-fluid  box mt-5">
+   <div class="row">
+       <div class="col-sm-8">
+           <h2>Moderation Tabs</h2>
+           <div class="warpper">
+               <input class="radio" id="one" name="group" type="radio" checked>
+               <input class="radio" id="two" name="group" type="radio">
+               <input class="radio" id="three" name="group" type="radio">
+               <input class="radio" id="four" name="group" type="radio">
+
+               <div class="tabs">
+                   <label class="tab" id="one-tab" for="one">Topic Complaint</label>
+                   <label class="tab" id="two-tab" for="two">Comment Complaint</label>
+                   <label class="tab" id="three-tab" for="three">Topic Warning</label>
+                   <label class="tab" id="four-tab" for="four">Comment Warning</label>
+               </div>
+
+               <div class="panels">
+                   <div class="panel" id="one-panel">
+                       <div class="panel-title">Title1</div>
+                       <p>Content1</p>
+                   </div>
+                   <div class="panel" id="two-panel">
+                       <div class="panel-title">Title2</div>
+                       <p>Content2</p>
+                   </div>
+                   <div class="panel" id="three-panel">
+                       <div class="panel-title">Title3</div>
+                       <p>Content3</p>
+                   </div>
+                   <div class="panel" id="four-panel">
+                       <div class="panel-title">Title4</div>
+                       <p>Content4</p>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>
+<div id="footer"></div>
+</body>
+<script src="script.js"></script>
+</html>
