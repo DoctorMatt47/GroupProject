@@ -22,6 +22,7 @@ public class CommentariesController : ApiControllerBase
 
     [AllowAnonymous]
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<Page<CommentaryResponse>> Get(
         GetCommentariesParameters parameters,
         CancellationToken cancellationToken)
@@ -44,7 +45,6 @@ public class CommentariesController : ApiControllerBase
     /// <param name="body">Commentary parameters</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Created commentary id</returns>
-    [Authorize(Roles = "User")]
     [HttpPost("OnTopic/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

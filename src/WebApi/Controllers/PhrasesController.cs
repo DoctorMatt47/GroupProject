@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupProject.WebApi.Controllers;
 
-[Authorize(Roles = "Admin")]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 [ProducesResponseType(StatusCodes.Status403Forbidden)]
 public class PhrasesController : ApiControllerBase
@@ -13,17 +12,20 @@ public class PhrasesController : ApiControllerBase
 
     public PhrasesController(IPhraseService phrases) => _phrases = phrases;
 
+    [AllowAnonymous]
     [HttpGet("Forbidden")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public Task<IEnumerable<PhraseResponse>> GetForbiddenPhrases(CancellationToken cancellationToken) =>
         _phrases.GetForbidden(cancellationToken);
 
+    [AllowAnonymous]
     [HttpGet("VerificationRequired")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public Task<IEnumerable<PhraseResponse>> GetVerificationRequired(CancellationToken cancellationToken) =>
         _phrases.GetVerificationRequired(cancellationToken);
 
-    [HttpGet("Forbidden/Bulk")]
+    [Authorize(Roles = "Admin")]
+    [HttpPut("Forbidden/Bulk")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult> PutForbiddenPhrases(
         IEnumerable<PutPhraseRequest> request,
@@ -33,7 +35,8 @@ public class PhrasesController : ApiControllerBase
         return NoContent();
     }
 
-    [HttpGet("VerificationRequired/Bulk")]
+    [Authorize(Roles = "Admin")]
+    [HttpPut("VerificationRequired/Bulk")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult> PutVerificationRequired(
         IEnumerable<PutPhraseRequest> request,

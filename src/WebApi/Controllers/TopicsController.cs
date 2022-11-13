@@ -21,14 +21,17 @@ public class TopicsController : ApiControllerBase
     [AllowAnonymous]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    public Task<Page<TopicHeaderResponse>> GetTopics(
+    public async Task<ActionResult<Page<TopicHeaderResponse>>> GetTopics(
         GetTopicsParameters parameters,
         CancellationToken cancellationToken)
     {
         var request = _mapper.Map<GetTopicsRequest>(parameters);
-        return _topics.Get(request, cancellationToken);
+        if (request.OrderBy is not (TopicsOrderedBy.VerifyBefore or TopicsOrderedBy.ComplaintCount))
+            return await _topics.Get(request, cancellationToken);
+
+        if (!User.IsInRole("Moderator") && !User.IsInRole("Admin")) return Forbid();
+        return await _topics.Get(request, cancellationToken);
     }
 
     /// <summary>
@@ -39,12 +42,12 @@ public class TopicsController : ApiControllerBase
     /// <param name="cancellationToken"></param>
     /// <returns>Created topic id</returns>
     [Authorize(Roles = "User")]
-    [HttpPost("OnSection/{id:int}")]
+    [HttpPost("InSection/{id:int}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public async Task<ActionResult<IdResponse<Guid>>> CreateTopicOnSection(
+    public async Task<ActionResult<IdResponse<Guid>>> CreateTopicInSection(
         int id,
         CreateTopicBody body,
         CancellationToken cancellationToken)
@@ -60,11 +63,35 @@ public class TopicsController : ApiControllerBase
         return Created(location, response);
     }
 
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> DeleteTopic(Guid id, CancellationToken cancellationToken)
+    {
+        await _topics.Delete(id, cancellationToken);
+        return NoContent();
+    }
+
     [AllowAnonymous]
-    [HttpPost("View")]
-    public async Task<ActionResult> IncrementViewCount(Guid id, CancellationToken cancellationToken)
+    [HttpPost("{id:guid}/View")]
+    public async Task<ActionResult> ViewTopic(Guid id, CancellationToken cancellationToken)
     {
         await _topics.View(id, cancellationToken);
+        return NoContent();
+    }
+
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpPut("{id:guid}/Verify")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> VerifyTopic(Guid id, CancellationToken cancellationToken)
+    {
+        await _topics.Verify(id, cancellationToken);
         return NoContent();
     }
 
@@ -76,18 +103,6 @@ public class TopicsController : ApiControllerBase
     public async Task<ActionResult> CloseTopic(Guid id, CancellationToken cancellationToken)
     {
         await _topics.Close(id, Guid.Parse(User.Identity!.Name!), cancellationToken);
-        return NoContent();
-    }
-
-    [Authorize(Roles = "Moderator, Admin")]
-    [HttpDelete("{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> Delete(Guid id, CancellationToken cancellationToken)
-    {
-        await _topics.Delete(id, cancellationToken);
         return NoContent();
     }
 }
