@@ -281,3 +281,13 @@ h4 {
 .code-container-wrap {
     white-space: pre-wrap;
 }
+#moderator-panel{
+    position: fixed;
+    top: 100px;
+    right: 100px;
+    width: 30%;
+    height: 50%;
+    z-index: 9999;
+    /*display: block;*/
+    display: none;
+}
