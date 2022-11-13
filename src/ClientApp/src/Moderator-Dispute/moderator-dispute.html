@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - Moderator Complaint Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+        });
+    </script>
+</head>
+<body id="page-header" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+<div class="container-fluid box mt-5">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="panel user-panel">
+                <div class="panel-heading text-center" style="background-color: lightcyan">
+                    <h3>Moderation Panel</h3>
+                </div>
+                <div class="panel-footer moderator-panel-footer">
+                    <button class=" moderator-btn btn-leave" onclick="openLeaveVerificationWindow()">Leave</button>
+                    <button class=" moderator-btn btn-delete" onclick="openDeleteVerificationWindow()">Delete</button>
+                    <button class=" moderator-btn btn-end" onclick="openEndVerificationWindow()">End</button>
+                    <button class=" moderator-btn btn-block" onclick="openBlockVerificationWindow()">Block</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="panel">
+                    <div class="panel-heading topic-panel-heading">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-11">
+                                    <a href="#">
+                                        <div class="section" id="section">Javascript</div>
+                                    </a>
+                                </div>
+                            </div>
+                            <h3 style="font-style: inherit" id="topic-name"><strong>Create multiple elements</strong></h3>
+                            <a style="color:grey; cursor:pointer;" href="#">See in original-></a>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="panel-body topic-panel-footer">
+                        <div id="topic-description">I want to create 4 elements with different text. The class needs to
+                            remain the same. I think I am doing this with too much code.
+                            Maybe anyone has some information how to make this code look more beautiful and more
+                            efficient?
+                            Best wishes and thank you!
+                        </div>
+                    </div>
+                    <div class="panel-footer" id="all-code">
+                        <div id="panel-footer-code">
+                            <div class="language" id="topic-language">Javascript</div>
+                            <div id="user-code" style="white-space: pre-wrap;">Here should be your code<br>
+                                var textBlock = document.createElement('div');<br>
+                                textBlock.setAttribute('class', 'finalBlock');<br><br>
+                                var addFinalBlock = document.getElementsByClassName('block')[0];<br>
+                                addFinalBlock.appendChild(textBlock);<br><br>
+                                textBlock.innerHTML = "Make this block a text block";
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="row panel user-panel">
+                <div class="panel-heading user-panel-heading">
+                    <h2 style="font-family:Courier New, Courier, monospace" id="username">Username</h2>
+                    <p id="registration-date">Registration date</p>
+                </div>
+                <div class="panel-body user-panel-body text-center">
+                    <div class="col-sm-6 ">
+                        <div id="preventions">6</div>
+                        <p style="color: black">Preventions</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <div id="created-discussions">6</div>
+                        <p style="color: black">Created Discussions</p>
+                    </div>
+                    <p>Last block date:22.03.2019</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="block-container" class="fullscreen-container">
+    <div class="verification-section">
+        <div class="inner-width">
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <button class="close-verification" onclick="closeBlockVerificationWindow();"><span
+                            class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <h3>Block this User?</h3>
+            <button class="submit-verification" onclick="closeBlockVerificationWindow();">Yes</button>
+        </div>
+    </div>
+</div>
+<div id="delete-container" class="fullscreen-container">
+    <div class="verification-section">
+        <div class="inner-width">
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <button class="close-verification" onclick="closeDeleteVerificationWindow();"><span
+                            class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <label for="alert">Notification text</label>
+            <textarea id="alert" style="height: 150px"> Dear User,our Moderation Service found your content to be in violation of forum rules. We would like to inform you that the topic has been deleted and You have been given a penalty point. </textarea>
+            <button class="submit-verification" onclick="closeDeleteVerificationWindow();">Send message and delete
+            </button>
+        </div>
+    </div>
+</div>
+<div id="leave-container" class="fullscreen-container">
+    <div class="verification-section">
+        <div class="inner-width">
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <button class="close-verification" onclick="closeLeaveVerificationWindow();"><span
+                            class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <h3>Do you want to leave this dispute without any action?</h3>
+            <button class="submit-verification" onclick="closeLeaveVerificationWindow();">Yes</button>
+        </div>
+    </div>
+</div>
+<div id="end-container" class="fullscreen-container">
+    <div class="verification-section">
+        <div class="inner-width">
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <button class="close-verification" onclick="closeEndVerificationWindow();"><span
+                            class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <h3> Do you want to close this dispute without any message for User?</h3>
+            <button class="submit-verification" onclick="closeEndVerificationWindow();">Yes, close dispute in favor of
+                the user
+            </button>
+        </div>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+<script src="script.js"></script>
+</html>

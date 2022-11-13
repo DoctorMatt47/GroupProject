@@ -37,7 +37,8 @@
                                 </a>
                             </div>
                             <div class="col-sm-1 complaint-icon">
-                                <button data-toggle="tooltip" title="Create a complaint" onclick="openComplainForm('topic', getValueFromCurrentUrl('id')); return false;">
+                                <button data-toggle="tooltip" title="Create a complaint"
+                                        onclick="openComplainForm('topic', getValueFromCurrentUrl('id')); return false;">
                                     <span class="glyphicon glyphicon-comment" style="color:#d7ae54"></span>
                                 </button>
                             </div>
@@ -61,11 +62,13 @@
                             textBlock.setAttribute('class', 'finalBlock');<br><br>
                             var addFinalBlock = document.getElementsByClassName('block')[0];<br>
                             addFinalBlock.appendChild(textBlock);<br><br>
-                            textBlock.innerHTML = "Make this block a text block";</div>
-                            <br>
+                            textBlock.innerHTML = "Make this block a text block";
+                        </div>
+                        <br>
                     </div>
                     <div style="width: 100%;">
-                        <button type="button" class="code-btn" id="run-code" onclick="openCompiler()">Run<span class="glyphicon glyphicon-play run-span"></span></button>
+                        <button type="button" class="code-btn" id="run-code" onclick="openCompiler()">Run<span
+                                class="glyphicon glyphicon-play run-span"></span></button>
                     </div>
                 </div>
                 <button type="submit" class="comment-btn" onclick="openCommentForm()">Add Comment</button>
@@ -74,25 +77,26 @@
             <div id="compiler"></div>
             <div id="commentForm"></div>
 
-            <div class="comment-group" id = "comment-group">
-                <div id="comment">
-                    <div id="complaint2"></div>
-                    <div class="complaint-icon">
+            <div class="comment-group" id="comment-group">
+                <div id="comment" class="panel">
+                    <div class="complaint-icon" style="margin-top: 10px;">
                         <button data-toggle="tooltip" title="Create a complaint" onclick="openForm()">
                             <span class="glyphicon glyphicon-comment comment-span"></span>
                         </button>
                     </div>
-                    <p id="answer">Here we have answer text<br>
-                        "Explanation:
+                    <div class="panel-body">
+                        <p id="answer">Here we have answer text<br>
+                            "Explanation:
 
-                        This is called event delegation and works as followed.
-                        The event is attached to a static parent (staticAncestors)
-                        of the element that should be handled. This jQuery handler
-                        is triggered every time the event triggers on this element
-                        or one of the descendant elements. The handler then checks
-                        if the element that triggered the event matches your selector
-                        (dynamicChild). When there is a match then your custom handler function is executed."
-                    </p>
+                            This is called event delegation and works as followed.
+                            The event is attached to a static parent (staticAncestors)
+                            of the element that should be handled. This jQuery handler
+                            is triggered every time the event triggers on this element
+                            or one of the descendant elements. The handler then checks
+                            if the element that triggered the event matches your selector
+                            (dynamicChild). When there is a match then your custom handler function is executed."
+                        </p>
+                    </div>
                     <div class="panel-footer">
                         <div id="panel-footer-answer-code">
                             <div class="language" id="answer-language">Javascript</div>
@@ -104,7 +108,8 @@
                             textBlock.innerHTML = "Make this block a text block";<br>
                         </div>
                         <div style="width: 100%;">
-                            <button type="button" class="code-btn" onclick="openCompiler()">Run<span class="glyphicon glyphicon-play run-span"></span></button>
+                            <button type="button" class="code-btn" onclick="openCompiler()">Run<span
+                                    class="glyphicon glyphicon-play run-span"></span></button>
                         </div>
                     </div>
                     <div id="answer-username"><a href="#">username</a></div>
@@ -141,12 +146,15 @@
                                 <div class="row">
                                     <div class="col-sm-8"></div>
                                     <div class="col-sm-4">
-                                        <button id="close-complaint" onclick="closeVerificationWindow(); return false;"><span class="glyphicon glyphicon-remove"></span>
+                                        <button id="close-complaint" onclick="closeVerificationWindow(); return false;">
+                                            <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                     </div>
                                 </div>
                                 <h3>ARE YOU SURE?</h3>
-                                <button id="submit-btn" onclick="closeCurrentTopic(); closeVerificationWindow(); return false;">Yes</button>
+                                <button id="submit-btn"
+                                        onclick="closeCurrentTopic(); closeVerificationWindow(); return false;">Yes
+                                </button>
                             </div>
                         </div>
                     </div>
