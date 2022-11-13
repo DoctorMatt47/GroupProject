@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using GroupProject.Domain.Interfaces;
 using GroupProject.Domain.ValueObjects;
 
@@ -34,6 +35,9 @@ public class Commentary : IHasId<Guid>, IHasComplaintCount, IVerifiable
         UserId = userId;
         VerifyBefore = DateTime.UtcNow + verificationDuration;
     }
+
+    public static Expression<Func<Commentary, bool>> VerificationRequired =>
+        topic => topic.VerifyBefore != null && topic.VerifyBefore > DateTime.UtcNow;
 
     public DateTime CreationTime { get; private set; }
     public string Description { get; private set; } = null!;

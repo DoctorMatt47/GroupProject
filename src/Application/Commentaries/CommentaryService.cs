@@ -58,8 +58,8 @@ public class CommentaryService : ICommentaryService
                 .OrderByDescending(c => c.ComplaintCount),
 
             CommentariesOrderedBy.VerifyBefore => commentaries
-                .Where(c => c.VerifyBefore != null)
-                .OrderByDescending(c => c.VerifyBefore),
+                .Where(Commentary.VerificationRequired)
+                .OrderBy(c => c.VerifyBefore),
 
             _ => throw new ArgumentOutOfRangeException(),
         };
