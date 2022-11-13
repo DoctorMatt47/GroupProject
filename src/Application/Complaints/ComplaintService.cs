@@ -4,6 +4,7 @@ using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
+using GroupProject.Application.Configurations;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
 using GroupProject.Domain.Interfaces;
@@ -14,16 +15,19 @@ namespace GroupProject.Application.Complaints;
 
 public class ComplaintService : IComplaintService
 {
+    private readonly IConfigurationService _configuration;
     private readonly IAppDbContext _dbContext;
     private readonly ILogger<ComplaintService> _logger;
     private readonly IMapper _mapper;
 
     public ComplaintService(
         IAppDbContext dbContext,
+        IConfigurationService configuration,
         ILogger<ComplaintService> logger,
         IMapper mapper)
     {
         _dbContext = dbContext;
+        _configuration = configuration;
         _logger = logger;
         _mapper = mapper;
     }
@@ -68,7 +72,7 @@ public class ComplaintService : IComplaintService
         var target = await FindTargetOrThrowAsync(request.Target, request.TargetId, cancellationToken);
         target.IncrementComplaintCount();
 
-        var configuration = await _dbContext.Set<Configuration>().FirstAsync(cancellationToken);
+        var configuration = await _configuration.Get(cancellationToken);
         var complaint = new Complaint(
             request.Description,
             request.Target,
