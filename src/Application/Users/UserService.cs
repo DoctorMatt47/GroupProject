@@ -66,7 +66,7 @@ public class UserService : IUserService
     {
         await _dbContext.Set<User>().NoOneOrThrowAsync(u => u.Login == request.Login, cancellationToken);
 
-        var forbiddenPhrases = await _phrases.GetForbiddenWhere(
+        var forbiddenPhrases = await _phrases.GetForbidden(
             p => request.Login.Contains(p.Phrase),
             cancellationToken);
 
