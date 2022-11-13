@@ -44,7 +44,7 @@ public class User : IHasId<Guid>
 
     public Guid Id { get; private set; }
 
-    public void Warn(int minWarningCountForBan, TimeSpan banDuration)
+    public void AddWarning(int minWarningCountForBan, TimeSpan banDuration)
     {
         WarningCount++;
         if (WarningCount < minWarningCountForBan) return;

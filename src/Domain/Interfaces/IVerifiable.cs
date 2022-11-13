@@ -3,5 +3,5 @@
 public interface IVerifiable
 {
     DateTime? VerifyBefore { get; }
-    void Verify();
+    void SetVerified();
 }

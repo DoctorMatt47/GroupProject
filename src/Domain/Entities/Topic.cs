@@ -27,7 +27,7 @@ public class Topic : IHasId<Guid>, IHasComplaintCount, IVerifiable
         CompileOptions? compileOptions,
         Guid userId,
         int sectionId,
-        TimeSpan? verificationDuration = null)
+        TimeSpan? verificationDuration)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
@@ -41,7 +41,7 @@ public class Topic : IHasId<Guid>, IHasComplaintCount, IVerifiable
 
     public static Expression<Func<Topic, bool>> IsOpen => topic => !topic.IsClosed;
 
-    public static Expression<Func<Topic, bool>> IsVerified =>
+    public static Expression<Func<Topic, bool>> VerificationRequired =>
         topic => topic.VerifyBefore != null && topic.VerifyBefore > DateTime.UtcNow;
 
     public DateTime CreationTime { get; private set; }
@@ -76,17 +76,17 @@ public class Topic : IHasId<Guid>, IHasComplaintCount, IVerifiable
 
     public DateTime? VerifyBefore { get; private set; }
 
-    public void Verify()
+    public void SetVerified()
     {
         VerifyBefore = null;
     }
 
-    public void Close()
+    public void SetClosed()
     {
         IsClosed = true;
     }
 
-    public void View()
+    public void IncrementViewCount()
     {
         ViewCount++;
     }

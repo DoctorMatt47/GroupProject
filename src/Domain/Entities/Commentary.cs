@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
 using GroupProject.Domain.Interfaces;
 using GroupProject.Domain.ValueObjects;
 
@@ -59,7 +56,7 @@ public class Commentary : IHasId<Guid>, IHasComplaintCount, IVerifiable
 
     public DateTime? VerifyBefore { get; private set; }
 
-    public void Verify()
+    public void SetVerified()
     {
         VerifyBefore = null;
     }
