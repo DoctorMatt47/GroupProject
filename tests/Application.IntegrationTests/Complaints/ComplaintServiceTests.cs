@@ -79,7 +79,8 @@ public class ComplaintServiceTests
             fixture.Create<string>(),
             fixture.Create<CompileOptions>(),
             topicId,
-            _db.DefaultUser.Id);
+            _db.DefaultUser.Id,
+            fixture.Create<TimeSpan>());
     }
 
     private Topic Topic()
