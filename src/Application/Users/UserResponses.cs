@@ -3,4 +3,5 @@
 public record UserResponse(
     string Login,
     string Role,
-    DateTime CreationTime);
+    DateTime CreationTime,
+    int WarningCount);
