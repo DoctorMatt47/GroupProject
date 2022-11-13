@@ -93,7 +93,7 @@ public class TopicService : ITopicService
         var section = await _dbContext.Set<Section>().FindOrThrowAsync(request.SectionId, cancellationToken);
         section.IncrementTopicCount();
 
-        var verificationDuration = await VerificationDurationAsync(request, cancellationToken);
+        var verificationDuration = await VerificationDurationOrNullAsync(request, cancellationToken);
 
         var compileOptions = _mapper.Map<CompileOptions>(request.CompileOptions);
         var topic = new Topic(
@@ -134,6 +134,7 @@ public class TopicService : ITopicService
     public async Task Verify(Guid id, CancellationToken cancellationToken)
     {
         var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
+        // TODO: Add is already verified check
         topic.SetVerified();
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
@@ -159,11 +160,11 @@ public class TopicService : ITopicService
             p => request.Header.Contains(p.Phrase) || request.Description.Contains(p.Phrase),
             cancellationToken);
 
-        if (forbiddenPhrases.Any())
-            throw new BadRequestException($"Topic contains forbidden words: {string.Join(',', forbiddenPhrases)}");
+        if (!forbiddenPhrases.Any()) return;
+        throw new BadRequestException($"Topic contains forbidden words: {string.Join(',', forbiddenPhrases)}");
     }
 
-    private async Task<TimeSpan?> VerificationDurationAsync(
+    private async Task<TimeSpan?> VerificationDurationOrNullAsync(
         CreateTopicRequest request,
         CancellationToken cancellationToken)
     {
