@@ -77,29 +77,27 @@
 </div>
 <div id="Unblock" class="fullscreen-container">
     <div class="unblock-section">
-        <div class="inner-width">
-            <div class="row">
-                <div class="col-sm-8"></div>
-                <div class="col-sm-4">
-                    <button class="close-unblock" onclick="closeUserActionWindow();"><span
-                            class="glyphicon glyphicon-remove"></span>
-                    </button>
-                </div>
+        <div class="row">
+            <div class="col-sm-8"></div>
+            <div class="col-sm-4">
+                <button class="close-unblock" onclick="closeUserActionWindow();"><span
+                        class="glyphicon glyphicon-remove"></span>
+                </button>
             </div>
-            <div class="data">
-                <label for="users">Choose User:</label>
-                <input list="nicknames" id="users" name="users">
-
-                <datalist id="nicknames">
-                    <option value="Chocolate">
-                    <option value="Coconut">
-                    <option value="Mint">
-                    <option value="Strawberry">
-                    <option value="Vanilla">
-                </datalist>
-            </div>
-            <button type="button" class="submit-unblock" onclick="closeUserActionWindow();">Unblock</button>
         </div>
+        <div class="data">
+            <label for="users">Choose User:</label>
+            <input list="nicknames" id="users" name="users">
+
+            <datalist id="nicknames">
+                <option value="Chocolate">
+                <option value="Coconut">
+                <option value="Mint">
+                <option value="Strawberry">
+                <option value="Vanilla">
+            </datalist>
+        </div>
+        <button type="button" class="submit-unblock" onclick="closeUserActionWindow();">Unblock</button>
     </div>
 </div>
 <div id="footer"></div>
