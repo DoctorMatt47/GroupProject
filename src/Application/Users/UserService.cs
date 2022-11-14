@@ -84,7 +84,10 @@ public class UserService : IUserService
         UserRole role,
         CancellationToken cancellationToken)
     {
-        await _dbContext.Set<User>().NoOneOrThrowAsync(u => u.Login == request.Login, cancellationToken);
+        await _dbContext.Set<User>().NoOneOrThrowAsync(
+            u => u.Login == request.Login,
+            $"login: {request.Login}",
+            cancellationToken);
 
         var forbidden = await _phrases.GetForbidden(p => request.Login.Contains(p.Phrase), cancellationToken);
         if (forbidden.Any())

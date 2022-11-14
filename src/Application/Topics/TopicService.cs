@@ -86,7 +86,10 @@ public class TopicService : ITopicService
     public async Task<IdResponse<Guid>> Create(CreateTopicRequest request, CancellationToken cancellationToken)
     {
         await _dbContext.Set<User>().AnyOrThrowAsync(request.UserId, cancellationToken);
-        await _dbContext.Set<Topic>().NoOneOrThrowAsync(t => t.Header == request.Header, cancellationToken);
+        await _dbContext.Set<Topic>().NoOneOrThrowAsync(
+            t => t.Header == request.Header,
+            $"header: {request.Header}",
+            cancellationToken);
 
         await ThrowIfContainsForbiddenPhrasesAsync(request, cancellationToken);
 

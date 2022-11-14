@@ -36,12 +36,12 @@ public static class LinqExtensions
     public static async Task NoOneOrThrowAsync<TEntity>(
         this IQueryable<TEntity> set,
         Expression<Func<TEntity, bool>> predicate,
+        string? condition,
         CancellationToken cancellationToken)
         where TEntity : class
     {
         var isExist = await set.AnyAsync(predicate, cancellationToken);
-        if (isExist)
-            throw new ConflictException($"There is already {typeof(TEntity).Name} with condition: {predicate}");
+        if (isExist) throw new ConflictException($"There is already {typeof(TEntity).Name} with {condition}");
     }
 
     public static async Task AnyOrThrowAsync<TEntity, TId>(
