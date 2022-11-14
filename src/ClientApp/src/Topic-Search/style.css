@@ -31,6 +31,11 @@ a:active {
     font-size: 10px;
 }
 
+.request {
+    color: gray;
+    font-size: 12px;
+}
+
 h4 {
     display: flex;
     align-self: flex-start;
@@ -40,6 +45,7 @@ h4 {
     float: left;
     padding: 10px;
 }
+
 
 .box {
     padding: 80px 120px;
@@ -62,15 +68,6 @@ h4 {
 
 .language-item {
     display: flex;
-}
-
-#side-panel {
-    margin: 100px 10px auto !important;
-}
-
-#section-name {
-    font-size: 30px;
-    font-weight: bold;
 }
 
 .line {

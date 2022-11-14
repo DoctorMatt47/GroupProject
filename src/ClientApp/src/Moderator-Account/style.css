@@ -206,7 +206,7 @@ h2 {
 }
 
 .unblock-section label {
-    color: #f16958;
+    color: rgba(246, 121, 105, 0.82);
     margin-bottom: 20px;
     font-size: 20px;
 }
@@ -225,7 +225,7 @@ h2 {
     border: 1px solid #f16958;
     padding: 12px 20px;
     border-radius: 30px;
-    background: #f16958;
+    background: rgba(246, 121, 105, 0.82);
     font-size: 15px;
     cursor: pointer;
     margin-top: 30px;
@@ -233,10 +233,10 @@ h2 {
 
 .submit-unblock:hover{
     background: #fff;
-    color: #f16958;
+    color: rgba(248, 110, 92, 0.82);
 }
 .close-unblock{
-    color:  #f16958;
+    color:  rgba(246, 121, 105, 0.82);
     border: beige;
     background-color: white;
 }
@@ -256,28 +256,19 @@ h2 {
     justify-content: space-around;
 }
 .data input{
-    width: 80%;
-    background-color: #f67969;
+    width: 100%;
+    border: 3px solid #f67969;
     border-radius: 20px;
-    border: none !important;
     padding: 10px;
     height: 30px;
-    color: white;
+    color: black;
     text-align: center;
 }
-.data input:active{
-    border: 1px solid rgba(61, 61, 173, 0.51);
+.data input:active,
+.data input:hover{
+    border: 3px solid #f67969;
 }
 
-
-.comment-formBtn:hover {
-    opacity: 0.6;
-    background: #666;
-}
-
-.comment-formBtn:active {
-    background: #444;
-}
 
 
 
