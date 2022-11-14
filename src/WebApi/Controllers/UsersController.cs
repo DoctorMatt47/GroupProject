@@ -1,4 +1,6 @@
-﻿using GroupProject.Application.Identity;
+﻿using GroupProject.Application.Common.Requests;
+using GroupProject.Application.Common.Responses;
+using GroupProject.Application.Identity;
 using GroupProject.Application.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +12,16 @@ public class UsersController : ApiControllerBase
     private readonly IUserService _users;
 
     public UsersController(IUserService users) => _users = users;
+
+    [Authorize("Moderator, Admin")]
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<Page<UserResponse>> GetUsers(
+        [FromQuery] PageRequest request,
+        CancellationToken cancellationToken) =>
+        await _users.GetUsers(request, cancellationToken);
 
     [AllowAnonymous]
     [HttpGet("{id:guid}")]
@@ -39,6 +51,16 @@ public class UsersController : ApiControllerBase
         return Created("", response);
     }
 
+    [Authorize(Roles = "Admin")]
+    [HttpGet("Moderators")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<Page<UserResponse>> GetModerators(
+        [FromQuery] PageRequest request,
+        CancellationToken cancellationToken) =>
+        await _users.GetModerators(request, cancellationToken);
+
     /// <summary>
     ///     Creates moderator with passed parameters. Available only for admin
     /// </summary>
@@ -49,7 +71,7 @@ public class UsersController : ApiControllerBase
     ///     requests that require authentication
     /// </returns>
     [Authorize(Roles = "Admin")]
-    [HttpPost("Moderator")]
+    [HttpPost("Moderators")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

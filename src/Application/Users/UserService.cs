@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
+using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Application.Phrases;
 using GroupProject.Domain.Entities;
@@ -34,6 +36,12 @@ public class UserService : IUserService
         _phrases = phrases;
     }
 
+    public async Task<Page<UserResponse>> GetModerators(PageRequest request, CancellationToken cancellationToken) =>
+        await GetUsersByRoleAsync(UserRole.Moderator, request, cancellationToken);
+
+    public async Task<Page<UserResponse>> GetUsers(PageRequest request, CancellationToken cancellationToken) =>
+        await GetUsersByRoleAsync(UserRole.User, request, cancellationToken);
+
     public async Task<UserResponse> Get(Guid id, CancellationToken cancellationToken)
     {
         var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
@@ -57,6 +65,18 @@ public class UserService : IUserService
 
         user.AddWarning(configuration.WarningCountForBan, configuration.BanDuration);
         await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    private Task<Page<UserResponse>> GetUsersByRoleAsync(
+        UserRole role,
+        PageRequest request,
+        CancellationToken cancellationToken)
+    {
+        return _dbContext.Set<User>()
+            .Where(u => u.Role == role)
+            .OrderByDescending(u => u.CreationTime)
+            .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
+            .ToPageAsync(request, cancellationToken);
     }
 
     private async Task<IdResponse<Guid>> CreateUserImplAsync(
