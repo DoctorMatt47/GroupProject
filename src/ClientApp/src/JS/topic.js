@@ -60,25 +60,25 @@ const getRecommendedTopics = (perPage, page)=>{
  * @returns promise to response with list of popular topics or error
  */
 const getPopularTopics=(perPage, page)=>{
-    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.time, "OnlyOpen":true});
+    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.view, "OnlyOpen":true});
 };
 /**
- * 
+ * @param {string} userId - id of user
  * @param {number} perPage - count of pages in current page
  * @param {number}  page - number of page
  * @returns promise to response with list of user topics or error
  */
 const getUserTopics=(userId, perPage, page)=>{
-    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.view, "OnlyOpen":true, "UserId":userId});
+    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.time, "OnlyOpen":false, "UserId":userId});
 };
 /**
- * 
+ * @param {string} sectionId - id of section
  * @param {number} perPage - count of pages in current page
  * @param {number}  page - number of page
  * @returns promise to response with list of section topics or error
  */
 const getSectionTopics=(sectionId, perPage, page)=>{
-    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.view, "OnlyOpen":true, "SectionId":sectionId});
+    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.time, "OnlyOpen":true, "SectionId":sectionId});
 };
 /**
  * 
