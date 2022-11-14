@@ -74,7 +74,7 @@ public static class LinqExtensions
         var (page, perPage) = request;
 
         var itemsCount = await queryable.CountAsync(cancellationToken);
-        var pageCount = (int) Math.Ceiling(itemsCount / (float) page);
+        var pageCount = (int) Math.Ceiling(itemsCount / (float) perPage);
         var items = await queryable
             .Skip((page - 1) * perPage)
             .Take(perPage)
