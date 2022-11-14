@@ -3,13 +3,12 @@
  * @param {Array} section - list of section data
  * @returns html object with section data
  */
-const createSection = (section) =>{
+const createSectionObject = (section) =>{
     const column = document.createElement("div");
     column.className = "col-sm-3";
 
     const a = document.createElement("a");
-    //a.onclick = ""
-    //TODO: go to topics page
+    a.href = addParameters("../Topics_in_section/topics_in_section.html", {id:section.id});
 
     const block = document.createElement("div");
     block.className = "block";
@@ -21,7 +20,7 @@ const createSection = (section) =>{
 
     const info = document.createElement("div");
     info.className = "section-info";
-    info.innerHTML = `<p>Number of topics:${section.count}</p><p>${section.description}</p>`;
+    info.innerHTML = `<p>Number of topics:${section.topicCount}</p><p>${section.description}</p>`;
     block.appendChild(info);
 
     a.appendChild(block);
@@ -43,7 +42,7 @@ const addSectionsPage = (container, sections) =>{
     container.innerHTML = "";
     const objects = sections.slice((currentPage - 1)*perPage, Math.min(sections.length, currentPage*perPage));
     for(let i in objects){
-        container.appendChild(createSection(objects[i]));
+        container.appendChild(createSectionObject(objects[i]));
     }
 };
 /**
