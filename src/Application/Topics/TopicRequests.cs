@@ -1,11 +1,12 @@
 ﻿using GroupProject.Application.Common.Requests;
+using GroupProject.Domain.ValueObjects;
 
 namespace GroupProject.Application.Topics;
 
 public record CreateTopicRequest(
     string Header,
     string Description,
-    CompileOptionsRequest? CompileOptions,
+    CompileOptions? CompileOptions,
     Guid UserId,
     int SectionId);
 
