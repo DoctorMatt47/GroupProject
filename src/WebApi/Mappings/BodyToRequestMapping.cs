@@ -4,6 +4,7 @@ using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Complaints;
 using GroupProject.Application.Topics;
 using GroupProject.Domain.Enums;
+using GroupProject.Domain.ValueObjects;
 using GroupProject.WebApi.Requests;
 
 namespace GroupProject.WebApi.Mappings;
@@ -23,5 +24,7 @@ public class BodyToRequestMapping : Profile
         CreateMap<CreateTopicBody, CreateTopicRequest>()
             .MapRecordMember(r => r.UserId, _ => Guid.Empty)
             .MapRecordMember(r => r.SectionId, _ => 0);
+
+        CreateMap<CompileOptionsBody, CompileOptions>();
     }
 }
