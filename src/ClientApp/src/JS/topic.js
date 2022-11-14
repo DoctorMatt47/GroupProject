@@ -1,3 +1,9 @@
+const TOPICS_SORTING = {
+    time:"CreationTime",
+    view:"ViewCount",
+    complaint:"ComplaintCount",
+    verify:"VerifyBefore"
+};
 /**
  * @param {number} sectionId - id of section of topic
  * @param {string} header - header or title of topic
@@ -26,18 +32,17 @@ const createTopic = (sectionId, header, description, code, language)=>{
 };
 /**
  * 
- * @param {number} perPage - count of pages in current page
- * @param {number}  page - number of page
+ * @param {Object} params - parameters for topics getting
  * @returns promise to response with list of topic data or error
  */
-const getTopics = (perPage, page)=>{
+const getTopics = (params)=>{
     const request = {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
         }
     };
-    return sendAsync(URLS.TopicsOrderedByCreationTime + `?perPage=${perPage}&page=${page}`, request);
+    return sendAsync(addParameters(URLS.Topics, params), request);
 };
 /**
  * 
@@ -46,7 +51,7 @@ const getTopics = (perPage, page)=>{
  * @returns promise to response with list of recommended topics or error
  */
 const getRecommendedTopics = (perPage, page)=>{
-    return getTopics(perPage, page);
+    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.time, "OnlyOpen":true});
 };
 /**
  * 
@@ -55,22 +60,25 @@ const getRecommendedTopics = (perPage, page)=>{
  * @returns promise to response with list of popular topics or error
  */
 const getPopularTopics=(perPage, page)=>{
-    return getTopics(perPage, page);
+    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.time, "OnlyOpen":true});
 };
 /**
  * 
  * @param {number} perPage - count of pages in current page
  * @param {number}  page - number of page
- * @returns promise to response with list of popular topics or error
+ * @returns promise to response with list of user topics or error
  */
-const getUserTopics=(userId)=>{
-    const request = {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    };
-    return sendAsync(URLS.TopicsByUser + userId, request);
+const getUserTopics=(userId, perPage, page)=>{
+    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.view, "OnlyOpen":true, "UserId":userId});
+};
+/**
+ * 
+ * @param {number} perPage - count of pages in current page
+ * @param {number}  page - number of page
+ * @returns promise to response with list of section topics or error
+ */
+const getSectionTopics=(sectionId, perPage, page)=>{
+    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.view, "OnlyOpen":true, "SectionId":sectionId});
 };
 /**
  * 
