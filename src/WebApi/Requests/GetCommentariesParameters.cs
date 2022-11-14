@@ -6,4 +6,5 @@ namespace GroupProject.WebApi.Requests;
 public record GetCommentariesParameters(
     [FromQuery] PageRequest Page,
     string OrderBy,
+    Guid? TopicId,
     Guid? UserId);
