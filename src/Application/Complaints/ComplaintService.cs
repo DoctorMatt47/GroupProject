@@ -83,6 +83,7 @@ public class ComplaintService : IComplaintService
             request.Description,
             request.Target,
             request.TargetId,
+            request.UserId,
             configuration.VerificationDuration);
 
         _dbContext.Set<Complaint>().Add(complaint);

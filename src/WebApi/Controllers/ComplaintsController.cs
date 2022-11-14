@@ -92,7 +92,13 @@ public class ComplaintsController : ApiControllerBase
         CreateComplaintBody body,
         CancellationToken cancellationToken)
     {
-        var request = _mapper.Map<CreateComplaintRequest>(body) with {TargetId = id};
+        var request = _mapper.Map<CreateComplaintRequest>(body) with
+        {
+            Target = ComplaintTarget.Topic,
+            TargetId = id,
+            UserId = Guid.Parse(User.Identity?.Name!),
+        };
+
         var response = await _complaints.Create(request, cancellationToken);
         return Created(string.Empty, response);
     }
@@ -117,6 +123,7 @@ public class ComplaintsController : ApiControllerBase
         {
             Target = ComplaintTarget.Commentary,
             TargetId = id,
+            UserId = Guid.Parse(User.Identity?.Name!),
         };
 
         var response = await _complaints.Create(request, cancellationToken);
