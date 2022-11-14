@@ -7,7 +7,7 @@ const createSectionForPanel = (sectionData)=>{
     const section = document.createElement("a");
     section.innerHTML = `<li class="list-group-item d-flex justify-content-between align-items-center">
                             ${sectionData.header}
-                            <span class="badge badge-primary badge-pill">${sectionData.count}</span>
+                            <span class="badge badge-primary badge-pill">${sectionData.topicCount}</span>
                         </li>`;
     //section.onclick = "";
     //TODO: go to topics page
