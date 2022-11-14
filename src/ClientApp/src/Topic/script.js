@@ -83,6 +83,7 @@ const createCommentObject = (comment, isNew = false)=>{
 
     if(isNew){
         commentsContainer.insertBefore(com, commentsContainer.firstChild);
+        answersContainer.textContent = Number(answersContainer.textContent) + 1;
         return;
     }
     commentsContainer.appendChild(com);

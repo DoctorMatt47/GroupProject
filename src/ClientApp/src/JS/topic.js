@@ -48,6 +48,15 @@ const getTopics = (params)=>{
  * 
  * @param {number} perPage - count of pages in current page
  * @param {number}  page - number of page  
+ * @returns promise to response with list of found topics or error
+ */
+const getSearchTopics = (pattern, perPage, page)=>{
+    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.view, "OnlyOpen":false, "Substring":pattern});
+};
+/**
+ * 
+ * @param {number} perPage - count of pages in current page
+ * @param {number}  page - number of page  
  * @returns promise to response with list of recommended topics or error
  */
 const getRecommendedTopics = (perPage, page)=>{

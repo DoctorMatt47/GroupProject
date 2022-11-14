@@ -22,7 +22,7 @@ const closeErrorWindow = ()=>{
 const searchTopics = ()=>{
     const input = document.getElementById("search-input");
     if(input.value === "") return;
-    //TODO: Open topics page with input as name parameter
+    openPage("../Topic-Search/topic-search.html", {"pattern":input.value});
 }
 const moderatorButton = ()=>{
     if(isLoggedIn()){
@@ -31,6 +31,7 @@ const moderatorButton = ()=>{
     }
 };
 window.addEventListener("load", ()=>{
+    document.getElementById("search-input").value = getValueFromCurrentUrl("pattern");
     addBackgroundClosing(document.getElementById("error-container"), closeErrorWindow);
     if(isLoggedIn()){
         authenticate(getFromStorage("login"), getFromStorage("password"))

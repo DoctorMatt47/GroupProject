@@ -46,8 +46,9 @@ let currentPage = 1;
  */
 const loadSectionTopics = (container, section, loadMore)=>{
     getSectionTopics(section.id, perSectionPage, currentPage++).then((response) => {
-        if(response.items.length == 0){
-            loadMore.style = "display: none";
+        if(currentPage - 1 >= response.pageCount){
+            loadMore.classList.add("disabled");
+            loadMore.setAttribute("disabled", true);
         }
         for(let i in response.items){
             getTopic(response.items[i].id).then((topic) => {
