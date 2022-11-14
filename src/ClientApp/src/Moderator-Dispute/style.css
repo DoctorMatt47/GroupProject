@@ -23,7 +23,26 @@ a::after{
     border-radius: 20px 20px 0 0;
     color: black;
 }
+.code-btn {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 4px 20px;
+    background-color: #333;
+    color: #f1f1f1;
+    border-radius: 20px;
+    transition: .2s;
+    height: 35px;
+}
 
+.code-btn:hover, .code-btn:focus {
+    border: 1px solid #333;
+    background-color: #fff;
+    color: #000;
+}
+.run-span {
+    padding: 6px;
+}
 .language {
     width: fit-content;
     display: flex;

@@ -7,7 +7,6 @@
 .user-panel {
     position: relative;
     border-radius: 20px !important;
-    border: 3px solid black;
     margin: 0 40px auto;
     color: black;
 }
@@ -80,7 +79,7 @@
 
 .panel {
     margin-bottom: 50px;
-    border-radius: 20px;
+    border-radius: 20px !important;
 }
 
 .panel-footer {
