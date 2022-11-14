@@ -46,11 +46,11 @@ let currentPage = 1;
  */
 const loadSectionTopics = (container, section, loadMore)=>{
     getSectionTopics(section.id, perSectionPage, currentPage++).then((response) => {
-        if(response.list.length == 0){
+        if(response.items.length == 0){
             loadMore.style = "display: none";
         }
-        for(let i in response.list){
-            getTopic(response.list[i].id).then((topic) => {
+        for(let i in response.items){
+            getTopic(response.items[i].id).then((topic) => {
                 container.appendChild(createSectionTopic(topic));
             }).catch(showError);
         }

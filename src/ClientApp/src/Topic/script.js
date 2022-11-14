@@ -10,6 +10,8 @@ const codeContainer = document.getElementById("user-code");
 const codeLanguageContainer = document.getElementById("topic-language");
 const codeButton = document.getElementById("run-code");
 const commentsContainer = document.getElementById("comment-group");
+const closeTopicButton = document.getElementById("close-btn");
+const addCommentButton = document.getElementById("comment-open-button");
 
 /**
  * 
@@ -93,16 +95,29 @@ let currentPage = 1;
  */
 const addCommentsToPage = (topicId) =>{
     getTopicComments(topicId, commentsPerPage, currentPage++).then(response=>{
-        for(let i in response.list){
-            createCommentObject(response.list[i]);
+        answersContainer.textContent = response.itemsCount;
+        for(let i in response.items){
+            createCommentObject(response.items[i]);
         }
     });
 };
+/**
+ * Changes page elements if topic is closed
+ * @param {object} topic - data of topic
+ */
+const topicClosed = (topic)=>{
+    if(topic.isClosed){
+        closeTopicButton.style = "background:gray";
+        closeTopicButton.textContent = "Closed";
+        addCommentButton.style = "display:none";
+    }
+}
 /**
  * Adds data from topic to page
  * @param {Object} topic - topic data from server
  */
 const addTopicToPage = (topic)=>{
+    topicClosed(topic);
     titleContainer.textContent = topic.header;
     descriptionContainer.textContent = topic.description;
     usernameContainer.textContent = topic.userLogin;

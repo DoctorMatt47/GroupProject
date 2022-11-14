@@ -14,12 +14,12 @@ const createCard = (data) => {
 };
 const createCards = (userId)=>{
     getUserTopics(userId, cardIncrease, currentPage++).then(response=>{
-        if(response.list.length == 0){
+        if(response.items.length == 0){
             loadMoreButton.classList.add("disabled");
             loadMoreButton.setAttribute("disabled", true);
         }
-        for(let i in response.list){
-            getTopic(response.list[i].id).then(resp =>{
+        for(let i in response.items){
+            getTopic(response.items[i].id).then(resp =>{
                 createCard(resp);
             }).catch(showError);
         }
@@ -42,7 +42,7 @@ const setUserData = (userId)=>{
         userCreationDate.textContent += ": "+new Date(response.creationTime).toLocaleDateString();
     }).catch(showError);
     getUserTopics(userId, 1, 1).then(response=>{
-        cardCreated.textContent = response.pageCount;
+        cardCreated.textContent = response.itemsCount;
     }).catch(showError);
 };
 

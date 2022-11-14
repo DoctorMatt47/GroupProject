@@ -78,7 +78,7 @@ const getUserTopics=(userId, perPage, page)=>{
  * @returns promise to response with list of section topics or error
  */
 const getSectionTopics=(sectionId, perPage, page)=>{
-    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.time, "OnlyOpen":true, "SectionId":sectionId});
+    return getTopics({"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.time, "OnlyOpen":false, "SectionId":sectionId});
 };
 /**
  * 
