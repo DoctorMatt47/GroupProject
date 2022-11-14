@@ -1,4 +1,4 @@
-function openPage(pageName,elmnt,color) {
+function openPageModerator(pageName,elmnt,color) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -13,6 +13,6 @@ function openPage(pageName,elmnt,color) {
 }
 
 // Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
+//document.getElementById("defaultOpen").click();
 
 
