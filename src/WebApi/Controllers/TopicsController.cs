@@ -34,6 +34,15 @@ public class TopicsController : ApiControllerBase
         return await _topics.Get(request, cancellationToken);
     }
 
+    [AllowAnonymous]
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<ActionResult<TopicResponse>> GetTopic(
+        Guid id,
+        CancellationToken cancellationToken) =>
+        await _topics.Get(id, cancellationToken);
+
     /// <summary>
     ///     Creates topic
     /// </summary>
