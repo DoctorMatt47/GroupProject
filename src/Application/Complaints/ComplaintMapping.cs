@@ -11,6 +11,8 @@ public class ComplaintMapping : Profile
     {
         CreateMap<Complaint, ComplaintByTargetResponse>();
         CreateMap<Complaint, ComplaintResponse>()
-            .MapRecordMember(r => r.TargetId, c => c.Target == ComplaintTarget.Topic ? c.TopicId : c.CommentaryId);
+            .MapRecordMember(
+                r => r.TargetId,
+                c => c.Target == ComplaintTarget.Topic ? c.TopicId!.Value : c.CommentaryId!.Value);
     }
 }
