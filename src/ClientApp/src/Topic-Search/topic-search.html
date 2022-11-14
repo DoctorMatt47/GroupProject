@@ -22,35 +22,36 @@
 <div id="header"></div>
 <div class=" container  box mt-5">
     <h2>Results:</h2>
-    <p class="request">Your request:</p>
+    <p class="request" id="your-request">Your request:</p>
     <hr class="line">
-    <div class="col-sm-12" id="topics-container">
-        <div class="topic">
-            <div class="col-sm-2 user-info">
-                <a href="#">
-                    <div class="language">Coffeescript</div>
-                </a>
-                <a href="#" id="username">username</a>
-                <p class="topic-p">creation date</p>
-            </div>
-            <div class="vertical-line"></div>
-            <a href="#">
-                <div class="col-sm-12">
-                    <div class="topic-name">Topic Name</div>
-                    <div class="topic-description">Here we have Topic Description.
-                        BTW we have a problem. The blocks may have different sizes.... So description should be shorter
-                        than three lines
-                        Or we should show only two sentences and then "..." Same with description in sections blocks
-                    </div>
-                    <div class="topic-info">
-                        <p class="topic-p">answered:</p>
-                        <p class="topic-p">views:</p>
-                    </div>
+    <div class="col-sm-12">
+        <div  id="topics-container">
+            <div class="topic">
+                <div class="col-sm-2 user-info">
+                    <a href="#">
+                        <div class="language">Coffeescript</div>
+                    </a>
+                    <a href="#" id="username">username</a>
+                    <p class="topic-p">creation date</p>
                 </div>
-            </a>
+                <div class="vertical-line"></div>
+                <a href="#">
+                    <div class="col-sm-12">
+                        <div class="topic-name">Topic Name</div>
+                        <div class="topic-description">Here we have Topic Description.
+                            BTW we have a problem. The blocks may have different sizes.... So description should be shorter
+                            than three lines
+                            Or we should show only two sentences and then "..." Same with description in sections blocks
+                        </div>
+                        <div class="topic-info">
+                            <p class="topic-p">answered:</p>
+                            <p class="topic-p">views:</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
-        <div class="pagination" id="pages">
-        </div>
+        <button id="load-more" >Load more</button>
     </div>
 </div>
 <div id="footer"></div>
