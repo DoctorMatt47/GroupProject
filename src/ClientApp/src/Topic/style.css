@@ -239,9 +239,6 @@ h4 {
     color: #000;
 }
 
-.run-span {
-    padding: 6px;
-}
 
 /*Verification popup window*/
 #verificationWindow {
@@ -283,11 +280,14 @@ h4 {
 }
 #moderator-panel{
     position: fixed;
+    padding: 30px;
+    background-color: gainsboro;
     top: 100px;
     right: 100px;
     width: 30%;
     height: 50%;
     z-index: 9999;
+    border: 2px solid black;
     /*display: block;*/
     display: none;
 }

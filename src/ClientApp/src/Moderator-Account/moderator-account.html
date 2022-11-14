@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - Main Forum Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+        });
+    </script>
+</head>
+<body id="page-header" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+<div class=" container-fluid  box mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>Moderation Tabs</h2>
+            <div class="wrapper">
+                <input class="radio" id="one" name="group" type="radio" checked>
+                <input class="radio" id="two" name="group" type="radio">
+                <input class="radio" id="three" name="group" type="radio">
+                <input class="radio" id="four" name="group" type="radio">
+
+                <div class="tabs">
+                    <label class="tab" id="one-tab" for="one">Topic Complaint</label>
+                    <label class="tab" id="two-tab" for="two">Comment Complaint</label>
+                    <label class="tab" id="three-tab" for="three">Topic Warning</label>
+                    <label class="tab" id="four-tab" for="four">Comment Warning</label>
+                </div>
+
+                <div class="panels">
+                    <div class="panel" id="one-panel">
+                        <div class="element-container">
+                            <a class="element">
+                                <p class="section">Section</p>
+                                <p>Topic name</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel" id="two-panel">
+                        <div class="element-container">
+                            <a class="element">
+                                <p class="section">Section</p>
+                                <p>Comment text</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel" id="three-panel">
+                        <p>Content3</p>
+                    </div>
+                    <div class="panel" id="four-panel">
+                        <p>Content4</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row account-panel">
+                <div class="panel-heading">
+                    <h2 style="font-family:Courier New, Courier, monospace" id="username">Moderator Username</h2>
+                    <p id="registration-date">Registration date</p>
+                </div>
+                <div class="panel-footer account-panel-footer">
+                    <button type="button" class="user-action-btn" onclick="openUserActionWindow()">user actions</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="Unblock" class="fullscreen-container">
+    <div class="unblock-section">
+        <div class="inner-width">
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <button class="close-unblock" onclick="closeUserActionWindow();"><span
+                            class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="data">
+                <label for="users">Choose User:</label>
+                <input list="nicknames" id="users" name="users">
+
+                <datalist id="nicknames">
+                    <option value="Chocolate">
+                    <option value="Coconut">
+                    <option value="Mint">
+                    <option value="Strawberry">
+                    <option value="Vanilla">
+                </datalist>
+            </div>
+            <button type="button" class="submit-unblock" onclick="closeUserActionWindow();">Unblock</button>
+        </div>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+<script src="script.js"></script>
+<script>
+    const openUserActionWindow = () => {
+        document.getElementById("Unblock").style.display = "block";
+    };
+    const closeUserActionWindow = () => {
+        document.getElementById("Unblock").style.display = "none";
+    };
+</script>
+</html>
