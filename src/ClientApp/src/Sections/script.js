@@ -8,8 +8,7 @@ const createSectionObject = (section) =>{
     column.className = "col-sm-3";
 
     const a = document.createElement("a");
-    //a.onclick = ""
-    //TODO: go to topics page
+    a.href = addParameters("../Topics_in_section/topics_in_section.html", {id:section.id});
 
     const block = document.createElement("div");
     block.className = "block";
