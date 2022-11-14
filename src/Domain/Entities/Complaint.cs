@@ -18,13 +18,19 @@ public class Complaint : IHasId<Guid>
     {
     }
 
-    public Complaint(string description, ComplaintTarget target, Guid elementId, TimeSpan complaintDuration)
+    public Complaint(
+        string description,
+        ComplaintTarget target,
+        Guid elementId,
+        Guid userId,
+        TimeSpan complaintDuration)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
         ExpirationTime = DateTime.UtcNow + complaintDuration;
         Description = description;
         Target = target;
+        UserId = userId;
 
         _ = target switch
         {
@@ -46,6 +52,9 @@ public class Complaint : IHasId<Guid>
 
     public Guid? CommentaryId { get; private set; }
     public Commentary? Commentary { get; private set; } = null!;
+
+    public Guid UserId { get; private set; }
+    public User User { get; private set; } = null!;
 
     public Guid Id { get; private set; }
 }

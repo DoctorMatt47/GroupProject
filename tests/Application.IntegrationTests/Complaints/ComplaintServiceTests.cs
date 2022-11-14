@@ -36,7 +36,13 @@ public class ComplaintServiceTests
         var complaintCount = random.Next(10);
         for (var i = 0; i < complaintCount; i++)
         {
-            var complaint = new Complaint(fixture.Create<string>(), ComplaintTarget.Topic, topic.Id, TimeSpan.Zero);
+            var complaint = new Complaint(
+                fixture.Create<string>(),
+                ComplaintTarget.Topic,
+                topic.Id,
+                _db.DefaultUser.Id,
+                TimeSpan.Zero);
+
             _dbContext.Set<Complaint>().Add(complaint);
         }
 
@@ -61,8 +67,13 @@ public class ComplaintServiceTests
         var complaintCount = random.Next(10);
         for (var i = 0; i < complaintCount; i++)
         {
-            var complaint = new Complaint(fixture.Create<string>(), ComplaintTarget.Commentary, commentary.Id,
+            var complaint = new Complaint(
+                fixture.Create<string>(),
+                ComplaintTarget.Commentary,
+                commentary.Id,
+                _db.DefaultUser.Id,
                 TimeSpan.Zero);
+
             _dbContext.Set<Complaint>().Add(complaint);
         }
 
