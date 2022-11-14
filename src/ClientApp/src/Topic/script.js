@@ -109,6 +109,7 @@ const addTopicToPage = (topic)=>{
     codeLanguageContainer.textContent = LANGUAGES[topic.compileOptions.language.toLowerCase()];
     sectionContainer.textContent = topic.sectionHeader;
     dateContainer.textContent = new Date(topic.creationTime).toLocaleDateString();
+    viewedContainer.textContent = topic.viewCount;
     let code = topic.compileOptions.code;
     if(code !== ""){
         codeContainer.textContent = code;
@@ -121,9 +122,7 @@ const addTopicToPage = (topic)=>{
 const closeCurrentTopic = ()=>{
     closeTopic(getValueFromCurrentUrl('id')).then(response=>{
         console.log(response);
-    }).catch(error=>{
-        console.log(error);
-    });
+    }).catch(showError);
 };
 
 window.addEventListener("load", ()=>{

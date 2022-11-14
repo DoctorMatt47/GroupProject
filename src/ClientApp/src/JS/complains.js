@@ -13,7 +13,7 @@ const createTopicComplaint = (topicId, description)=>{
         },
         body: JSON.stringify(body),
     };
-    return sendAsync(URLS.ComplaintTopicCreate + topicId, request);
+    return sendAsync(URLS.ComplaintTopic + topicId, request);
 };
 /**
  * @param {number} commentId - id of comment to add to it complain
@@ -30,7 +30,7 @@ const createCommentComplaint = (commentId, description)=>{
         },
         body: JSON.stringify(body),
     };
-    return sendAsync(URLS.ComplaintCommentCreate + commentId, request);
+    return sendAsync(URLS.ComplaintComment + commentId, request);
 };
 /**
  * 
@@ -45,7 +45,7 @@ const getTopicComplaint = (topicId)=>{
             "Authorization":"Bearer "+getFromStorage("token")
         }
     };
-    return sendAsync(URLS.ComplaintByTopic + topicId, request);
+    return sendAsync(URLS.ComplaintTopic + topicId, request);
 }
 /**
  * 
@@ -60,5 +60,5 @@ const getCommentComplaint = (commentId)=>{
             "Authorization":"Bearer "+getFromStorage("token")
         }
     };
-    return sendAsync(URLS.ComplaintByComment + commentId, request);
+    return sendAsync(URLS.ComplaintComment + commentId, request);
 }

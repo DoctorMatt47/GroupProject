@@ -29,7 +29,5 @@ const submitComplaint = () =>{
     create(id, document.getElementById("message").value)
         .then(response=>{
             console.log("Complaint was created!");
-        }).catch(error=>{
-            console.log(error);
-        });
+        }).catch(showError);
 };
