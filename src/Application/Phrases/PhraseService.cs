@@ -22,7 +22,7 @@ public class PhraseService : IPhraseService
     }
 
     public async Task<IEnumerable<PhraseResponse>> GetForbidden(CancellationToken cancellationToken) =>
-        await _context.Set<VerificationRequiredPhrase>()
+        await _context.Set<ForbiddenPhrase>()
             .ProjectTo<PhraseResponse>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 

@@ -9,9 +9,6 @@ namespace GroupProject.Application.Common.Extensions;
 
 public static class LinqExtensions
 {
-    public static Page<T> ToPage<T>(this IEnumerable<T> enumerable, int pageCount) =>
-        new(enumerable.ToList(), pageCount);
-
     public static async Task<TEntity> FirstOrThrowAsync<TEntity, TId>(
         this IQueryable<TEntity> set,
         TId id,
@@ -39,12 +36,12 @@ public static class LinqExtensions
     public static async Task NoOneOrThrowAsync<TEntity>(
         this IQueryable<TEntity> set,
         Expression<Func<TEntity, bool>> predicate,
+        string? condition,
         CancellationToken cancellationToken)
         where TEntity : class
     {
         var isExist = await set.AnyAsync(predicate, cancellationToken);
-        if (isExist)
-            throw new ConflictException($"There is already {typeof(TEntity).Name} with condition: {predicate}");
+        if (isExist) throw new ConflictException($"There is already {typeof(TEntity).Name} with {condition}");
     }
 
     public static async Task AnyOrThrowAsync<TEntity, TId>(
@@ -76,20 +73,15 @@ public static class LinqExtensions
     {
         var (page, perPage) = request;
 
-        var pageCount = await queryable.PageCountAsync(page, cancellationToken);
-        var list = await queryable
+        var itemsCount = await queryable.CountAsync(cancellationToken);
+        var pageCount = (int) Math.Ceiling(itemsCount / (float) perPage);
+        var items = await queryable
             .Skip((page - 1) * perPage)
             .Take(perPage)
             .ToListAsync(cancellationToken);
 
-        return new Page<T>(list, pageCount);
+        return new Page<T>(items, pageCount, itemsCount);
     }
-
-    private static async Task<int> PageCountAsync<T>(
-        this IQueryable<T> queryable,
-        int perPage,
-        CancellationToken cancellationToken = default) =>
-        (int) Math.Ceiling(await queryable.CountAsync(cancellationToken) / (float) perPage);
 
     public static async Task<IEnumerable<TResponse>> SelectAsync<TEntity, TResponse>(
         this IEnumerable<TEntity> enumerable,

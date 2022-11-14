@@ -6,6 +6,8 @@ using GroupProject.Application.Common.Requests;
 using GroupProject.Application.IntegrationTests.Common.Fixtures;
 using GroupProject.Application.Topics;
 using GroupProject.Domain.Entities;
+using GroupProject.Domain.Enums;
+using GroupProject.Domain.ValueObjects;
 
 namespace GroupProject.Application.IntegrationTests.Topics;
 
@@ -42,7 +44,7 @@ public class TopicServiceTests
 
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.List.Should().OnlyContain(t => t.SectionId == _db.DefaultSection.Id);
+        response.Items.Should().OnlyContain(t => t.SectionId == _db.DefaultSection.Id);
     }
 
     [Fact]
@@ -62,7 +64,7 @@ public class TopicServiceTests
 
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.List.Should().OnlyContain(t => t.SectionId == _db.DefaultSection.Id);
+        response.Items.Should().OnlyContain(t => t.SectionId == _db.DefaultSection.Id);
     }
 
     [Fact]
@@ -81,7 +83,7 @@ public class TopicServiceTests
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.CreationTime, true);
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.List.Should().OnlyContain(t => !t.IsClosed);
+        response.Items.Should().OnlyContain(t => !t.IsClosed);
     }
 
     [Fact]
@@ -92,7 +94,7 @@ public class TopicServiceTests
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.CreationTime, Substring: "a");
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.List.Should().OnlyContain(t => t.Header.Contains(request.Substring!));
+        response.Items.Should().OnlyContain(t => t.Header.Contains(request.Substring!));
     }
 
     [Fact]
@@ -103,7 +105,7 @@ public class TopicServiceTests
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.CreationTime);
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.List.Should().BeInDescendingOrder(t => t.CreationTime);
+        response.Items.Should().BeInDescendingOrder(t => t.CreationTime);
     }
 
     [Fact]
@@ -122,7 +124,7 @@ public class TopicServiceTests
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.ViewCount);
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.List.Should().BeInDescendingOrder(t => t.ViewCount);
+        response.Items.Should().BeInDescendingOrder(t => t.ViewCount);
     }
 
     [Fact]
@@ -141,7 +143,7 @@ public class TopicServiceTests
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.ComplaintCount);
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.List.Should().BeInDescendingOrder(t => t.ComplaintCount);
+        response.Items.Should().BeInDescendingOrder(t => t.ComplaintCount);
     }
 
     [Fact]
@@ -153,7 +155,7 @@ public class TopicServiceTests
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.VerifyBefore);
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.List.Should()
+        response.Items.Should()
             .NotContain(t => t.VerifyBefore == null || t.VerifyBefore <= now).And
             .BeInAscendingOrder(t => t.VerifyBefore);
     }
@@ -236,7 +238,7 @@ public class TopicServiceTests
         {
             SectionId = _db.DefaultSection.Id,
             UserId = _db.DefaultUser.Id,
-            CompileOptions = new CompileOptionsRequest(fixture.Create<string>(), "R"),
+            CompileOptions = new CompileOptions(fixture.Create<string>(), ProgrammingLanguage.Lua),
         };
     }
 }

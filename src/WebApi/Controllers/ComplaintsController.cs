@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupProject.WebApi.Controllers;
 
-[Authorize(Roles = "Moderator, Admin")]
 [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 [ProducesResponseType(StatusCodes.Status403Forbidden)]
 public class ComplaintsController : ApiControllerBase
@@ -31,6 +30,7 @@ public class ComplaintsController : ApiControllerBase
     /// <param name="request">Number of elements per page and page number</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Paged complaints</returns>
+    [Authorize(Roles = "Moderator, Admin")]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public Task<Page<ComplaintResponse>> GetComplaints(
@@ -44,6 +44,7 @@ public class ComplaintsController : ApiControllerBase
     /// <param name="id">Topic id</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Complaints of topic with passed id</returns>
+    [Authorize(Roles = "Moderator, Admin")]
     [HttpGet("AboutTopic/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -58,6 +59,7 @@ public class ComplaintsController : ApiControllerBase
     /// <param name="id">Commentary id</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Complaints of commentary with passed id</returns>
+    [Authorize(Roles = "Moderator, Admin")]
     [HttpGet("AboutCommentary/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -113,7 +115,7 @@ public class ComplaintsController : ApiControllerBase
         return Created(string.Empty, response);
     }
 
-    [Authorize]
+    [Authorize(Roles = "Moderator, Admin")]
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

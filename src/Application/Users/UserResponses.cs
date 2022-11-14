@@ -4,4 +4,5 @@ public record UserResponse(
     string Login,
     string Role,
     DateTime CreationTime,
-    int WarningCount);
+    int WarningCount,
+    DateTime BanEndTime);
