@@ -8,9 +8,9 @@ const closeCommentForm = () => {
 };
 
 const commentDescription = document.getElementById("comment-description");
-const commentNeedCode = document.getElementById("need-code");
+const commentNeedCode = document.getElementById("comment-need-code");
 const commentCode = document.getElementById("comment-code");
-const commentLanguage = document.getElementById("topic-code-language");
+const commentLanguage = document.getElementById("comment-code-language");
 /**
  * Gets data from from and sends http request to server.
  * If request is successful than open topic page else gets error
@@ -23,11 +23,7 @@ const submitComment = ()=>{
         commentLanguage.value)
     .then(response=>{
         closeCommentForm();
-        openErrorWindow(response);
-        //TODO: get comment by id and add it to page
+        getComment(response.id).then((comment)=>createCommentObject(comment, true)).catch(showError);
     })
-    .catch(error=>{
-        const exception = JSON.parse(error.message);
-        openErrorWindow(exception.message);
-    });
+    .catch(showError);
 };

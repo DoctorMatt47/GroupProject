@@ -1,17 +1,39 @@
+const COMMENTS_SORTING = {
+    time:"CreationTime",
+    complaint:"ComplaintCount",
+    verify:"VerifyBefore"
+};
 /**
  * 
- * @param {number} perPage - count of pages in current page
- * @param {number}  page - number of page  
+ * @param {object} params - parameters for comments getting
  * @returns promise to response with list of comments in topic or error
  */
-const getComments = (topicId, perPage, page)=>{
+const getComments = (params)=>{
     const request = {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
         }
     };
-    return sendAsync(URLS.CommentsByTopic + `${topicId}?perPage=${perPage}&page=${page}`, request);
+    return sendAsync(addParameters(URLS.Comments, params), request);
+};
+/**
+ * @param {string} topicId - id of topic
+ * @param {number} perPage - count of pages in current page
+ * @param {number}  page - number of page  
+ * @returns promise to response with list of comments in topic or error
+ */
+const getTopicComments = (topicId, perPage, page)=>{
+    return getComments({"Page.Size":perPage,"Page.Number":page, "OrderBy":COMMENTS_SORTING.time, "TopicId":topicId});
+};
+/**
+ * @param {string} userId - id of user
+ * @param {number} perPage - count of pages in current page
+ * @param {number}  page - number of page  
+ * @returns promise to response with list of comments in topic or error
+ */
+const getUserComments = (userId, perPage, page)=>{
+    return getComments({"Page.Size":perPage,"Page.Number":page, "OrderBy":COMMENTS_SORTING.time, "UserId":userId});
 };
 /**
  * @param {number} topicId - id of topic
@@ -49,5 +71,5 @@ const getComment = (commentId)=>{
             "Content-Type": "application/json"
         }
     };
-    return sendAsync(URLS.Comments + `${commentId}`, request);
+    return sendAsync(URLS.Comments + `/${commentId}`, request);
 };

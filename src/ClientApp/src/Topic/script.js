@@ -51,7 +51,7 @@ const createCommentCode = (comment)=>{
  * Creates comment object and adds comment data to comment list in page 
  * @param {Object} comment 
  */
-const createCommentObject = (comment)=>{
+const createCommentObject = (comment, isNew = false)=>{
     const com = document.createElement("div");
     com.id = "comment";
     const complaint = document.createElement("div");
@@ -79,15 +79,20 @@ const createCommentObject = (comment)=>{
     date.textContent = "Answered: " + new Date(comment.creationTime).toLocaleDateString();
     com.appendChild(date);
 
+    if(isNew){
+        commentsContainer.insertBefore(com, commentsContainer.firstChild);
+        return;
+    }
     commentsContainer.appendChild(com);
 };
+const commentsPerPage = 10;
+let currentPage = 1;
 /**
  * Adds comments of topic to topic page
  * @param {string} topicId - id of topic
  */
 const addCommentsToPage = (topicId) =>{
-    commentsContainer.innerHTML = "";
-    getComments(topicId, 20, 1).then(response=>{
+    getTopicComments(topicId, commentsPerPage, currentPage++).then(response=>{
         for(let i in response.list){
             createCommentObject(response.list[i]);
         }
@@ -124,6 +129,7 @@ const closeCurrentTopic = ()=>{
 window.addEventListener("load", ()=>{
     getTopic(getValueFromCurrentUrl("id")).then(response => {
         addTopicToPage(response);
+        commentsContainer.innerHTML = "";
         addCommentsToPage(response.id);
         document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";
     })
