@@ -5,4 +5,5 @@ namespace GroupProject.Application.Complaints;
 public record CreateComplaintRequest(
     string Description,
     ComplaintTarget Target,
-    Guid TargetId);
+    Guid TargetId,
+    Guid UserId);

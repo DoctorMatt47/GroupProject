@@ -6,6 +6,7 @@ namespace GroupProject.Application.Complaints;
 public interface IComplaintService
 {
     Task<Page<ComplaintResponse>> Get(PageRequest request, CancellationToken cancellationToken);
+    Task<ComplaintResponse> Get(Guid id, CancellationToken cancellationToken);
     Task<IEnumerable<ComplaintByTargetResponse>> GetByTopicId(Guid topicId, CancellationToken cancellationToken);
 
     Task<IEnumerable<ComplaintByTargetResponse>> GetByCommentaryId(

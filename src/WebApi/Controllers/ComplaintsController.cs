@@ -38,6 +38,14 @@ public class ComplaintsController : ApiControllerBase
         CancellationToken cancellationToken) =>
         _complaints.Get(request, cancellationToken);
 
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public Task<ComplaintResponse> Get(Guid id, CancellationToken cancellationToken) =>
+        _complaints.Get(id, cancellationToken);
+
+
     /// <summary>
     ///     Gets complaints by topic id. Should be used in moderator menu. Is not available for user
     /// </summary>
@@ -84,7 +92,13 @@ public class ComplaintsController : ApiControllerBase
         CreateComplaintBody body,
         CancellationToken cancellationToken)
     {
-        var request = _mapper.Map<CreateComplaintRequest>(body) with {TargetId = id};
+        var request = _mapper.Map<CreateComplaintRequest>(body) with
+        {
+            Target = ComplaintTarget.Topic,
+            TargetId = id,
+            UserId = Guid.Parse(User.Identity?.Name!),
+        };
+
         var response = await _complaints.Create(request, cancellationToken);
         return Created(string.Empty, response);
     }
@@ -109,6 +123,7 @@ public class ComplaintsController : ApiControllerBase
         {
             Target = ComplaintTarget.Commentary,
             TargetId = id,
+            UserId = Guid.Parse(User.Identity?.Name!),
         };
 
         var response = await _complaints.Create(request, cancellationToken);
