@@ -38,6 +38,14 @@ public class ComplaintsController : ApiControllerBase
         CancellationToken cancellationToken) =>
         _complaints.Get(request, cancellationToken);
 
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public Task<ComplaintResponse> Get(Guid id, CancellationToken cancellationToken) =>
+        _complaints.Get(id, cancellationToken);
+
+
     /// <summary>
     ///     Gets complaints by topic id. Should be used in moderator menu. Is not available for user
     /// </summary>

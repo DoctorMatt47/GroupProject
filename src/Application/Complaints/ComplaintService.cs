@@ -43,6 +43,12 @@ public class ComplaintService : IComplaintService
             .ToPageAsync(request, cancellationToken);
     }
 
+    public async Task<ComplaintResponse> Get(Guid id, CancellationToken cancellationToken)
+    {
+        var complaint = await _dbContext.Set<Complaint>().FindOrThrowAsync(id, cancellationToken);
+        return _mapper.Map<ComplaintResponse>(complaint);
+    }
+
     public async Task<IEnumerable<ComplaintByTargetResponse>> GetByTopicId(
         Guid topicId,
         CancellationToken cancellationToken)
