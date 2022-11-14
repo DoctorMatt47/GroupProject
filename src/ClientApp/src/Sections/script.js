@@ -1,3 +1,6 @@
+const sectionNameInput = document.getElementById("section-search");
+const sectionSearchButton = document.getElementById("section-search-button");
+
 /**
  * Creates section block to add to page
  * @param {Array} section - list of section data
@@ -29,9 +32,9 @@ const createSectionObject = (section) =>{
     return column;
 };
 
-const perPage = 10;
+const perPage = 8;
 let currentPage = 1;
-
+let pattern = "";
 /**
  * 
  * @param {Object} container - html container for section blocks
@@ -74,7 +77,7 @@ const createPageButtons = (navBar, pagesNumber, container, sections) =>{
  */
 const addPagesBar = (container, sections)=>{
     const pages = document.getElementById("pages");
-
+    pages.innerHTML = '';
     //Creates button LEFT
     const prev = document.createElement("a");
     prev.innerHTML = `&laquo;`;
@@ -112,6 +115,7 @@ const addSections = ()=>{
     getSections().then((response) => {
         const container = document.getElementById("page-sections");
         container.innerHTML = "";
+        response = response.filter(item=>item.header.toLowerCase().includes(pattern)||item.description.toLowerCase().includes(pattern));
         addPagesBar(container, response);
         addSectionsPage(container, response, currentPage);
     }).catch((err) => {
@@ -121,4 +125,10 @@ const addSections = ()=>{
 
 window.addEventListener("load", ()=>{
     addSections();
+    sectionSearchButton.onclick = ()=>{
+        if(pattern != sectionNameInput.value){
+            pattern = sectionNameInput.value.toLowerCase();
+            addSections();
+        }
+    }
 });
