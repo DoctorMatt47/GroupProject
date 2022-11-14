@@ -4,6 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace GroupProject.WebApi.Requests;
 
 public record GetCommentariesParameters(
-    [FromQuery] PageRequest PageRequest,
+    [FromQuery] PageRequest Page,
     string OrderBy,
     Guid? UserId);

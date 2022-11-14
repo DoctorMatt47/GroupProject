@@ -10,7 +10,7 @@ public record CreateTopicRequest(
     int SectionId);
 
 public record GetTopicsRequest(
-    PageRequest PageRequest,
+    PageRequest Page,
     TopicsOrderedBy OrderBy,
     bool OnlyOpen = false,
     string? Substring = null,

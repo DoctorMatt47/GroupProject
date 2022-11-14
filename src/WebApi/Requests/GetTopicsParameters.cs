@@ -1,10 +1,9 @@
 ﻿using GroupProject.Application.Common.Requests;
-using Microsoft.AspNetCore.Mvc;
 
 namespace GroupProject.WebApi.Requests;
 
 public record GetTopicsParameters(
-    [FromQuery] PageRequest PageRequest,
+    PageRequest Page,
     string OrderBy,
     bool OnlyOpen,
     string? Substring,

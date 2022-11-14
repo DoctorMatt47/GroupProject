@@ -9,7 +9,7 @@ public record CreateCommentaryRequest(
     Guid UserId);
 
 public record GetCommentariesRequest(
-    PageRequest PageRequest,
+    PageRequest Page,
     CommentariesOrderedBy OrderBy,
     Guid? TopicId = null,
     Guid? UserId = null);

@@ -23,7 +23,7 @@ public class TopicsController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public async Task<ActionResult<Page<TopicHeaderResponse>>> GetTopics(
-        GetTopicsParameters parameters,
+        [FromQuery] GetTopicsParameters parameters,
         CancellationToken cancellationToken)
     {
         var request = _mapper.Map<GetTopicsRequest>(parameters);

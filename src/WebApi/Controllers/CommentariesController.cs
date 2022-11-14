@@ -24,7 +24,7 @@ public class CommentariesController : ApiControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<Page<CommentaryResponse>> Get(
-        GetCommentariesParameters parameters,
+        [FromQuery] GetCommentariesParameters parameters,
         CancellationToken cancellationToken)
     {
         var request = _mapper.Map<GetCommentariesRequest>(parameters);

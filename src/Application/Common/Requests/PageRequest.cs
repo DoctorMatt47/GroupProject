@@ -1,5 +1,5 @@
 ﻿namespace GroupProject.Application.Common.Requests;
 
 public record PageRequest(
-    int Page,
-    int PerPage);
+    int Number,
+    int Size);
