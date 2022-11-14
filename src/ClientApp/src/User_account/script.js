@@ -34,17 +34,21 @@ const addCards = (userId) => {
 };
 
 const username = document.getElementById("username");
+const userCreationDate = document.getElementById("registration-date");
 
-const setUserData = (data)=>{
-    username.textContent = getFromStorage("login");
-    getUserTopics(data.id, 1, 1).then(response=>{
+const setUserData = (userId)=>{
+    getUser(userId).then(response=>{
+        username.textContent = response.login;
+        userCreationDate.textContent += ": "+new Date(response.creationTime).toLocaleDateString();
+    }).catch(showError);
+    getUserTopics(userId, 1, 1).then(response=>{
         cardCreated.textContent = response.pageCount;
     }).catch(showError);
 };
 
 window.addEventListener("load", ()=>{
     authenticate(getFromStorage("login"), getFromStorage("password")).then(response=>{
-        setUserData(response);
+        setUserData(response.id);
         addCards(response.id);
     }).catch(error=>{
         console.log(error);
