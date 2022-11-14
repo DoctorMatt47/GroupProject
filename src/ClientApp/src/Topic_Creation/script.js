@@ -23,10 +23,7 @@ const addSectionToSelect = (selectId) =>{
             option.textContent = response[type].header;
             select.appendChild(option);
         }
-    }).catch(error=>{
-        const exception = JSON.parse(error.message);
-        console.log(exception);
-    });
+    }).catch(showError);
 };
 
 /**
@@ -49,10 +46,7 @@ const submitTopic = () => {
     .then(response=>{
         openPage(addParameters("../Topic/topic.html", {id:response.id}));
     })
-    .catch(error=>{
-        const exception = JSON.parse(error.message);
-        console.log(exception);
-    });
+    .catch(showError);
 };
 window.addEventListener("load", ()=>{
     addLanguagesToSelect('topic-code-language');

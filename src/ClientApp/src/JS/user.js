@@ -50,3 +50,17 @@ const isLoggedIn = ()=>{
     const token = getFromStorage("token");
     return (token !== null && token !== undefined && token !== "");
 };
+/**
+ * 
+ * @param {string} userId - id of user
+ * @returns promise to response with user data or error
+ */
+const getUser = (userId)=>{
+    const request = {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+    return sendAsync(URLS.Users + `/${userId}`, request);
+};

@@ -24,13 +24,27 @@ const searchTopics = ()=>{
     if(input.value === "") return;
     //TODO: Open topics page with input as name parameter
 }
+const moderatorButton = ()=>{
+    if(isLoggedIn()){
+        window.location.href = "../Moderator-Account/moderator-account.html";
+        return;
+    }
+};
 window.addEventListener("load", ()=>{
     addBackgroundClosing(document.getElementById("error-container"), closeErrorWindow);
     if(isLoggedIn()){
-        document.getElementById("user-menu-item").style.display = "block";
-        document.getElementById("login-button").textContent =  getFromStorage("login");
+        authenticate(getFromStorage("login"), getFromStorage("password"))
+        .then((result) => {
+            if(result.role === "Moderator"){
+                document.getElementById("moderator-login-button").textContent = getFromStorage("login");
+                document.getElementById("moderator-menu-item").style.display = "block";
+                return;
+            }
+            document.getElementById("user-login-button").textContent = getFromStorage("login");
+            document.getElementById("user-menu-item").style.display = "block";
+        }).catch(showError);
         return;
     }
-    //TODO: add for admin and moderator
+    //TODO: add for admin and moderator moderator-account.html
     document.getElementById("guest-menu-item").style.display = "block";
 });
