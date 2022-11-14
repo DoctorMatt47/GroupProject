@@ -20,6 +20,24 @@ public class CommentariesController : ApiControllerBase
         _mapper = mapper;
     }
 
+    [AllowAnonymous]
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<Page<CommentaryResponse>> Get(
+        [FromQuery] GetCommentariesParameters parameters,
+        CancellationToken cancellationToken)
+    {
+        var request = _mapper.Map<GetCommentariesRequest>(parameters);
+        return await _commentaries.Get(request, cancellationToken);
+    }
+
+    [AllowAnonymous]
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<CommentaryResponse> Get(Guid id, CancellationToken cancellationToken) =>
+        await _commentaries.Get(id, cancellationToken);
+
     /// <summary>
     ///     Creates commentary for specific topic
     /// </summary>
@@ -27,7 +45,6 @@ public class CommentariesController : ApiControllerBase
     /// <param name="body">Commentary parameters</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Created commentary id</returns>
-    [Authorize(Roles = "User")]
     [HttpPost("OnTopic/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -42,49 +59,12 @@ public class CommentariesController : ApiControllerBase
         var request = _mapper.Map<CreateCommentaryRequest>(body) with
         {
             TopicId = id,
-            UserId = Guid.Parse(User.Identity?.Name!),
+            UserId = Guid.Parse(User.Identity?.Name!)
         };
 
         var response = await _commentaries.Create(request, cancellationToken);
         return Created(string.Empty, response);
     }
-
-    /// <summary>
-    ///     Gets paged commentaries by topic id
-    /// </summary>
-    /// <param name="id">Topic id</param>
-    /// <param name="perPage">Number of commentary per page</param>
-    /// <param name="page">Number of pages</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>Commentary page</returns>
-    [AllowAnonymous]
-    [HttpGet("ByTopic/{id:guid}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<Page<CommentaryResponse>> GetCommentariesByTopicIdOrderedByCreationTime(
-        Guid id,
-        int perPage,
-        int page,
-        CancellationToken cancellationToken) =>
-        _commentaries.GetByTopicIdOrderedByCreationTime(id, perPage, page, cancellationToken);
-
-    /// <summary>
-    ///     Gets paged commentaries by topic id
-    /// </summary>
-    /// <param name="id">Topic id</param>
-    /// <param name="perPage">Number of commentary per page</param>
-    /// <param name="page">Number of pages</param>
-    /// <param name="cancellationToken"></param>
-    /// <returns>Commentary page</returns>
-    [AllowAnonymous]
-    [HttpGet("OrderedByComplaintCount")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<Page<CommentaryResponse>> GetCommentariesOrderedByComplaintCount(
-        int perPage,
-        int page,
-        CancellationToken cancellationToken) =>
-        _commentaries.GetOrderedByComplaintCount(perPage, page, cancellationToken);
 
     [Authorize(Roles = "Moderator, Admin")]
     [HttpDelete("{id:guid}")]

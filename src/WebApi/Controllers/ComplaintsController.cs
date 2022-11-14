@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
 using GroupProject.Application.Complaints;
 using GroupProject.Domain.Enums;
@@ -8,6 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupProject.WebApi.Controllers;
 
+[Authorize(Roles = "Moderator, Admin")]
+[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+[ProducesResponseType(StatusCodes.Status403Forbidden)]
 public class ComplaintsController : ApiControllerBase
 {
     private readonly IComplaintService _complaints;
@@ -22,53 +26,58 @@ public class ComplaintsController : ApiControllerBase
     }
 
     /// <summary>
-    ///     Gets complains by topic id. Should be used in moderator menu. Is not available for user
+    ///     Gets paged complaints
+    /// </summary>
+    /// <param name="request">Number of elements per page and page number</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>Paged complaints</returns>
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public Task<Page<ComplaintResponse>> GetComplaints(
+        [FromQuery] PageRequest request,
+        CancellationToken cancellationToken) =>
+        _complaints.Get(request, cancellationToken);
+
+    /// <summary>
+    ///     Gets complaints by topic id. Should be used in moderator menu. Is not available for user
     /// </summary>
     /// <param name="id">Topic id</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Complaints of topic with passed id</returns>
-    [Authorize(Roles = "Moderator, Admin")]
-    [HttpGet("ByTopic/{id:guid}")]
+    [HttpGet("AboutTopic/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<IEnumerable<ComplaintResponse>> GetComplaintsByTopic(
+    public Task<IEnumerable<ComplaintByTargetResponse>> GetComplaintsAboutTopic(
         Guid id,
         CancellationToken cancellationToken) =>
         _complaints.GetByTopicId(id, cancellationToken);
 
     /// <summary>
-    ///     Gets complains by commentary id. Should be used in moderator menu. Is not available for user
+    ///     Gets complaints by commentary id. Should be used in moderator menu. Is not available for user
     /// </summary>
     /// <param name="id">Commentary id</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Complaints of commentary with passed id</returns>
-    [Authorize(Roles = "User")]
-    [HttpGet("ByCommentary/{id:guid}")]
+    [HttpGet("AboutCommentary/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public Task<IEnumerable<ComplaintResponse>> GetComplaintsByCommentary(
+    public Task<IEnumerable<ComplaintByTargetResponse>> GetComplaintsAboutCommentary(
         Guid id,
         CancellationToken cancellationToken) =>
         _complaints.GetByCommentaryId(id, cancellationToken);
 
     /// <summary>
-    ///     Creates complaint for specific topic
+    ///     Creates complaint about specific topic
     /// </summary>
     /// <param name="id">Topic id</param>
     /// <param name="body">Complaint parameters</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Created complaint id</returns>
-    [Authorize(Roles = "User")]
-    [HttpPost("OnTopic/{id:guid}")]
+    [Authorize]
+    [HttpPost("AboutTopic/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IdResponse<Guid>>> CreateComplaintOnTopic(
+    public async Task<ActionResult<IdResponse<Guid>>> CreateComplaintAboutTopic(
         Guid id,
         CreateComplaintBody body,
         CancellationToken cancellationToken)
@@ -79,19 +88,17 @@ public class ComplaintsController : ApiControllerBase
     }
 
     /// <summary>
-    ///     Creates complaint for specific topic
+    ///     Creates complaint about specific commentary
     /// </summary>
     /// <param name="id">Topic id</param>
     /// <param name="body">Complaint parameters</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Created complaint id</returns>
-    [Authorize(Roles = "User")]
-    [HttpPost("OnCommentary/{id:guid}")]
+    [Authorize]
+    [HttpPost("AboutCommentary/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IdResponse<Guid>>> CreateComplaintOnCommentary(
+    public async Task<ActionResult<IdResponse<Guid>>> CreateComplaintAboutCommentary(
         Guid id,
         CreateComplaintBody body,
         CancellationToken cancellationToken)
@@ -106,11 +113,9 @@ public class ComplaintsController : ApiControllerBase
         return Created(string.Empty, response);
     }
 
-    [Authorize(Roles = "Moderator, Admin")]
+    [Authorize]
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {

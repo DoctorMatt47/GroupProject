@@ -6,8 +6,6 @@ using GroupProject.Application.Common.Requests;
 using GroupProject.Application.IntegrationTests.Common.Fixtures;
 using GroupProject.Application.Topics;
 using GroupProject.Domain.Entities;
-using GroupProject.Domain.Enums;
-using GroupProject.Domain.ValueObjects;
 
 namespace GroupProject.Application.IntegrationTests.Topics;
 
@@ -28,62 +26,142 @@ public class TopicServiceTests
     }
 
     [Fact]
-    public async Task GetOrderedByCreationTime()
+    public async Task Get_ByUserId()
     {
+        var random = new Random();
         for (var i = 0; i < 10; i++)
         {
-            var topic = Topic();
-            _dbContext.Set<Topic>().Add(topic);
+            var user = random.NextDouble() >= 0.5 ? await _db.CreateUserAsync() : _db.DefaultUser;
+            await _db.CreateTopicAsync(user.Id, _db.DefaultSection.Id);
         }
 
-        await _dbContext.SaveChangesAsync(CancellationToken.None);
+        var request = new GetTopicsRequest(
+            new PageRequest(1, 10),
+            TopicsOrderedBy.CreationTime,
+            UserId: _db.DefaultUser.Id);
 
-        var topicPage = await _topics.GetOrderedByCreationTime(10, 1, CancellationToken.None);
-        var topics = topicPage.List.ToList();
+        var response = await _topics.Get(request, CancellationToken.None);
 
-        for (var i = 0; i < topics.Count - 1; i++)
-        {
-            topics[i].CreationTime.Should().BeOnOrAfter(topics[i + 1].CreationTime);
-        }
+        response.List.Should().OnlyContain(t => t.SectionId == _db.DefaultSection.Id);
     }
 
     [Fact]
-    public async Task GetOrderedByComplaintCount()
+    public async Task Get_BySectionId()
     {
-        var fixture = new Fixture();
         var random = new Random();
-
         for (var i = 0; i < 10; i++)
         {
-            var topic = Topic();
-            _dbContext.Set<Topic>().Add(topic);
-
-            for (var j = 0; j < random.Next(5); j++)
-            {
-                var complaint = new Complaint(fixture.Create<string>(), ComplaintTarget.Topic, topic.Id);
-                _dbContext.Set<Complaint>().Add(complaint);
-            }
+            var section = random.NextDouble() >= 0.5 ? await _db.CreateSectionAsync() : _db.DefaultSection;
+            await _db.CreateTopicAsync(_db.DefaultUser.Id, section.Id);
         }
 
-        await _dbContext.SaveChangesAsync(CancellationToken.None);
+        var request = new GetTopicsRequest(
+            new PageRequest(1, 10),
+            TopicsOrderedBy.CreationTime,
+            SectionId: _db.DefaultSection.Id);
 
-        var topicPage = await _topics.GetOrderedByComplaintCount(10, 1, CancellationToken.None);
-        var topics = topicPage.List.ToList();
+        var response = await _topics.Get(request, CancellationToken.None);
 
-        for (var i = 0; i < topics.Count - 1; i++)
+        response.List.Should().OnlyContain(t => t.SectionId == _db.DefaultSection.Id);
+    }
+
+    [Fact]
+    public async Task Get_OnlyOpen()
+    {
+        var random = new Random();
+        for (var i = 0; i < 10; i++)
         {
-            topics[i].ComplaintCount.Should().NotBe(0).And.BeLessOrEqualTo(topics[i + 1].ComplaintCount);
+            var topic = await _db.CreateTopicAsync();
+            _dbContext.Set<Topic>().Attach(topic);
+            if (random.NextDouble() >= 0.5) topic.SetClosed();
         }
+
+        await _dbContext.SaveChangesAsync();
+
+        var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.CreationTime, true);
+        var response = await _topics.Get(request, CancellationToken.None);
+
+        response.List.Should().OnlyContain(t => !t.IsClosed);
+    }
+
+    [Fact]
+    public async Task Get_ContainsSubstring()
+    {
+        for (var i = 0; i < 10; i++) await _db.CreateTopicAsync();
+
+        var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.CreationTime, Substring: "a");
+        var response = await _topics.Get(request, CancellationToken.None);
+
+        response.List.Should().OnlyContain(t => t.Header.Contains(request.Substring!));
+    }
+
+    [Fact]
+    public async Task Get_OrderedByCreationTime()
+    {
+        for (var i = 0; i < 10; i++) await _db.CreateTopicAsync();
+
+        var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.CreationTime);
+        var response = await _topics.Get(request, CancellationToken.None);
+
+        response.List.Should().BeInDescendingOrder(t => t.CreationTime);
+    }
+
+    [Fact]
+    public async Task Get_OrderedByViewCount()
+    {
+        var random = new Random();
+        for (var i = 0; i < 10; i++)
+        {
+            var topic = await _db.CreateTopicAsync();
+            _dbContext.Set<Topic>().Attach(topic);
+            for (var j = 0; j < random.Next(100); j++) topic.IncrementViewCount();
+        }
+
+        await _dbContext.SaveChangesAsync();
+
+        var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.ViewCount);
+        var response = await _topics.Get(request, CancellationToken.None);
+
+        response.List.Should().BeInDescendingOrder(t => t.ViewCount);
+    }
+
+    [Fact]
+    public async Task Get_OrderedByComplaintCount()
+    {
+        var random = new Random();
+        for (var i = 0; i < 10; i++)
+        {
+            var topic = await _db.CreateTopicAsync();
+            _dbContext.Set<Topic>().Attach(topic);
+            for (var j = 0; j < random.Next(100); j++) topic.IncrementComplaintCount();
+        }
+
+        await _dbContext.SaveChangesAsync();
+
+        var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.ComplaintCount);
+        var response = await _topics.Get(request, CancellationToken.None);
+
+        response.List.Should().BeInDescendingOrder(t => t.ComplaintCount);
+    }
+
+    [Fact]
+    public async Task Get_OrderedByVerifyBefore()
+    {
+        var now = DateTime.UtcNow;
+        for (var i = 0; i < 10; i++) await _db.CreateTopicAsync();
+
+        var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.VerifyBefore);
+        var response = await _topics.Get(request, CancellationToken.None);
+
+        response.List.Should()
+            .NotContain(t => t.VerifyBefore == null || t.VerifyBefore <= now).And
+            .BeInAscendingOrder(t => t.VerifyBefore);
     }
 
     [Fact]
     public async Task GetById()
     {
-        var topic = Topic();
-
-        _dbContext.Set<Topic>().Add(topic);
-        await _dbContext.SaveChangesAsync();
-
+        var topic = await _db.CreateTopicAsync();
         await FluentActions
             .Invoking(() => _topics.Get(topic.Id, CancellationToken.None))
             .Should()
@@ -113,18 +191,15 @@ public class TopicServiceTests
         topic.CompileOptions!.Code.Should().Be(topic.CompileOptions.Code);
         topic.CompileOptions.Language.Should().Be(topic.CompileOptions.Language);
         topic.IsClosed.Should().BeFalse();
-        topic.IsVerificationRequired.Should().BeFalse();
+        topic.VerifyBefore.Should().BeNull();
         topic.CreationTime.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(1));
     }
 
     [Fact]
     public async Task CreateTopic_ThrowExceptionIfTopicWithSameHeaderExist()
     {
-        var topic = Topic();
+        var topic = await _db.CreateTopicAsync();
         var request = CreateTopicRequest() with {Header = topic.Header};
-
-        _dbContext.Set<Topic>().Add(topic);
-        await _dbContext.SaveChangesAsync();
 
         await FluentActions
             .Invoking(() => _topics.Create(request, CancellationToken.None))
@@ -163,17 +238,5 @@ public class TopicServiceTests
             UserId = _db.DefaultUser.Id,
             CompileOptions = new CompileOptionsRequest(fixture.Create<string>(), "R"),
         };
-    }
-
-    private Topic Topic()
-    {
-        var fixture = new Fixture();
-
-        return new Topic(
-            fixture.Create<string>(),
-            fixture.Create<string>(),
-            fixture.Create<CompileOptions>(),
-            _db.DefaultUser.Id,
-            _db.DefaultSection.Id);
     }
 }

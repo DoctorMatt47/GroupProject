@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using GroupProject.Domain.Interfaces;
 using GroupProject.Domain.ValueObjects;
 
@@ -8,7 +9,7 @@ namespace GroupProject.Domain.Entities;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Local")]
-public class Commentary : IHasComplaintCount
+public class Commentary : IHasId<Guid>, IHasComplaintCount, IVerifiable
 {
     private readonly List<Complaint> _complaints = new();
 
@@ -19,7 +20,12 @@ public class Commentary : IHasComplaintCount
     {
     }
 
-    public Commentary(string description, CompileOptions? compileOptions, Guid topicId, Guid userId)
+    public Commentary(
+        string description,
+        CompileOptions? compileOptions,
+        Guid topicId,
+        Guid userId,
+        TimeSpan? verificationDuration)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
@@ -27,9 +33,12 @@ public class Commentary : IHasComplaintCount
         CompileOptions = compileOptions;
         TopicId = topicId;
         UserId = userId;
+        VerifyBefore = DateTime.UtcNow + verificationDuration;
     }
 
-    public Guid Id { get; private set; }
+    public static Expression<Func<Commentary, bool>> VerificationRequired =>
+        topic => topic.VerifyBefore != null && topic.VerifyBefore > DateTime.UtcNow;
+
     public DateTime CreationTime { get; private set; }
     public string Description { get; private set; } = null!;
     public CompileOptions? CompileOptions { get; private set; }
@@ -51,5 +60,14 @@ public class Commentary : IHasComplaintCount
     public void DecrementComplaintCount()
     {
         if (ComplaintCount != 0) ComplaintCount--;
+    }
+
+    public Guid Id { get; private set; }
+
+    public DateTime? VerifyBefore { get; private set; }
+
+    public void SetVerified()
+    {
+        VerifyBefore = null;
     }
 }

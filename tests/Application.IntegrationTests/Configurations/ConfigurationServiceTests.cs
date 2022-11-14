@@ -34,10 +34,12 @@ public class ConfigurationServiceTests
         var rules = fixture.Create<string>();
         var warningCountForBan = fixture.Create<int>();
         var banDuration = fixture.Create<TimeSpan>();
+        var complainDuration = fixture.Create<TimeSpan>();
 
         configuration.Rules = rules;
         configuration.BanDuration = banDuration;
         configuration.WarningCountForBan = warningCountForBan;
+        configuration.VerificationDuration = complainDuration;
 
         await _dbContext.SaveChangesAsync();
 
@@ -45,6 +47,7 @@ public class ConfigurationServiceTests
         response.Rules.Should().Be(rules);
         response.BanDuration.Should().Be(banDuration);
         response.WarningCountForBan.Should().Be(warningCountForBan);
+        response.VerificationDuration.Should().Be(complainDuration);
     }
 
     [Fact]
@@ -58,7 +61,8 @@ public class ConfigurationServiceTests
         var configuration = await _dbContext.Set<Configuration>().FirstAsync();
 
         configuration.Rules.Should().Be(request.Rules);
-        configuration.BanDuration.Should().Be(request.BanDuration!.Value);
         configuration.WarningCountForBan.Should().Be(request.WarningCountForBan);
+        configuration.BanDuration.Should().Be(request.BanDuration!.Value);
+        configuration.VerificationDuration.Should().Be(request.ComplaintDuration!.Value);
     }
 }

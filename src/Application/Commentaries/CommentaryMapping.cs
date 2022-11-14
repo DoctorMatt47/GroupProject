@@ -10,5 +10,8 @@ public class CommentaryMapping : Profile
     {
         CreateMap<Commentary, CommentaryResponse>()
             .MapRecordMember(c => c.UserLogin, c => c.User.Login);
+
+        CreateMap<Commentary, CommentaryResponse>()
+            .MapRecordMember(c => c.UserLogin, c => c.User.Login);
     }
 }

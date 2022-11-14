@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using GroupProject.Domain.Enums;
+using GroupProject.Domain.Interfaces;
 
 namespace GroupProject.Domain.Entities;
 
@@ -7,7 +9,7 @@ namespace GroupProject.Domain.Entities;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Local")]
-public class Complaint
+public class Complaint : IHasId<Guid>
 {
     /// <summary>
     ///     Parameterless constructor, intended only for orm usage.
@@ -16,10 +18,11 @@ public class Complaint
     {
     }
 
-    public Complaint(string description, ComplaintTarget target, Guid elementId)
+    public Complaint(string description, ComplaintTarget target, Guid elementId, TimeSpan complaintDuration)
     {
         Id = Guid.NewGuid();
         CreationTime = DateTime.UtcNow;
+        ExpirationTime = DateTime.UtcNow + complaintDuration;
         Description = description;
         Target = target;
 
@@ -31,14 +34,18 @@ public class Complaint
         };
     }
 
-    public Guid Id { get; private set; }
+    public static Expression<Func<Complaint, bool>> Active => complaint => complaint.ExpirationTime >= DateTime.UtcNow;
+
     public DateTime CreationTime { get; private set; }
     public string Description { get; private set; } = null!;
     public ComplaintTarget Target { get; private set; }
+    public DateTime ExpirationTime { get; private set; }
 
     public Guid? TopicId { get; private set; }
     public Topic? Topic { get; private set; } = null!;
 
     public Guid? CommentaryId { get; private set; }
     public Commentary? Commentary { get; private set; } = null!;
+
+    public Guid Id { get; private set; }
 }

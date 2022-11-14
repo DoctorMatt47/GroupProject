@@ -3,6 +3,7 @@ using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
+using GroupProject.Application.Phrases;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
 using GroupProject.Domain.Interfaces;
@@ -17,17 +18,20 @@ public class UserService : IUserService
     private readonly ILogger<UserService> _logger;
     private readonly IMapper _mapper;
     private readonly IPasswordHashService _passwordHash;
+    private readonly IPhraseService _phrases;
 
     public UserService(
         IAppDbContext dbContext,
         IPasswordHashService passwordHash,
         ILogger<UserService> logger,
-        IMapper mapper)
+        IMapper mapper,
+        IPhraseService phrases)
     {
         _dbContext = dbContext;
         _passwordHash = passwordHash;
         _logger = logger;
         _mapper = mapper;
+        _phrases = phrases;
     }
 
     public async Task<UserResponse> Get(Guid id, CancellationToken cancellationToken)
@@ -60,8 +64,11 @@ public class UserService : IUserService
         UserRole role,
         CancellationToken cancellationToken)
     {
-        var isUserExist = await _dbContext.Set<User>().AnyAsync(u => u.Login == request.Login, cancellationToken);
-        if (isUserExist) throw new ConflictException($"There is already user with login: {request.Login}");
+        await _dbContext.Set<User>().NoOneOrThrowAsync(u => u.Login == request.Login, cancellationToken);
+
+        var forbidden = await _phrases.GetForbidden(p => request.Login.Contains(p.Phrase), cancellationToken);
+        if (forbidden.Any())
+            throw new BadRequestException($"Login contains forbidden words: {string.Join(',', forbidden)}");
 
         var user = new User(request.Login, request.Password, _passwordHash, role);
 

@@ -1,12 +1,11 @@
 ﻿using System.Security.Claims;
-using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Identity;
 
 namespace GroupProject.Infrastructure.Identity;
 
 public class IdentityRepository : IIdentityRepository
 {
-    public ClaimsIdentity Create(CreateIdentityRequest request)
+    public ClaimsIdentity Create(Application.Identity.Identity request)
     {
         var claims = new List<Claim>
         {

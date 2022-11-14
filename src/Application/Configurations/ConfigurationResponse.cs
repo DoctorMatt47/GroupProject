@@ -1,3 +1,7 @@
 ﻿namespace GroupProject.Application.Configurations;
 
-public record ConfigurationResponse(string Rules, int WarningCountForBan, TimeSpan BanDuration);
+public record ConfigurationResponse(
+    string Rules,
+    int WarningCountForBan,
+    TimeSpan BanDuration,
+    TimeSpan VerificationDuration);

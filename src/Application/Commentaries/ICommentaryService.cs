@@ -4,17 +4,9 @@ namespace GroupProject.Application.Commentaries;
 
 public interface ICommentaryService
 {
-    Task<Page<CommentaryResponse>> GetByTopicIdOrderedByCreationTime(
-        Guid id,
-        int perPage,
-        int page,
-        CancellationToken cancellationToken);
-
-    Task<Page<CommentaryResponse>> GetOrderedByComplaintCount(
-        int perPage,
-        int page,
-        CancellationToken cancellationToken);
-
+    Task<Page<CommentaryResponse>> Get(GetCommentariesRequest request, CancellationToken cancellationToken);
+    Task<CommentaryResponse> Get(Guid id, CancellationToken cancellationToken);
     Task<IdResponse<Guid>> Create(CreateCommentaryRequest request, CancellationToken cancellationToken);
     Task Delete(Guid id, CancellationToken cancellationToken);
+    Task Verify(Guid id, CancellationToken cancellationToken);
 }

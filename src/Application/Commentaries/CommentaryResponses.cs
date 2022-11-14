@@ -9,4 +9,6 @@ public record CommentaryResponse(
     Guid UserId,
     string UserLogin,
     Guid TopicId,
-    DateTime CreationTime);
+    DateTime CreationTime,
+    int ComplaintCount,
+    DateTime VerifyBefore);

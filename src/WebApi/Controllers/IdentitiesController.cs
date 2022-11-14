@@ -1,5 +1,4 @@
 ﻿using GroupProject.Application.Identity;
-using GroupProject.Application.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +24,7 @@ public class IdentitiesController : ApiControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public Task<IdentityResponse> Authenticate(
-        AuthenticateUserRequest body,
+        CreateIdentityRequest body,
         CancellationToken cancellationToken) =>
         _identities.Create(body, cancellationToken);
 }

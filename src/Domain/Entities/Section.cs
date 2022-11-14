@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using GroupProject.Domain.Interfaces;
 
 namespace GroupProject.Domain.Entities;
 
@@ -6,7 +7,7 @@ namespace GroupProject.Domain.Entities;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Local")]
-public class Section
+public class Section : IHasId<int>
 {
     private readonly List<Topic> _topics = new();
 
@@ -23,9 +24,21 @@ public class Section
         Description = description;
     }
 
-    public int Id { get; private set; } = 0;
     public string Header { get; private set; } = null!;
     public string Description { get; private set; } = null!;
+    public int TopicCount { get; private set; }
 
     public IEnumerable<Topic> Topics => _topics.ToList();
+
+    public int Id { get; private set; } = 0;
+
+    public void IncrementTopicCount()
+    {
+        TopicCount++;
+    }
+
+    public void DecrementTopicCount()
+    {
+        TopicCount--;
+    }
 }

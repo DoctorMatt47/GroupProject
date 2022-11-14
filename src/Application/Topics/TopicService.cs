@@ -4,6 +4,8 @@ using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Responses;
+using GroupProject.Application.Configurations;
+using GroupProject.Application.Phrases;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
 using GroupProject.Domain.ValueObjects;
@@ -14,59 +16,61 @@ namespace GroupProject.Application.Topics;
 
 public class TopicService : ITopicService
 {
+    private readonly IConfigurationService _configuration;
     private readonly IAppDbContext _dbContext;
     private readonly ILogger<TopicService> _logger;
     private readonly IMapper _mapper;
+    private readonly IPhraseService _phrases;
 
     public TopicService(
         IAppDbContext dbContext,
+        IPhraseService phrases,
+        IConfigurationService configuration,
         ILogger<TopicService> logger,
         IMapper mapper)
     {
         _dbContext = dbContext;
+        _phrases = phrases;
+        _configuration = configuration;
         _logger = logger;
         _mapper = mapper;
     }
 
-    public async Task<Page<TopicInfoResponse>> GetOrderedByCreationTime(
-        int perPage,
-        int page,
-        CancellationToken cancellationToken)
+    public async Task<Page<TopicHeaderResponse>> Get(GetTopicsRequest request, CancellationToken cancellationToken)
     {
-        var pageCount = await _dbContext.Set<Topic>().PageCountAsync(perPage, cancellationToken);
-
-        return await _dbContext.Set<Topic>()
+        var topics = _dbContext.Set<Topic>()
             .Include(t => t.Section)
             .Include(t => t.User)
-            .OrderByDescending(t => t.CreationTime)
-            .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(perPage, page, pageCount, cancellationToken);
-    }
+            .AsQueryable();
 
-    public async Task<Page<TopicInfoResponse>> GetOrderedByComplaintCount(
-        int perPage,
-        int page,
-        CancellationToken cancellationToken)
-    {
-        var pageCount = await _dbContext.Set<Topic>().PageCountAsync(perPage, cancellationToken);
+        var (pageRequest, orderBy, onlyOpen, substring, sectionId, userId) = request;
+        if (substring is not null) topics = topics.Where(t => t.Header.Contains(substring));
+        if (sectionId is not null) topics = topics.Where(t => t.SectionId == sectionId);
+        if (userId is not null) topics = topics.Where(t => t.UserId == userId);
+        if (onlyOpen) topics = topics.Where(Topic.IsOpen);
 
-        return await _dbContext.Set<Topic>()
-            .Include(t => t.Section)
-            .Include(t => t.User)
-            .Where(t => t.ComplaintCount != 0)
-            .OrderBy(t => t.ComplaintCount)
-            .ProjectTo<TopicInfoResponse>(_mapper.ConfigurationProvider)
-            .ToPageAsync(perPage, page, pageCount, cancellationToken);
-    }
+        topics = orderBy switch
+        {
+            TopicsOrderedBy.CreationTime => topics
+                .OrderByDescending(t => t.CreationTime),
 
-    public async Task<IEnumerable<TopicByUserIdResponse>> GetByUserId(Guid userId, CancellationToken cancellationToken)
-    {
-        return await _dbContext.Set<Topic>()
-            .Include(t => t.Section)
-            .Include(t => t.User)
-            .Where(t => t.UserId == userId)
-            .ProjectTo<TopicByUserIdResponse>(_mapper.ConfigurationProvider)
-            .ToListAsync(cancellationToken);
+            TopicsOrderedBy.ViewCount => topics
+                .OrderByDescending(t => t.ViewCount),
+
+            TopicsOrderedBy.ComplaintCount => topics
+                .Where(t => t.ComplaintCount != 0)
+                .OrderByDescending(t => t.ComplaintCount),
+
+            TopicsOrderedBy.VerifyBefore => topics
+                .Where(Topic.VerificationRequired)
+                .OrderBy(t => t.VerifyBefore),
+
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+
+        return await topics
+            .ProjectTo<TopicHeaderResponse>(_mapper.ConfigurationProvider)
+            .ToPageAsync(pageRequest, cancellationToken);
     }
 
     public async Task<TopicResponse> Get(Guid id, CancellationToken cancellationToken)
@@ -74,25 +78,22 @@ public class TopicService : ITopicService
         var topic = await _dbContext.Set<Topic>()
             .Include(t => t.Section)
             .Include(t => t.User)
-            .FirstOrDefaultAsync(t => t.Id == id, cancellationToken);
+            .FirstOrThrowAsync(id, cancellationToken);
 
-        if (topic is null) throw new NotFoundException($"There is no topic with id: {id}");
         return _mapper.Map<TopicResponse>(topic);
     }
 
     public async Task<IdResponse<Guid>> Create(CreateTopicRequest request, CancellationToken cancellationToken)
     {
-        var isUserExist = await _dbContext.Set<User>().AnyAsync(u => u.Id == request.UserId, cancellationToken);
-        if (!isUserExist) throw new NotFoundException($"There is no user with id: {request.UserId}");
+        await _dbContext.Set<User>().AnyOrThrowAsync(request.UserId, cancellationToken);
+        await _dbContext.Set<Topic>().NoOneOrThrowAsync(t => t.Header == request.Header, cancellationToken);
 
-        var isSectionExist = await _dbContext.Set<Section>().AnyAsync(
-            s => s.Id == request.SectionId,
-            cancellationToken);
+        await ThrowIfContainsForbiddenPhrasesAsync(request, cancellationToken);
 
-        if (!isSectionExist) throw new NotFoundException($"There is no section with id: {request.SectionId}");
+        var section = await _dbContext.Set<Section>().FindOrThrowAsync(request.SectionId, cancellationToken);
+        section.IncrementTopicCount();
 
-        var isTopicExist = await _dbContext.Set<Topic>().AnyAsync(t => t.Header == request.Header, cancellationToken);
-        if (isTopicExist) throw new ConflictException($"There is already topic with header: {request.Header}");
+        var verificationDuration = await VerificationDurationOrNullAsync(request, cancellationToken);
 
         var compileOptions = _mapper.Map<CompileOptions>(request.CompileOptions);
         var topic = new Topic(
@@ -100,7 +101,8 @@ public class TopicService : ITopicService
             request.Description,
             compileOptions,
             request.UserId,
-            request.SectionId);
+            request.SectionId,
+            verificationDuration);
 
         _dbContext.Set<Topic>().Add(topic);
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -110,10 +112,30 @@ public class TopicService : ITopicService
         return new IdResponse<Guid>(topic.Id);
     }
 
-    public async Task Delete(Guid id, CancellationToken cancellationToken)
+    public async Task View(Guid id, CancellationToken cancellationToken)
     {
         var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
+        topic.IncrementViewCount();
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task Delete(Guid id, CancellationToken cancellationToken)
+    {
+        var topic = await _dbContext.Set<Topic>()
+            .Include(t => t.Section)
+            .FirstOrThrowAsync(id, cancellationToken);
+
+        topic.Section.DecrementTopicCount();
+
         _dbContext.Set<Topic>().Remove(topic);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task Verify(Guid id, CancellationToken cancellationToken)
+    {
+        var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
+        // TODO: Add is already verified check
+        topic.SetVerified();
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
@@ -125,6 +147,34 @@ public class TopicService : ITopicService
         if (user.Role is UserRole.User && topic.UserId != user.Id)
             throw new ForbiddenException("You don't have permission for closing this topic");
 
-        topic.IsClosed = true;
+        topic.SetClosed();
+
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    private async Task ThrowIfContainsForbiddenPhrasesAsync(
+        CreateTopicRequest request,
+        CancellationToken cancellationToken)
+    {
+        var forbiddenPhrases = await _phrases.GetForbidden(
+            p => request.Header.Contains(p.Phrase) || request.Description.Contains(p.Phrase),
+            cancellationToken);
+
+        if (!forbiddenPhrases.Any()) return;
+        throw new BadRequestException($"Topic contains forbidden words: {string.Join(',', forbiddenPhrases)}");
+    }
+
+    private async Task<TimeSpan?> VerificationDurationOrNullAsync(
+        CreateTopicRequest request,
+        CancellationToken cancellationToken)
+    {
+        var verificationRequired = await _phrases.AnyVerificationRequired(
+            p => request.Header.Contains(p.Phrase) || request.Description.Contains(p.Phrase),
+            cancellationToken);
+
+        if (!verificationRequired) return null;
+
+        var configuration = await _configuration.Get(cancellationToken);
+        return configuration.VerificationDuration;
     }
 }
