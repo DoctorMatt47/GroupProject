@@ -37,8 +37,8 @@ const username = document.getElementById("username");
 
 const setUserData = (data)=>{
     username.textContent = getFromStorage("login");
-    getUserTopics(data.id, 100000, 1).then(response=>{
-        cardCreated.textContent = response.list.length;
+    getUserTopics(data.id, 1, 1).then(response=>{
+        cardCreated.textContent = response.pageCount;
     }).catch(showError);
 };
 

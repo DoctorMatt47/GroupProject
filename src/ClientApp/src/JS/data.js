@@ -7,8 +7,6 @@ const URLS = {
     Section: BASE_URL + "Section",
     Comments: BASE_URL + "Commentaries",
     CommentsCreate: BASE_URL + "Commentaries/OnTopic/",
-    ComplaintTopicCreate: BASE_URL + "Complaints/OnTopic/",
-    ComplaintCommentCreate: BASE_URL + "Complaints/OnCommentary/",
-    ComplaintByTopic: BASE_URL + "Complaints/ByTopic/",
-    ComplaintByComment: BASE_URL + "Complaints/ByCommentary/",
+    ComplaintTopic: BASE_URL + "Complaints/AboutTopic/",
+    ComplaintComment: BASE_URL + "Complaints/AboutCommentary/",
 };
