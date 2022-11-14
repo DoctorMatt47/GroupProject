@@ -19,6 +19,11 @@ const openErrorWindow = (error)=>{
 const closeErrorWindow = ()=>{
     document.getElementById("error-container").style = "display: none;";
 };
+const searchTopics = ()=>{
+    const input = document.getElementById("search-input");
+    if(input.value === "") return;
+    //TODO: Open topics page with input as name parameter
+}
 window.addEventListener("load", ()=>{
     addBackgroundClosing(document.getElementById("error-container"), closeErrorWindow);
     if(isLoggedIn()){

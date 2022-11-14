@@ -3,8 +3,8 @@ const loadMoreButton = document.getElementById("load-more");
 const cardCountElem = document.getElementById("card-count");
 const cardTotalElem = document.getElementById("card-total");
 
-const cardLimit = 60;
-const cardIncrease = 10;
+let cardLimit = 60;
+let cardIncrease = 3;
 const pageCount = Math.ceil(cardLimit / cardIncrease);
 let currentPage = 1;
 
@@ -34,12 +34,15 @@ const addCards = (pageIndex) => {
     currentPage = pageIndex;
 
     handleButtonStatus();
-
-    const endRange =
-        pageIndex * cardIncrease > cardLimit ? cardLimit : pageIndex * cardIncrease;
-
-    cardCountElem.innerHTML = endRange;
     getRecommendedTopics(cardIncrease, currentPage).then(response=>{
+        console.log(response)
+        cardLimit = Math.min(cardLimit, response.pageCount);
+        cardIncrease = Math.min(cardIncrease, response.pageCount);
+        const endRange =
+        pageIndex * cardIncrease > cardLimit ? cardLimit : pageIndex * cardIncrease;
+        cardCountElem.innerHTML = endRange;
+        cardTotalElem.innerHTML = cardLimit;
+
         for(let i in response.list){
             getTopic(response.list[i].id).then(response=>{
                 createCard(response);
