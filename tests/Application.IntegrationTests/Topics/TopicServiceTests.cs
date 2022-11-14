@@ -6,6 +6,8 @@ using GroupProject.Application.Common.Requests;
 using GroupProject.Application.IntegrationTests.Common.Fixtures;
 using GroupProject.Application.Topics;
 using GroupProject.Domain.Entities;
+using GroupProject.Domain.Enums;
+using GroupProject.Domain.ValueObjects;
 
 namespace GroupProject.Application.IntegrationTests.Topics;
 
@@ -236,7 +238,7 @@ public class TopicServiceTests
         {
             SectionId = _db.DefaultSection.Id,
             UserId = _db.DefaultUser.Id,
-            CompileOptions = new CompileOptionsRequest(fixture.Create<string>(), "R"),
+            CompileOptions = new CompileOptions(fixture.Create<string>(), ProgrammingLanguage.Lua),
         };
     }
 }
