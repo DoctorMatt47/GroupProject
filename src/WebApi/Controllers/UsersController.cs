@@ -11,6 +11,13 @@ public class UsersController : ApiControllerBase
 
     public UsersController(IUserService users) => _users = users;
 
+    [AllowAnonymous]
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<UserResponse> GetUser(Guid id, CancellationToken cancellationToken) =>
+        await _users.Get(id, cancellationToken);
+
     /// <summary>
     ///     Creates new user with passed parameters
     /// </summary>
