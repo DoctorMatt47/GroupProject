@@ -13,7 +13,7 @@
             <textarea id="topic-description" minlength="2" maxlength="32000" required></textarea>
             <label for="need-code">Add code</label>
             <input id="need-code" type="checkbox" style="padding: 10px" checked="true"
-                   onclick="setVisible(checked, 'code', 'flex')">
+                   onclick="setVisible(checked, 'code', 'flex'); return false;">
             <div id="code" style="display:flex; flex-direction: column;">
                 <label for="topic-code-language">Language</label>
                 <select id="topic-code-language" required>

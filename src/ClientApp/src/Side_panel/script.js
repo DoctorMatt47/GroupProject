@@ -9,8 +9,7 @@ const createSectionForPanel = (sectionData)=>{
                             ${sectionData.header}
                             <span class="badge badge-primary badge-pill">${sectionData.topicCount}</span>
                         </li>`;
-    //section.onclick = "";
-    //TODO: go to topics page
+    section.href = addParameters("../Topics_in_section/topics_in_section.html", {id:sectionData.id});
     return section;
 };
 /**
@@ -21,7 +20,7 @@ const addSectionsToPanel = (containerId)=>{
     const container  = document.getElementById(containerId);
     container.innerHTML = "";
     getSections().then((response) => {
-        const sections = response.slice(0, 6);
+        const sections = response.sort((a,b)=>b.topicCount - a.topicCount).slice(0, 6);
         for(let i in sections){
             container.appendChild(createSectionForPanel(sections[i]));
         }
@@ -36,11 +35,11 @@ const addSectionsToPanel = (containerId)=>{
  */
 const createLanguageForPanel = (sectionData)=>{
     const section = document.createElement("a");
-    section.innerHTML = `<a href="#">
+    section.innerHTML = `<a>
                             <li class="list-group-item language-list-item">${sectionData.header}</li>
                         </a>`;
-    //section.onclick = "";
-    //TODO: go to topics page
+    section.href = addParameters("../Topics_in_section/topics_in_section.html", {id:sectionData.id});
+
     return section;
 };
 /**

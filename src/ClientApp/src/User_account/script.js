@@ -1,19 +1,9 @@
 const cardContainer = document.getElementById("card-container");
 const loadMoreButton = document.getElementById("load-more");
-const cardCountElem = document.getElementById("card-count");
-const cardTotalElem = document.getElementById("card-total");
+const cardCreated = document.getElementById("created-discussions");
 
-const cardLimit = 10; //should be specified
 const cardIncrease = 5;
-const pageCount = Math.ceil(cardLimit / cardIncrease);
 let currentPage = 1;
-
-const handleButtonStatus = () => {
-    if (pageCount === currentPage) {
-        loadMoreButton.classList.add("disabled");
-        loadMoreButton.setAttribute("disabled", true);
-    }
-};
 
 const createCard = (data) => {
     const card = document.createElement("a");
@@ -22,46 +12,42 @@ const createCard = (data) => {
     card.href = addParameters("../Topic/topic.html", {id:data.id});
     cardContainer.appendChild(card);
 };
-
-const addCards = (userId, pageIndex) => {
-    currentPage = pageIndex;
-
-    /*handleButtonStatus();
-
-    const startRange = (pageIndex - 1) * cardIncrease;
-    const endRange =
-        pageIndex * cardIncrease > cardLimit ? cardLimit : pageIndex * cardIncrease;
-
-    for (let i = startRange + 1; i <= endRange; i++) {
-        createCard();
-    }*/
-    const err = (error)=>{
-        console.log(error);
-    };
-    getUserTopics(userId).then(response=>{
-        for(let i in response){
-            getTopic(response[i].id).then(resp =>{
-                createCard(resp);
-            }).catch(err);
+const createCards = (userId)=>{
+    getUserTopics(userId, cardIncrease, currentPage++).then(response=>{
+        if(response.list.length == 0){
+            loadMoreButton.classList.add("disabled");
+            loadMoreButton.setAttribute("disabled", true);
         }
-    }).catch(err);
+        for(let i in response.list){
+            getTopic(response.list[i].id).then(resp =>{
+                createCard(resp);
+            }).catch(showError);
+        }
+    }).catch(showError);
+}
+
+const addCards = (userId) => {
+    createCards(userId);
+    loadMoreButton.onclick = ()=>{
+        createCards(userId);
+    };
 };
 
 const username = document.getElementById("username");
 
 const setUserData = (data)=>{
     username.textContent = getFromStorage("login");
+    getUserTopics(data.id, 100000, 1).then(response=>{
+        cardCreated.textContent = response.list.length;
+    }).catch(showError);
 };
 
 window.addEventListener("load", ()=>{
     authenticate(getFromStorage("login"), getFromStorage("password")).then(response=>{
         setUserData(response);
-        addCards(response.id, currentPage);
+        addCards(response.id);
     }).catch(error=>{
         console.log(error);
-    });
-    loadMoreButton.addEventListener("click", () => {
-        addCards(currentPage + 1);
     });
 });
 
