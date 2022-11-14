@@ -20,7 +20,7 @@ const addSectionsToPanel = (containerId)=>{
     const container  = document.getElementById(containerId);
     container.innerHTML = "";
     getSections().then((response) => {
-        const sections = response.slice(0, 6);
+        const sections = response.sort((a,b)=>b.topicCount - a.topicCount).slice(0, 6);
         for(let i in sections){
             container.appendChild(createSectionForPanel(sections[i]));
         }
