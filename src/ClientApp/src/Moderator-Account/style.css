@@ -265,7 +265,28 @@ h2 {
     border: 3px solid #f67969;
 }
 
+.load-more {
+    width: 90%;
+    padding: 16px;
+    border: none;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    background-color: rgba(54, 124, 194, 0.63);
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+}
 
+.load-more:not([disabled]):hover {
+    background-color: rgba(54, 124, 194, 0.78);
+    box-shadow: 0 1px 9px rgba(0, 0, 0, 0.2);
+}
+
+.load-more[disabled] {
+    background-color: #eaeaea !important;
+}
 
 
 
