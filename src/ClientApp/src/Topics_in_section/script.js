@@ -73,3 +73,18 @@ const loadData = ()=>{
     }).catch(showError);
 };
 window.addEventListener("load", loadData);
+
+const openUpdateForm = () => {
+    document.getElementById("updateWindow").style.display = "block";
+
+};
+const closeUpdateForm = () => {
+    document.getElementById("updateWindow").style.display = "none";
+};
+const openDeleteForm = () => {
+    document.getElementById("deleteWindow").style.display = "block";
+
+};
+const closeDeleteForm = () => {
+    document.getElementById("deleteWindow").style.display = "none";
+};
