@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - Administrator Account Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+        });
+    </script>
+</head>
+<body id="page-header" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+<div class=" container-fluid  box mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>Administration Tabs</h2>
+            <div class="wrapper">
+                <input class="radio" id="one" name="group" type="radio" checked>
+                <input class="radio" id="two" name="group" type="radio">
+                <input class="radio" id="three" name="group" type="radio">
+                <input class="radio" id="four" name="group" type="radio">
+
+                <div class="tabs">
+                    <label class="tab" id="one-tab" for="one">Topic and Comment Complaint List</label>
+                    <label class="tab" id="two-tab" for="two">System Warning List</label>
+                    <label class="tab" id="three-tab" for="three">Users List</label>
+                    <label class="tab" id="four-tab" for="four">Moderators List</label>
+                </div>
+
+                <div class="panels">
+                    <div class="panel" id="one-panel">
+                        <div class="element-container">
+                            <a class="element">
+                                <p class="section">Section</p>
+                                <p>Topic name</p>
+                            </a>
+                        </div>
+                        <button class="load-more">Load more</button>
+                    </div>
+
+                    <div class="panel" id="two-panel">
+                        <div class="element-container">
+                            <a class="element">
+                                <p class="section">Section</p>
+                                <p>Comment text</p>
+                            </a>
+                        </div>
+                        <button class="load-more">Load more</button>
+                    </div>
+
+                    <!--User Tabs-->
+                    <div class="panel" id="three-panel">
+                        <div class="element-container">
+                            <a class="element">
+                                <div class="row info-box" style="width: 100%" >
+                                    <div class="col-sm-6" style="text-align: left">
+                                    <p class="section">Username</p>
+                                        <p>Registration date: 22.10.2022</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>1</p>
+                                        <div>number of topics</div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>1</p>
+                                        <div>number of warnings</div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>1</p>
+                                        <div>number of blocks</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <button class="load-more">Load more</button>
+                    </div>
+
+                    <div class="panel" id="four-panel">
+                        <div class="element-container">
+                            <a class="element">
+                                <div class="row info-box" style="width: 100%" >
+                                    <div class="col-sm-6" style="text-align: left">
+                                        <p class="section">Moderator Username</p>
+                                        <p>Registration date: 22.10.2022</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>1</p>
+                                        <div>number of topics</div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>1</p>
+                                        <div>number of warnings</div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>1</p>
+                                        <div>number of blocks</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <button class="load-more">Load more</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row account-panel">
+                <div class="panel-heading">
+                    <h2 style="font-family:Courier New, Courier, monospace" id="username">Administrator Username</h2>
+                    <p id="registration-date">Registration date</p>
+                </div>
+                <div class="panel-footer account-panel-footer">
+                    <button type="button" class="admin-button" onclick="openCreateSectionWindow()">Create Section</button>
+                    <button type="button" class="admin-button" onclick="openCreateModeratorWindow()">Create Moderator</button>
+                    <button type="button" class="admin-button" onclick="openUserActionWindow()">Unblock User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="Unblock" class="fullscreen-container">
+    <div class="unblock-section">
+        <div class="row">
+            <div class="col-sm-8"></div>
+            <div class="col-sm-4">
+                <button class="close-unblock" onclick="closeUserActionWindow();"><span
+                        class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
+        </div>
+        <div class="data">
+            <label for="users">Choose User:</label>
+            <input list="nicknames" id="users" name="users">
+
+            <datalist id="nicknames">
+                <option value="Chocolate">
+                <option value="Coconut">
+                <option value="Mint">
+                <option value="Strawberry">
+                <option value="Vanilla">
+            </datalist>
+        </div>
+        <button type="button" class="submit-unblock" onclick="closeUserActionWindow();">Unblock</button>
+    </div>
+</div>
+<div id="createSection" class="fullscreen-container">
+    <div class="unblock-section">
+        <h2>Comment Topic</h2>
+        <form>
+            <label for="section-title">Section Title</label>
+            <input id="section-title" minlength="2" maxlength="32000" required>
+            <label for="section-description">Section description</label>
+            <textarea id="section-description" minlength="2" maxlength="32000" required></textarea>
+            <button type="submit" class="formBtn" onclick="">Submit</button>
+            <button type="button" class="formBtn" onclick="closeCreateSectionWindow()">Close</button>
+        </form>
+    </div>
+</div>
+<div id="createModerator" class="fullscreen-container">
+    <div class="unblock-section">
+        <h2>Comment Topic</h2>
+        <form>
+            <label for="moderator-nickname">Moderator Name</label>
+            <input id="moderator-nickname" minlength="2" maxlength="32000" required>
+<!--            <label for="">Section description</label>-->
+<!--            <textarea id="section-description" minlength="2" maxlength="32000" required></textarea>-->
+            <button type="submit" class="formBtn" onclick="">Submit</button>
+            <button type="button" class="formBtn" onclick="closeCreateModeratorWindow()">Close</button>
+        </form>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+<script src="script.js"></script>
+</html>
