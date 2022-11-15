@@ -41,10 +41,10 @@
                             <div class="col-sm-1 complaint-icon">
                                 <button data-toggle="tooltip" title="Create a complaint"
                                         onclick="openComplainForm('topic', getValueFromCurrentUrl('id')); return false;">
-                                    <span class="glyphicon glyphicon-comment" style="color:#d7ae54"></span>
+                                    <span class="glyphicon glyphicon-comment comment-span"></span>
                                 </button>
                                 <button data-toggle="tooltip" title="Delete">
-                                    <span class="glyphicon glyphicon-trash" style="color:rgba(213,17,33,0.78); font-size: 19px;display:none;"></span>
+                                    <span class="glyphicon glyphicon-trash trash-span"></span>
                                 </button>
                             </div>
                         </div>
@@ -83,9 +83,12 @@
 
             <div class="comment-group" id="comment-group">
                 <div id="comment" class="panel">
-                    <div class="complaint-icon" style="margin-top: 10px;">
+                    <div class="complaint-icon" style="margin-top: 15px;">
                         <button data-toggle="tooltip" title="Create a complaint" onclick="openForm()">
                             <span class="glyphicon glyphicon-comment comment-span"></span>
+                        </button>
+                        <button data-toggle="tooltip" title="Delete">
+                            <span class="glyphicon glyphicon-trash trash-span"></span>
                         </button>
                     </div>
                         <p id="answer">Here we have answer text<br>

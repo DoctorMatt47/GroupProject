@@ -93,6 +93,15 @@ h4 {
 .comment-span {
     color: #d7ae54;
     margin-right: 15px;
+    display: block;
+}
+
+.trash-span {
+    color: rgba(213, 17, 33, 0.78);
+    font-size: 19px;
+    display: none;
+    margin-right: 15px;
+    margin-top: 10px;
 }
 
 .column {
@@ -278,7 +287,8 @@ h4 {
 .code-container-wrap {
     white-space: pre-wrap;
 }
-#moderator-panel{
+
+#moderator-panel {
     position: fixed;
     padding: 30px;
     background-color: gainsboro;
