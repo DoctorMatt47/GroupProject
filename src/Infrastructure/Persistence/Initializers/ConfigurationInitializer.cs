@@ -18,6 +18,7 @@ public class ConfigurationInitializer : IEntityInitializer
             Rules = string.Empty,
             BanDuration = TimeSpan.FromMinutes(2),
             WarningCountForBan = 2,
+            VerificationDuration = TimeSpan.FromMinutes(2),
         };
 
         _dbContext.Set<Configuration>().Add(configuration);

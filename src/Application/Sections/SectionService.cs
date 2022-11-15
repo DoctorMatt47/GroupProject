@@ -29,7 +29,10 @@ public class SectionService : ISectionService
 
     public async Task<IdResponse<int>> Create(CreateSectionRequest request, CancellationToken cancellationToken)
     {
-        await _dbContext.Set<Section>().NoOneOrThrowAsync(s => s.Header == request.Header, cancellationToken);
+        await _dbContext.Set<Section>().NoOneOrThrowAsync(
+            s => s.Header == request.Header,
+            $"header: {request.Header}",
+            cancellationToken);
 
         var section = new Section(request.Header, request.Description);
 

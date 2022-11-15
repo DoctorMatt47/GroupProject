@@ -5,9 +5,9 @@ public record ComplaintResponse(
     string Description,
     Guid UserId,
     DateTime CreationTime,
-    Guid TargetId,
+    DateTime ExpirationTime,
     string Target,
-    DateTime ExpirationTime);
+    Guid TargetId);
 
 public record ComplaintByTargetResponse(
     Guid Id,

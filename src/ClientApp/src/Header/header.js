@@ -19,13 +19,33 @@ const openErrorWindow = (error)=>{
 const closeErrorWindow = ()=>{
     document.getElementById("error-container").style = "display: none;";
 };
-window.addEventListener("load", ()=>{
-    addBackgroundClosing(document.getElementById("error-container"), closeErrorWindow);
+const searchTopics = ()=>{
+    const input = document.getElementById("search-input");
+    if(input.value === "") return;
+    openPage("../Topic-Search/topic-search.html", {"pattern":input.value});
+}
+const moderatorButton = ()=>{
     if(isLoggedIn()){
-        document.getElementById("user-menu-item").style.display = "block";
-        document.getElementById("login-button").textContent =  getFromStorage("login");
+        window.location.href = "../Moderator-Account/moderator-account.html";
         return;
     }
-    //TODO: add for admin and moderator
+};
+window.addEventListener("load", ()=>{
+    document.getElementById("search-input").value = getValueFromCurrentUrl("pattern");
+    addBackgroundClosing(document.getElementById("error-container"), closeErrorWindow);
+    if(isLoggedIn()){
+        authenticate(getFromStorage("login"), getFromStorage("password"))
+        .then((result) => {
+            if(result.role === "Moderator"){
+                document.getElementById("moderator-login-button").textContent = getFromStorage("login");
+                document.getElementById("moderator-menu-item").style.display = "block";
+                return;
+            }
+            document.getElementById("user-login-button").textContent = getFromStorage("login");
+            document.getElementById("user-menu-item").style.display = "block";
+        }).catch(showError);
+        return;
+    }
+    //TODO: add for admin and moderator moderator-account.html
     document.getElementById("guest-menu-item").style.display = "block";
 });

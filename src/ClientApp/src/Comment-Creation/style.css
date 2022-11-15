@@ -86,7 +86,7 @@ textarea {
     resize: none;
 }
 
-#need-code {
+#comment-need-code {
     display: flex;
     justify-content: center;
     margin: 0 auto 10px;

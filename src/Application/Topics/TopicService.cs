@@ -86,7 +86,10 @@ public class TopicService : ITopicService
     public async Task<IdResponse<Guid>> Create(CreateTopicRequest request, CancellationToken cancellationToken)
     {
         await _dbContext.Set<User>().AnyOrThrowAsync(request.UserId, cancellationToken);
-        await _dbContext.Set<Topic>().NoOneOrThrowAsync(t => t.Header == request.Header, cancellationToken);
+        await _dbContext.Set<Topic>().NoOneOrThrowAsync(
+            t => t.Header == request.Header,
+            $"header: {request.Header}",
+            cancellationToken);
 
         await ThrowIfContainsForbiddenPhrasesAsync(request, cancellationToken);
 
@@ -141,10 +144,10 @@ public class TopicService : ITopicService
 
     public async Task Close(Guid id, Guid userId, CancellationToken cancellationToken)
     {
-        var user = await _dbContext.Set<User>().FindOrThrowAsync(userId, cancellationToken);
+        var user = await _dbContext.Set<User>().AsNoTracking().FirstOrThrowAsync(userId, cancellationToken);
         var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(id, cancellationToken);
 
-        if (user.Role is UserRole.User && topic.UserId != user.Id)
+        if (user.Role is UserRole.User && topic.UserId != userId)
             throw new ForbiddenException("You don't have permission for closing this topic");
 
         topic.SetClosed();

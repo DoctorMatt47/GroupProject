@@ -94,3 +94,8 @@ const addBackgroundClosing = (container, closeFunction)=>{
         if (event.target.id === container.id) closeFunction();
     });
 }
+const showError = (err) => {
+    console.log(err);
+    const exception = JSON.parse(err.message);
+    openErrorWindow(exception.message);
+};

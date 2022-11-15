@@ -14,7 +14,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="../Home/home.html"><img src="../../resources/static/logo_white.png"
-                                                                  alt="logo"></a>
+                                                                alt="logo"></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
@@ -23,7 +23,7 @@
                 <li><a href="#">CONTACT</a></li>
                 <li><a href="#">HELP</a></li>
                 <li id="guest-menu-item" onclick="guestButton(); return false;"><a href="#">LOGIN/JOIN</a></li>
-                <li id="user-menu-item"><a class="dropdown-toggle" data-toggle="dropdown" id="login-button" href="#">Username
+                <li id="user-menu-item"><a class="dropdown-toggle" data-toggle="dropdown" id="user-login-button" href="#">Username
                     <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" onclick="userButton(); return false;">Your Profile</a></li>
@@ -35,7 +35,15 @@
                     </ul>
                 </li>
                 <li id="admin-menu-item"></li>
-                <li id="moderator-menu-item"></li>
+                <li id="moderator-menu-item"><a class="dropdown-toggle" data-toggle="dropdown" id="moderator-login-button" href="#">Username
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="moderatorButton(); return false;">Your Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a href="#" onclick="signOutButton(); return false;">Sign out</a></li>
+                    </ul></li>
             </ul>
         </div>
     </div>
@@ -50,7 +58,7 @@
     <div>
         <form class="input-group">
             <input type="search" class="form-control" size="60" placeholder="Search..." id="search-input" required>
-            <button type="button" class="btn">Search</button>
+            <button type="button" class="btn" onclick="searchTopics(); return false;">Search</button>
         </form>
     </div>
 </div>
