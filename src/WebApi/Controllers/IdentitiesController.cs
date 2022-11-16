@@ -27,4 +27,7 @@ public class IdentitiesController : ApiControllerBase
         CreateIdentityRequest body,
         CancellationToken cancellationToken) =>
         _identities.Create(body, cancellationToken);
+
+    [HttpGet]
+    public TimeSpan Get() => TimeSpan.FromDays(1);
 }

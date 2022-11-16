@@ -48,6 +48,11 @@ public class User : IHasId<Guid>
     {
         WarningCount++;
         if (WarningCount < minWarningCountForBan) return;
+        SetBanned(banDuration);
+    }
+
+    public void SetBanned(TimeSpan banDuration)
+    {
         BanEndTime = (BanEndTime > DateTime.UtcNow ? BanEndTime : DateTime.UtcNow) + banDuration;
     }
 }

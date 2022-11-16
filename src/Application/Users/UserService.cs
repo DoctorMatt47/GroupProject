@@ -5,6 +5,7 @@ using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Requests;
 using GroupProject.Application.Common.Responses;
+using GroupProject.Application.Configurations;
 using GroupProject.Application.Phrases;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
@@ -16,6 +17,7 @@ namespace GroupProject.Application.Users;
 
 public class UserService : IUserService
 {
+    private readonly IConfigurationService _configuration;
     private readonly IAppDbContext _dbContext;
     private readonly ILogger<UserService> _logger;
     private readonly IMapper _mapper;
@@ -24,12 +26,14 @@ public class UserService : IUserService
 
     public UserService(
         IAppDbContext dbContext,
+        IConfigurationService configuration,
         IPasswordHashService passwordHash,
         ILogger<UserService> logger,
         IMapper mapper,
         IPhraseService phrases)
     {
         _dbContext = dbContext;
+        _configuration = configuration;
         _passwordHash = passwordHash;
         _logger = logger;
         _mapper = mapper;
@@ -64,6 +68,14 @@ public class UserService : IUserService
         var configuration = await _dbContext.Set<Configuration>().FirstAsync(cancellationToken);
 
         user.AddWarning(configuration.WarningCountForBan, configuration.BanDuration);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task BanUser(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
+        var configuration = await _configuration.Get(cancellationToken);
+        user.SetBanned(configuration.BanDuration);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
