@@ -14,11 +14,13 @@
         $(function () {
             $("#header").load("../Header/header.html");
             $("#footer").load("../Footer/footer.html");
+            $("#compiler").load("../Code-Compiler/code-compiler.html");
             $("#moderator-panel").load("../Moderator_panel/moderator-panel.html");
         });
     </script>
 </head>
 <body id="page-header" data-target=".navbar" data-offset="50">
+<div id="compiler"></div>
 <div id="header"></div>
 <div class="container-fluid box mt-5">
     <div class="row">
@@ -38,12 +40,12 @@
                                 </div>
                             </div>
                             <h3 style="font-style: inherit" id="topic-name"><strong>Create multiple elements</strong></h3>
-                            <a style="color:grey; cursor:pointer;" href="#">See in original-></a>
+                            <a style="color:grey; cursor:pointer;" href="#" id="original-button">See in original-></a>
                             <hr>
                         </div>
                     </div>
                     <div class="panel-body topic-panel-footer">
-                        <div id="topic-description">I want to create 4 elements with different text. The class needs to
+                        <div id="topic-description-complaint">I want to create 4 elements with different text. The class needs to
                             remain the same. I think I am doing this with too much code.
                             Maybe anyone has some information how to make this code look more beautiful and more
                             efficient?
@@ -82,9 +84,9 @@
                     </div>
                     <div class="col-sm-6">
                         <div id="created-discussions">6</div>
-                        <p style="color: black">Created Discussions</p>
+                        <p style="color: black">Created Topics</p>
                     </div>
-                    <p>Last block date:22.03.2019</p>
+                    <p id="last-block">Last block date:22.03.2019</p>
                 </div>
             </div>
         </div>
@@ -94,4 +96,6 @@
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
+<script src="../JS/complains.js"></script>
+<script src="../JS/comment.js"></script>
 </html>

@@ -43,7 +43,9 @@ window.addEventListener("load", ()=>{
             }
             document.getElementById("user-login-button").textContent = getFromStorage("login");
             document.getElementById("user-menu-item").style.display = "block";
-        }).catch(showError);
+        }).catch(error=>{
+            localStorage.clear();
+        });
         return;
     }
     //TODO: add for admin and moderator moderator-account.html
