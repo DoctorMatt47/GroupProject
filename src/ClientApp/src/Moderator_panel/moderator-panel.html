@@ -22,7 +22,7 @@
                 </div>
             </div>
             <h3>Block this User?</h3>
-            <button class="submit-verification" onclick="closeBlockVerificationWindow();">Yes</button>
+            <button class="submit-verification" onclick="closeBlockVerificationWindow();" id="block-button">Yes</button>
         </div>
     </div>
 </div>
@@ -39,7 +39,7 @@
             </div>
             <label for="alert">Notification text</label>
             <textarea id="alert" style="height: 150px"> Dear User,our Moderation Service found your content to be in violation of forum rules. We would like to inform you that the topic has been deleted and You have been given a penalty point. </textarea>
-            <button class="submit-verification" onclick="closeDeleteVerificationWindow();">Send message and delete
+            <button class="submit-verification" onclick="closeDeleteVerificationWindow();" id="delete-button">Send message and delete
             </button>
         </div>
     </div>
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <h3> Do you want to close this dispute without any message for User?</h3>
-            <button class="submit-verification" onclick="closeEndVerificationWindow();">Yes, close dispute in favor of
+            <button class="submit-verification" onclick="closeEndVerificationWindow();" id="end-button">Yes, close dispute in favor of
                 the user
             </button>
         </div>

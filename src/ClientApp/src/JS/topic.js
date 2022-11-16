@@ -106,7 +106,7 @@ const getTopic = (topicId)=>{
 /**
  * 
  * @param {string} topicId - id of topic to close
- * @returns 
+ * @returns promise with answer
  */
 const closeTopic = (topicId)=>{
     const request = {
@@ -117,4 +117,19 @@ const closeTopic = (topicId)=>{
         }
     };
     return sendAsync(URLS.Topics + `/${topicId}/Close`, request);
+};
+/**
+ * Deletes topic from database
+ * @param {string} topicId - id of topic to delete
+ * @returns promise with answer
+ */
+const deleteTopic = (topicId)=>{
+    const request = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(URLS.Topics + `/${topicId}`, request);
 };

@@ -70,11 +70,36 @@ const loadComplaintData = (complaint)=>{
         }
         original.href = originalUrl;
         loadComplaintObject(response);
+        loadModeratorPanel(complaint, response.userId);
     }).catch(showError);
 };
+const loadModeratorPanel = (complaint, userId)=>{
+    const blockButton = document.getElementById("block-button");
+    const endButton = document.getElementById("end-button");
+    const deleteButton = document.getElementById("delete-button");
 
+    blockButton.onclick = ()=>{
+        blockUser(userId).then(response=>{
+            console.log("Blocked");
+        }).catch(showError);
+    };
+
+    endButton.onclick = ()=>{
+        deleteComplaint(complaint.id).then(()=>{
+            openPage('../Moderator-Account/moderator-account.html');
+        }).catch(showError);
+    };
+
+    deleteButton.onclick = ()=>{
+        let deleteFunction = deleteTopic;
+        if(complaint.target === "Commentary"){
+            deleteFunction = deleteComment;
+        }
+        deleteFunction(complaint.targetId).then(() => {//also deletes complaint
+            openPage('../Moderator-Account/moderator-account.html');
+        }).catch(showError);
+    };
+};
 window.addEventListener("load", ()=>{
-    getComplaint(getValueFromCurrentUrl("id")).then((response) => {
-        loadComplaintData(response);
-    }).catch(showError);
+    getComplaint(getValueFromCurrentUrl("id")).then(loadComplaintData).catch(showError);
 });

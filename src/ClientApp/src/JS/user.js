@@ -71,7 +71,7 @@ const getUser = (userId)=>{
  */
 const blockUser = (userId)=>{
     const request = {
-        method: "POST",
+        method: "GET",
         headers: {
             'Content-Type': 'application/json',
             "Authorization":"Bearer "+getFromStorage("token")

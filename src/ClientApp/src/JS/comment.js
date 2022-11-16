@@ -73,3 +73,18 @@ const getComment = (commentId)=>{
     };
     return sendAsync(URLS.Comments + `/${commentId}`, request);
 };
+/**
+ * Deletes comment from database
+ * @param {string} commentId - id of comment
+ * @returns promise with answer
+ */
+const deleteComment = (commentId)=>{
+    const request = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(URLS.Comments + `/${commentId}`, request);
+};
