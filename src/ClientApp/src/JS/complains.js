@@ -92,3 +92,18 @@ const getComplaints = (perPage, page)=>{
     };
     return sendAsync(URLS.Complaints + `?Number=${page}&Size=${perPage}`, request);
 }
+/**
+ * Deletes complaint from database
+ * @param {number} complaintId - id of complaint
+ * @returns promise with answer
+ */
+const deleteComplaint = (complaintId)=>{
+    const request = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(URLS.Complaints + `/${complaintId}`, request);
+}
