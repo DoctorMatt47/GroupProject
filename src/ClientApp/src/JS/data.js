@@ -9,4 +9,5 @@ const URLS = {
     CommentsCreate: BASE_URL + "Commentaries/OnTopic/",
     ComplaintTopic: BASE_URL + "Complaints/AboutTopic/",
     ComplaintComment: BASE_URL + "Complaints/AboutCommentary/",
+    Complaints: BASE_URL + "Complaints",
 };

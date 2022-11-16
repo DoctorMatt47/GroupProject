@@ -64,3 +64,18 @@ const getUser = (userId)=>{
     };
     return sendAsync(URLS.Users + `/${userId}`, request);
 };
+/**
+ * TODO:
+ * Blocks user for ban duration time(from configuration)
+ * @param {string} userId - id of user 
+ */
+const blockUser = (userId)=>{
+    const request = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization":"Bearer "+getFromStorage("token")
+        },
+    };
+    return sendAsync(URLS.Users + `/${userId}`, request);
+};

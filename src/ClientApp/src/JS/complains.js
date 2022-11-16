@@ -62,3 +62,33 @@ const getCommentComplaint = (commentId)=>{
     };
     return sendAsync(URLS.ComplaintComment + commentId, request);
 }
+/**
+ * 
+ * @param {number} complaintId - id of complaint
+ * @returns promise to response with complaint data or error
+ */
+const getComplaint = (complaintId)=>{
+    const request = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(URLS.Complaints + `/${complaintId}`, request);
+}
+/**
+ * @param {number} perPage - count of pages in current page
+ * @param {number} page - number of page  
+ * @returns list of complaints
+ */
+const getComplaints = (perPage, page)=>{
+    const request = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(URLS.Complaints + `?Number=${page}&Size=${perPage}`, request);
+}
