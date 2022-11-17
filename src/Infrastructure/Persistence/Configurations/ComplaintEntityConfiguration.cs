@@ -9,8 +9,8 @@ public class ComplaintEntityConfiguration : IEntityTypeConfiguration<Complaint>
 {
     public void Configure(EntityTypeBuilder<Complaint> builder)
     {
-        builder.HasOne(c => c.Topic).WithMany(t => t.Complaints);
-        builder.HasOne(c => c.Commentary).WithMany(t => t.Complaints);
+        builder.HasOne(c => c.Topic).WithMany(t => t.Complaints).OnDelete(DeleteBehavior.Cascade);
+        builder.HasOne(c => c.Commentary).WithMany(t => t.Complaints).OnDelete(DeleteBehavior.Cascade);
         builder.Property(c => c.Target).HasEnumConversion();
     }
 }
