@@ -81,6 +81,16 @@ const loadVerifies = (container, words)=>{
 }
 
 window.addEventListener("load", ()=>{
+    const username = document.getElementById("username");
+    const date = document.getElementById("registration-date");
+    authenticate(getFromStorage("login"), getFromStorage("password")).then(user=>{
+        getUser(user.id).then(response=>{
+            username.textContent = response.login;
+            date.textContent += ": "+new Date(response.creationTime).toLocaleDateString();
+        }).catch(showError);
+    }).catch(showError);
+    
+
     const complaints = document.getElementById("complaint-list");
     complaints.innerHTML = "";
     loadComplains(complaints);
