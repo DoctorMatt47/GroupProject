@@ -46,6 +46,12 @@ public class UserService : IUserService
     public async Task<Page<UserResponse>> GetUsers(PageRequest request, CancellationToken cancellationToken) =>
         await GetUsersByRoleAsync(UserRole.User, request, cancellationToken);
 
+    public async Task<IEnumerable<UserResponse>> GetBannedUsers(CancellationToken cancellationToken) =>
+        await _dbContext.Set<User>()
+            .Where(User.IsBanned)
+            .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+
     public async Task<UserResponse> Get(Guid id, CancellationToken cancellationToken)
     {
         var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
