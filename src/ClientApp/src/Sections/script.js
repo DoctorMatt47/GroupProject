@@ -131,6 +131,13 @@ window.addEventListener("load", ()=>{
             addSections();
         }
     }
+    authenticate(getFromStorage("login"), getFromStorage("password")).then(response=>{
+        console.log(response)
+            if(response.role === "Admin"){
+                document.getElementById("create-section-button").style = "display:block";
+            }
+    }).catch(showError);
+    
 });
 
 const openCreateSectionWindow = () => {
@@ -138,4 +145,13 @@ const openCreateSectionWindow = () => {
 };
 const closeCreateSectionWindow = () => {
     document.getElementById("createSection").style.display = "none";
+};
+
+const submitSection = ()=>{
+    const title = document.getElementById("section-title");
+    const description = document.getElementById("section-description");
+
+    createSection(title.value, description.value).then(()=>{
+        addSections();
+    }).catch(showError);
 };
