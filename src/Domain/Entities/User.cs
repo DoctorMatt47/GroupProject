@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using GroupProject.Domain.Enums;
 using GroupProject.Domain.Interfaces;
 
@@ -31,6 +32,8 @@ public class User : IHasId<Guid>
         Role = role;
     }
 
+    public static Expression<Func<User, bool>> IsBanned => user => user.BanEndTime > DateTime.UtcNow;
+
     public string Login { get; private set; } = null!;
     public byte[] PasswordHash { get; private set; } = null!;
     public byte[] PasswordSalt { get; private set; } = null!;
@@ -48,6 +51,11 @@ public class User : IHasId<Guid>
     {
         WarningCount++;
         if (WarningCount < minWarningCountForBan) return;
+        SetBanned(banDuration);
+    }
+
+    public void SetBanned(TimeSpan banDuration)
+    {
         BanEndTime = (BanEndTime > DateTime.UtcNow ? BanEndTime : DateTime.UtcNow) + banDuration;
     }
 }

@@ -11,4 +11,5 @@ public interface IUserService
     Task<IdResponse<Guid>> CreateUser(CreateUserRequest request, CancellationToken cancellationToken);
     Task<IdResponse<Guid>> CreateModerator(CreateUserRequest request, CancellationToken cancellationToken);
     Task AddWarningToUser(Guid id, CancellationToken cancellationToken);
+    Task BanUser(Guid id, CancellationToken cancellationToken);
 }

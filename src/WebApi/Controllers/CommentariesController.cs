@@ -59,7 +59,7 @@ public class CommentariesController : ApiControllerBase
         var request = _mapper.Map<CreateCommentaryRequest>(body) with
         {
             TopicId = id,
-            UserId = Guid.Parse(User.Identity?.Name!)
+            UserId = Guid.Parse(User.Identity?.Name!),
         };
 
         var response = await _commentaries.Create(request, cancellationToken);

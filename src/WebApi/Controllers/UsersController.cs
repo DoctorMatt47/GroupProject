@@ -91,4 +91,16 @@ public class UsersController : ApiControllerBase
         await _users.AddWarningToUser(id, cancellationToken);
         return NoContent();
     }
+
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpPost("Ban/{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> BanUser(Guid id, CancellationToken cancellationToken)
+    {
+        await _users.BanUser(id, cancellationToken);
+        return NoContent();
+    }
 }
