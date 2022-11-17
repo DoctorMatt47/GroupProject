@@ -105,6 +105,8 @@ public class ComplaintService : IComplaintService
         var target = await FindTargetOrThrowAsync(complaint.Target, targetId, cancellationToken);
 
         target.DecrementComplaintCount();
+
+        _dbContext.Set<Complaint>().Remove(complaint);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
