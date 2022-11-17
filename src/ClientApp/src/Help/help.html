@@ -11,41 +11,74 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script>
-        $(function(){
+        $(function () {
             $("#header").load("../Header/header.html");
             $("#footer").load("../Footer/footer.html");
-            $("#side-panel").load("../Side_panel/side-panel.html");
         });
     </script>
 </head>
 <body id="page-header" data-target=".navbar" data-offset="50">
 <div id="header"></div>
-<div class=" container-fluid  box mt-5">
-    <div class="row">
-        <div class="col-sm-8">
-
-            <div id="warning-count">Users will be blocked after getting `Warning count` warnings</div>
-            <div id="ban-duration">Users will be blocked for `Ban duration`</div>
-            <div id="verification-duration">verification duration</div><!--Only for admin-->
-            <div id="forbidden-words">Forbidden words: f*ck, b*tch, ...</div>
-            <div id="verification-words">Verification words: kill, fight, rob, ...</div>
-            <div id="rules" style="white-space: pre-wrap;">Forum members are not allowed
-                1. Leave messages on the forums containing:
-                information constituting a state or other secret specially protected by law;
-                extremist materials;
-                materials containing:
-                - public calls for terrorist activity or publicly justifying terrorism;
-                - propaganda of pornography, the cult of violence and cruelty;
-                - profanity, offensive, nationalistic, rude, obscene and any other information that violates generally accepted moral and ethical norms;
-                - information on methods, methods of development, manufacture and use, places of purchase of narcotic drugs, psychotropic substances and their precursors, new potentially dangerous psychoactive substances, promotion of any advantages of using certain means, methods and places of cultivation of narcotic plants;
-                - information containing instructions for homemade production of explosives and explosive devices;
-                information on means of committing suicide, as well as calls to commit suicide.
-                2. To post messages that provoke conflict with other forum participants.
-                3. Use prohibited nicknames. Pseudonyms containing website addresses, names of organizations, names of state authorities and local self-government bodies, e-mail addresses, mats, insults, obscene words, their derivatives or allusions to them are not allowed. As a nickname, you cannot use the names of famous writers, politicians, actors, scientists and other famous people, if it is not your own name. The use of an identical nickname or a parody of the nickname of an already registered user is not allowed.
-                4. Excessive use of capital letters (Caps Lock mode).
-                5. To use as an avatar an image containing advertising, the logo of the organization and other related advertising materials, as well as bloody scenes, scenes of violence or pornography, suicides, the production and use of narcotics and other substances and means withdrawn from circulation, scenes of committing other illegal acts and crimes.</div>
-
-        </div>
+<div class=" container box mt-5">
+    <div class="details-group">
+        <details>
+            <summary>
+                Rules
+                <button type="button" class="edit-icon"><span class="glyphicon glyphicon-edit"></span></button>
+            </summary>
+            <div>
+                <div id="rules" style="white-space: pre-wrap;"><strong>Forum members are not allowed</strong>
+                    <strong>1. Leave messages on the forums containing:</strong>
+                    information constituting a state or other secret specially protected by law;
+                    extremist materials;
+                    materials containing:
+                    - public calls for terrorist activity or publicly justifying terrorism;
+                    - propaganda of pornography, the cult of violence and cruelty;
+                    - profanity, offensive, nationalistic, rude, obscene and any other information that violates
+                    generally accepted moral and ethical norms;
+                    - information on methods, methods of development, manufacture and use, places of purchase of
+                    narcotic drugs, psychotropic substances and their precursors, new potentially dangerous psychoactive
+                    substances, promotion of any advantages of using certain means, methods and places of cultivation of
+                    narcotic plants;
+                    - information containing instructions for homemade production of explosives and explosive devices;
+                    information on means of committing suicide, as well as calls to commit suicide.
+                    <strong>2. To post messages that provoke conflict with other forum participants.</strong>
+                    <strong>3. Use prohibited nicknames.</strong>
+                    Pseudonyms containing website addresses, names of organizations, names
+                    of state authorities and local self-government bodies, e-mail addresses, mats, insults, obscene
+                    words, their derivatives or allusions to them are not allowed. As a nickname, you cannot use the
+                    names of famous writers, politicians, actors, scientists and other famous people, if it is not your
+                    own name. The use of an identical nickname or a parody of the nickname of an already registered user
+                    is not allowed.
+                    <strong>4. Excessive use of capital letters (Caps Lock mode).</strong>
+                    5. To use as an avatar an image containing advertising, the logo of the organization and other
+                    related advertising materials, as well as bloody scenes, scenes of violence or pornography,
+                    suicides, the production and use of narcotics and other substances and means withdrawn from
+                    circulation, scenes of committing other illegal acts and crimes.
+                </div>
+            </div>
+        </details>
+        <details>
+            <summary>
+                Words
+                <button type="button" class="edit-icon"><span class="glyphicon glyphicon-edit"></span></button>
+            </summary>
+            <div>
+                <div id="forbidden-words">Forbidden words: f*ck, b*tch, ...</div>
+                <div id="verification-words">Verification words: kill, fight, rob, ...</div>
+            </div>
+        </details>
+        <details>
+            <summary>
+                Warning info
+                <button type="button" class="edit-icon"><span class="glyphicon glyphicon-edit"></span></button>
+            </summary>
+            <div>
+                <div id="warning-count">Users will be blocked after getting `Warning count` warnings</div>
+                <div id="ban-duration">Users will be blocked for `Ban duration`</div>
+                <div id="verification-duration">verification duration</div><!--Only for admin-->
+            </div>
+        </details>
     </div>
 </div>
 <div id="footer"></div>
