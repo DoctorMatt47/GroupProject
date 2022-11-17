@@ -22,7 +22,7 @@
 <div class=" container box mt-5">
     <div class="page-title">
         <h1 class="text-center" style="text-transform: uppercase;font-family: Courier sans-serif">Sections</h1>
-        <div class="create-button">
+        <div id="create-section-button" class="create-button" style="display: none;">
             <button type="button" onclick="openCreateSectionWindow()">
                 <img src="../../resources/static/plus.png" alt="create new section">
             </button>
@@ -60,12 +60,12 @@
 <div id="createSection" class="fullscreen-container">
     <div class="window-section">
         <h2>Comment Topic</h2>
-        <form>
+        <form onsubmit="submitSection(); closeCreateSectionWindow(); return false;">
             <label for="section-title">Section Title</label>
             <input id="section-title" minlength="2" maxlength="32000" required>
             <label for="section-description">Section description</label>
             <textarea id="section-description" minlength="2" maxlength="32000" required></textarea>
-            <button type="submit" class="window-formBtn" onclick="">Submit</button>
+            <button type="submit" class="window-formBtn">Submit</button>
             <button type="button" class="window-formBtn" onclick="closeCreateSectionWindow()">Close</button>
         </form>
     </div>

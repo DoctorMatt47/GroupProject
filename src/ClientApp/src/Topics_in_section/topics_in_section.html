@@ -68,13 +68,13 @@
 <div id="updateWindow" class="fullscreen-container">
     <div class="update-section">
         <h2>Update Section</h2>
-        <form>
+        <form onsubmit="submitUpdateSection(); closeUpdateForm(); return false;">
             <label for="new-section-name">New Section Title</label>
             <textarea id="new-section-name" minlength="2" maxlength="32000" required></textarea>
             <label for="new-section-description">New Section Description</label>
             <textarea id="new-section-description" minlength="2" maxlength="32000" required></textarea>
 
-            <button type="submit" class="comment-formBtn" onclick="">Submit</button>
+            <button type="submit" class="comment-formBtn">Submit</button>
             <button type="button" class="comment-formBtn" onclick="closeUpdateForm()">Close</button>
         </form>
     </div>
@@ -82,7 +82,7 @@
 <div id="deleteWindow" class="fullscreen-container">
     <div class="update-section">
             <h2>Delete Section with all topics in it?</h2>
-            <button type="button" class="comment-formBtn" onclick="">Delete</button>
+            <button type="button" class="comment-formBtn" onclick="deleteCurrentSection(); closeDeleteForm();">Delete</button>
             <button type="button" class="comment-formBtn" onclick="closeDeleteForm()">Close</button>
     </div>
 </div>

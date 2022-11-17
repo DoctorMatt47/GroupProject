@@ -74,8 +74,19 @@ const loadData = ()=>{
 };
 window.addEventListener("load", loadData);
 
+
+const title = document.getElementById("new-section-name");
+const description = document.getElementById("new-section-description");
+
 const openUpdateForm = () => {
-    document.getElementById("updateWindow").style.display = "block";
+    const sectionId = getValueFromCurrentUrl("id");
+    getSections().then((response) => {
+        const section = response.find(item=>item.id == sectionId);
+        if(section == undefined) return;
+        title.value = section.header;
+        description.value = section.description;
+        document.getElementById("updateWindow").style.display = "block";
+    }).catch(showError);
 
 };
 const closeUpdateForm = () => {
@@ -87,4 +98,21 @@ const openDeleteForm = () => {
 };
 const closeDeleteForm = () => {
     document.getElementById("deleteWindow").style.display = "none";
+};
+/**
+ * Gets data from form and sends request to update current section
+ */
+const submitUpdateSection = ()=>{
+    const sectionId = getValueFromCurrentUrl("id");
+    updateSection(sectionId, title.value, description.value).then(()=>{
+        openMessageWindow("Updated!");
+        loadSection({"id":sectionId, "header":title.value, "description":description.value});
+    }).catch(showError);
+}
+
+const deleteCurrentSection = ()=>{
+    deleteSection(getValueFromCurrentUrl("id")).then(()=>{
+        openMessageWindow("Deleted!");
+        openPage("../Sections/sections.html");
+    }).catch(showError);
 };
