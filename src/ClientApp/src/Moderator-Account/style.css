@@ -68,7 +68,7 @@ h2 {
 }
 
 #one:checked ~ .panels #one-panel,
-#two:checked ~ .panels #two-panel{
+#two:checked ~ .panels #two-panel {
     display: block;
 }
 
@@ -82,16 +82,22 @@ h2 {
 .section {
     display: flex;
 }
+
 .block {
     height: 220px;
     width: 100%;
-    overflow: hidden;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
     border-radius: 20px;
     border: 1px solid cadetblue;
     margin-top: 20px;
     padding: 20px;
     text-decoration: none;
     cursor: pointer;
+}
+
+.block::-webkit-scrollbar {
+    display: none;
 }
 
 .block:hover {
@@ -125,16 +131,19 @@ h2 {
     color: #000;
 
 }
-.topic{
+
+.topic {
     border: 1px solid rgba(14, 134, 64, 0.81);
     background-color: rgba(14, 134, 64, 0.81);
 
 }
-.comment{
+
+.comment {
     border: 1px solid #e0a53a;
     background-color: #e0a53a;
 }
-.title h4{
+
+.title h4 {
     padding-left: 7px;
     padding-right: 7px;
 }
@@ -154,19 +163,21 @@ h2 {
     margin: 80px 40px auto;
     color: black;
 }
-.account-panel-footer{
+
+.account-panel-footer {
     background-color: white;
 
 }
+
 .panel-heading,
-.panel-heading h2{
+.panel-heading h2 {
     background-color: #32557f;
     text-align: center;
     border-radius: 20px 20px 0 0;
     color: white;
 }
 
-.user-action-btn{
+.user-action-btn {
     width: 100%;
     border-radius: 30px;
     background-color: rgba(92, 161, 127, 0.91);
@@ -174,14 +185,17 @@ h2 {
     font-size: 20px;
     text-transform: uppercase;
 }
-.user-action-btn:hover{
+
+.user-action-btn:hover {
     background-color: rgba(63, 138, 101, 0.91);
 }
+
 .user-action-btn:active {
     background-color: rgba(63, 138, 101, 0.91);
     box-shadow: 0 5px rgba(0, 0, 0, 0.2);
     transform: translateY(2px);
 }
+
 .fullscreen-container {
     font-family: Courier, sans-serif;
     display: none;
@@ -222,7 +236,7 @@ h2 {
     transition: .5s;
 }
 
-.submit-unblock{
+.submit-unblock {
     text-transform: uppercase;
     color: #fff;
     width: 30%;
@@ -236,31 +250,36 @@ h2 {
     margin-top: 30px;
 }
 
-.submit-unblock:hover{
+.submit-unblock:hover {
     background: #fff;
     color: rgba(248, 110, 92, 0.82);
 }
-.close-unblock{
-    color:  rgba(246, 121, 105, 0.82);
+
+.close-unblock {
+    color: rgba(246, 121, 105, 0.82);
     border: beige;
     background-color: white;
 }
+
 .close-unblock:hover {
     border-radius: 50px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-.close-unblock:active{
+
+.close-unblock:active {
     background-color: white;
     box-shadow: 0 5px rgba(0, 0, 0, 0.2);
     transform: translateY(2px);
 }
-.data{
+
+.data {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
 }
-.data input{
+
+.data input {
     width: 100%;
     border: 3px solid #f67969;
     border-radius: 20px;
@@ -269,8 +288,9 @@ h2 {
     color: black;
     text-align: center;
 }
+
 .data input:active,
-.data input:hover{
+.data input:hover {
     border: 3px solid #f67969;
 }
 
