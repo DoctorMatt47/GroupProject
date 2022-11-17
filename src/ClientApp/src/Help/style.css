@@ -1,0 +1,42 @@
+.details-group{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-between;
+    align-items: center;
+}
+details {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: .5em .5em 0;
+    cursor: pointer;
+}
+
+summary {
+    font-weight: bold;
+    font-size: 20px;
+    margin: -.5em -.5em 0;
+    padding: .5em;
+    border-bottom: 3px solid #c5c5f6;
+    border-radius: 30px;
+}
+
+details[open] {
+    padding: .5em;
+}
+
+details[open] summary {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: .5em;
+    border-bottom: 3px solid #c5c5f6;
+}
+.edit-icon{
+    font-size: 15px;
+    padding-top: 7px;
+    padding-left: 10px;
+    color: rgba(4, 58, 194, 0.49);
+    background: none;
+    border: none;
+}

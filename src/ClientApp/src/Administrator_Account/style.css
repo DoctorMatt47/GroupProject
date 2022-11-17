@@ -164,7 +164,7 @@ h2 {
     z-index: 9999;
 }
 
-.unblock-section {
+.window-section {
     border: 10px solid #f67969;
     padding: 5em;
     width: 600px;
@@ -180,13 +180,13 @@ h2 {
 
 }
 
-.unblock-section label {
+.window-section label {
     color: rgba(246, 121, 105, 0.82);
     margin-bottom: 20px;
     font-size: 20px;
 }
 
-.unblock-section:hover {
+.window-section:hover {
     border-top-left-radius: 200px;
     border-bottom-right-radius: 200px;
     transition: .5s;
@@ -290,7 +290,7 @@ h2 {
     color: black;
 }
 
-.formBtn {
+.window-formBtn {
     width: 140px !important;
     display: inline-flex;
     justify-content: center;
@@ -304,12 +304,13 @@ h2 {
     margin-top: 20px;
 }
 
-.formBtn:hover {
+.window-formBtn:hover {
     opacity: 0.6;
     background: #666;
 }
 
-.formBtn:active {
+.window-formBtn:active {
+
     background: #444;
 }
 

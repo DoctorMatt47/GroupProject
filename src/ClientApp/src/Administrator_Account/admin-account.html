@@ -129,7 +129,7 @@
     </div>
 </div>
 <div id="Unblock" class="fullscreen-container">
-    <div class="unblock-section">
+    <div class="window-section">
         <div class="row">
             <div class="col-sm-8"></div>
             <div class="col-sm-4">
@@ -154,28 +154,28 @@
     </div>
 </div>
 <div id="createSection" class="fullscreen-container">
-    <div class="unblock-section">
+    <div class="window-section">
         <h2>Comment Topic</h2>
         <form>
             <label for="section-title">Section Title</label>
             <input id="section-title" minlength="2" maxlength="32000" required>
             <label for="section-description">Section description</label>
             <textarea id="section-description" minlength="2" maxlength="32000" required></textarea>
-            <button type="submit" class="formBtn" onclick="">Submit</button>
-            <button type="button" class="formBtn" onclick="closeCreateSectionWindow()">Close</button>
+            <button type="submit" class="window-formBtn" onclick="">Submit</button>
+            <button type="button" class="window-formBtn" onclick="closeCreateSectionWindow()">Close</button>
         </form>
     </div>
 </div>
 <div id="createModerator" class="fullscreen-container">
-    <div class="unblock-section">
+    <div class="window-section">
         <h2>Comment Topic</h2>
         <form>
             <label for="moderator-nickname">Moderator Name</label>
             <input id="moderator-nickname" minlength="2" maxlength="32000" required>
-<!--            <label for="">Section description</label>-->
-<!--            <textarea id="section-description" minlength="2" maxlength="32000" required></textarea>-->
-            <button type="submit" class="formBtn" onclick="">Submit</button>
-            <button type="button" class="formBtn" onclick="closeCreateModeratorWindow()">Close</button>
+            <label for="moderator-password">Moderator Password</label>
+            <input type="password" id="moderator-password" minlength="2" maxlength="32000" required>
+            <button type="submit" class="window-formBtn" onclick="">Submit</button>
+            <button type="button" class="window-formBtn" onclick="closeCreateModeratorWindow()">Close</button>
         </form>
     </div>
 </div>
