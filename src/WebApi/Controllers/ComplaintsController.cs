@@ -83,7 +83,7 @@ public class ComplaintsController : ApiControllerBase
     /// <param name="body">Complaint parameters</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Created complaint id</returns>
-    [Authorize]
+    [Authorize(Policy = "NotBanned")]
     [HttpPost("AboutTopic/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -110,7 +110,7 @@ public class ComplaintsController : ApiControllerBase
     /// <param name="body">Complaint parameters</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Created complaint id</returns>
-    [Authorize]
+    [Authorize(Policy = "NotBanned")]
     [HttpPost("AboutCommentary/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

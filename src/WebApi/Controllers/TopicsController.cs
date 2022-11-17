@@ -50,7 +50,7 @@ public class TopicsController : ApiControllerBase
     /// <param name="body">Topic parameters</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Created topic id</returns>
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User", Policy = "NotBanned")]
     [HttpPost("InSection/{id:int}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -104,7 +104,7 @@ public class TopicsController : ApiControllerBase
         return NoContent();
     }
 
-    [Authorize]
+    [Authorize(Policy = "NotBanned")]
     [HttpPut("{id:guid}/Close")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
