@@ -51,10 +51,10 @@ const loadMoreComplaints = document.getElementById("load-more-complaints");
 let complaintPage = 1;
 
 const loadComplains = (container)=>{
-    let noMoreTopic = false;
-    getVerifyTopics(perPage, complaintPage).then((response) => {
+    getComplaints(perPage, complaintPage++).then((response) => {
+        console.log(response)
         if(response.itemsCount == 0){
-            noMoreTopic = true;
+            loadMoreComplaints.style = "display: none";
             return;
         }
         for(let i in response.items){
@@ -69,7 +69,7 @@ let verifyPage = 1;
 const loadVerifies = (container, words)=>{
     getVerifyTopics(perPage, complaintPage++).then((response) => {
         if(response.itemsCount == 0){
-            loadMoreComplaints.style = "display: none";
+            //loadMoreComplaints.style = "display: none";
             return;
         }
         for(let i in response.items){

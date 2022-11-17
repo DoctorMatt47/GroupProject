@@ -12,6 +12,8 @@ const codeButton = document.getElementById("run-code");
 const commentsContainer = document.getElementById("comment-group");
 const closeTopicButton = document.getElementById("close-btn");
 const addCommentButton = document.getElementById("comment-open-button");
+const complaintButton = document.getElementById("topic-complaint-button");
+const trashButton = document.getElementById("topic-admin-button");
 
 /**
  * 
@@ -53,13 +55,17 @@ const createCommentCode = (comment)=>{
  * Creates comment object and adds comment data to comment list in page 
  * @param {Object} comment 
  */
-const createCommentObject = (comment, isNew = false)=>{
+const createCommentObject = (role, comment, isNew = false)=>{
     const com = document.createElement("div");
     com.id = "comment";
     const complaint = document.createElement("div");
-    complaint.innerHTML = `<div class="complaint-icon" style="margin-top: 10px;">
-    <button data-toggle="tooltip" title="Create a complaint" onclick="openComplainForm('comment', '${comment.id}'); return false;">
-    <span class="glyphicon glyphicon-comment" style="color:#d7ae54; margin-right: 15px"></span></button></div>`;
+    let icon = `<button data-toggle="tooltip" title="Create a complaint" onclick="openComplainForm('comment', '${comment.id}'); return false;">
+                <span class="glyphicon glyphicon-comment" style="color:#d7ae54; margin-right: 15px"></span></button>`;
+    if(role ==="Admin"){
+        icon = `<button data-toggle="tooltip" title="Delete">
+        <span class="glyphicon glyphicon-trash trash-span"></span></button>`;
+    }
+    complaint.innerHTML =`<div class="complaint-icon" style="margin-top: 10px;">${icon}</div>` 
     com.appendChild(complaint);
 
     const answer = document.createElement("p");
@@ -94,11 +100,11 @@ let currentPage = 1;
  * Adds comments of topic to topic page
  * @param {string} topicId - id of topic
  */
-const addCommentsToPage = (topicId) =>{
+const addCommentsToPage = (role, topicId) =>{
     getTopicComments(topicId, commentsPerPage, currentPage++).then(response=>{
         answersContainer.textContent = response.itemsCount;
         for(let i in response.items){
-            createCommentObject(response.items[i]);
+            createCommentObject(role, response.items[i]);
         }
     });
 };
@@ -117,7 +123,12 @@ const topicClosed = (topic)=>{
  * Adds data from topic to page
  * @param {Object} topic - topic data from server
  */
-const addTopicToPage = (topic)=>{
+const addTopicToPage = (role, topic)=>{
+    if(role ==="Admin"){
+        complaintButton.style = "display:none;";
+    }else{
+        trashButton.style = "display:none;";
+    }
     topicClosed(topic);
     titleContainer.textContent = topic.header;
     descriptionContainer.textContent = topic.description;
@@ -142,17 +153,19 @@ const closeCurrentTopic = ()=>{
 };
 
 window.addEventListener("load", ()=>{
-    getTopic(getValueFromCurrentUrl("id")).then(response => {
-        addTopicToPage(response);
-        commentsContainer.innerHTML = "";
-        addCommentsToPage(response.id);
-        document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";
-    })
-    .catch(error => {
-        console.log(error);
-        const exception = JSON.parse(error.message);
-        console.log(exception);
-    });
+    authenticate(getFromStorage("login"), getFromStorage("password")).then(user=>{
+        if(user.role !== "User"){
+            addCommentButton.style = "display:none";
+        }
+        getTopic(getValueFromCurrentUrl("id")).then(response => {
+            addTopicToPage(user.role, response);
+            commentsContainer.innerHTML = "";
+            addCommentsToPage(user.role, response.id);
+            document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";
+        })
+        .catch(showError);
+    }).catch(showError);
+
 });
 
 
