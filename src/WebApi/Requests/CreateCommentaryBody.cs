@@ -1,7 +1,5 @@
-﻿using GroupProject.Domain.ValueObjects;
-
-namespace GroupProject.WebApi.Requests;
+﻿namespace GroupProject.WebApi.Requests;
 
 public record CreateCommentaryBody(
     string Description,
-    CompileOptions? CompileOptions);
+    CompileOptionsBody? CompileOptions);
