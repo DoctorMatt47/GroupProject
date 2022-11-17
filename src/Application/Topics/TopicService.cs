@@ -118,10 +118,11 @@ public class TopicService : ITopicService
         {
             var forbiddenPhrases = (await _phrases
                     .GetForbidden(cancellationToken))
-                .Where(p =>
-                    _phrases.ContainsPhrase(request.CompileOptions?.Code ?? string.Empty, p.Phrase)
-                    || _phrases.ContainsPhrase(request.Header, p.Phrase)
-                    || _phrases.ContainsPhrase(request.Description, p.Phrase))
+                .Select(p => p.Phrase)
+                .Where(phrase =>
+                    _phrases.ContainsPhrase(request.CompileOptions?.Code ?? string.Empty, phrase)
+                    || _phrases.ContainsPhrase(request.Header, phrase)
+                    || _phrases.ContainsPhrase(request.Description, phrase))
                 .ToList();
 
             if (!forbiddenPhrases.Any()) return;
