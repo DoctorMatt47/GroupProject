@@ -91,6 +91,23 @@ const getSectionTopics=(sectionId, perPage, page)=>{
 };
 /**
  * 
+ * @param {number} perPage - count of pages in current page
+ * @param {number}  page - number of page  
+ * @returns promise to response with list of topics to verify or error
+ */
+const getVerifyTopics = (perPage, page)=>{
+    const request = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(addParameters(URLS.Topics, 
+        {"Page.Size":perPage,"Page.Number":page, "OrderBy":TOPICS_SORTING.verify, "OnlyOpen":false}), request);
+};
+/**
+ * 
  * @param {number} topicId - id of topic
  * @returns promise to response with topic data or error
  */

@@ -26,7 +26,7 @@ const getValueFromCurrentUrl=(key)=>{
 /**
  * 
  * @param {string} url - url to add to it parameters
- * @param {Object} params - parameters to add it to url
+ * @param {object} params - parameters to add it to url
  * @returns url with parameters
  */
 const addParameters = (url, params)=>{
@@ -99,3 +99,10 @@ const showError = (err) => {
     const exception = JSON.parse(err.message);
     openErrorWindow(exception.message);
 };
+const findWords = (words, text)=>{
+    let res = []
+    for(let i in words){
+        if(text.search(words[i]) != -1) res.push(words[i]);
+    }
+    return res;
+}

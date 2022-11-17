@@ -33,6 +33,7 @@
                 </div>
                 <div class="panels">
                     <div class="panel row" id="one-panel" style="margin: 0 50px;">
+                        <div id="complaint-list">
                             <div class="col-sm-3">
                                 <a href="#">
                                     <div class="block">
@@ -59,37 +60,40 @@
                                     </div>
                                 </a>
                             </div>
+                        </div>
                             <!--Let's display less than 12 blocks on one page-->
-                        <button class="load-more">Load more</button>
+                        <button id="load-more-complaints" class="load-more">Load more</button>
                     </div>
                     <div class="panel" id="two-panel" style="margin: 0 50px;">
-                        <div class="col-sm-3">
-                            <a href="#">
-                                <div class="block">
-                                    <div class="title topic">
-                                        <h4><strong>Topic</strong></h4>
+                        <div id="verify-list">
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title topic">
+                                            <h4><strong>Topic</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>number of comments: 254</p>
+                                            <p>creation date:22.02.12</p>
+                                            <p>Here we can display warning words</p>
+                                        </div>
                                     </div>
-                                    <div class="info">
-                                        <p>number of comments: 254</p>
-                                        <p>creation date:22.02.12</p>
-                                        <p>Here we can display warning words</p>
+                                </a>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title comment">
+                                            <h4><strong>Comment</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>number of comments: 254</p>
+                                            <p>creation date:22.02.12</p>
+                                            <p>Here we can display warning words</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-sm-3">
-                            <a href="#">
-                                <div class="block">
-                                    <div class="title comment">
-                                        <h4><strong>Comment</strong></h4>
-                                    </div>
-                                    <div class="info">
-                                        <p>number of comments: 254</p>
-                                        <p>creation date:22.02.12</p>
-                                        <p>Here we can display warning words</p>
-                                    </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
                         <button class="load-more">Load more</button>
                     </div>
@@ -137,12 +141,5 @@
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
-<script>
-    const openUserActionWindow = () => {
-        document.getElementById("Unblock").style.display = "block";
-    };
-    const closeUserActionWindow = () => {
-        document.getElementById("Unblock").style.display = "none";
-    };
-</script>
+<script src="../JS/complains.js"></script>
 </html>

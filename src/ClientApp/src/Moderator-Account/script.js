@@ -1,18 +1,94 @@
-function openPageModerator(pageName,elmnt,color) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablink");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.backgroundColor = "";
-    }
-    document.getElementById(pageName).style.display = "block";
-    elmnt.style.backgroundColor = color;
+const openUserActionWindow = () => {
+    document.getElementById("Unblock").style.display = "block";
+};
+const closeUserActionWindow = () => {
+    document.getElementById("Unblock").style.display = "none";
+};
+/**
+ * Creates complaint html object for page
+ * @param {object} complaint - object with complaint data
+ */
+const createComplaintObject = (complaint)=>{
+    const div = document.createElement("div");
+    div.innerHTML = `<a href="${addParameters('../Moderator-Dispute/moderator-dispute.html', {id:complaint.id, type:"Complaint"})}">
+                        <div class="block">
+                            <div class="title ${complaint.target === "Topic"?"topic":"comment"}">
+                                <h4><strong>${textCutter(complaint.target, 7)}</strong></h4>
+                            </div>
+                            <div class="info">
+                                <p>${textCutter(complaint.description, 20) + "..."}</p>
+                                <p>Creation date:${new Date(complaint.creationTime).toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                    </a>`
+    div.className = "col-sm-3";
+    return div;
+}
+/**
+ * Creates complaint html object for page
+ * @param {object} complaint - object with complaint data
+ */
+const createVerifyObject = (type, obj, words)=>{
+    const div = document.createElement("div");
+    div.innerHTML = `<a href="${addParameters('../Moderator-Dispute/moderator-dispute.html', {id:obj.id, type:"Verify"})}">
+                        <div class="block">
+                            <div class="title ${type === "Topic"?"topic":"comment"}">
+                                <h4><strong>${type}</strong></h4>
+                            </div>
+                            <div class="info">
+                                <p>${textCutter(words, 20) + "..."}</p>
+                                <p>Creation date:${new Date(obj.creationTime).toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                    </a>`
+    div.className = "col-sm-3";
+    return div;
 }
 
-// Get the element with id="defaultOpen" and click on it
-//document.getElementById("defaultOpen").click();
+const perPage = 8;
 
+const loadMoreComplaints = document.getElementById("load-more-complaints");
+let complaintPage = 1;
 
+const loadComplains = (container)=>{
+    let noMoreTopic = false;
+    getVerifyTopics(perPage, complaintPage).then((response) => {
+        if(response.itemsCount == 0){
+            noMoreTopic = true;
+            return;
+        }
+        for(let i in response.items){
+            container.appendChild(createComplaintObject(response.items[i]));
+        }
+    }).catch(showError);
+}
+
+const loadMoreVerifies = document.getElementById("load-more-verifies");
+let verifyPage = 1;
+
+const loadVerifies = (container, words)=>{
+    getVerifyTopics(perPage, complaintPage++).then((response) => {
+        if(response.itemsCount == 0){
+            loadMoreComplaints.style = "display: none";
+            return;
+        }
+        for(let i in response.items){
+            let topic = response.items[i];
+            let titleWords = findWords(topic.header + topic.description);
+            container.appendChild(createVerifyObject("Topic", topic, titleWords));
+        }
+    }).catch(showError);
+}
+
+window.addEventListener("load", ()=>{
+    const complaints = document.getElementById("complaint-list");
+    complaints.innerHTML = "";
+    loadComplains(complaints);
+    loadMoreComplaints.onclick = ()=>{
+        loadComplains(complaints);
+    };
+
+    const verifies = document.getElementById("verify-list");
+    verifies.innerHTML = "";
+    loadVerifies(verifies);
+});
