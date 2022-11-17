@@ -132,10 +132,9 @@ window.addEventListener("load", ()=>{
         }
     }
     authenticate(getFromStorage("login"), getFromStorage("password")).then(response=>{
-        console.log(response)
-            if(response.role === "Admin"){
-                document.getElementById("create-section-button").style = "display:block";
-            }
+        if(response.role === "Admin"){
+            document.getElementById("create-section-button").style = "display:block";
+        }
     }).catch(showError);
     
 });

@@ -50,8 +50,6 @@ window.addEventListener("load", ()=>{
     authenticate(getFromStorage("login"), getFromStorage("password")).then(response=>{
         setUserData(response.id);
         addCards(response.id);
-    }).catch(error=>{
-        console.log(error);
-    });
+    }).catch(showError);
 });
 
