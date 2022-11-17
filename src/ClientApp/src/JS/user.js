@@ -65,17 +65,30 @@ const getUser = (userId)=>{
     return sendAsync(URLS.Users + `/${userId}`, request);
 };
 /**
- * TODO:
  * Blocks user for ban duration time(from configuration)
  * @param {string} userId - id of user 
  */
 const blockUser = (userId)=>{
     const request = {
-        method: "GET",
+        method: "POST",
         headers: {
             'Content-Type': 'application/json',
             "Authorization":"Bearer "+getFromStorage("token")
         },
     };
-    return sendAsync(URLS.Users + `/${userId}`, request);
+    return sendAsync(URLS.Users + `/Ban/${userId}`, request);
+};
+/**
+ * Adds one warning to user
+ * @param {string} userId - id of user 
+ */
+const warningUser = (userId)=>{
+    const request = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization":"Bearer "+getFromStorage("token")
+        },
+    };
+    return sendAsync(URLS.Users + `/${userId}/Warning`, request);
 };

@@ -11,5 +11,6 @@ const sendAsync = async(endpoint, request)=>{
         console.log(text);
         throw new Error(text);
     }
+    if(response.statusText === "No Content") return response.text();
     return response.json();
 };

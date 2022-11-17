@@ -137,7 +137,7 @@ const addTopicToPage = (topic)=>{
 
 const closeCurrentTopic = ()=>{
     closeTopic(getValueFromCurrentUrl('id')).then(()=>{
-        console.log("Closed");
+        openMessageWindow("Closed!");
     }).catch(showError);
 };
 

@@ -57,6 +57,19 @@ const loadComplaintUser = (userId)=>{
     }).catch(showError);
 
 }
+/**
+ * Adds user data to page
+ * @param {string} userId - id of user
+ */
+const loadComplaintAuthor = (complaint)=>{
+    getUser(complaint.userId).then((user)=>{
+        const usernameContainer = document.getElementById("complainer-username");
+        const complaintText = document.getElementById("complaint-text");
+        usernameContainer.textContent = user.login;
+        complaintText.textContent = complaint.description;
+    }).catch(showError);
+
+}
 const loadComplaintData = (complaint)=>{
     const original = document.getElementById("original-button");
     let getFunction = getTopic;
@@ -71,17 +84,29 @@ const loadComplaintData = (complaint)=>{
         original.href = originalUrl;
         loadComplaintObject(response);
         loadModeratorPanel(complaint, response.userId);
+        loadComplaintAuthor(complaint);
     }).catch(showError);
 };
 const loadModeratorPanel = (complaint, userId)=>{
-    const blockButton = document.getElementById("block-button");
+    const authorBlockButton = document.getElementById("author-block-button");
+    const userBlockButton = document.getElementById("open-block-button");
     const endButton = document.getElementById("end-button");
     const deleteButton = document.getElementById("delete-button");
 
-    blockButton.onclick = ()=>{
-        blockUser(userId).then(response=>{
-            console.log("Blocked");
-        }).catch(showError);
+    authorBlockButton.onclick = ()=>{
+        openBlockVerificationWindow(()=>{
+            blockUser(complaint.userId).then(()=>{
+                openMessageWindow("Blocked");
+            }).catch(showError);
+        });
+    };
+
+    userBlockButton.onclick = ()=>{
+        openBlockVerificationWindow(()=>{
+            blockUser(userId).then(()=>{
+                openMessageWindow("Blocked");
+            }).catch(showError);
+        });
     };
 
     endButton.onclick = ()=>{
@@ -96,7 +121,9 @@ const loadModeratorPanel = (complaint, userId)=>{
             deleteFunction = deleteComment;
         }
         deleteFunction(complaint.targetId).then(() => {//also deletes complaint
-            openPage('../Moderator-Account/moderator-account.html');
+            warningUser(userId).then(()=>{
+                openPage('../Moderator-Account/moderator-account.html');
+            }).catch(showError);
         }).catch(showError);
     };
 };

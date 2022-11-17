@@ -1,5 +1,9 @@
-const openBlockVerificationWindow = () => {
+const openBlockVerificationWindow = (action) => {
     document.getElementById("block-container").style.display = "block";
+    document.getElementById("block-button").onclick = ()=>{
+        action();
+        closeBlockVerificationWindow();
+    };
 };
 const closeBlockVerificationWindow = () => {
     document.getElementById("block-container").style.display = "none";
