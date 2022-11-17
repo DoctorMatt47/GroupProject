@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using GroupProject.Domain.Enums;
 using GroupProject.Domain.Interfaces;
 
@@ -30,6 +31,8 @@ public class User : IHasId<Guid>
         PasswordHash = passwordHash.Encode(password, PasswordSalt);
         Role = role;
     }
+
+    public static Expression<Func<User, bool>> IsBanned => user => user.BanEndTime > DateTime.UtcNow;
 
     public string Login { get; private set; } = null!;
     public byte[] PasswordHash { get; private set; } = null!;
