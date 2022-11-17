@@ -2,7 +2,7 @@ using System.Reflection;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Infrastructure.Extensions;
 using GroupProject.WebApi.Extensions;
-using GroupProject.WebApi.Middlewares;
+using GroupProject.WebApi.Requirements;
 using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,9 +16,9 @@ builder.Services
     .AddBearerAuthentication(builder.Configuration)
     .AddEndpointsApiExplorer()
     .AddSwagger()
+    .AddSingleton<IAuthorizationHandler, NotBannedHandler>()
+    .AddAuthorization(opts => opts.AddPolicy("NotBanned", policy => policy.AddRequirements(new NotBannedRequirement())))
     .AddControllers();
-
-builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, BanCheckAuthorizationMiddleware>();
 
 var app = builder.Build();
 

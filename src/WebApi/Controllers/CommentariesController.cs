@@ -45,6 +45,7 @@ public class CommentariesController : ApiControllerBase
     /// <param name="body">Commentary parameters</param>
     /// <param name="cancellationToken"></param>
     /// <returns>Created commentary id</returns>
+    [Authorize(Policy = "NotBanned")]
     [HttpPost("OnTopic/{id:guid}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
