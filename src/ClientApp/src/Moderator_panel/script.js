@@ -25,9 +25,3 @@ const openDeleteVerificationWindow = () => {
 const closeDeleteVerificationWindow = () => {
     document.getElementById("delete-container").style.display = "none";
 };
-const openMessageWindow = () => {
-    document.getElementById("message-container").style.display = "block";
-};
-const closeMessageWindow = () => {
-    document.getElementById("message-container").style.display = "none";
-};

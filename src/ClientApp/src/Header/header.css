@@ -108,7 +108,7 @@ h3, h4 {
 
 .open .dropdown-toggle {
     color: #fff;
-    back ground-color: #555 !important;
+    background-color: #555 !important;
 }
 
 .dropdown-menu li a {
@@ -138,7 +138,7 @@ textarea {
     resize: none;
 }
 /*Error popup window*/
-#error-container {
+.fullscreen-container{
     display: none;
     position: fixed;
     top: 0;
@@ -161,10 +161,10 @@ textarea {
     box-shadow: rgba(50, 50, 93, 0.25) 0 6px 12px -2px, rgba(0, 0, 0, 0.8) 0 3px 7px -3px;
 
 }
-.error-inner-width{
+.message-inner-width{
     display: flex;
     flex-direction: column;
-    max-width: 500px;
+    max-width: 400px;
     margin: auto;
     padding: 0 20px;
 
@@ -177,4 +177,42 @@ textarea {
     letter-spacing: 4px;
     font-weight: 500;
 }
-
+.error-btn{
+    width: 40%;
+    background-color: #862525;
+    color: white;
+    margin-top: 30px;
+    padding: 0 20px;
+    align-self: center;
+    border-radius: 70px;
+}
+/*Message popup window*/
+.message-section{
+    overflow: hidden;
+    background: #fff;
+    padding: 80px 0;
+    text-align: center;
+    width: 50%;
+    opacity: 1 !important;
+    margin: 250px auto auto;
+    border-radius: 300px 100px 300px 100px;
+    border: 8px solid #5ca17f;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 6px 12px -2px, rgba(0, 0, 0, 0.8) 0 3px 7px -3px;
+}
+.message-section h3{
+    font-size: 22px;
+    color: #5ca17f;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 500;
+}
+.message-btn{
+    width: 40%;
+    background-color: #5ca17f;
+    color: white;
+    margin-top: 30px;
+    padding: 0 20px;
+    align-self: center;
+    border-radius: 70px;
+}

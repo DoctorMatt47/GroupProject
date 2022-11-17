@@ -14,7 +14,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="../Home/home.html"><img src="../../resources/static/logo_white.png"
-                                                                alt="logo"></a>
+                                                                  alt="logo"></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
@@ -23,7 +23,8 @@
                 <li><a href="#">CONTACT</a></li>
                 <li><a href="../Help/help.html">HELP</a></li>
                 <li id="guest-menu-item" onclick="guestButton(); return false;"><a href="#">LOGIN/JOIN</a></li>
-                <li id="user-menu-item"><a class="dropdown-toggle" data-toggle="dropdown" id="user-login-button" href="#">Username
+                <li id="user-menu-item"><a class="dropdown-toggle" data-toggle="dropdown" id="user-login-button"
+                                           href="#">Username
                     <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" onclick="userButton(); return false;">Your Profile</a></li>
@@ -35,7 +36,8 @@
                     </ul>
                 </li>
                 <li id="admin-menu-item"></li>
-                <li id="moderator-menu-item"><a class="dropdown-toggle" data-toggle="dropdown" id="moderator-login-button" href="#">Username
+                <li id="moderator-menu-item"><a class="dropdown-toggle" data-toggle="dropdown"
+                                                id="moderator-login-button" href="#">Username
                     <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" onclick="moderatorButton(); return false;">Your Profile</a></li>
@@ -43,7 +45,8 @@
                             <hr class="dropdown-divider">
                         </li>
                         <li><a href="#" onclick="signOutButton(); return false;">Sign out</a></li>
-                    </ul></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -63,14 +66,23 @@
     </div>
 </div>
 <!--Popup window for server errors-->
-<div id="error-container">
+<div id="error-container" class="fullscreen-container">
     <div class="error-section">
-        <div class="error-inner-width">
+        <div class="message-inner-width">
             <h3>Error</h3>
             <div id="error-message">Here you should place server Message</div>
+            <button type="button" class="error-btn" onclick="closeErrorWindow()">OK</button>
         </div>
     </div>
-
+</div>
+<!--Popup window for messages-->
+<div id="message-container" class="fullscreen-container">
+    <div class="message-section">
+        <div class="message-inner-width">
+            <h3>Place here your message</h3>
+            <button class="message-btn" onclick="closeMessageWindow();" id="message-button">OK</button>
+        </div>
+    </div>
 </div>
 <script src="../Header/header.js"></script>
 <script src="../JS/user.js"></script>

@@ -19,6 +19,14 @@ const openErrorWindow = (error)=>{
 const closeErrorWindow = ()=>{
     document.getElementById("error-container").style = "display: none;";
 };
+
+const openMessageWindow = () => {
+    document.getElementById("message-container").style.display = "block";
+};
+const closeMessageWindow = () => {
+    document.getElementById("message-container").style.display = "none";
+};
+
 const searchTopics = ()=>{
     const input = document.getElementById("search-input");
     if(input.value === "") return;
