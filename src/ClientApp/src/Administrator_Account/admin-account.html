@@ -145,7 +145,6 @@
                     <p id="registration-date">Registration date</p>
                 </div>
                 <div class="panel-footer account-panel-footer">
-                    <button type="button" class="admin-button" onclick="openCreateSectionWindow()">Create Section</button>
                     <button type="button" class="admin-button" onclick="openCreateModeratorWindow()">Create Moderator</button>
                     <button type="button" class="admin-button" onclick="openUserActionWindow()">Unblock User</button>
                 </div>
@@ -176,19 +175,6 @@
             </datalist>
         </div>
         <button type="button" class="submit-unblock" onclick="closeUserActionWindow();">Unblock</button>
-    </div>
-</div>
-<div id="createSection" class="fullscreen-container">
-    <div class="window-section">
-        <h2>Comment Topic</h2>
-        <form>
-            <label for="section-title">Section Title</label>
-            <input id="section-title" minlength="2" maxlength="32000" required>
-            <label for="section-description">Section description</label>
-            <textarea id="section-description" minlength="2" maxlength="32000" required></textarea>
-            <button type="submit" class="window-formBtn" onclick="">Submit</button>
-            <button type="button" class="window-formBtn" onclick="closeCreateSectionWindow()">Close</button>
-        </form>
     </div>
 </div>
 <div id="createModerator" class="fullscreen-container">

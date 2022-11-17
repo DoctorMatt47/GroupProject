@@ -132,3 +132,10 @@ window.addEventListener("load", ()=>{
         }
     }
 });
+
+const openCreateSectionWindow = () => {
+    document.getElementById("createSection").style.display = "block";
+};
+const closeCreateSectionWindow = () => {
+    document.getElementById("createSection").style.display = "none";
+};

@@ -20,7 +20,14 @@
 <body id="page-header" data-target=".navbar" data-offset="50">
 <div id="header"></div>
 <div class=" container box mt-5">
-    <h1 class="text-center" style="text-transform: uppercase;font-family: Courier sans-serif">Sections</h1>
+    <div class="page-title">
+        <h1 class="text-center" style="text-transform: uppercase;font-family: Courier sans-serif">Sections</h1>
+        <div class="create-button">
+            <button type="button" onclick="openCreateSectionWindow()">
+                <img src="../../resources/static/plus.png" alt="create new section">
+            </button>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-4">
             <form class="section-form" onsubmit="return false;">
@@ -35,7 +42,7 @@
                 <a href="#">
                     <div class="block">
                         <div class="section-title">
-                            <h5><strong>CoffeeScript machine</strong></h5>
+                            <h5><strong>CoffeeScript</strong></h5>
                         </div>
                         <div class=" section-info">
                             <p>number of topics: 254</p>
@@ -45,43 +52,24 @@
                     </div>
                 </a>
             </div>
-            <div class="col-sm-3">
-                <a href="#">
-                    <div class="block"></div>
-                </a>
-            </div>
-            <div class="col-sm-3">
-                <a href="#">
-                    <div class="block"></div>
-                </a>
-            </div>
-            <div class="col-sm-3">
-                <a href="#">
-                    <div class="block"></div>
-                </a>
-            </div>
-            <div class="col-sm-3">
-                <a href="#">
-                    <div class="block"></div>
-                </a>
-            </div>
-            <div class="col-sm-3">
-                <a href="#">
-                    <div class="block"></div>
-                </a>
-            </div>
-            <div class="col-sm-3">
-                <a href="#">
-                    <div class="block"></div>
-                </a>
-            </div>
         </div>
     </div>
-
     <div class="pagination" id="pages">
     </div>
 </div>
-
+<div id="createSection" class="fullscreen-container">
+    <div class="window-section">
+        <h2>Comment Topic</h2>
+        <form>
+            <label for="section-title">Section Title</label>
+            <input id="section-title" minlength="2" maxlength="32000" required>
+            <label for="section-description">Section description</label>
+            <textarea id="section-description" minlength="2" maxlength="32000" required></textarea>
+            <button type="submit" class="window-formBtn" onclick="">Submit</button>
+            <button type="button" class="window-formBtn" onclick="closeCreateSectionWindow()">Close</button>
+        </form>
+    </div>
+</div>
 <div id="footer"></div>
 </body>
 <script src="../JS/section.js"></script>

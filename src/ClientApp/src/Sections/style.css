@@ -40,6 +40,84 @@ a:active {
     background-color: white;
 }
 
+.page-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.fullscreen-container {
+    font-family: Courier, sans-serif;
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(90, 90, 90, 0.5);
+    z-index: 9999;
+}
+
+.window-section {
+    border: 10px solid #f67969;
+    padding: 5em;
+    width: 600px;
+    max-height: 100% !important;
+    border-radius: 200px;
+    text-align: center;
+    background: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%)
+
+}
+
+.window-formBtn {
+    width: 140px !important;
+    display: inline-flex;
+    justify-content: center;
+    background: #f67969 !important;
+    color: #fff;
+    font-weight: 100;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 20px;
+    height: 30px;
+    margin-top: 20px;
+}
+
+.window-formBtn:hover {
+    opacity: 0.6;
+    background: #666;
+}
+
+.window-formBtn:active {
+
+    background: #444;
+}
+
+textarea, input {
+    margin: .9em auto;
+    font-family: inherit;
+    text-transform: inherit;
+    font-size: inherit;
+    display: block;
+    width: 400px;
+    padding: .4em;
+    border: none;
+    border-radius: 20px;
+    background-color: #c5c5f6;
+}
+
+textarea {
+    height: 80px;
+    resize: none;
+}
+
 .section-form {
     display: flex;
     justify-content: space-between;
@@ -127,6 +205,7 @@ a:active {
 .section-title {
     height: 70px;
     display: flex;
+    justify-content: center;
     align-items: center;
     text-align: center;
     overflow: hidden;
@@ -137,7 +216,8 @@ a:active {
     background-color: #e0a53a;
 
 }
-.section-title h5{
+
+.section-title h5 {
     padding: 0 8px;
 }
 
@@ -163,4 +243,27 @@ a:active {
 
 .pagination a:hover:not(.active) {
     background-color: #ddd;
+}
+
+.create-button button {
+    border: beige;
+    background-color: white;
+}
+
+.create-button button:hover {
+    border-radius: 100px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.create-button button:active {
+    background-color: #ececdc;
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+
+.create-button img {
+    margin-top: 10px;
+    padding: 10px;
+    height: 50px;
+    width: 50px;
 }
