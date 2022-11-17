@@ -30,4 +30,13 @@ public class SectionController : ApiControllerBase
         var response = await _sections.Create(body, cancellationToken);
         return Created(string.Empty, response);
     }
+
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> Delete(int id, CancellationToken cancellationToken)
+    {
+        await _sections.Delete(id, cancellationToken);
+        return NoContent();
+    }
 }

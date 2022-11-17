@@ -43,4 +43,11 @@ public class SectionService : ISectionService
 
         return new IdResponse<int>(section.Id);
     }
+
+    public async Task Delete(int id, CancellationToken cancellationToken)
+    {
+        var section = await _dbContext.Set<Section>().FindOrThrowAsync(id, cancellationToken);
+        _dbContext.Set<Section>().Remove(section);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
 }
