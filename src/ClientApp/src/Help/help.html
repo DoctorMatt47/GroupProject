@@ -24,7 +24,8 @@
         <details>
             <summary>
                 Rules
-                <button type="button" class="edit-icon"><span class="glyphicon glyphicon-edit"></span></button>
+                <button type="button" class="edit-icon" onclick="openUpdateForm()"><span
+                        class="glyphicon glyphicon-edit"></span></button>
             </summary>
             <div>
                 <div id="rules" style="white-space: pre-wrap;"><strong>Forum members are not allowed</strong>
@@ -81,7 +82,28 @@
         </details>
     </div>
 </div>
+<div id="update-container" class="fullscreen-container">
+    <div class="update-section">
+        <h2>Update Rules</h2>
+        <form>
+            <label for="rules-text">Rules text</label>
+            <textarea id="rules-text"></textarea>
+            <button type="submit" class="update-btn" onclick="">Submit</button>
+            <button type="button" class="update-btn" onclick="closeUpdateForm()">Close</button>
+        </form>
+    </div>
+</div>
+</div>
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
+<script>
+    const openUpdateForm = () => {
+        document.getElementById("update-container").style.display = "block";
+
+    };
+    const closeUpdateForm = () => {
+        document.getElementById("update-container").style.display = "none";
+    };
+</script>
 </html>
