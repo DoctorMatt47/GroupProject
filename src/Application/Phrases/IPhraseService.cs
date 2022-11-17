@@ -1,7 +1,4 @@
-﻿using System.Linq.Expressions;
-using GroupProject.Domain.Entities;
-
-namespace GroupProject.Application.Phrases;
+﻿namespace GroupProject.Application.Phrases;
 
 public interface IPhraseService
 {
@@ -16,11 +13,5 @@ public interface IPhraseService
         IEnumerable<PutPhraseRequest> request,
         CancellationToken cancellationToken);
 
-    Task<IReadOnlyCollection<PhraseResponse>> GetForbidden(
-        Expression<Func<ForbiddenPhrase, bool>> predicate,
-        CancellationToken cancellationToken);
-
-    Task<bool> AnyVerificationRequired(
-        Expression<Func<ForbiddenPhrase, bool>> predicate,
-        CancellationToken cancellationToken);
+    bool ContainsPhrase(string text, string phrase);
 }
