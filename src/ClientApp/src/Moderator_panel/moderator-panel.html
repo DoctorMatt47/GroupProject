@@ -7,7 +7,7 @@
         <button class=" moderator-btn btn-leave" onclick="openLeaveVerificationWindow()">Leave</button>
         <button class=" moderator-btn btn-delete" onclick="openDeleteVerificationWindow()">Delete</button>
         <button class=" moderator-btn btn-end" onclick="openEndVerificationWindow()">End</button>
-        <button class=" moderator-btn btn-block" onclick="openBlockVerificationWindow()">Block</button>
+        <button id="open-block-button" class=" moderator-btn btn-block">Block</button>
     </div>
 </div>
 <div id="block-container" class="fullscreen-container">
@@ -22,7 +22,7 @@
                 </div>
             </div>
             <h3>Block this User?</h3>
-            <button class="submit-verification" onclick="closeBlockVerificationWindow();" id="block-button">Yes</button>
+            <button class="submit-verification" id="block-button">Yes</button>
         </div>
     </div>
 </div>

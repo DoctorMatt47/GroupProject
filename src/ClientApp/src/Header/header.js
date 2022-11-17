@@ -20,8 +20,9 @@ const closeErrorWindow = ()=>{
     document.getElementById("error-container").style = "display: none;";
 };
 
-const openMessageWindow = () => {
+const openMessageWindow = (message) => {
     document.getElementById("message-container").style.display = "block";
+    document.getElementById("message-message").textContent = message;
 };
 const closeMessageWindow = () => {
     document.getElementById("message-container").style.display = "none";
