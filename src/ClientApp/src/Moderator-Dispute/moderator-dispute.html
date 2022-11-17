@@ -25,6 +25,15 @@
 <div class="container-fluid box mt-5">
     <div class="row">
         <div class="col-sm-3">
+            <div class="panel complainer-panel">
+                <div class="panel-heading complainer-panel-heading">
+                    <h2 style="font-family:Courier New, Courier, monospace" id="complainer-username">Username</h2>
+                </div>
+                <div class="panel-body user-panel-body text-center">
+                    <div id="complaint-text">Text</div>
+                </div>
+                <button class="moderator-btn btn-block" onclick="openBlockVerificationWindow()" style="width: 80%;">Block</button>
+            </div>
             <div id="moderator-panel"></div>
         </div>
         <div class="col-sm-6">
@@ -39,13 +48,15 @@
                                     </a>
                                 </div>
                             </div>
-                            <h3 style="font-style: inherit" id="topic-name"><strong>Create multiple elements</strong></h3>
+                            <h3 style="font-style: inherit" id="topic-name"><strong>Create multiple elements</strong>
+                            </h3>
                             <a style="color:grey; cursor:pointer;" href="#" id="original-button">See in original-></a>
                             <hr>
                         </div>
                     </div>
                     <div class="panel-body topic-panel-footer">
-                        <div id="topic-description-complaint">I want to create 4 elements with different text. The class needs to
+                        <div id="topic-description-complaint">I want to create 4 elements with different text. The class
+                            needs to
                             remain the same. I think I am doing this with too much code.
                             Maybe anyone has some information how to make this code look more beautiful and more
                             efficient?
@@ -64,7 +75,8 @@
                             </div>
                             <br>
                             <div style="width: 100%;">
-                                <button type="button" class="code-btn" id="run-code" onclick="openCompiler()">Run</button>
+                                <button type="button" class="code-btn" id="run-code" onclick="openCompiler()">Run
+                                </button>
                             </div>
                         </div>
                     </div>

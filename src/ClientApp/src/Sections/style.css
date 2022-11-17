@@ -102,6 +102,7 @@ a:active {
     margin-top: 20px;
     padding: 20px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .block:hover {
@@ -126,7 +127,6 @@ a:active {
 .section-title {
     height: 70px;
     display: flex;
-    justify-content: center;
     align-items: center;
     text-align: center;
     overflow: hidden;
@@ -137,9 +137,8 @@ a:active {
     background-color: #e0a53a;
 
 }
-.section-title h4{
-    padding-left: 7px;
-    padding-right: 7px;
+.section-title h5{
+    padding: 0 8px;
 }
 
 .pagination {

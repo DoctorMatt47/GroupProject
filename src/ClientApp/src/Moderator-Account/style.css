@@ -79,42 +79,66 @@ h2 {
     border-top: 3px solid #32557f;
 }
 
-.element-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-}
-
 .section {
     display: flex;
 }
-
-.element {
-    height: 8vh;
-    width: 90%;
-    margin: 8px;
+.block {
+    height: 220px;
+    width: 100%;
+    overflow: hidden;
     border-radius: 20px;
-    transition: all 200ms ease-in-out;
-    display: flex;
-    align-items: flex-start;
-    justify-content: left;
-    flex-direction: column;
-    padding: 10px;
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    text-decoration: none;
-    color: black;
-    background: linear-gradient(to bottom, #ffffff 0%, #E5E4E2 100%);
     border: 1px solid cadetblue;
+    margin-top: 20px;
+    padding: 20px;
+    text-decoration: none;
+    cursor: pointer;
 }
-.element::-webkit-scrollbar {
-    display: none;
-}
-.element:hover {
+
+.block:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
+
+#block:active {
+    background-color: gray;
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(4px);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: flex-start;
+    font-size: 10px;
+    color: black;
+}
+
+.title {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border-radius: 30px;
+    color: #000;
+
+}
+.topic{
+    border: 1px solid rgba(14, 134, 64, 0.81);
+    background-color: rgba(14, 134, 64, 0.81);
+
+}
+.comment{
+    border: 1px solid #e0a53a;
+    background-color: #e0a53a;
+}
+.title h4{
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
 
 .element-actions {
     margin: 8px;
@@ -251,9 +275,9 @@ h2 {
 }
 
 .load-more {
-    width: 40%;
+    width: 100%;
     padding: 16px 40px;
-    margin-left: 50px;
+    margin-top: 30px;
     border: none;
     cursor: pointer;
     transition: all 200ms ease-in-out;
