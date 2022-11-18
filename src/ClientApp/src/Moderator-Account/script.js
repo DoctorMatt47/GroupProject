@@ -30,7 +30,7 @@ const createComplaintObject = (complaint)=>{
  */
 const createVerifyObject = (type, obj, words)=>{
     const div = document.createElement("div");
-    div.innerHTML = `<a href="${addParameters('../Moderator-Dispute/moderator-dispute.html', {id:obj.id, type:"Verify"})}">
+    div.innerHTML = `<a href="${addParameters('../Moderator-Dispute/moderator-dispute.html', {id:obj.id, type:"Verify"+type})}">
                         <div class="block">
                             <div class="title ${type === "Topic"?"topic":"comment"}">
                                 <h4><strong>${type}</strong></h4>
@@ -52,7 +52,6 @@ let complaintPage = 1;
 
 const loadComplains = (container)=>{
     getComplaints(perPage, complaintPage++).then((response) => {
-        console.log(response)
         if(response.itemsCount == 0){
             loadMoreComplaints.style = "display: none";
             return;
@@ -67,17 +66,37 @@ const loadMoreVerifies = document.getElementById("load-more-verifies");
 let verifyPage = 1;
 
 const loadVerifies = (container, words)=>{
-    getVerifyTopics(perPage, complaintPage++).then((response) => {
+    let loadMoreTopics = true, loadMoreComments = true;
+    getVerifyTopics(perPage, verifyPage).then((response) => {
         if(response.itemsCount == 0){
-            //loadMoreComplaints.style = "display: none";
+            loadMoreTopics = false;
             return;
         }
         for(let i in response.items){
-            let topic = response.items[i];
-            let titleWords = findWords(topic.header + topic.description);
-            container.appendChild(createVerifyObject("Topic", topic, titleWords));
+            getTopic(response.items[i].id).then(topic=>{
+                console.log(topic);
+                let titleWords = findWords(words, topic.header + topic.description);
+                container.appendChild(createVerifyObject("Topic", topic, titleWords));
+            }).catch(showError);
         }
     }).catch(showError);
+    return;
+    getVerifyComments(perPage, verifyPage).then((response) => {
+        if(response.itemsCount == 0){
+            loadMoreComments = false;
+            return;
+        }
+        for(let i in response.items){
+            let comment = response.items[i];
+            let titleWords = findWords(words, comment.description);
+            container.appendChild(createVerifyObject("Comment", comment, titleWords));
+        }
+    }).catch(showError);
+    if(!loadMoreComments && !loadMoreTopics){
+        loadMoreVerifies.style="display:none;";
+        return;
+    }
+    verifyPage++;
 }
 
 window.addEventListener("load", ()=>{
@@ -100,5 +119,5 @@ window.addEventListener("load", ()=>{
 
     const verifies = document.getElementById("verify-list");
     verifies.innerHTML = "";
-    loadVerifies(verifies);
+    loadVerifies(verifies, ["kill", "rob"]);
 });

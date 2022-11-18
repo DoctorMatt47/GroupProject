@@ -70,8 +70,11 @@ const loadComplaintAuthor = (complaint)=>{
     }).catch(showError);
 
 }
-const loadComplaintData = (complaint)=>{
+const loadOriginalButton = (path)=>{
     const original = document.getElementById("original-button");
+    original.href = path;
+};
+const loadComplaintData = (complaint)=>{
     let getFunction = getTopic;
     let originalUrl = "../Topic/topic.html?id="+complaint.targetId;
     if(complaint.target === "Commentary"){
@@ -81,18 +84,23 @@ const loadComplaintData = (complaint)=>{
         if(complaint.target === "Commentary"){
             originalUrl = "../Topic/topic.html?id="+response.topicId;
         }
-        original.href = originalUrl;
+        loadOriginalButton(originalUrl);
         loadComplaintObject(response);
         loadModeratorPanel(complaint, response.userId);
         loadComplaintAuthor(complaint);
     }).catch(showError);
 };
 const loadModeratorPanel = (complaint, userId)=>{
+    const authorPanel = document.getElementById("author-panel");
+
     const authorBlockButton = document.getElementById("author-block-button");
     const userBlockButton = document.getElementById("open-block-button");
     const endButton = document.getElementById("end-button");
     const deleteButton = document.getElementById("delete-button");
 
+    if(!("userId" in complaint)){
+        authorPanel.style = "display:none";
+    }
     authorBlockButton.onclick = ()=>{
         openBlockVerificationWindow(()=>{
             blockUser(complaint.userId).then(()=>{
@@ -110,7 +118,11 @@ const loadModeratorPanel = (complaint, userId)=>{
     };
 
     endButton.onclick = ()=>{
-        deleteComplaint(complaint.id).then(()=>{
+        let remove = deleteComplaint;
+        if(!("userId" in complaint)){
+            remove = verifyTopic;
+        }
+        remove(complaint.id).then(()=>{
             openPage('../Moderator-Account/moderator-account.html');
         }).catch(showError);
     };
@@ -127,6 +139,33 @@ const loadModeratorPanel = (complaint, userId)=>{
         }).catch(showError);
     };
 };
+const loadNoComplaintData = (target, data)=>{
+    loadComplaintObject(data);
+    loadModeratorPanel({target:target, id:data.id, targetId:data.id}, data.userId);
+    const id = data.id
+    if(target === "Comment"){
+        id = data.topicId;
+    }
+    loadOriginalButton("../Topic/topic.html?id="+id);
+}
 window.addEventListener("load", ()=>{
-    getComplaint(getValueFromCurrentUrl("id")).then(loadComplaintData).catch(showError);
+    const type = getValueFromCurrentUrl("type");
+    const id = getValueFromCurrentUrl("id");
+    switch(type){
+        case "Complaint":
+            {
+                getComplaint(id).then(loadComplaintData).catch(showError);
+            }
+            break;
+        case "VerifyTopic":
+            {
+                getTopic(id).then(topic=>loadNoComplaintData("Topic", topic)).catch(showError);
+            }
+            break;
+        case "VerifyComment":
+            {
+                getComment(id).then(comment=>loadNoComplaintData("Comment", comment)).catch(showError);
+            }
+            break;
+    }
 });

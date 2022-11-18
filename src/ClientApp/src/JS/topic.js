@@ -136,6 +136,21 @@ const closeTopic = (topicId)=>{
     return sendAsync(URLS.Topics + `/${topicId}/Close`, request);
 };
 /**
+ * 
+ * @param {string} topicId - id of topic to verify
+ * @returns promise with answer
+ */
+const verifyTopic = (topicId)=>{
+    const request = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(URLS.Topics + `/${topicId}/Verify`, request);
+};
+/**
  * Deletes topic from database
  * @param {string} topicId - id of topic to delete
  * @returns promise with answer
