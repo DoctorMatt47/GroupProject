@@ -30,7 +30,7 @@ const createComplaintObject = (complaint)=>{
  */
 const createVerifyObject = (type, obj, words)=>{
     const div = document.createElement("div");
-    div.innerHTML = `<a href="${addParameters('../Moderator-Dispute/moderator-dispute.html', {id:obj.id, type:"Verify"})}">
+    div.innerHTML = `<a href="${addParameters('../Moderator-Dispute/moderator-dispute.html', {id:obj.id, type:"Verify"+type})}">
                         <div class="block">
                             <div class="title ${type === "Topic"?"topic":"comment"}">
                                 <h4><strong>${type}</strong></h4>

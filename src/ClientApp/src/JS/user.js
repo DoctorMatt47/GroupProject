@@ -79,6 +79,20 @@ const blockUser = (userId)=>{
     return sendAsync(URLS.Users + `/Ban/${userId}`, request);
 };
 /**
+ * Unblocks user
+ * @param {string} userId - id of user 
+ */
+const unBlockUser = (userId)=>{
+    const request = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization":"Bearer "+getFromStorage("token")
+        },
+    };
+    return sendAsync(URLS.Users + `/${userId}`, request);
+};
+/**
  * Adds one warning to user
  * @param {string} userId - id of user 
  */
@@ -91,4 +105,43 @@ const warningUser = (userId)=>{
         },
     };
     return sendAsync(URLS.Users + `/${userId}/Warning`, request);
+};
+/**
+ * @returns promise to list of users
+ */
+const getUsers = (perPage, page)=>{
+    const request = {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization":"Bearer "+getFromStorage("token")
+        },
+    };
+    return sendAsync(URLS.Users+`?Number=${page}&Size=${perPage}`, request);
+};
+/**
+ * @returns promise to list of users
+ */
+const getModerators = (perPage, page)=>{
+    const request = {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization":"Bearer "+getFromStorage("token")
+        },
+    };
+    return sendAsync(URLS.Users+`/Moderators?Number=${page}&Size=${perPage}`, request);
+};
+/**
+ * @returns promise to list of blocked users
+ */
+const getBlockedUsers = ()=>{
+    const request = {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization":"Bearer "+getFromStorage("token")
+        },
+    };
+    return sendAsync(URLS.Users + `/Banned`, request);
 };
