@@ -84,6 +84,8 @@ h2 {
 }
 
 .block {
+    display: flex;
+    flex-direction: column;
     height: 220px;
     width: 100%;
     overflow-y: scroll;
@@ -146,6 +148,7 @@ h2 {
 .title h4 {
     padding-left: 7px;
     padding-right: 7px;
+    font-size:1vw;
 }
 
 

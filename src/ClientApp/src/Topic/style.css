@@ -96,12 +96,11 @@ h4 {
     display: block;
 }
 
-.trash-span {
-    color: rgba(213, 17, 33, 0.78);
-    font-size: 19px;
+.moderate-span {
+    color: rgba(213, 92, 17, 0.68);
+    font-size: 25px;
     display: none;
     margin-right: 15px;
-    margin-top: 10px;
 }
 
 .column {
