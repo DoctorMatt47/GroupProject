@@ -85,9 +85,9 @@ public class CommentaryService : ICommentaryService
         var topic = await _dbContext.Set<Topic>().FindOrThrowAsync(request.TopicId, cancellationToken);
         if (topic.IsClosed) throw new ConflictException("Topic has been closed");
 
-        await ThrowIfContainsForbiddenPhrasesOrNull(request, cancellationToken);
+        await ThrowIfContainsForbiddenPhrasesOrNull();
 
-        var verificationDuration = await VerificationDurationOrNullAsync(request, cancellationToken);
+        var verificationDuration = await VerificationDurationOrNullAsync();
 
         var compileOptions = _mapper.Map<CompileOptions>(request.CompileOptions);
         var commentary = new Commentary(
@@ -106,6 +106,34 @@ public class CommentaryService : ICommentaryService
             commentary.TopicId);
 
         return new IdResponse<Guid>(commentary.Id);
+
+        async Task<TimeSpan?> VerificationDurationOrNullAsync()
+        {
+            var verificationRequired = (await _phrases
+                    .GetVerificationRequired(cancellationToken))
+                .Any(p =>
+                    _phrases.ContainsPhrase(request.CompileOptions?.Code ?? string.Empty, p.Phrase) ||
+                    _phrases.ContainsPhrase(request.Description, p.Phrase));
+
+            if (!verificationRequired) return null;
+
+            var configuration = await _configuration.Get(cancellationToken);
+            return configuration.VerificationDuration;
+        }
+
+        async Task ThrowIfContainsForbiddenPhrasesOrNull()
+        {
+            var forbiddenPhrases = (await _phrases
+                    .GetForbidden(cancellationToken))
+                .Select(p => p.Phrase)
+                .Where(phrase =>
+                    _phrases.ContainsPhrase(request.CompileOptions?.Code ?? string.Empty, phrase) ||
+                    _phrases.ContainsPhrase(request.Description, phrase))
+                .ToList();
+
+            if (!forbiddenPhrases.Any()) return;
+            throw new BadRequestException($"Topic contains forbidden words: {string.Join(", ", forbiddenPhrases)}");
+        }
     }
 
     public async Task Verify(Guid id, CancellationToken cancellationToken)
@@ -121,28 +149,5 @@ public class CommentaryService : ICommentaryService
         var commentary = await _dbContext.Set<Commentary>().FindOrThrowAsync(id, cancellationToken);
         _dbContext.Set<Commentary>().Remove(commentary);
         await _dbContext.SaveChangesAsync(cancellationToken);
-    }
-
-    private async Task<TimeSpan?> VerificationDurationOrNullAsync(
-        CreateCommentaryRequest request,
-        CancellationToken cancellationToken)
-    {
-        var verificationRequired = await _phrases.AnyVerificationRequired(
-            p => request.Description.Contains(p.Phrase),
-            cancellationToken);
-
-        if (!verificationRequired) return null;
-
-        var configuration = await _configuration.Get(cancellationToken);
-        return configuration.VerificationDuration;
-    }
-
-    private async Task ThrowIfContainsForbiddenPhrasesOrNull(
-        CreateCommentaryRequest request,
-        CancellationToken cancellationToken)
-    {
-        var forbidden = await _phrases.GetForbidden(p => request.Description.Contains(p.Phrase), cancellationToken);
-        if (!forbidden.Any()) return;
-        throw new BadRequestException($"Commentary contains forbidden words: {string.Join(',', forbidden)}");
     }
 }

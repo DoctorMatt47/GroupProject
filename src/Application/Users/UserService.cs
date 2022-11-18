@@ -46,6 +46,12 @@ public class UserService : IUserService
     public async Task<Page<UserResponse>> GetUsers(PageRequest request, CancellationToken cancellationToken) =>
         await GetUsersByRoleAsync(UserRole.User, request, cancellationToken);
 
+    public async Task<IEnumerable<UserResponse>> GetBannedUsers(CancellationToken cancellationToken) =>
+        await _dbContext.Set<User>()
+            .Where(User.IsBanned)
+            .ProjectTo<UserResponse>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
+
     public async Task<UserResponse> Get(Guid id, CancellationToken cancellationToken)
     {
         var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
@@ -74,6 +80,8 @@ public class UserService : IUserService
     public async Task BanUser(Guid id, CancellationToken cancellationToken)
     {
         var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
+        if (user.Role is not UserRole.User) throw new BadRequestException("You can't ban moderator or admin");
+
         var configuration = await _configuration.Get(cancellationToken);
         user.SetBanned(configuration.BanDuration);
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -101,9 +109,12 @@ public class UserService : IUserService
             $"login: {request.Login}",
             cancellationToken);
 
-        var forbidden = await _phrases.GetForbidden(p => request.Login.Contains(p.Phrase), cancellationToken);
-        if (forbidden.Any())
-            throw new BadRequestException($"Login contains forbidden words: {string.Join(',', forbidden)}");
+        var containsForbidden = (await _phrases
+                .GetForbidden(cancellationToken))
+            .Any(p => _phrases.ContainsPhrase(request.Login, p.Phrase));
+
+        if (containsForbidden)
+            throw new BadRequestException($"Login contains forbidden words: {string.Join(',', containsForbidden)}");
 
         var user = new User(request.Login, request.Password, _passwordHash, role);
 

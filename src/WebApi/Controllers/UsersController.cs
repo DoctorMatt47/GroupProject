@@ -23,6 +23,14 @@ public class UsersController : ApiControllerBase
         CancellationToken cancellationToken) =>
         await _users.GetUsers(request, cancellationToken);
 
+    [Authorize(Roles = "Moderator, Admin")]
+    [HttpGet("Banned")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<IEnumerable<UserResponse>> GetBannedUsers(CancellationToken cancellationToken) =>
+        await _users.GetBannedUsers(cancellationToken);
+
     [AllowAnonymous]
     [HttpGet("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]

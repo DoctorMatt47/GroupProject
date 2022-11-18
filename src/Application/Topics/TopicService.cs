@@ -91,12 +91,12 @@ public class TopicService : ITopicService
             $"header: {request.Header}",
             cancellationToken);
 
-        await ThrowIfContainsForbiddenPhrasesAsync(request, cancellationToken);
+        await ThrowIfContainsForbiddenPhrasesAsync();
 
         var section = await _dbContext.Set<Section>().FindOrThrowAsync(request.SectionId, cancellationToken);
         section.IncrementTopicCount();
 
-        var verificationDuration = await VerificationDurationOrNullAsync(request, cancellationToken);
+        var verificationDuration = await VerificationDurationOrNullAsync();
 
         var compileOptions = _mapper.Map<CompileOptions>(request.CompileOptions);
         var topic = new Topic(
@@ -113,6 +113,36 @@ public class TopicService : ITopicService
         _logger.LogInformation("Created topic with id: {Id}", topic.Id);
 
         return new IdResponse<Guid>(topic.Id);
+
+        async Task ThrowIfContainsForbiddenPhrasesAsync()
+        {
+            var forbiddenPhrases = (await _phrases
+                    .GetForbidden(cancellationToken))
+                .Select(p => p.Phrase)
+                .Where(phrase =>
+                    _phrases.ContainsPhrase(request.CompileOptions?.Code ?? string.Empty, phrase)
+                    || _phrases.ContainsPhrase(request.Header, phrase)
+                    || _phrases.ContainsPhrase(request.Description, phrase))
+                .ToList();
+
+            if (!forbiddenPhrases.Any()) return;
+            throw new BadRequestException($"Topic contains forbidden words: {string.Join(", ", forbiddenPhrases)}");
+        }
+
+        async Task<TimeSpan?> VerificationDurationOrNullAsync()
+        {
+            var verificationRequired = (await _phrases
+                    .GetVerificationRequired(cancellationToken))
+                .Any(p =>
+                    _phrases.ContainsPhrase(request.CompileOptions?.Code ?? string.Empty, p.Phrase)
+                    || _phrases.ContainsPhrase(request.Header, p.Phrase)
+                    || _phrases.ContainsPhrase(request.Description, p.Phrase));
+
+            if (!verificationRequired) return null;
+
+            var configuration = await _configuration.Get(cancellationToken);
+            return configuration.VerificationDuration;
+        }
     }
 
     public async Task View(Guid id, CancellationToken cancellationToken)
@@ -153,31 +183,5 @@ public class TopicService : ITopicService
         topic.SetClosed();
 
         await _dbContext.SaveChangesAsync(cancellationToken);
-    }
-
-    private async Task ThrowIfContainsForbiddenPhrasesAsync(
-        CreateTopicRequest request,
-        CancellationToken cancellationToken)
-    {
-        var forbiddenPhrases = await _phrases.GetForbidden(
-            p => request.Header.Contains(p.Phrase) || request.Description.Contains(p.Phrase),
-            cancellationToken);
-
-        if (!forbiddenPhrases.Any()) return;
-        throw new BadRequestException($"Topic contains forbidden words: {string.Join(',', forbiddenPhrases)}");
-    }
-
-    private async Task<TimeSpan?> VerificationDurationOrNullAsync(
-        CreateTopicRequest request,
-        CancellationToken cancellationToken)
-    {
-        var verificationRequired = await _phrases.AnyVerificationRequired(
-            p => request.Header.Contains(p.Phrase) || request.Description.Contains(p.Phrase),
-            cancellationToken);
-
-        if (!verificationRequired) return null;
-
-        var configuration = await _configuration.Get(cancellationToken);
-        return configuration.VerificationDuration;
     }
 }
