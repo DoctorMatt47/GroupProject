@@ -43,18 +43,13 @@ window.addEventListener("load", ()=>{
     document.getElementById("search-input").value = getValueFromCurrentUrl("pattern");
     addBackgroundClosing(document.getElementById("error-container"), closeErrorWindow);
     if(isLoggedIn()){
-        authenticate(getFromStorage("login"), getFromStorage("password"))
-        .then((result) => {
-            if(result.role === "Moderator"){
-                document.getElementById("moderator-login-button").textContent = getFromStorage("login");
-                document.getElementById("moderator-menu-item").style.display = "block";
-                return;
-            }
-            document.getElementById("user-login-button").textContent = getFromStorage("login");
-            document.getElementById("user-menu-item").style.display = "block";
-        }).catch(error=>{
-            localStorage.clear();
-        });
+        if(getFromStorage("role") === "Moderator"){
+            document.getElementById("moderator-login-button").textContent = getFromStorage("login");
+            document.getElementById("moderator-menu-item").style.display = "block";
+            return;
+        }
+        document.getElementById("user-login-button").textContent = getFromStorage("login");
+        document.getElementById("user-menu-item").style.display = "block";
         return;
     }
     //TODO: add for admin and moderator moderator-account.html

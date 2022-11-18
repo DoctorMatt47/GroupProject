@@ -156,19 +156,17 @@ const closeCurrentTopic = ()=>{
 };
 
 window.addEventListener("load", ()=>{
-    authenticate(getFromStorage("login"), getFromStorage("password")).then(user=>{
-        if(user.role !== "User"){
-            addCommentButton.style = "display:none";
-        }
-        getTopic(getValueFromCurrentUrl("id")).then(response => {
-            addTopicToPage(user.role, response);
-            commentsContainer.innerHTML = "";
-            addCommentsToPage(user.role, response.id);
-            document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";
-        })
-        .catch(showError);
-    }).catch(showError);
-
+    const role = getFromStorage("role");
+    if(role !== "User"){
+        addCommentButton.style = "display:none;";
+    }
+    getTopic(getValueFromCurrentUrl("id")).then(response => {
+        addTopicToPage(role, response);
+        commentsContainer.innerHTML = "";
+        addCommentsToPage(role, response.id);
+        document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";
+    })
+    .catch(showError);
 });
 
 

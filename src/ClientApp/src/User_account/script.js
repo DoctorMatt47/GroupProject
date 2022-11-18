@@ -70,9 +70,8 @@ const setUserData = (userId)=>{
 };
 
 window.addEventListener("load", ()=>{
-    authenticate(getFromStorage("login"), getFromStorage("password")).then(response=>{
-        setUserData(response.id);
-        addCards(response.id);
-    }).catch(showError);
+    const id = getFromStorage("id");
+    setUserData(id);
+    addCards(id);
 });
 

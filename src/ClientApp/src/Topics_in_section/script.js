@@ -71,12 +71,10 @@ const loadData = ()=>{
             loadSectionTopics(container, section, loadMore);
         };
     }).catch(showError);
-    authenticate(getFromStorage("login"), getFromStorage("password")).then(response=>{
-        if(response.role === "Admin"){
-            document.getElementById("edit-button").style = "display:block";
-            document.getElementById("delete-button").style = "display:block";
-        }    
-    }).catch(showError);
+    if(getFromStorage("role") === "Admin"){
+        document.getElementById("edit-button").style = "display:block";
+        document.getElementById("delete-button").style = "display:block";
+    }
 };
 window.addEventListener("load", loadData);
 
