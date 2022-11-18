@@ -36,6 +36,22 @@ const getUserComments = (userId, perPage, page)=>{
     return getComments({"Page.Size":perPage,"Page.Number":page, "OrderBy":COMMENTS_SORTING.time, "UserId":userId});
 };
 /**
+ * @param {number} perPage - count of pages in current page
+ * @param {number}  page - number of page  
+ * @returns promise to response with list of comments to verify or error
+ */
+const getVerifyComments = (perPage, page) =>{
+    const request = {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(addParameters(URLS.Comments, 
+        {"Page.Size":perPage,"Page.Number":page, "OrderBy":COMMENTS_SORTING.verify}), request);
+};
+/**
  * @param {number} topicId - id of topic
  * @param {string} description - description of comment
  * @param {string} code - code to add it to comment
