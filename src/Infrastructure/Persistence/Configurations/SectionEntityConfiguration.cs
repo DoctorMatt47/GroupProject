@@ -8,6 +8,6 @@ public class SectionEntityConfiguration : IEntityTypeConfiguration<Section>
 {
     public void Configure(EntityTypeBuilder<Section> builder)
     {
-        builder.HasMany(s => s.Topics).WithOne(t => t.Section);
+        builder.HasMany(s => s.Topics).WithOne(t => t.Section).OnDelete(DeleteBehavior.Cascade);
     }
 }
