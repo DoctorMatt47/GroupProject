@@ -57,24 +57,17 @@ const updateSection = (sectionId, header, description)=>{
     return sendAsync(URLS.Section, request);
 }
 /**
- * TODO: make with request
  * Deletes section
  * @param {string} sectionId - id of section
  * @returns promise to answer
  */
 const deleteSection = (sectionId)=>{
-    return getSections();
-    const body = {
-        header: header, 
-        description: description, 
-    };
     const request = {
-        method: "POST",
+        method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             "Authorization":"Bearer "+getFromStorage("token")
         },
-        body: JSON.stringify(body),
     };
-    return sendAsync(URLS.Section, request);
+    return sendAsync(URLS.Section +`/${sectionId}`, request);
 }
