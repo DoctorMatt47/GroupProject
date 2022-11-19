@@ -98,19 +98,42 @@ const loadVerifies = (container, words)=>{
     }
     verifyPage++;
 }
+/**
+ * Adds banned users to input
+ */
 const loadBannedUsers = ()=>{
     const nicknames = document.getElementById("nicknames");
     nicknames.innerHTML = "";
     getBlockedUsers().then(response=>{
         console.log(response);
-        for(let i in response.items){
+        for(let i in response){
             const option = document.createElement("option");
-            option.value = response.items[i].login;
-            option.textContent = response.items[i].id;
+            option.value = response[i].login;
+            option.setAttribute("meta-data", response[i].id);
             nicknames.appendChild(option);
         }
     }).catch(showError);
 }
+/**
+ * Unblocks user with login from input
+ */
+const unblockSelectedUser = ()=>{
+    const input = document.getElementById("users");
+    const datalist = document.getElementById("nicknames");
+    let id = null;
+    for (let i in datalist.options) {
+        if (datalist.options[i].value === input.value){
+            id = datalist.options[i].getAttribute("meta-data");
+        }
+    }
+    if(id == null){
+        openErrorWindow(`There isn't user with login: '${input.value}'`);
+        return;
+    }
+    unBlockUser(id).then(()=>{
+        openMessageWindow("Unblocked!");
+    }).catch(showError);
+};
 window.addEventListener("load", ()=>{
     const username = document.getElementById("username");
     const date = document.getElementById("registration-date");
