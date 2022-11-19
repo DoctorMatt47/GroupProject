@@ -68,7 +68,7 @@ public class CommentariesController : ApiControllerBase
     }
 
     [Authorize(Roles = "Moderator, Admin")]
-    [HttpPost("{id:guid}/View")]
+    [HttpPost("{id:guid}/Verify")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<ActionResult> VerifyCommentary(Guid id, CancellationToken cancellationToken)
     {
