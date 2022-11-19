@@ -38,65 +38,69 @@
 
                 <div class="panels">
                     <div class="panel" id="one-panel" style="margin: 0 50px;">
-                        <div class="col-sm-3">
-                            <a href="#">
-                                <div class="block">
-                                    <div class="title topic">
-                                        <h4><strong>Topic</strong></h4>
+                        <div id="complaint-list">
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title topic">
+                                            <h4><strong>Topic</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>number of complaints: 254</p>
+                                            <p>creation date:22.02.12</p>
+                                        </div>
                                     </div>
-                                    <div class="info">
-                                        <p>number of complaints: 254</p>
-                                        <p>creation date:22.02.12</p>
+                                </a>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title comment">
+                                            <h4><strong>Comment</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>number of complaints: 254</p>
+                                            <p>creation date:22.02.12</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-sm-3">
-                            <a href="#">
-                                <div class="block">
-                                    <div class="title comment">
-                                        <h4><strong>Comment</strong></h4>
-                                    </div>
-                                    <div class="info">
-                                        <p>number of complaints: 254</p>
-                                        <p>creation date:22.02.12</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <button class="load-more">Load more</button>
+                            <!--Let's display less than 12 blocks on one page-->
+                        <button id="load-more-complaints" class="load-more">Load more</button>
                     </div>
-
                     <div class="panel" id="two-panel" style="margin: 0 50px;">
-                        <div class="col-sm-3">
-                            <a href="#">
-                                <div class="block">
-                                    <div class="title topic">
-                                        <h4><strong>Topic</strong></h4>
+                        <div id="verify-list">
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title topic">
+                                            <h4><strong>Topic</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>number of comments: 254</p>
+                                            <p>creation date:22.02.12</p>
+                                            <p>Here we can display warning words</p>
+                                        </div>
                                     </div>
-                                    <div class="info">
-                                        <p>number of comments: 254</p>
-                                        <p>creation date:22.02.12</p>
-                                        <p>Here we can display warning words</p>
+                                </a>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title comment">
+                                            <h4><strong>Comment</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>number of comments: 254</p>
+                                            <p>creation date:22.02.12</p>
+                                            <p>Here we can display warning words</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-sm-3">
-                            <a href="#">
-                                <div class="block">
-                                    <div class="title comment">
-                                        <h4><strong>Comment</strong></h4>
-                                    </div>
-                                    <div class="info">
-                                        <p>number of comments: 254</p>
-                                        <p>creation date:22.02.12</p>
-                                        <p>Here we can display warning words</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <button class="load-more">Load more</button>
+                        <button id="load-more-verifies" class="load-more">Load more</button>
                     </div>
                     <!--User Tabs-->
                     <div class="panel" id="three-panel">
@@ -164,7 +168,7 @@
         </div>
         <div class="data">
             <label for="users">Choose User:</label>
-            <input list="nicknames" id="users" name="users">
+            <input list="nicknames" id="users" name="users" autocomplete="off">
 
             <datalist id="nicknames">
                 <option value="Chocolate">
@@ -174,17 +178,17 @@
                 <option value="Vanilla">
             </datalist>
         </div>
-        <button type="button" class="submit-unblock" onclick="closeUserActionWindow();">Unblock</button>
+        <button type="button" class="submit-unblock" onclick="unblockSelectedUser(); closeUserActionWindow(); return false;">Unblock</button>
     </div>
 </div>
 <div id="createModerator" class="fullscreen-container">
     <div class="window-section">
-        <h2>Comment Topic</h2>
-        <form>
+        <h2>Create Moderator</h2>
+        <form onsubmit="submitModerator(); closeCreateModeratorWindow(); return false;">
             <label for="moderator-nickname">Moderator Name</label>
             <input id="moderator-nickname" minlength="2" maxlength="32000" required>
             <label for="moderator-password">Moderator Password</label>
-            <input type="password" id="moderator-password" minlength="2" maxlength="32000" required>
+            <input id="moderator-password" minlength="2" maxlength="32000" required>
             <button type="submit" class="window-formBtn" onclick="">Submit</button>
             <button type="button" class="window-formBtn" onclick="closeCreateModeratorWindow()">Close</button>
         </form>
@@ -193,4 +197,8 @@
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
+<script src="../Moderator-Account/script.js"></script>
+<script src="../JS/complains.js"></script>
+<script src="../JS/comment.js"></script>
+<script src="../JS/configurations.js"></script>
 </html>

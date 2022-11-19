@@ -39,6 +39,12 @@ const moderatorButton = ()=>{
         return;
     }
 };
+const adminButton = ()=>{
+    if(isLoggedIn()){
+        window.location.href = "../Administrator_Account/admin-account.html";
+        return;
+    }
+};
 window.addEventListener("load", ()=>{
     document.getElementById("search-input").value = getValueFromCurrentUrl("pattern");
     addBackgroundClosing(document.getElementById("error-container"), closeErrorWindow);
@@ -48,10 +54,14 @@ window.addEventListener("load", ()=>{
             document.getElementById("moderator-menu-item").style.display = "block";
             return;
         }
+        if(getFromStorage("role") === "Admin"){
+            document.getElementById("admin-login-button").textContent = getFromStorage("login");
+            document.getElementById("admin-menu-item").style.display = "block";
+            return;
+        }
         document.getElementById("user-login-button").textContent = getFromStorage("login");
         document.getElementById("user-menu-item").style.display = "block";
         return;
     }
-    //TODO: add for admin and moderator moderator-account.html
     document.getElementById("guest-menu-item").style.display = "block";
 });

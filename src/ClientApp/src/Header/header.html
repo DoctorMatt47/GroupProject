@@ -35,7 +35,17 @@
                         <li><a href="#" onclick="signOutButton(); return false;">Sign out</a></li>
                     </ul>
                 </li>
-                <li id="admin-menu-item"></li>
+                <li id="admin-menu-item"><a class="dropdown-toggle" data-toggle="dropdown"
+                    id="admin-login-button" href="#">Username
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="adminButton(); return false;">Your Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                            </li>
+                        <li><a href="#" onclick="signOutButton(); return false;">Sign out</a></li>
+                    </ul>
+                </li>
                 <li id="moderator-menu-item"><a class="dropdown-toggle" data-toggle="dropdown"
                                                 id="moderator-login-button" href="#">Username
                     <span class="caret"></span></a>
