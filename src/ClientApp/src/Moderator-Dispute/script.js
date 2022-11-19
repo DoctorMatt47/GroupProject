@@ -122,7 +122,8 @@ const loadModeratorPanel = (complaint, userId)=>{
             if(complaint.target === "Commentary") remove = verifyComment;
         }
         remove(complaint.id).then(()=>{
-            openPage('../Moderator-Account/moderator-account.html');
+            window.history.go(-1);
+            //openPage('../Moderator-Account/moderator-account.html');
         }).catch(showError);
     };
 
@@ -133,7 +134,8 @@ const loadModeratorPanel = (complaint, userId)=>{
         }
         deleteFunction(complaint.targetId).then(() => {//also deletes complaint
             warningUser(userId).then(()=>{
-                openPage('../Moderator-Account/moderator-account.html');
+                window.history.go(-1);
+                //openPage('../Moderator-Account/moderator-account.html');
             }).catch(showError);
         }).catch(showError);
     };
@@ -169,18 +171,27 @@ window.addEventListener("load", ()=>{
     switch(type){
         case "Complaint":
             {
-                getComplaint(id).then(loadComplaintData).catch(showError);
+                getComplaint(id).then(loadComplaintData).catch(()=>{
+                    window.history.go(-1);
+                });
             }
             break;
         case "VerifyTopic":
             {
-                getTopic(id).then(topic=>loadNoComplaintData("Topic", topic)).catch(showError);
+                getTopic(id).then(topic=>loadNoComplaintData("Topic", topic)).catch(()=>{
+                    window.history.go(-1);
+                });
             }
             break;
         case "VerifyComment":
             {
-                getComment(id).then(comment=>loadNoComplaintData("Commentary", comment)).catch(showError);
+                getComment(id).then(comment=>loadNoComplaintData("Commentary", comment)).catch(()=>{
+                    window.history.go(-1);
+                });
             }
             break;
+        default:{
+            window.history.go(-1);
+        }   
     }
 });
