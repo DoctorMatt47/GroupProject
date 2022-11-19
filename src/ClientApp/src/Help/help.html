@@ -24,8 +24,8 @@
         <details>
             <summary>
                 Rules
-                <button type="button" class="edit-icon" onclick="openUpdateForm()"><span
-                        class="glyphicon glyphicon-edit"></span></button>
+                <button type="button" class="edit-icon" onclick="openUpdateForm()">
+                    <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
             <div>
                 <div id="rules" style="white-space: pre-wrap;"><strong>Forum members are not allowed</strong>
@@ -62,7 +62,8 @@
         <details>
             <summary>
                 Words
-                <button type="button" class="edit-icon"><span class="glyphicon glyphicon-edit"></span></button>
+                <button type="button" class="edit-icon" onclick="openUpdateForm()">
+                    <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
             <div>
                 <div id="forbidden-words">Forbidden words: f*ck, b*tch, ...</div>
@@ -72,7 +73,8 @@
         <details>
             <summary>
                 Warning info
-                <button type="button" class="edit-icon"><span class="glyphicon glyphicon-edit"></span></button>
+                <button type="button" class="edit-icon" onclick="openUpdateForm()">
+                    <span class="glyphicon glyphicon-edit" ></span></button>
             </summary>
             <div>
                 <div id="warning-count">Users will be blocked after getting `Warning count` warnings</div>
@@ -92,7 +94,6 @@
             <button type="button" class="update-btn" onclick="closeUpdateForm()">Close</button>
         </form>
     </div>
-</div>
 </div>
 <div id="footer"></div>
 </body>

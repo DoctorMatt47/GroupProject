@@ -50,4 +50,12 @@ public class SectionService : ISectionService
         _dbContext.Set<Section>().Remove(section);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task Update(PutSectionRequest request, CancellationToken cancellationToken)
+    {
+        var section = await _dbContext.Set<Section>().FindOrThrowAsync(request.Id, cancellationToken);
+        section.Header = request.Header;
+        section.Description = request.Description;
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
 }

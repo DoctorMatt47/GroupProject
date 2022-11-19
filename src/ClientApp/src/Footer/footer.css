@@ -1,7 +1,9 @@
 footer {
     background-color: #2d2d30;
-    color: #f5f5f5;
-    padding: 32px;
+    color: #f5f5f5 !important;
+    padding: 10px;
+    width: 100%;
+
 }
 
 footer a {
