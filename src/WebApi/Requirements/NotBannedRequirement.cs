@@ -16,12 +16,13 @@ public class NotBannedHandler : AuthorizationHandler<IAuthorizationRequirement>
         AuthorizationHandlerContext context,
         IAuthorizationRequirement requirement)
     {
+        var userId = context.User.Identity?.Name;
+        if (userId is null) return;
+
         await using var scope = _provider.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetService<IAppDbContext>()!;
 
-        var userId = context.User.Identity?.Name!;
         var user = await dbContext.Set<User>().FindAsync(Guid.Parse(userId));
-
         if (user is null) return;
 
         if (User.IsBanned.Compile().Invoke(user))

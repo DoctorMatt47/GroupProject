@@ -2,6 +2,7 @@
 using GroupProject.Application.Commentaries;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Application.Complaints;
+using GroupProject.Application.Sections;
 using GroupProject.Application.Topics;
 using GroupProject.Domain.Enums;
 using GroupProject.Domain.ValueObjects;
@@ -27,5 +28,8 @@ public class BodyToRequestMapping : Profile
             .MapRecordMember(r => r.SectionId, _ => 0);
 
         CreateMap<CompileOptionsBody, CompileOptions>();
+
+        CreateMap<PutSectionBody, PutSectionRequest>()
+            .MapRecordMember(r => r.Id, _ => 0);
     }
 }
