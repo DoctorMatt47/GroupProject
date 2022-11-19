@@ -118,9 +118,7 @@ const addSections = ()=>{
         response = response.filter(item=>item.header.toLowerCase().includes(pattern)||item.description.toLowerCase().includes(pattern));
         addPagesBar(container, response);
         addSectionsPage(container, response, currentPage);
-    }).catch((err) => {
-        console.log(err);
-    });
+    }).catch(showError);
 };
 
 window.addEventListener("load", ()=>{
@@ -131,12 +129,9 @@ window.addEventListener("load", ()=>{
             addSections();
         }
     }
-    authenticate(getFromStorage("login"), getFromStorage("password")).then(response=>{
-        if(response.role === "Admin"){
-            document.getElementById("create-section-button").style = "display:block";
-        }
-    }).catch(showError);
-    
+    if(getFromStorage("role") === "Admin"){
+        document.getElementById("create-section-button").style = "display:block";
+    }
 });
 
 const openCreateSectionWindow = () => {

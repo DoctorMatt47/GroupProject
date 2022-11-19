@@ -36,9 +36,11 @@ const authenticate = (login, password)=>{
     };
     let res =  sendAsync(URLS.UsersAuthenticate, request);
     res.then(response => {
+        console.log(response)
         putToStorage("token", response.token);
         putToStorage("login", login);
-        putToStorage("password", password);
+        putToStorage("id", response.id);
+        putToStorage("role", response.role);
     });
     return res;
 };
@@ -47,7 +49,7 @@ const authenticate = (login, password)=>{
  * @returns true if there is logged user else false
  */
 const isLoggedIn = ()=>{
-    const token = getFromStorage("token");
+    const token = getFromStorage("login");
     return (token !== null && token !== undefined && token !== "");
 };
 /**
@@ -84,13 +86,13 @@ const blockUser = (userId)=>{
  */
 const unBlockUser = (userId)=>{
     const request = {
-        method: "POST",
+        method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
             "Authorization":"Bearer "+getFromStorage("token")
         },
     };
-    return sendAsync(URLS.Users + `/${userId}`, request);
+    return sendAsync(URLS.Users + `/Ban/${userId}`, request);
 };
 /**
  * Adds one warning to user

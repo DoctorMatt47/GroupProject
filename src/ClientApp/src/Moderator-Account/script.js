@@ -98,15 +98,25 @@ const loadVerifies = (container, words)=>{
     }
     verifyPage++;
 }
-
+const loadBannedUsers = ()=>{
+    const nicknames = document.getElementById("nicknames");
+    nicknames.innerHTML = "";
+    getBlockedUsers().then(response=>{
+        console.log(response);
+        for(let i in response.items){
+            const option = document.createElement("option");
+            option.value = response.items[i].login;
+            option.textContent = response.items[i].id;
+            nicknames.appendChild(option);
+        }
+    }).catch(showError);
+}
 window.addEventListener("load", ()=>{
     const username = document.getElementById("username");
     const date = document.getElementById("registration-date");
-    authenticate(getFromStorage("login"), getFromStorage("password")).then(user=>{
-        getUser(user.id).then(response=>{
-            username.textContent = response.login;
-            date.textContent += ": "+new Date(response.creationTime).toLocaleDateString();
-        }).catch(showError);
+    getUser(getFromStorage("id")).then(response=>{
+        username.textContent = response.login;
+        date.textContent += ": "+new Date(response.creationTime).toLocaleDateString();
     }).catch(showError);
     
 
@@ -119,5 +129,9 @@ window.addEventListener("load", ()=>{
 
     const verifies = document.getElementById("verify-list");
     verifies.innerHTML = "";
-    loadVerifies(verifies, ["kill", "rob"]);
+    getVerifyPhrases().then(response=>{
+        loadVerifies(verifies, response.map(item=>item.phrase));
+    }).catch(showError);
+    
+    loadBannedUsers();
 });

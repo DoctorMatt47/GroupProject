@@ -24,7 +24,7 @@
         <details>
             <summary>
                 Rules
-                <button type="button" class="edit-icon" onclick="openUpdateForm()">
+                <button style="display: none;" id="rules-button" type="button" class="edit-icon" onclick="openUpdateForm()" >
                     <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
             <div>
@@ -62,7 +62,7 @@
         <details>
             <summary>
                 Words
-                <button type="button" class="edit-icon" onclick="openUpdateForm()">
+                <button style="display: none;" id="words-button" type="button" class="edit-icon" onclick="openUpdateForm()">
                     <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
             <div>
@@ -73,13 +73,13 @@
         <details>
             <summary>
                 Warning info
-                <button type="button" class="edit-icon" onclick="openUpdateForm()">
+                <button style="display: none;" id="warnings-button" type="button" class="edit-icon" onclick="openUpdateForm()">
                     <span class="glyphicon glyphicon-edit" ></span></button>
             </summary>
             <div>
                 <div id="warning-count">Users will be blocked after getting `Warning count` warnings</div>
                 <div id="ban-duration">Users will be blocked for `Ban duration`</div>
-                <div id="verification-duration">verification duration</div><!--Only for admin-->
+                <div style="display: none;" id="verification-duration">verification duration</div>
             </div>
         </details>
     </div>
@@ -98,6 +98,7 @@
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
+<script src="../JS/configurations.js"></script>
 <script>
     const openUpdateForm = () => {
         document.getElementById("update-container").style.display = "block";
