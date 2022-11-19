@@ -23,7 +23,6 @@ const submitComment = ()=>{
         commentLanguage.value)
     .then(response=>{
         if("id" in response){
-            closeCommentForm();
             getComment(response.id).then((comment)=>createCommentObject("User",comment, true)).catch(showError);
         }
         else openErrorWindow(response.message);

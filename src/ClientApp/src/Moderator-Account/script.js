@@ -129,7 +129,9 @@ window.addEventListener("load", ()=>{
 
     const verifies = document.getElementById("verify-list");
     verifies.innerHTML = "";
-    loadVerifies(verifies, ["kill", "rob"]);
-
+    getVerifyPhrases().then(response=>{
+        loadVerifies(verifies, response.map(item=>item.phrase));
+    }).catch(showError);
+    
     loadBannedUsers();
 });
