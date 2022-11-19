@@ -46,7 +46,7 @@ const addCards = (pageIndex) => {
         for(let i in response.items){
             getTopic(response.items[i].id).then(response=>{
                 createCard(response);
-            }).catch(showError);
+            });
         }
     }).catch(showError);
 };
@@ -66,7 +66,7 @@ const addPopularCards =()=>{
         for(let i in response.items){
             getTopic(response.items[i].id).then(response=>{
                 createPopularCard(response);
-            }).catch(showError);
+            });
         }
     }).catch(showError);
 };

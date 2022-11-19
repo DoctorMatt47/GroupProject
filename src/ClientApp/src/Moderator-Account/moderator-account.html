@@ -95,7 +95,7 @@
                                 </a>
                             </div>
                         </div>
-                        <button class="load-more">Load more</button>
+                        <button id="load-more-verifies" class="load-more">Load more</button>
                     </div>
                 </div>
             </div>
@@ -125,9 +125,9 @@
         </div>
         <div class="data">
             <label for="users">Choose User:</label>
-            <input list="nicknames" id="users" name="users">
+            <input list="nicknames" id="users" name="users" autocomplete="off">
 
-            <datalist id="nicknames">
+            <datalist id="nicknames" >
                 <option value="Chocolate">
                 <option value="Coconut">
                 <option value="Mint">
@@ -135,7 +135,7 @@
                 <option value="Vanilla">
             </datalist>
         </div>
-        <button type="button" class="submit-unblock" onclick="closeUserActionWindow();">Unblock</button>
+        <button type="button" class="submit-unblock" onclick="unblockSelectedUser(); closeUserActionWindow(); return false;">Unblock</button>
     </div>
 </div>
 <div id="footer"></div>

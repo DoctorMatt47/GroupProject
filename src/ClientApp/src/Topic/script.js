@@ -60,10 +60,12 @@ const createCommentObject = (role, comment, isNew = false)=>{
     com.id = "comment";
     const complaint = document.createElement("div");
     let icon = `<button data-toggle="tooltip" title="Create a complaint" onclick="openComplainForm('comment', '${comment.id}'); return false;">
-                <span class="glyphicon glyphicon-comment" style="color:#d7ae54; margin-right: 15px"></span></button>`;
-    if(role ==="Admin"){
-        icon = `<button data-toggle="tooltip" title="Delete">
-        <span class="glyphicon glyphicon-trash trash-span"></span></button>`;
+                    <span id="topic-complaint-button"  class="glyphicon glyphicon-comment comment-span"></span></button>`;
+    if(role ==="Admin" || role === "Moderator"){
+        icon = `<button data-toggle="tooltip" title="Moderate">
+                    <span id="topic-admin-button" class="glyphicon glyphicon-copy moderate-span"
+                        onclick="openPage('../Moderator-Dispute/moderator-dispute.html', {id:'${comment.id}', type:'VerifyComment'}); return false;"></span>
+                </button>`;
     }
     complaint.innerHTML =`<div class="complaint-icon" style="margin-top: 10px;">${icon}</div>` 
     com.appendChild(complaint);
@@ -124,10 +126,10 @@ const topicClosed = (topic)=>{
  * @param {Object} topic - topic data from server
  */
 const addTopicToPage = (role, topic)=>{
-    if(role ==="Admin"){
-        complaintButton.style = "display:none;";
+    if(role === "Admin" || role === "Moderator"){
+        trashButton.style = "display:block;";
     }else{
-        trashButton.style = "display:none;";
+        complaintButton.style = "display:block;";
     }
     topicClosed(topic);
     titleContainer.textContent = topic.header;
@@ -166,7 +168,9 @@ window.addEventListener("load", ()=>{
         addCommentsToPage(role, response.id);
         document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";
     })
-    .catch(showError);
+    .catch(()=>{
+        window.history.go(-1);
+    });
 });
 
 

@@ -147,3 +147,22 @@ const getBlockedUsers = ()=>{
     };
     return sendAsync(URLS.Users + `/Banned`, request);
 };
+/**
+ * Creates moderator
+ * @param {String} login - login of moderator
+ * @param {String} password - password of moderator
+ * @returns 
+ */
+const createModerator = (login, password)=>{
+    const body = {login: login, password: password};
+
+    const request = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization":"Bearer "+getFromStorage("token")
+        },
+        body: JSON.stringify(body),
+    };
+    return sendAsync(URLS.Users + "/Moderators", request);
+};

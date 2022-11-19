@@ -104,3 +104,18 @@ const deleteComment = (commentId)=>{
     };
     return sendAsync(URLS.Comments + `/${commentId}`, request);
 };
+/**
+ * 
+ * @param {string} commentId - id of comment to verify
+ * @returns promise with answer
+ */
+const verifyComment = (commentId)=>{
+    const request = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(URLS.Comments + `/${commentId}/Verify`, request);
+};
