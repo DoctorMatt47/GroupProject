@@ -58,4 +58,9 @@ public class User : IHasId<Guid>
     {
         BanEndTime = (BanEndTime > DateTime.UtcNow ? BanEndTime : DateTime.UtcNow) + banDuration;
     }
+
+    public void SetUnbanned()
+    {
+        BanEndTime = null;
+    }
 }

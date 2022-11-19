@@ -87,6 +87,13 @@ public class UserService : IUserService
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task UnbanUser(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
+        user.SetUnbanned();
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     private Task<Page<UserResponse>> GetUsersByRoleAsync(
         UserRole role,
         PageRequest request,
