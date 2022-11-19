@@ -38,7 +38,7 @@ public class CommentaryService : ICommentaryService
     public async Task<Page<CommentaryResponse>> Get(GetCommentariesRequest request, CancellationToken cancellationToken)
     {
         var (pageRequest, orderBy, topicId, userId) = request;
-        if (topicId is null && userId is null)
+        if (topicId is null && userId is null && request.OrderBy is not CommentariesOrderedBy.VerifyBefore)
             throw new BadRequestException("Topic id and user id should not be null at the same time");
 
         var commentaries = _dbContext.Set<Commentary>()
