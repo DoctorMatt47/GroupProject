@@ -44,7 +44,8 @@ const submitTopic = () => {
         needCodeCreate.checked ?codeCreate.value:"", 
         languageCreate.value)
     .then(response=>{
-        openPage(addParameters("../Topic/topic.html", {id:response.id}));
+        if("id" in response) openPage(addParameters("../Topic/topic.html", {id:response.id}));
+        else openErrorWindow(response.message);
     })
     .catch(showError);
 };

@@ -86,13 +86,13 @@ const blockUser = (userId)=>{
  */
 const unBlockUser = (userId)=>{
     const request = {
-        method: "POST",
+        method: "DELETE",
         headers: {
             'Content-Type': 'application/json',
             "Authorization":"Bearer "+getFromStorage("token")
         },
     };
-    return sendAsync(URLS.Users + `/${userId}`, request);
+    return sendAsync(URLS.Users + `/Ban/${userId}`, request);
 };
 /**
  * Adds one warning to user

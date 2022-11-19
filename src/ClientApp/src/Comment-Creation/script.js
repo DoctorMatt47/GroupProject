@@ -22,8 +22,11 @@ const submitComment = ()=>{
         commentNeedCode.checked ?commentCode.value:"", 
         commentLanguage.value)
     .then(response=>{
-        closeCommentForm();
-        getComment(response.id).then((comment)=>createCommentObject("User",comment, true)).catch(showError);
+        if("id" in response){
+            closeCommentForm();
+            getComment(response.id).then((comment)=>createCommentObject("User",comment, true)).catch(showError);
+        }
+        else openErrorWindow(response.message);
     })
     .catch(showError);
 };

@@ -99,10 +99,17 @@ const showError = (err) => {
     const exception = JSON.parse(err.message);
     openErrorWindow(exception.message);
 };
+/**
+ * 
+ * @param {Array} words 
+ * @param {String} text 
+ * @returns array with found words
+ */
 const findWords = (words, text)=>{
     let res = []
+    let lower = text.toLowerCase();
     for(let i in words){
-        if(text.search(words[i]) != -1) res.push(words[i]);
+        if(lower.search(words[i].toLowerCase()) != -1) res.push(words[i]);
     }
     return res;
 }
