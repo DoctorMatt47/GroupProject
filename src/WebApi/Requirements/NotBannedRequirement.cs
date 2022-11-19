@@ -26,7 +26,7 @@ public class NotBannedHandler : AuthorizationHandler<IAuthorizationRequirement>
 
         if (User.IsBanned.Compile().Invoke(user))
         {
-            var message = $@"{{""message"":""You have been banned until {user.BanEndTime}""}}";
+            var message = $"You have been banned until {user.BanEndTime}";
             context.Fail(new AuthorizationFailureReason(this, message));
             return;
         }
