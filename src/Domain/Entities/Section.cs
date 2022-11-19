@@ -24,8 +24,8 @@ public class Section : IHasId<int>
         Description = description;
     }
 
-    public string Header { get; private set; } = null!;
-    public string Description { get; private set; } = null!;
+    public string Header { get; set; } = null!;
+    public string Description { get; set; } = null!;
     public int TopicCount { get; private set; }
 
     public IEnumerable<Topic> Topics => _topics.ToList();

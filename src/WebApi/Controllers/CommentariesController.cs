@@ -68,10 +68,19 @@ public class CommentariesController : ApiControllerBase
     }
 
     [Authorize(Roles = "Moderator, Admin")]
+    [HttpPost("{id:guid}/View")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> VerifyCommentary(Guid id, CancellationToken cancellationToken)
+    {
+        await _commentaries.Verify(id, cancellationToken);
+        return NoContent();
+    }
+
+    [Authorize(Roles = "Moderator, Admin")]
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> Delete(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult> DeleteCommentary(Guid id, CancellationToken cancellationToken)
     {
         await _commentaries.Delete(id, cancellationToken);
         return NoContent();
