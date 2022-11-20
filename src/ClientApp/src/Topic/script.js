@@ -174,6 +174,14 @@ window.addEventListener("load", ()=>{
         addTopicToPage(role, response);
         addCommentsToPage(role, response.id);
         document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";
+
+        
+        window.addEventListener("scroll", ()=>{
+            let limitBottom = document.documentElement.offsetHeight - window.innerHeight;
+            if(document.documentElement.scrollTop == limitBottom){
+                addCommentsToPage(role, response.id);
+            }
+        });
     }).catch((error)=>{
         addTopicToPage("", {header:"", description:"", compileOptions:{code:"", language:""}, isClosed:true, viewCount:0});
         showError(error);
