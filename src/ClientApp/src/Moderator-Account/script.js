@@ -148,14 +148,20 @@ const unblockSelectedUser = ()=>{
         openMessageWindow("Unblocked!");
     }).catch(showError);
 };
-window.addEventListener("load", ()=>{
-    //Moderator data
+
+const loadModeratorData = ()=>{
     const username = document.getElementById("username");
     const date = document.getElementById("registration-date");
     getUser(getFromStorage("id")).then(response=>{
         username.textContent = response.login;
+        username.style += "font-family: monospace; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;";
+        username.title = response.login;
         date.textContent += ": "+new Date(response.creationTime).toLocaleDateString();
     }).catch(showError);
+}
+window.addEventListener("load", ()=>{
+    //Moderator data
+    loadModeratorData();
     
     //Complaints
     const complaints = document.getElementById("complaint-list");

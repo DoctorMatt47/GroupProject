@@ -44,6 +44,8 @@ const loadComplaintUser = (userId)=>{
         const badTimeContainer = document.getElementById("last-block");
     
         usernameContainer.textContent = user.login;
+        usernameContainer.style += "font-family: monospace; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;";
+        usernameContainer.title = user.login;
         creationTimeContainer.textContent = new Date(user.creationTime).toLocaleDateString();
         warningCountContainer.textContent = user.warningCount;
         const date = new Date(user.banEndTime).toLocaleDateString();
@@ -66,6 +68,8 @@ const loadComplaintAuthor = (complaint)=>{
         const usernameContainer = document.getElementById("complainer-username");
         const complaintText = document.getElementById("complaint-text");
         usernameContainer.textContent = user.login;
+        usernameContainer.style += "font-family: monospace; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;";
+        usernameContainer.title = user.login;
         complaintText.textContent = complaint.description;
     }).catch(showError);
 

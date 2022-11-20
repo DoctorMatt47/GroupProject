@@ -82,6 +82,8 @@ const createCommentObject = (role, comment, isNew = false)=>{
     const username = document.createElement("div");
     username.id = "answer-username";
     username.textContent = comment.userLogin;
+    username.style += "font-family: monospace; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;";
+    username.title = comment.userLogin;
     com.appendChild(username);
 
     const date = document.createElement("p");
@@ -135,6 +137,8 @@ const addTopicToPage = (role, topic)=>{
     titleContainer.textContent = topic.header;
     descriptionContainer.textContent = topic.description;
     usernameContainer.textContent = topic.userLogin;
+    usernameContainer.style += "font-family: monospace; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;";
+    usernameContainer.title = topic.userLogin;
     codeLanguageContainer.textContent = LANGUAGES[topic.compileOptions.language.toLowerCase()];
     sectionContainer.textContent = topic.sectionHeader;
     sectionContainer.onclick = ()=>{
@@ -158,19 +162,17 @@ const closeCurrentTopic = ()=>{
 };
 
 window.addEventListener("load", ()=>{
-    authenticate(getFromStorage("login"), getFromStorage("password")).then(user=>{
-        if(user.role !== "User"){
-            addCommentButton.style = "display:none";
-        }
-        getTopic(getValueFromCurrentUrl("id")).then(response => {
-            addTopicToPage(user.role, response);
-            commentsContainer.innerHTML = "";
-            addCommentsToPage(user.role, response.id);
-            document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";
-        })
-        .catch(showError);
-    }).catch(showError);
-
+    const role = getFromStorage("role");
+    if(role !== "User"){
+        addCommentButton.style = "display:none";
+    }
+    getTopic(getValueFromCurrentUrl("id")).then(response => {
+        addTopicToPage(role, response);
+        commentsContainer.innerHTML = "";
+        addCommentsToPage(role, response.id);
+        document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";
+    })
+    .catch(showError);
 });
 
 
