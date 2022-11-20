@@ -134,7 +134,7 @@
 <div id="update-warning-container" class="fullscreen-container">
     <div class="update-section">
         <h2>Update Rules</h2>
-        <form>
+        <form onsubmit="submitWarning(); closeUpdateWarningForm(); return false;">
             <label for="update-count" style="font-size: 16px">Warning Count</label>
             <input type="number" size="3" id="update-count" value="3" min="0">
             <label for="update-ban-duration" style="font-size: 16px">Ban duration</label>

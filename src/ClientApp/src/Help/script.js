@@ -39,12 +39,15 @@ const loadConfiguration = ()=>{
 
         const warnings = document.getElementById("warning-count");
         warnings.textContent = `Users will be blocked after getting ${response.warningCountForBan} warnings.`;
+        document.getElementById("update-count").value = response.warningCountForBan;
 
         const ban = document.getElementById("ban-duration");
         ban.textContent = `Users will be blocked for ${response.banDuration}.`;
-        
+        setTimeValue("ban-days","ban-hours","ban-minutes", response.banDuration);
+
         const verify = document.getElementById("verification-duration");
         verify.textContent = `Complaints will be removed from system after ${response.verificationDuration}.`;
+        setTimeValue("complaint-days","complaint-hours","complaint-minutes", response.verificationDuration);
     }).catch(showError);
 };
 const loadPhrases = ()=>{
@@ -86,7 +89,37 @@ const submitWords = ()=>{
         loadPhrases();
     }).catch(showError);
 };
-
+const setTimeValue = (dayId, hourId, minuteId, value)=>{
+    const day = document.getElementById(dayId);
+    const hour = document.getElementById(hourId);
+    const minute = document.getElementById(minuteId);
+    const value1 = value.split(".");
+    let index = 0;
+    if(value1.length > 1){
+        day.value = value1[0];
+        index = 1;
+    }
+    const value2 = value1[index].split(":");
+    hour.value = value2[0];
+    minute.value = value2[1];
+};
+const getTimeValue = (dayId, hourId, minuteId)=>{
+    const day = document.getElementById(dayId);
+    const hour = document.getElementById(hourId);
+    const minute = document.getElementById(minuteId);
+    return day.value +"."+hour.value +":"+minute.value +":00";
+};
+const submitWarning = ()=>{
+    const warningCount = document.getElementById("update-count");
+    updateConfiguration({
+        warningCountForBan: warningCount.value, 
+        banDuration:getTimeValue("ban-days","ban-hours","ban-minutes"),
+        complaintDuration:getTimeValue("complaint-days","complaint-hours","complaint-minutes")
+    }).then(()=>{
+        openMessageWindow("Updated!");
+        loadConfiguration();
+    }).catch(showError);
+};
 window.addEventListener("load", ()=>{
     loadForAdmin();
     loadConfiguration();
