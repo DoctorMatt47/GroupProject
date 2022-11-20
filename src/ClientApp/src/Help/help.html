@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Hi-fi code - Main Forum Page</title>
+    <title>Hi-fi code - Help Forum Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -23,13 +23,36 @@
     <div class="details-group">
         <details>
             <summary>
+                About Us
+                <button id="questions-button" type="button" class="edit-icon"
+                        onclick="openUpdateForm()">
+                    <span class="glyphicon glyphicon-edit"></span></button>
+            </summary>
+            <div>
+                <h1>Hi-Fi Code</h1><br>
+                <p style="font-size: 15px">
+                    is a community that developers trust to help them exceed expectations.
+                    Where developers can learn, share and build their developer toolkit.
+                    Our mission is to help each other learn, build and share using code.
+                    By providing a community that supports each other, through discussion & question-based threads,
+                    to providing resources that will give developers the upper hand on creating their project.
+                </p>
+                <p style="font-size: 15px">
+                    We help people find the answers they need, when they need them.
+                    We're best known for our public Q&A platform that lots of people visit every month to ask questions, learn, and share technical knowledge.
+                </p>
+            </div>
+        </details>
+        <details>
+            <summary>
                 Rules
-                <button style="display: none;" id="rules-button" type="button" class="edit-icon" onclick="openUpdateForm()" >
+                <button id="rules-button" type="button" class="edit-icon"
+                        onclick="openUpdateForm()">
                     <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
             <div>
                 <div id="rules" style="white-space: pre-wrap;"><strong>Forum members are not allowed</strong>
-                    <strong>1. Leave messages on the forums containing:</strong>
+                    1. Leave messages on the forums containing:
                     information constituting a state or other secret specially protected by law;
                     extremist materials;
                     materials containing:
@@ -43,15 +66,15 @@
                     narcotic plants;
                     - information containing instructions for homemade production of explosives and explosive devices;
                     information on means of committing suicide, as well as calls to commit suicide.
-                    <strong>2. To post messages that provoke conflict with other forum participants.</strong>
-                    <strong>3. Use prohibited nicknames.</strong>
+                    2. To post messages that provoke conflict with other forum participants.
+                    3. Use prohibited nicknames.
                     Pseudonyms containing website addresses, names of organizations, names
                     of state authorities and local self-government bodies, e-mail addresses, mats, insults, obscene
                     words, their derivatives or allusions to them are not allowed. As a nickname, you cannot use the
                     names of famous writers, politicians, actors, scientists and other famous people, if it is not your
                     own name. The use of an identical nickname or a parody of the nickname of an already registered user
                     is not allowed.
-                    <strong>4. Excessive use of capital letters (Caps Lock mode).</strong>
+                    4. Excessive use of capital letters (Caps Lock mode).
                     5. To use as an avatar an image containing advertising, the logo of the organization and other
                     related advertising materials, as well as bloody scenes, scenes of violence or pornography,
                     suicides, the production and use of narcotics and other substances and means withdrawn from
@@ -62,7 +85,8 @@
         <details>
             <summary>
                 Words
-                <button style="display: none;" id="words-button" type="button" class="edit-icon" onclick="openUpdateForm()">
+                <button id="words-button" type="button" class="edit-icon"
+                        onclick="openUpdateWordsForm()">
                     <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
             <div>
@@ -73,8 +97,9 @@
         <details>
             <summary>
                 Warning info
-                <button style="display: none;" id="warnings-button" type="button" class="edit-icon" onclick="openUpdateForm()">
-                    <span class="glyphicon glyphicon-edit" ></span></button>
+                <button id="warnings-button" type="button" class="edit-icon"
+                        onclick="openUpdateWarningForm()">
+                    <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
             <div>
                 <div id="warning-count">Users will be blocked after getting `Warning count` warnings</div>
@@ -84,6 +109,13 @@
         </details>
     </div>
 </div>
+
+<!--Popup Update Windows -->
+
+<!-- Для warning нужно: поле для числа предупреждений,
+ поле для количества дней в бане(дни, часы, минуты)
+  поле для времени обработки жалобы(дни, часы, минуты).-->
+
 <div id="update-container" class="fullscreen-container">
     <div class="update-section">
         <h2>Update Rules</h2>
@@ -95,6 +127,50 @@
         </form>
     </div>
 </div>
+<div id="update-words-container" class="fullscreen-container">
+    <div class="update-section">
+        <h2>Update Rules</h2>
+        <form>
+            <label for="forbidden">Forbidden words</label>
+            <input type="text" class="input-size" id="forbidden"></input>
+            <label for="verification">Verification words</label>
+            <input type="text" class="input-size" id="verification"></input>
+            <button type="submit" class="update-btn" onclick="">Submit</button>
+            <button type="button" class="update-btn" onclick="closeUpdateWordsForm()">Close</button>
+        </form>
+    </div>
+</div>
+<div id="update-warning-container" class="fullscreen-container">
+    <div class="update-section">
+        <h2>Update Rules</h2>
+        <form>
+            <label for="update-count" style="font-size: 16px">Warning Count</label>
+            <input type="number" size="3" id="update-count" value="3" min="0">
+            <label for="update-ban-duration" style="font-size: 16px">Ban duration</label>
+            <div id="update-ban-duration">
+                <label for="ban-days">Days</label>
+                <input type="number" id="ban-days" value="0" min="0">
+                <label for="ban-hours">Hours</label>
+                <input type="number" id="ban-hours" value="0" min="0" max="23">
+                <label for="ban-minutes">Minutes</label>
+                <input type="number" id="ban-minutes" value="0" min="0" max="59">
+            </div>
+            <label for="update-complaint-duration" style="font-size: 16px">Complaint verification</label>
+            <div id="update-complaint-duration">
+                <label for="complaint-days">Days</label>
+                <input type="number" id="complaint-days" value="0" min="0">
+                <label for="complaint-hours">Hours</label>
+                <input type="number" id="complaint-hours" value="0" min="0" max="23">
+                <label for="complaint-minutes">Minutes</label>
+                <input type="number" id="complaint-minutes" value="0" min="0" max="59">
+            </div>
+
+
+            <button type="submit" class="update-btn" onclick="">Submit</button>
+            <button type="button" class="update-btn" onclick="closeUpdateWarningForm()">Close</button>
+        </form>
+    </div>
+</div>
 <div id="footer"></div>
 </body>
 <script src="script.js"></script>
@@ -102,10 +178,21 @@
 <script>
     const openUpdateForm = () => {
         document.getElementById("update-container").style.display = "block";
-
     };
     const closeUpdateForm = () => {
         document.getElementById("update-container").style.display = "none";
+    };
+    const openUpdateWordsForm = () => {
+        document.getElementById("update-words-container").style.display = "block";
+    };
+    const closeUpdateWordsForm = () => {
+        document.getElementById("update-words-container").style.display = "none";
+    };
+    const openUpdateWarningForm = () => {
+        document.getElementById("update-warning-container").style.display = "block";
+    };
+    const closeUpdateWarningForm = () => {
+        document.getElementById("update-warning-container").style.display = "none";
     };
 </script>
 </html>

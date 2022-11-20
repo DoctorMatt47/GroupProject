@@ -15,6 +15,8 @@ details {
 }
 
 summary {
+    display: flex;
+    flex-direction: row;
     font-weight: bold;
     font-size: 20px;
     margin: -.5em -.5em 0;
@@ -33,8 +35,10 @@ details[open] summary {
     border-bottom: 3px solid #c5c5f6;
 }
 .edit-icon{
+    /*display: block;*/
+    display: none;
     font-size: 15px;
-    padding-top: 7px;
+    padding-top: 6px;
     padding-left: 10px;
     color: rgba(4, 58, 194, 0.49);
     background: none;
@@ -43,6 +47,9 @@ details[open] summary {
 
 /*Verification popup window*/
 .fullscreen-container {
+    overflow-y:scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     font-family: Courier, sans-serif;
     display: none;
     position: fixed;
@@ -54,11 +61,18 @@ details[open] summary {
     z-index: 9999;
 }
 
+.fullscreen-container::-webkit-scrollbar {
+    display: none;
+}
 .update-section {
     background: #fff;
     padding: 80px 0;
     text-align: center;
     width: 45%;
+    top: 0;
+    bottom: 25%;
+    left: 25%;
+    right: 25%;
     margin: 150px auto auto;
     border-radius: 200px;
     border: 4px solid rgba(61, 61, 173, 0.78);
@@ -84,6 +98,7 @@ details[open] summary {
     font-size: 14px;
     cursor: pointer;
     margin-bottom: 10px;
+
 }
 
 .update-btn:hover{
@@ -96,7 +111,7 @@ details[open] summary {
     transform: translateY(2px);
 }
 
-textarea{
+textarea,input{
     margin: .8em auto;
     text-transform: inherit;
     font-size: inherit;
@@ -105,7 +120,26 @@ textarea{
     padding: .4em;
     border: none;
     border-radius: 20px;
+    background-color: #c5c5f6;
+}
+textarea{
     height: 200px !important;
     resize: none;
-    background-color: #c5c5f6;
+}
+.input-size{
+    height: 100px !important;
+}
+#update-count{
+ text-align: center;
+}
+#update-ban-duration, #update-complaint-duration{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 10px 45px;
+}
+#update-ban-duration input, #update-complaint-duration input{
+    width: 100px;
+    margin: 10px !important;
 }
