@@ -1,11 +1,13 @@
 .thumbnail {
     position: relative;
+    overflow: hidden;
     border-radius: 20px;
     margin: 20px;
     padding: 20px;
     color: black;
     align-items: baseline;
 }
+
 .thumbnail p {
     margin-top: 15px;
     vertical-align: bottom;

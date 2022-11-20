@@ -129,6 +129,7 @@ h4 {
 .panel {
     padding-top: 0 !important;
     background: none;
+    overflow: hidden;
     position: relative;
     margin: 20px 40px auto;
     color: black;
@@ -143,13 +144,12 @@ h4 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #95b731;
     text-align: center;
+    background-color: #95b731;
     border-radius: 10px 10px 0 0;
     color: black;
     padding-top: 20px;
 }
-
 .language {
     width: fit-content;
     display: flex;
@@ -175,7 +175,7 @@ h4 {
     justify-content: flex-end;
 }
 
-#panel-footer-code #panel-footer-answer-code {
+#panel-footer-code, #panel-footer-answer-code {
     width: 100%;
     margin: 10px;
     padding: 10px;

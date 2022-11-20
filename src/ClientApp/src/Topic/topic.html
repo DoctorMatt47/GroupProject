@@ -76,7 +76,9 @@
                         </div>
                     </div>
                 </div>
-                <button id="comment-open-button" type="submit" class="comment-btn" onclick="openCommentForm()">Add Comment</button>
+                <button id="comment-open-button" type="submit" class="comment-btn" onclick="openCommentForm()">Add
+                    Comment
+                </button>
             </div>
 
             <div id="compiler"></div>
@@ -92,29 +94,32 @@
                             <span class="glyphicon glyphicon-copy moderate-span"></span>
                         </button>
                     </div>
-                        <p id="answer">Here we have answer text<br>
-                            "Explanation:
+                    <p id="answer">Here we have answer text<br>
+                        "Explanation:
 
-                            This is called event delegation and works as followed.
-                            The event is attached to a static parent (staticAncestors)
-                            of the element that should be handled. This jQuery handler
-                            is triggered every time the event triggers on this element
-                            or one of the descendant elements. The handler then checks
-                            if the element that triggered the event matches your selector
-                            (dynamicChild). When there is a match then your custom handler function is executed."
-                        </p>
+                        This is called event delegation and works as followed.
+                        The event is attached to a static parent (staticAncestors)
+                        of the element that should be handled. This jQuery handler
+                        is triggered every time the event triggers on this element
+                        or one of the descendant elements. The handler then checks
+                        if the element that triggered the event matches your selector
+                        (dynamicChild). When there is a match then your custom handler function is executed."
+                    </p>
                     <div class="panel-footer">
                         <div id="panel-footer-answer-code">
                             <div class="language" id="answer-language">Javascript</div>
-                            Here should be your code<br>
-                            var textBlock = document.createElement('div');<br>
-                            textBlock.setAttribute('class', 'finalBlock');<br><br>
-                            var addFinalBlock = document.getElementsByClassName('block')[0];<br>
-                            addFinalBlock.appendChild(textBlock);<br><br>
-                            textBlock.innerHTML = "Make this block a text block";<br>
-                        </div>
-                        <div style="width: 100%;">
-                            <button type="button" class="code-btn" onclick="openCompiler()">Run</button>
+                            <p>
+                                Here should be your code<br>
+                                var textBlock = document.createElement('div');<br>
+                                textBlock.setAttribute('class', 'finalBlock');<br>
+                                var addFinalBlock = document.getElementsByClassName('block')[0];<br>
+                                addFinalBlock.appendChild(textBlock);<br>
+                                textBlock.innerHTML = "Make this block a text block";
+                            </p>
+
+                            <div style="width: 100%;">
+                                <button type="button" class="code-btn" onclick="openCompiler()">Run</button>
+                            </div>
                         </div>
                     </div>
                     <div id="answer-username"><a href="#">username</a></div>
@@ -158,7 +163,8 @@
                                 </div>
                                 <h3>ARE YOU SURE?</h3>
                                 <button id="submit-btn"
-                                        onclick="closeCurrentTopic(); topicClosed({isClosed:true}); closeVerificationWindow(); return false;">Yes
+                                        onclick="closeCurrentTopic(); topicClosed({isClosed:true}); closeVerificationWindow(); return false;">
+                                    Yes
                                 </button>
                             </div>
                         </div>
