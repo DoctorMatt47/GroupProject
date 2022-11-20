@@ -22,6 +22,10 @@ const submitModerator = ()=>{
 const userList = document.getElementById("user-list");
 const moderatorList = document.getElementById("moderator-list");
 
+/**
+ * Creates user object for list ib page
+ * @param {Object} user - data of user
+ */
 const createUserObject = (user)=>{
     const div = document.createElement("div");
     div.className = "col-sm-3";
@@ -43,6 +47,25 @@ const createUserObject = (user)=>{
     userList.appendChild(div);
 };
 
+const createModeratorObject = (moderator)=>{
+    const div = document.createElement("div");
+    div.className = "col-sm-3";
+    div.innerHTML = `<div>
+                        <div class="block">
+                            <div class="title moder">
+                                <h4><strong>Moderator</strong></h4>
+                            </div>
+                            <div class="info">
+                                <p title='${moderator.login}' 
+                                    style='font-family: monospace; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;'>${moderator.login}</p>
+                                    <p>Registration date: ${new Date(moderator.creationTime).toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                    </div>`;
+
+    moderatorList.appendChild(div);
+};
+
 const perUserPage = 4;
 let currentUserPage = 1, currentModeratorPage = 1;
 
@@ -62,5 +85,12 @@ window.addEventListener("load", ()=>{
     loadUserList(getUsers, currentUserPage++, userButton, createUserObject);
     userButton.onclick = ()=>{
         loadUserList(getUsers, currentUserPage++, userButton, createUserObject);
+    };
+
+    moderatorList.innerHTML = "";
+    const moderatorButton = document.getElementById("load-more-moderators");
+    loadUserList(getModerators, currentModeratorPage++, moderatorButton, createModeratorObject);
+    moderatorButton.onclick = ()=>{
+        loadUserList(getModerators, currentModeratorPage++, moderatorButton, createModeratorObject);
     };
 });
