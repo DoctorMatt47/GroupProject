@@ -5,10 +5,12 @@
  */
 const createSectionForPanel = (sectionData)=>{
     const section = document.createElement("a");
+    getSectionTopics(sectionData.id, 1, 1).then(res=>{
     section.innerHTML = `<li class="list-group-item d-flex justify-content-between align-items-center">
                             ${sectionData.header}
-                            <span class="badge badge-primary badge-pill">${sectionData.topicCount}</span>
+                            <span class="badge badge-primary badge-pill">${res.itemsCount}</span>
                         </li>`;
+    });
     section.href = addParameters("../Topics_in_section/topics_in_section.html", {id:sectionData.id});
     return section;
 };
