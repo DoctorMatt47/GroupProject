@@ -59,9 +59,11 @@ const createCommentObject = (role, comment, isNew = false)=>{
     const com = document.createElement("div");
     com.id = "comment";
     const complaint = document.createElement("div");
-    let icon = `<button data-toggle="tooltip" title="Create a complaint" onclick="openComplainForm('comment', '${comment.id}'); return false;">
-                    <span id="topic-complaint-button"  class="glyphicon glyphicon-comment comment-span"></span></button>`;
-    if(role ==="Admin" || role === "Moderator"){
+    let icon ="";
+    if(role === "User"){
+        icon = `<button data-toggle="tooltip" title="Create a complaint" onclick="openComplainForm('comment', '${comment.id}'); return false;">
+        <span id="topic-complaint-button"  class="glyphicon glyphicon-comment comment-span"></span></button>`;
+    } else if(role ==="Admin" || role === "Moderator"){
         icon = `<button data-toggle="tooltip" title="Moderate">
                     <span id="topic-admin-button" class="glyphicon glyphicon-copy moderate-span"
                         onclick="openPage('../Moderator-Dispute/moderator-dispute.html', {id:'${comment.id}', type:'VerifyComment'}); return false;"></span>
@@ -130,7 +132,7 @@ const topicClosed = (topic)=>{
 const addTopicToPage = (role, topic)=>{
     if(role ==="Admin" || role === "Moderator"){
         trashButton.style = "display:block;";
-    }else{
+    }else if(role ==="User"){
         complaintButton.style = "display:block;";
     }
     topicClosed(topic);
@@ -166,13 +168,15 @@ window.addEventListener("load", ()=>{
     if(role !== "User"){
         addCommentButton.style = "display:none";
     }
+    commentsContainer.innerHTML = "";
     getTopic(getValueFromCurrentUrl("id")).then(response => {
         addTopicToPage(role, response);
-        commentsContainer.innerHTML = "";
         addCommentsToPage(role, response.id);
         document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";
-    })
-    .catch(showError);
+    }).catch((error)=>{
+        addTopicToPage("", {header:"", description:"", compileOptions:{code:"", language:""}, isClosed:true, viewCount:0});
+        showError(error);
+    });
 });
 
 

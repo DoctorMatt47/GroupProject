@@ -61,10 +61,14 @@ const loadData = ()=>{
     const sectionId = getValueFromCurrentUrl("id");
     getSections().then((response) => {
         const section = response.find(item=>item.id == sectionId);
-        if(section == undefined) return;
-        loadSection(section);
         const container = document.getElementById("topics-container");
         container.innerHTML = '';
+        if(section == undefined){
+            loadSection({header:"", description:""});
+            openErrorWindow("Section not found!");
+            return;
+        } 
+        loadSection(section);
         const loadMore = document.getElementById("load-more");
         loadSectionTopics(container, section, loadMore);
         loadMore.onclick = ()=>{
