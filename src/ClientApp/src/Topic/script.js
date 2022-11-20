@@ -170,6 +170,7 @@ window.addEventListener("load", ()=>{
     }
     commentsContainer.innerHTML = "";
     getTopic(getValueFromCurrentUrl("id")).then(response => {
+        viewTopicForCurrentUser(response.id);
         addTopicToPage(role, response);
         addCommentsToPage(role, response.id);
         document.getElementById("close-btn").style.display = response.userLogin === getFromStorage("login")?"block":"none";

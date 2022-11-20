@@ -111,4 +111,19 @@ const findWords = (words, text)=>{
         if(lower.search(words[i].toLowerCase()) != -1) res.push(words[i]);
     }
     return res;
-}
+};
+const viewTopicForCurrentUser = (topicId)=>{
+    let saved = getFromStorage("viewedTopics");
+    console.log(saved);
+    let topics = new Array();
+    if(saved != null){
+        topics = JSON.parse(saved);
+    }
+    if(topics.includes(topicId)) return;
+    viewTopic(topicId).then(() => {
+        topics.push(topicId);
+        putToStorage("viewedTopics", JSON.stringify(topics));
+    }).catch((err) => {
+        console.log(err);
+    });
+};

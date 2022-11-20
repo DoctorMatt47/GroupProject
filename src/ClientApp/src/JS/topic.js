@@ -165,3 +165,17 @@ const deleteTopic = (topicId)=>{
     };
     return sendAsync(URLS.Topics + `/${topicId}`, request);
 };
+/**
+ * Adds one view to topic
+ * @param {String} topicId - id of topic
+ */
+const viewTopic = (topicId)=>{
+    const request = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(URLS.Topics + `/${topicId}/View`, request);
+};
