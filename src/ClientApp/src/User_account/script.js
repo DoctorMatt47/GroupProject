@@ -37,34 +37,44 @@ const username = document.getElementById("username");
 const userCreationDate = document.getElementById("registration-date");
 const userPanel = document.getElementById("user-panel");
 
+const setUserWarnings = (response)=>{
+    if(response.warningCount > 0){
+        const warningPanel = document.getElementById("warning-panel");
+        warningPanel.style = "display: block;";
+        const warningPanelCount = document.getElementById("warning-count");
+        warningPanelCount.textContent = response.warningCount;
+
+        const warnings = new Number(getFromStorage("warnings"));
+        if(response.warningCount > warnings){
+            openMessageWindow("You have received a warning from a moderator because you have violated forum rules. Your content was removed.");
+        }
+        putToStorage("warnings", ""+response.warningCount);
+    }
+};
+const setUserBan = (response)=>{
+    const ban = new Date(response.banEndTime), now = new Date();
+    ban.setHours(ban.getHours() +2);
+    if(ban > now){
+        const isBanned = getFromStorage("banned");
+        if(isBanned == "false"){
+            openMessageWindow("You have been banned by moderator because you have violated forum rules.");
+            putToStorage("banned", "true");
+        }
+        userPanel.style = "background-color: tomato;";
+        const banTime = document.createElement("p");
+        banTime.textContent = "Banned until: "+ban.toLocaleDateString() + " " + ban.toLocaleTimeString();
+        userPanel.appendChild(banTime);
+    } else putToStorage("banned", "false");
+};
 const setUserData = (userId)=>{
     getUser(userId).then(response=>{
         username.textContent = response.login;
         username.style += "font-family: monospace; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;";
         username.title = response.login;
         userCreationDate.textContent += ": "+new Date(response.creationTime).toLocaleDateString();
-
-        if(response.warningCount > 0){
-            const warnings = new Number(getFromStorage("warnings"));
-            if(response.warningCount > warnings){
-                openMessageWindow("You have received a warning from a moderator because you have violated forum rules. Your content was removed.");
-            }
-            putToStorage("warnings", ""+response.warningCount);
-        }
-
-        const ban = new Date(response.banEndTime), now = new Date();
-        ban.setHours(ban.getHours() +2);
-        if(ban > now){
-            const isBanned = getFromStorage("banned");
-            if(isBanned == "false"){
-                openMessageWindow("You have been banned by moderator because you have violated forum rules.");
-                putToStorage("banned", "true");
-            }
-            userPanel.style = "background-color: tomato;";
-            const banTime = document.createElement("p");
-            banTime.textContent = "Banned until: "+ban.toLocaleDateString() + " " + ban.toLocaleTimeString();
-            userPanel.appendChild(banTime);
-        } else putToStorage("banned", "false");
+        setUserWarnings(response);
+        setUserBan(response);
+        
     }).catch(showError);
 
     getUserTopics(userId, 1, 1).then(response=>{
@@ -77,4 +87,3 @@ window.addEventListener("load", ()=>{
     setUserData(id);
     addCards(id);
 });
-

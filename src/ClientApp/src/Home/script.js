@@ -35,7 +35,6 @@ const addCards = (pageIndex) => {
 
     handleButtonStatus();
     getRecommendedTopics(cardIncrease, currentPage).then(response=>{
-        console.log(response)
         cardLimit = Math.min(cardLimit, response.itemsCount);
         cardIncrease = Math.min(cardIncrease, response.itemsCount);
         const endRange =
@@ -88,4 +87,3 @@ window.onload = function () {
         addCards(currentPage + 1);
     });
 };
-
