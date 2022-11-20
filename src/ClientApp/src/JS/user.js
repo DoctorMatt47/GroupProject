@@ -36,7 +36,6 @@ const authenticate = (login, password)=>{
     };
     let res =  sendAsync(URLS.UsersAuthenticate, request);
     res.then(response => {
-        console.log(response)
         putToStorage("token", response.token);
         putToStorage("login", login);
         putToStorage("id", response.id);

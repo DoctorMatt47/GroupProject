@@ -114,7 +114,6 @@ const findWords = (words, text)=>{
 };
 const viewTopicForCurrentUser = (topicId)=>{
     let saved = getFromStorage("viewedTopics");
-    console.log(saved);
     let topics = new Array();
     if(saved != null){
         topics = JSON.parse(saved);

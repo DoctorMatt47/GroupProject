@@ -23,7 +23,10 @@ const createSectionObject = (section) =>{
 
     const info = document.createElement("div");
     info.className = "section-info";
-    info.innerHTML = `<p>Number of topics:${section.topicCount}</p><p>${section.description}</p>`;
+    getSectionTopics(section.id, 1, 1).then(res=>{
+        info.innerHTML = `<p>Number of topics:${res.itemsCount}</p><p>${section.description}</p>`;
+    })
+    
     block.appendChild(info);
 
     a.appendChild(block);
