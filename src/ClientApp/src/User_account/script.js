@@ -40,6 +40,8 @@ const userPanel = document.getElementById("user-panel");
 const setUserData = (userId)=>{
     getUser(userId).then(response=>{
         username.textContent = response.login;
+        username.style += "font-family: monospace; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;";
+        username.title = response.login;
         userCreationDate.textContent += ": "+new Date(response.creationTime).toLocaleDateString();
 
         if(response.warningCount > 0){
@@ -64,6 +66,7 @@ const setUserData = (userId)=>{
             userPanel.appendChild(banTime);
         } else putToStorage("banned", "false");
     }).catch(showError);
+
     getUserTopics(userId, 1, 1).then(response=>{
         cardCreated.textContent = response.itemsCount;
     }).catch(showError);

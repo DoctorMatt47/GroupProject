@@ -166,3 +166,12 @@ const createModerator = (login, password)=>{
     };
     return sendAsync(URLS.Users + "/Moderators", request);
 };
+/**
+ * 
+ * @param {Object} user - user data 
+ */
+const isBanned = (user)=>{
+    const ban = new Date(user.banEndTime), now = new Date();
+    ban.setHours(ban.getHours() +2);
+    return ban > now;
+};
