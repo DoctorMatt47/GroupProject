@@ -35,7 +35,7 @@ public class PhraseService : IPhraseService
         IEnumerable<PutPhraseRequest> request,
         CancellationToken cancellationToken)
     {
-        await _context.Database.ExecuteSqlRawAsync("delete from ForbiddenPhrases", cancellationToken);
+        _context.Set<ForbiddenPhrase>().RemoveRange(_context.Set<ForbiddenPhrase>());
 
         var phrases = request.Select(p => new ForbiddenPhrase(p.Phrase));
         await _context.Set<ForbiddenPhrase>().AddRangeAsync(phrases, cancellationToken);
@@ -49,7 +49,7 @@ public class PhraseService : IPhraseService
         IEnumerable<PutPhraseRequest> request,
         CancellationToken cancellationToken)
     {
-        await _context.Database.ExecuteSqlRawAsync("delete from VerificationRequiredPhrases", cancellationToken);
+        _context.Set<VerificationRequiredPhrase>().RemoveRange(_context.Set<VerificationRequiredPhrase>());
 
         var phrases = request.Select(p => new VerificationRequiredPhrase(p.Phrase));
         await _context.Set<VerificationRequiredPhrase>().AddRangeAsync(phrases, cancellationToken);
