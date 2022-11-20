@@ -59,5 +59,8 @@ const loadUserList = (getter, page, button, creator)=>{
 window.addEventListener("load", ()=>{
     userList.innerHTML = "";
     const userButton = document.getElementById("load-more-users");
-    loadUserList(getUsers, currentUserPage, userButton, createUserObject);
+    loadUserList(getUsers, currentUserPage++, userButton, createUserObject);
+    userButton.onclick = ()=>{
+        loadUserList(getUsers, currentUserPage++, userButton, createUserObject);
+    };
 });
