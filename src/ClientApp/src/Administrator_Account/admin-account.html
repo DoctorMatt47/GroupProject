@@ -182,7 +182,7 @@
                 <option value="Vanilla">
             </datalist>
         </div>
-        <button type="button" class="submit-unblock" onclick="unblockSelectedUser(); closeUserActionWindow(); return false;">Unblock</button>
+        <button type="button" class="submit-unblock" onclick="unblockSelectedUser(); closeUserActionWindow(); setTimeout(loadUsers, 100); return false;">Unblock</button>
     </div>
 </div>
 <div id="createModerator" class="fullscreen-container">
@@ -200,9 +200,16 @@
 </div>
 <div id="footer"></div>
 </body>
-<script src="script.js"></script>
+<script src="../Administrator_Account/script.js"></script>
 <script src="../Moderator-Account/script.js"></script>
 <script src="../JS/complains.js"></script>
 <script src="../JS/comment.js"></script>
 <script src="../JS/configurations.js"></script>
+<script src="../JS/topic.js"></script>
+<script src="../JS/section.js"></script>
+<script src="../JS/languages.js"></script>
+<script src="../JS/user.js"></script>
+<script src="../JS/code.js"></script>
+<script src="../JS/httpFunctions.js"></script>
+<script src="../JS/data.js"></script>
 </html>

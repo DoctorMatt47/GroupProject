@@ -2,6 +2,8 @@
  * Makes topic creation form visible
  */
 const openForm = () => {
+    addLanguagesToSelect('topic-code-language');
+    addSectionToSelect('topic-section');
     document.getElementById("topic-container").style.display = "flex";
 };
 /**
@@ -50,7 +52,5 @@ const submitTopic = () => {
     .catch(showError);
 };
 window.addEventListener("load", ()=>{
-    addLanguagesToSelect('topic-code-language');
-    addSectionToSelect('topic-section');
     addBackgroundClosing(document.getElementById("topic-container"), closeForm);
 });

@@ -1,4 +1,5 @@
 const openCommentForm = () => {
+    addLanguagesToSelect('comment-code-language');
     const container = document.getElementById("comment-container");
     container.style.display = "block";
     addBackgroundClosing(container, closeCommentForm);

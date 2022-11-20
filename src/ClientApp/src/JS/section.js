@@ -33,7 +33,6 @@ const createSection = (header, description)=>{
     return sendAsync(URLS.Section, request);
 }
 /**
- * TODO: make with request
  * Update old section
  * @param {string} sectionId - id of section
  * @param {string} header - section title
@@ -41,20 +40,19 @@ const createSection = (header, description)=>{
  * @returns promise to section id or error
  */
 const updateSection = (sectionId, header, description)=>{
-    return getSections();
     const body = {
         header: header, 
         description: description, 
     };
     const request = {
-        method: "POST",
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
             "Authorization":"Bearer "+getFromStorage("token")
         },
         body: JSON.stringify(body),
     };
-    return sendAsync(URLS.Section, request);
+    return sendAsync(URLS.Section +`/${sectionId}`, request);
 }
 /**
  * Deletes section

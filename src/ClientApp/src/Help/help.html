@@ -24,9 +24,6 @@
         <details>
             <summary>
                 About Us
-                <button id="questions-button" type="button" class="edit-icon"
-                        onclick="openUpdateForm()">
-                    <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
             <div>
                 <h1>Hi-Fi Code</h1><br>
@@ -46,7 +43,7 @@
         <details>
             <summary>
                 Rules
-                <button id="rules-button" type="button" class="edit-icon"
+                <button id="rules-button" type="button" class="edit-icon" style="display: none;"
                         onclick="openUpdateForm()">
                     <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
@@ -85,7 +82,7 @@
         <details>
             <summary>
                 Words
-                <button id="words-button" type="button" class="edit-icon"
+                <button id="words-button" type="button" class="edit-icon" style="display: none;"
                         onclick="openUpdateWordsForm()">
                     <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
@@ -97,7 +94,7 @@
         <details>
             <summary>
                 Warning info
-                <button id="warnings-button" type="button" class="edit-icon"
+                <button id="warnings-button" type="button" class="edit-icon" style="display: none;"
                         onclick="openUpdateWarningForm()">
                     <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
@@ -110,18 +107,12 @@
     </div>
 </div>
 
-<!--Popup Update Windows -->
-
-<!-- Для warning нужно: поле для числа предупреждений,
- поле для количества дней в бане(дни, часы, минуты)
-  поле для времени обработки жалобы(дни, часы, минуты).-->
-
 <div id="update-container" class="fullscreen-container">
     <div class="update-section">
         <h2>Update Rules</h2>
-        <form>
+        <form onsubmit="submitRules(); closeUpdateForm(); return false;">
             <label for="rules-text">Rules text</label>
-            <textarea id="rules-text"></textarea>
+            <textarea id="rules-text" minlength="0" maxlength="8000"></textarea>
             <button type="submit" class="update-btn" onclick="">Submit</button>
             <button type="button" class="update-btn" onclick="closeUpdateForm()">Close</button>
         </form>
@@ -130,7 +121,7 @@
 <div id="update-words-container" class="fullscreen-container">
     <div class="update-section">
         <h2>Update Rules</h2>
-        <form>
+        <form onsubmit="submitWords(); closeUpdateWordsForm(); return false;">
             <label for="forbidden">Forbidden words</label>
             <input type="text" class="input-size" id="forbidden"></input>
             <label for="verification">Verification words</label>
@@ -143,7 +134,7 @@
 <div id="update-warning-container" class="fullscreen-container">
     <div class="update-section">
         <h2>Update Rules</h2>
-        <form>
+        <form onsubmit="submitWarning(); closeUpdateWarningForm(); return false;">
             <label for="update-count" style="font-size: 16px">Warning Count</label>
             <input type="number" size="3" id="update-count" value="3" min="0">
             <label for="update-ban-duration" style="font-size: 16px">Ban duration</label>
@@ -173,26 +164,13 @@
 </div>
 <div id="footer"></div>
 </body>
-<script src="script.js"></script>
+<script src="../Help/script.js"></script>
 <script src="../JS/configurations.js"></script>
-<script>
-    const openUpdateForm = () => {
-        document.getElementById("update-container").style.display = "block";
-    };
-    const closeUpdateForm = () => {
-        document.getElementById("update-container").style.display = "none";
-    };
-    const openUpdateWordsForm = () => {
-        document.getElementById("update-words-container").style.display = "block";
-    };
-    const closeUpdateWordsForm = () => {
-        document.getElementById("update-words-container").style.display = "none";
-    };
-    const openUpdateWarningForm = () => {
-        document.getElementById("update-warning-container").style.display = "block";
-    };
-    const closeUpdateWarningForm = () => {
-        document.getElementById("update-warning-container").style.display = "none";
-    };
-</script>
+<script src="../JS/topic.js"></script>
+<script src="../JS/section.js"></script>
+<script src="../JS/languages.js"></script>
+<script src="../JS/user.js"></script>
+<script src="../JS/code.js"></script>
+<script src="../JS/httpFunctions.js"></script>
+<script src="../JS/data.js"></script>
 </html>

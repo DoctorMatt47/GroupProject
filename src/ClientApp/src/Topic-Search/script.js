@@ -10,7 +10,9 @@ const createSearchTopic = (topic)=>{
         <a href="#">
             <div class="language">${topic.compileOptions.language}</div>
         </a>
-        <a href="#" id= "username">${topic.userLogin}</a>
+        <a href="#" id= "username" title="${topic.userLogin}"
+            style="font-family: monospace; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+            ${topic.userLogin}</a>
         <p class="topic-p">${new Date(topic.creationTime).toLocaleDateString()}</p>
     </div>
     <div class="vertical-line"></div>
@@ -33,7 +35,6 @@ let currentPage = 1;
 
 const loadTopicsSearch = (container, pattern, loadMore)=>{
     getSearchTopics(pattern, perPage, currentPage++).then((response) => {
-        console.log(response)
         if(currentPage - 1 >= response.pageCount){
             loadMore.classList.add("disabled");
             loadMore.setAttribute("disabled", true);

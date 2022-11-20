@@ -15,6 +15,7 @@ const submitModerator = ()=>{
     const login = moderatorNickname.value;
     const password = moderatorPassword.value;
     createModerator(login, password).then(() => {
+        loadModerators();
         openMessageWindow(`Created moderator with login:'${login}' and password: '${password}'!`);
     }).catch(showError);
 };
@@ -79,18 +80,25 @@ const loadUserList = (getter, page, button, creator)=>{
         }
     }).catch(showError);
 };
-window.addEventListener("load", ()=>{
-    userList.innerHTML = "";
-    const userButton = document.getElementById("load-more-users");
-    loadUserList(getUsers, currentUserPage++, userButton, createUserObject);
-    userButton.onclick = ()=>{
-        loadUserList(getUsers, currentUserPage++, userButton, createUserObject);
-    };
-
+const loadModerators = ()=>{
+    currentModeratorPage = 1
     moderatorList.innerHTML = "";
     const moderatorButton = document.getElementById("load-more-moderators");
     loadUserList(getModerators, currentModeratorPage++, moderatorButton, createModeratorObject);
     moderatorButton.onclick = ()=>{
         loadUserList(getModerators, currentModeratorPage++, moderatorButton, createModeratorObject);
     };
+};
+const loadUsers = ()=>{
+    currentUserPage = 1
+    userList.innerHTML = "";
+    const userButton = document.getElementById("load-more-users");
+    loadUserList(getUsers, currentUserPage++, userButton, createUserObject);
+    userButton.onclick = ()=>{
+        loadUserList(getUsers, currentUserPage++, userButton, createUserObject);
+    };
+};
+window.addEventListener("load", ()=>{
+    loadModerators();
+    loadUsers();
 });

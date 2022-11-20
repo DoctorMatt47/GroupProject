@@ -20,7 +20,9 @@ const createSectionTopic = (topic)=>{
         <a href="#">
             <div class="language">${topic.compileOptions.language}</div>
         </a>
-        <a href="#" id= "username">${topic.userLogin}</a>
+        <a href="#" id= "username" title="${topic.userLogin}"
+            style="font-family: monospace; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+            ${topic.userLogin}</a>
         <p class="topic-p">${new Date(topic.creationTime).toLocaleDateString()}</p>
     </div>
     <div class="vertical-line"></div>
@@ -61,10 +63,14 @@ const loadData = ()=>{
     const sectionId = getValueFromCurrentUrl("id");
     getSections().then((response) => {
         const section = response.find(item=>item.id == sectionId);
-        if(section == undefined) return;
-        loadSection(section);
         const container = document.getElementById("topics-container");
         container.innerHTML = '';
+        if(section == undefined){
+            loadSection({header:"", description:""});
+            openErrorWindow("Section not found!");
+            return;
+        } 
+        loadSection(section);
         const loadMore = document.getElementById("load-more");
         loadSectionTopics(container, section, loadMore);
         loadMore.onclick = ()=>{

@@ -35,7 +35,6 @@ const addCards = (pageIndex) => {
 
     handleButtonStatus();
     getRecommendedTopics(cardIncrease, currentPage).then(response=>{
-        console.log(response)
         cardLimit = Math.min(cardLimit, response.itemsCount);
         cardIncrease = Math.min(cardIncrease, response.itemsCount);
         const endRange =
@@ -55,7 +54,9 @@ const createPopularCard = (topic)=>{
     column.className = "column col-sm-4";
     const card = document.createElement("div");
     card.className = "thumbnail thumbnail-topic";
-    card.innerHTML = `<p>${topic.userLogin}</p><a><strong>${topic.header}</strong></a>
+    card.innerHTML = `<p title="${topic.userLogin}"
+        style="font-family: monospace; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+            ${topic.userLogin}</p><a><strong>${topic.header}</strong></a>
     <p>${cutTextForTopic(topic.description)}</p>`;
     column.onclick = ()=>openPage(addParameters(topicPage, {id:topic.id}));
     column.appendChild(card);
@@ -88,4 +89,3 @@ window.onload = function () {
         addCards(currentPage + 1);
     });
 };
-
