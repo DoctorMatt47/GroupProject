@@ -182,7 +182,7 @@
                 <option value="Vanilla">
             </datalist>
         </div>
-        <button type="button" class="submit-unblock" onclick="unblockSelectedUser(); closeUserActionWindow(); return false;">Unblock</button>
+        <button type="button" class="submit-unblock" onclick="unblockSelectedUser(); closeUserActionWindow(); setTimeout(loadUsers, 100); return false;">Unblock</button>
     </div>
 </div>
 <div id="createModerator" class="fullscreen-container">

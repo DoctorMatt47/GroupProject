@@ -128,10 +128,10 @@ const topicClosed = (topic)=>{
  * @param {Object} topic - topic data from server
  */
 const addTopicToPage = (role, topic)=>{
-    if(role ==="Admin"){
-        complaintButton.style = "display:none;";
+    if(role ==="Admin" || role === "Moderator"){
+        trashButton.style = "display:block;";
     }else{
-        trashButton.style = "display:none;";
+        complaintButton.style = "display:block;";
     }
     topicClosed(topic);
     titleContainer.textContent = topic.header;

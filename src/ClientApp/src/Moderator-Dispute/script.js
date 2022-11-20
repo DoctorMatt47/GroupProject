@@ -127,6 +127,7 @@ const loadModeratorPanel = (complaint, userId)=>{
         }
         remove(complaint.id).then(()=>{
             window.history.go(-1);
+            location.reload(); 
             //openPage('../Moderator-Account/moderator-account.html');
         }).catch(showError);
     };
@@ -139,6 +140,7 @@ const loadModeratorPanel = (complaint, userId)=>{
         deleteFunction(complaint.targetId).then(() => {//also deletes complaint
             warningUser(userId).then(()=>{
                 window.history.go(-1);
+                location.reload(); 
                 //openPage('../Moderator-Account/moderator-account.html');
             }).catch(showError);
         }).catch(showError);
