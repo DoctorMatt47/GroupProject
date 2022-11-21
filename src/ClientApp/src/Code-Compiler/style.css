@@ -22,9 +22,7 @@ label {
 }
 
 #compiler-form {
-    overflow-y: scroll;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    overflow: auto;
     background: #fff;
     border: 10px solid #f67969;
     text-align: center;

@@ -11,6 +11,7 @@ const closeCompiler = () => {
 };
 const createCode = (container, code, language) =>{
     let div = document.createElement("div");
+    div.style = "overflow: auto;";
     div.setAttribute("data-pym-src", "https://www.jdoodle.com/plugin");
     div.setAttribute("data-language", language);
     div.textContent = code;
