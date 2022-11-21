@@ -32,18 +32,25 @@ h2 {
     margin: 20px;
 }
 
-.thumbnail:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
 .thumbnail p {
     margin-top: 15px;
     vertical-align: bottom;
     color: #555;
 }
-
 .thumbnail-topic {
+    height: 200px;
+    overflow-y: scroll !important;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
     background: linear-gradient(to bottom, #ffffff 0%, #818674 100%);
+}
+
+.thumbnail-topic::-webkit-scrollbar {
+    display: none;
+}
+
+.thumbnail-topic:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .thumbnail-topic a {
@@ -67,11 +74,12 @@ h2 {
     height: 60px !important;
     font-size: 20px;
     padding: 20px;
-    border-radius: 20px;
+    border-radius: 20px !important;
     background-color: #8A9A5B !important;
 
 }
 .join-btn:active{
+    border-radius:;
     background-color: green;
     box-shadow: 0 5px rgba(0, 0, 0, 0.2);
     transform: translateY(2px);
