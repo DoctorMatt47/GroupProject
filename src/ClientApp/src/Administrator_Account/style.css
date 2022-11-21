@@ -352,7 +352,7 @@ h2 {
     background: #444;
 }
 
-textarea, input {
+textarea, .fullscreen-container input {
     margin: .9em auto;
     font-family: inherit;
     text-transform: inherit;

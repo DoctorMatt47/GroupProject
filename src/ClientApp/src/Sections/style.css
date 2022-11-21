@@ -96,11 +96,10 @@ a:active {
 }
 
 .window-formBtn:active {
-
     background: #444;
 }
 
-textarea, input {
+textarea, .section-form input, .fullscreen-container input {
     margin: .9em auto;
     font-family: inherit;
     text-transform: inherit;
