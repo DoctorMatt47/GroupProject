@@ -7,7 +7,6 @@ using GroupProject.Application.Common.Responses;
 using GroupProject.Application.Configurations;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
-using GroupProject.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -75,8 +74,7 @@ public class ComplaintService : IComplaintService
         CreateComplaintRequest request,
         CancellationToken cancellationToken)
     {
-        var target = await FindTargetOrThrowAsync(request.Target, request.TargetId, cancellationToken);
-        target.IncrementComplaintCount();
+        await AnyTargetOrThrowAsync(request.Target, request.TargetId, cancellationToken);
 
         var configuration = await _configuration.Get(cancellationToken);
         var complaint = new Complaint(
@@ -102,15 +100,13 @@ public class ComplaintService : IComplaintService
     {
         var complaint = await _dbContext.Set<Complaint>().FindOrThrowAsync(id, cancellationToken);
         var targetId = (Guid) (complaint.CommentaryId ?? complaint.TopicId)!;
-        var target = await FindTargetOrThrowAsync(complaint.Target, targetId, cancellationToken);
-
-        target.DecrementComplaintCount();
+        await AnyTargetOrThrowAsync(complaint.Target, targetId, cancellationToken);
 
         _dbContext.Set<Complaint>().Remove(complaint);
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    private async Task<IHasComplaintCount> FindTargetOrThrowAsync(
+    private Task AnyTargetOrThrowAsync(
         ComplaintTarget target,
         Guid targetId,
         CancellationToken cancellationToken)
@@ -118,10 +114,10 @@ public class ComplaintService : IComplaintService
         return target switch
         {
             ComplaintTarget.Topic =>
-                await _dbContext.Set<Topic>().FindOrThrowAsync(targetId, cancellationToken),
+                _dbContext.Set<Topic>().AnyOrThrowAsync(targetId, cancellationToken),
 
             ComplaintTarget.Commentary =>
-                await _dbContext.Set<Commentary>().FindOrThrowAsync(targetId, cancellationToken),
+                _dbContext.Set<Commentary>().AnyOrThrowAsync(targetId, cancellationToken),
 
             _ => throw new ArgumentOutOfRangeException(),
         };
