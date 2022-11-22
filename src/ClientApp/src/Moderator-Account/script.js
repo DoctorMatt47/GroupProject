@@ -4,6 +4,12 @@ const openUserActionWindow = () => {
 const closeUserActionWindow = () => {
     document.getElementById("Unblock").style.display = "none";
 };
+const openModeratorActionWindow = () => {
+    document.getElementById("Unblock-moderator").style.display = "block";
+};
+const closeModeratorActionWindow = () => {
+    document.getElementById("Unblock-moderator").style.display = "none";
+};
 /**
  * Creates complaint html object for page
  * @param {object} complaint - object with complaint data

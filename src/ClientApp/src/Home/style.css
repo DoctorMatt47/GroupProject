@@ -39,6 +39,7 @@ h2 {
 }
 .thumbnail-topic {
     height: 200px;
+    overflow-x: hidden;
     overflow-y: scroll !important;
     -ms-overflow-style: none;
     scrollbar-width: none;
