@@ -9,7 +9,7 @@ namespace GroupProject.Domain.Entities;
 [SuppressMessage("ReSharper", "AutoPropertyCanBeMadeGetOnly.Local")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Local")]
-public class Topic : IHasId<Guid>, IHasComplaintCount, IVerifiable
+public class Topic : IHasId<Guid>, IVerifiable
 {
     private readonly List<Commentary> _commentaries = new();
     private readonly List<Complaint> _complaints = new();
@@ -50,6 +50,7 @@ public class Topic : IHasId<Guid>, IHasComplaintCount, IVerifiable
     public bool IsClosed { get; private set; }
     public CompileOptions? CompileOptions { get; private set; }
     public int ViewCount { get; private set; }
+    public int ComplaintCount { get; private set; } = 0;
 
     public Guid UserId { get; private set; }
     public User User { get; private set; } = null!;
@@ -59,18 +60,6 @@ public class Topic : IHasId<Guid>, IHasComplaintCount, IVerifiable
 
     public IEnumerable<Complaint> Complaints => _complaints.ToList();
     public IEnumerable<Commentary> Commentaries => _commentaries.ToList();
-
-    public int ComplaintCount { get; private set; }
-
-    public void IncrementComplaintCount()
-    {
-        ComplaintCount++;
-    }
-
-    public void DecrementComplaintCount()
-    {
-        if (ComplaintCount != 0) ComplaintCount--;
-    }
 
     public Guid Id { get; private set; }
 

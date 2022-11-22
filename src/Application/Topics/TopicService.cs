@@ -94,7 +94,6 @@ public class TopicService : ITopicService
         await ThrowIfContainsForbiddenPhrasesAsync();
 
         var section = await _dbContext.Set<Section>().FindOrThrowAsync(request.SectionId, cancellationToken);
-        section.IncrementTopicCount();
 
         var verificationDuration = await VerificationDurationOrNullAsync();
 
@@ -157,8 +156,6 @@ public class TopicService : ITopicService
         var topic = await _dbContext.Set<Topic>()
             .Include(t => t.Section)
             .FirstOrThrowAsync(id, cancellationToken);
-
-        topic.Section.DecrementTopicCount();
 
         _dbContext.Set<Topic>().Remove(topic);
         await _dbContext.SaveChangesAsync(cancellationToken);

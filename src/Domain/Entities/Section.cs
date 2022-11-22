@@ -31,14 +31,4 @@ public class Section : IHasId<int>
     public IEnumerable<Topic> Topics => _topics.ToList();
 
     public int Id { get; private set; } = 0;
-
-    public void IncrementTopicCount()
-    {
-        TopicCount++;
-    }
-
-    public void DecrementTopicCount()
-    {
-        TopicCount--;
-    }
 }
