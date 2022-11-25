@@ -135,7 +135,6 @@ public class TopicServiceTests
         {
             var topic = await _db.CreateTopicAsync();
             _dbContext.Set<Topic>().Attach(topic);
-            for (var j = 0; j < random.Next(100); j++) topic.IncrementComplaintCount();
         }
 
         await _dbContext.SaveChangesAsync();

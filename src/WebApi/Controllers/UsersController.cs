@@ -123,4 +123,16 @@ public class UsersController : ApiControllerBase
         await _users.UnbanUser(id, cancellationToken);
         return NoContent();
     }
+
+    [Authorize(Roles = "Admin")]
+    [HttpDelete("Moderator/{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> DeleteModerator(Guid id, CancellationToken cancellationToken)
+    {
+        await _users.DeleteModerator(id, cancellationToken);
+        return NoContent();
+    }
 }
