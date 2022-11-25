@@ -1,0 +1,331 @@
+body {
+    font-family: "Lato", sans-serif;
+}
+
+h2 {
+    color: #000;
+    text-align: center;
+    font-size: 2em;
+    margin: 20px 0;
+}
+
+.box {
+    padding: 0 80px;
+    background-color: #F5F5F5;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 200px;
+    width: 100%;
+}
+
+.tab {
+    cursor: pointer;
+    padding: 10px 20px;
+    margin: 0 2px;
+    background: #32557f;
+    display: inline-block;
+    color: #fff;
+    border-radius: 3px 3px 0 0;
+    box-shadow: 0 0.5rem 0.8rem #00000080;
+}
+
+.panels {
+    background: #fff;
+    box-shadow: 0 2rem 2rem rgba(0, 0, 0, 0.35);
+    min-height: 200px;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 3px;
+    padding: 20px;
+}
+
+.panel {
+    display: none;
+    animation: fadein 0.8s;
+    border: none;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.panel-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.radio {
+    display: none;
+}
+
+#one:checked ~ .panels #one-panel,
+#two:checked ~ .panels #two-panel {
+    display: block;
+}
+
+#one:checked ~ .tabs #one-tab,
+#two:checked ~ .tabs #two-tab {
+    background: #fff;
+    color: #000;
+    border-top: 3px solid #32557f;
+}
+
+.section {
+    display: flex;
+}
+
+.block {
+    display: flex;
+    flex-direction: column;
+    height: 220px;
+    width: 100%;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    border-radius: 20px;
+    border: 1px solid cadetblue;
+    margin-top: 20px;
+    padding: 20px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.block::-webkit-scrollbar {
+    display: none;
+}
+
+.block:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#block:active {
+    background-color: gray;
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(4px);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: flex-start;
+    font-size: 10px;
+    color: black;
+}
+
+.title {
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border-radius: 30px;
+    color: #000;
+
+}
+
+.topic {
+    border: 1px solid rgba(14, 134, 64, 0.81);
+    background-color: rgba(14, 134, 64, 0.81);
+
+}
+
+.comment {
+    border: 1px solid #e0a53a;
+    background-color: #e0a53a;
+}
+
+.title h4 {
+    padding-left: 7px;
+    padding-right: 7px;
+    font-size:1vw;
+}
+
+
+.element-actions {
+    margin: 8px;
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.account-panel {
+    position: relative;
+    border-radius: 20px !important;
+    margin: 80px 40px auto;
+    color: black;
+}
+
+.account-panel-footer {
+    background-color: white;
+
+}
+
+.panel-heading,
+.panel-heading h2 {
+    background-color: #32557f;
+    text-align: center;
+    border-radius: 20px 20px 0 0;
+    color: white;
+}
+
+.user-action-btn {
+    width: 100%;
+    border-radius: 30px;
+    background-color: rgba(92, 161, 127, 0.91);
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.user-action-btn:hover {
+    background-color: rgba(63, 138, 101, 0.91);
+}
+
+.user-action-btn:active {
+    background-color: rgba(63, 138, 101, 0.91);
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+
+.fullscreen-container {
+    font-family: Courier, sans-serif;
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(90, 90, 90, 0.5);
+    z-index: 9999;
+}
+
+.unblock-section {
+    border: 10px solid #f67969;
+    padding: 5em;
+    width: 600px;
+    max-height: 100% !important;
+    border-radius: 200px;
+    text-align: center;
+    background: #fff;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%)
+
+}
+
+.unblock-section label {
+    color: rgba(246, 121, 105, 0.82);
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.unblock-section:hover {
+    border-top-left-radius: 200px;
+    border-bottom-right-radius: 200px;
+    transition: .5s;
+}
+
+.submit-unblock {
+    text-transform: uppercase;
+    color: #fff;
+    width: 30%;
+    align-self: center;
+    border: 1px solid #f16958;
+    padding: 12px 20px;
+    border-radius: 30px;
+    background: rgba(246, 121, 105, 0.82);
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.submit-unblock:hover {
+    background: #fff;
+    color: rgba(248, 110, 92, 0.82);
+}
+
+.close-unblock {
+    color: rgba(246, 121, 105, 0.82);
+    border: beige;
+    background-color: white;
+}
+
+.close-unblock:hover {
+    border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.close-unblock:active {
+    background-color: white;
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.data input {
+    width: 100%;
+    border: 3px solid #f67969;
+    border-radius: 20px;
+    padding: 10px;
+    height: 30px;
+    color: black;
+    text-align: center;
+}
+
+.data input:active,
+.data input:hover {
+    border: 3px solid #f67969;
+}
+
+.load-more {
+    width: 100%;
+    padding: 16px 40px;
+    margin-top: 30px;
+    border: none;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    background-color: rgba(54, 124, 194, 0.45);
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+}
+
+.load-more:not([disabled]):hover {
+    background-color: rgba(54, 124, 194, 0.78);
+    box-shadow: 0 1px 9px rgba(0, 0, 0, 0.2);
+}
+
+.load-more:not([disabled]):active {
+    background-color: rgba(54, 124, 194, 0.78);
+    box-shadow: 0 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(2px);
+}
+
+.load-more[disabled] {
+    background-color: #eaeaea !important;
+}
+
+
+

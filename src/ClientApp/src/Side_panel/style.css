@@ -1,0 +1,33 @@
+.thumbnail {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    margin: 20px;
+    padding: 20px;
+    color: black;
+    align-items: baseline;
+}
+
+.thumbnail p {
+    margin-top: 15px;
+    vertical-align: bottom;
+    color: #555;
+}
+
+.language-list-item {
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    border: none;
+}
+
+
+.list-group span {
+    background-color: cadetblue;
+}
+
+.view-all-link a {
+    text-align: left;
+    color: #B0B0B0 !important;
+    text-decoration: none;
+}
