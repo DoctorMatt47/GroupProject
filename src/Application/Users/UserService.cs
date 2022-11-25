@@ -128,7 +128,9 @@ public class UserService : IUserService
 
         var forbiddenPhrases = (await _phrases
                 .GetForbidden(cancellationToken))
-            .FirstOrDefault(p => _phrases.ContainsPhrase(request.Login, p.Phrase));
+            .Select(p => p.Phrase)
+            .Where(phrase => _phrases.ContainsPhrase(request.Login, phrase))
+            .ToList();
 
         if (forbiddenPhrases is not null)
             throw new BadRequestException($"Login contains forbidden words: {string.Join(',', forbiddenPhrases)}");
