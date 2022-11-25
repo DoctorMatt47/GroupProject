@@ -14,4 +14,5 @@ public interface IUserService
     Task AddWarningToUser(Guid id, CancellationToken cancellationToken);
     Task BanUser(Guid id, CancellationToken cancellationToken);
     Task UnbanUser(Guid id, CancellationToken cancellationToken);
+    Task DeleteModerator(Guid id, CancellationToken cancellationToken);
 }
