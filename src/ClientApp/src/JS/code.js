@@ -95,6 +95,7 @@ const addBackgroundClosing = (container, closeFunction)=>{
     });
 }
 const showError = (err) => {
+    console.log(err)
     const exception = JSON.parse(err.message);
     openErrorWindow(exception.message);
 };
