@@ -174,3 +174,17 @@ const isBanned = (user)=>{
     ban.setHours(ban.getHours() +2);
     return ban > now;
 };
+/**
+ * Deletes moderator
+ * @param {string} moderatorId id of moderator
+ */
+const deleteModerator = (moderatorId)=>{
+    const request = {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization":"Bearer "+getFromStorage("token")
+        }
+    };
+    return sendAsync(URLS.Users + `/${moderatorId}`, request);
+};

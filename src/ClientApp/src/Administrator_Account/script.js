@@ -85,6 +85,17 @@ const loadModerators = ()=>{
     moderatorList.innerHTML = "";
     const moderatorButton = document.getElementById("load-more-moderators");
     loadUserList(getModerators, currentModeratorPage++, moderatorButton, createModeratorObject);
+    getModerators(1,1).then(res=>{
+        getModerators(res.itemsCount, 1).then(moderators=>{
+            const datalist = document.getElementById("moderator-nicknames");
+            for(let i = 0; i < moderators.items.length; i++){
+                const option = document.createElement("option");
+                option.value = moderators.items[i].login;
+                option.setAttribute("meta-data", moderators.items[i].id);
+                datalist.appendChild(option);
+            }
+        }).catch(showError);
+    }).catch(showError);
     moderatorButton.onclick = ()=>{
         loadUserList(getModerators, currentModeratorPage++, moderatorButton, createModeratorObject);
     };
@@ -97,6 +108,27 @@ const loadUsers = ()=>{
     userButton.onclick = ()=>{
         loadUserList(getUsers, currentUserPage++, userButton, createUserObject);
     };
+};
+/**
+ * Unblocks user with login from input
+ */
+const deleteSelectedModerator = ()=>{
+    const input = document.getElementById("moderators");
+    const datalist = document.getElementById("moderator-nicknames");
+    let id = null;
+    for (let i in datalist.options) {
+        if (datalist.options[i].value === input.value){
+            id = datalist.options[i].getAttribute("meta-data");
+        }
+    }
+    if(id == null){
+        openErrorWindow(`There isn't moderator with login: '${input.value}'`);
+        return;
+    }
+    deleteModerator(id).then(()=>{
+        loadModerators();
+        openMessageWindow("Deleted!");
+    }).catch(showError);
 };
 window.addEventListener("load", ()=>{
     loadModerators();

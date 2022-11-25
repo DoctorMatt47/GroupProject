@@ -155,7 +155,7 @@
                 <div class="panel-footer account-panel-footer">
                     <button type="button" class="admin-button" onclick="openCreateModeratorWindow()">Create Moderator</button>
                     <button type="button" class="admin-button" onclick="openUserActionWindow()">Unblock User</button>
-                    <button type="button" class="admin-button" onclick="openModeratorActionWindow()">Unblock Moderator</button>
+                    <button type="button" class="admin-button" onclick="openModeratorActionWindow()">Delete Moderator</button>
                 </div>
             </div>
         </div>
@@ -192,13 +192,13 @@
             </div>
         </div>
         <div class="data">
-            <label for="users">Choose Moderator:</label>
-            <input list="nicknames" id="moderators" name="users" autocomplete="off">
+            <label for="moderators">Choose Moderator:</label>
+            <input list="moderator-nicknames" id="moderators" name="moderators" autocomplete="off">
 
             <datalist id="moderator-nicknames">
             </datalist>
         </div>
-        <button type="button" class="submit-unblock" onclick="unblockSelectedUser(); closeModeratorActionWindow(); setTimeout(loadUsers, 100); return false;">Unblock</button>
+        <button type="button" class="submit-unblock" onclick="deleteSelectedModerator(); closeModeratorActionWindow(); return false;">Delete</button>
     </div>
 </div>
 <div id="createModerator" class="fullscreen-container">
