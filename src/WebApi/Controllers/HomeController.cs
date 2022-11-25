@@ -6,5 +6,5 @@ namespace GroupProject.WebApi.Controllers;
 [ApiExplorerSettings(IgnoreApi = true)]
 public class HomeController : ControllerBase
 {
-    public ActionResult RedirectToSwagger() => Redirect("/swagger/index.html");
+    //public ActionResult RedirectToSwagger() => Redirect("/swagger/index.html");
 }

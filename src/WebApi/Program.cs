@@ -30,6 +30,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseFileServerWithoutCaching();
+}
+else
+{
+    app.UseFileServer();
 }
 
 app.UseCors(p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
