@@ -186,5 +186,5 @@ const deleteModerator = (moderatorId)=>{
             "Authorization":"Bearer "+getFromStorage("token")
         }
     };
-    return sendAsync(URLS.Users + `/${moderatorId}`, request);
+    return sendAsync(URLS.Users + `/Moderator/${moderatorId}`, request);
 };

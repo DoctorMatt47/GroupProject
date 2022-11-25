@@ -88,6 +88,7 @@ const loadModerators = ()=>{
     getModerators(1,1).then(res=>{
         getModerators(res.itemsCount, 1).then(moderators=>{
             const datalist = document.getElementById("moderator-nicknames");
+            datalist.innerHTML = "";
             for(let i = 0; i < moderators.items.length; i++){
                 const option = document.createElement("option");
                 option.value = moderators.items[i].login;
@@ -126,6 +127,7 @@ const deleteSelectedModerator = ()=>{
         return;
     }
     deleteModerator(id).then(()=>{
+        input.value = "";
         loadModerators();
         openMessageWindow("Deleted!");
     }).catch(showError);
