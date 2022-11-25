@@ -1,35 +1,55 @@
 const cardContainer = document.getElementById("card-container");
-const loadMoreButton = document.getElementById("load-more");
+const loadMoreTopicButton = document.getElementById("load-more");
+const commentContainer = document.getElementById("comment-container");
+const loadMoreCommentButton = document.getElementById("load-more-comments");
 const cardCreated = document.getElementById("created-discussions");
 
 const cardIncrease = 5;
-let currentPage = 1;
+let currentTopicPage = 1;
+let currentCommentPage = 1;
 
-const createCard = (data) => {
+const createCard = (data, container) => {
     const card = document.createElement("a");
     card.className = "card";
     card.innerHTML = `${data.header}<br>${cutTextForTopic(data.description)}`;
     card.href = addParameters("../Topic/topic.html", {id:data.id});
-    cardContainer.appendChild(card);
+    container.appendChild(card);
 };
-const createCards = (userId)=>{
-    getUserTopics(userId, cardIncrease, currentPage++).then(response=>{
-        if(response.items.length == 0){
-            loadMoreButton.classList.add("disabled");
-            loadMoreButton.setAttribute("disabled", true);
+const createTopicCards = (userId)=>{
+    getUserTopics(userId, cardIncrease, currentTopicPage++).then(response=>{
+        if(response.items.length < cardIncrease){
+            loadMoreTopicButton.classList.add("disabled");
+            loadMoreTopicButton.setAttribute("disabled", true);
         }
         for(let i in response.items){
             getTopic(response.items[i].id).then(resp =>{
-                createCard(resp);
+                createCard(resp, cardContainer);
             }).catch(showError);
         }
     }).catch(showError);
 }
-
+const createCommentCards = (userId)=>{
+    getUserComments(userId, cardIncrease, currentCommentPage++).then(response=>{
+        if(response.items.length < cardIncrease){
+            loadMoreCommentButton.classList.add("disabled");
+            loadMoreCommentButton.setAttribute("disabled", true);
+        }
+        for(let i in response.items){
+            let item = response.items[i];
+            item.header = "Comment"
+            item.id = item.topicId
+            createCard(item, commentContainer);
+        }
+    }).catch(showError);
+};
 const addCards = (userId) => {
-    createCards(userId);
-    loadMoreButton.onclick = ()=>{
-        createCards(userId);
+    createTopicCards(userId);
+    createCommentCards(userId);
+    loadMoreTopicButton.onclick = ()=>{
+        createTopicCards(userId);
+    };
+    loadMoreCommentButton.onclick = ()=>{
+        createCommentCards(userId);
     };
 };
 

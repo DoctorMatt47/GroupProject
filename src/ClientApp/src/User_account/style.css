@@ -129,7 +129,7 @@
     align-items: center;
 }
 
-#load-more {
+#load-more,#load-more-comments {
     width: 100%;
     padding: 16px;
     border: none;
@@ -144,16 +144,16 @@
     box-shadow: 0 5px #00000033;
 }
 
-#load-more:active {
+#load-more,#load-more-comments:active {
     box-shadow: 0 5px rgba(0, 0, 0, 0.2);
     transform: translateY(2px);
 }
 
-#load-more:not([disabled]):hover {
+#load-more,#load-more-comments:not([disabled]):hover {
     box-shadow: 0 1px 9px rgba(0, 0, 0, 0.2);
 }
 
-#load-more[disabled] {
+#load-more,#load-more-comments[disabled] {
     background-color: #eaeaea !important;
 }
 
