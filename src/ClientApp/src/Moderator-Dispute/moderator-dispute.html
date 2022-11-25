@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - Complaint Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+            $("#compiler").load("../Code-Compiler/code-compiler.html");
+            $("#moderator-panel").load("../Moderator_panel/moderator-panel.html");
+        });
+    </script>
+</head>
+<body id="page-header" data-target=".navbar" data-offset="50">
+<div id="compiler"></div>
+<div id="header"></div>
+<div class="container-fluid box mt-5">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="row panel user-panel">
+                <div class="panel-heading user-panel-heading">
+                    <h2 style="font-family:Courier New, Courier, monospace" id="username">Username</h2>
+                    <p id="registration-date">Registration date</p>
+                </div>
+                <div class="panel-body user-panel-body text-center">
+                    <div class="col-sm-6 ">
+                        <div id="preventions">6</div>
+                        <p style="color: black">Preventions</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <div id="created-discussions">6</div>
+                        <p style="color: black">Created Topics</p>
+                    </div>
+                    <p id="last-block">Last block date:22.03.2019</p>
+                </div>
+            </div>
+            <div id="moderator-panel"></div>
+        </div>
+        <div class="col-sm-6">
+            <div class="row">
+                <div class="panel">
+                    <div class="panel-heading topic-panel-heading">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-11">
+                                    <a href="#">
+                                        <div class="section" id="section">Javascript</div>
+                                    </a>
+                                </div>
+                            </div>
+                            <h3 style="font-style: inherit" id="topic-name"><strong>Create multiple elements</strong>
+                            </h3>
+                            <a style="color:grey; cursor:pointer;" href="#" id="original-button">See in original-></a>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="panel-body topic-panel-footer">
+                        <div id="topic-description-complaint">I want to create 4 elements with different text. The class
+                            needs to
+                            remain the same. I think I am doing this with too much code.
+                            Maybe anyone has some information how to make this code look more beautiful and more
+                            efficient?
+                            Best wishes and thank you!
+                        </div>
+                    </div>
+                    <div class="panel-footer" id="all-code">
+                        <div id="panel-footer-code">
+                            <div class="language" id="topic-language">Javascript</div>
+                            <div id="user-code" style="white-space: pre-wrap;">Here should be your code<br>
+                                var textBlock = document.createElement('div');<br>
+                                textBlock.setAttribute('class', 'finalBlock');<br><br>
+                                var addFinalBlock = document.getElementsByClassName('block')[0];<br>
+                                addFinalBlock.appendChild(textBlock);<br><br>
+                                textBlock.innerHTML = "Make this block a text block";
+                            </div>
+                            <br>
+                            <div style="width: 100%;">
+                                <button type="button" class="code-btn" id="run-code" onclick="openCompiler()">Run
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3 text-center" id="author-panel">
+            <div class="panel complainer-panel ">
+                <div class="panel-heading complainer-panel-heading">
+                    <h3 id="complaint-header">Complaint Author</h3>
+                    <h5 style="font-family:Courier New, Courier, monospace" id="complainer-username">Username</h5>
+                </div>
+                <div class="panel-body user-panel-body text-center">
+                    <div id="complaint-text">Text</div>
+                </div>
+                <button id="author-block-button" class="moderator-btn btn-block" style="width: 80%;">Block</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+</body>
+<script src="../Moderator-Dispute/script.js"></script>
+<script src="../JS/complains.js"></script>
+<script src="../JS/comment.js"></script>
+<script src="../JS/configurations.js"></script>
+<script src="../JS/topic.js"></script>
+<script src="../JS/section.js"></script>
+<script src="../JS/languages.js"></script>
+<script src="../JS/user.js"></script>
+<script src="../JS/code.js"></script>
+<script src="../JS/httpFunctions.js"></script>
+<script src="../JS/data.js"></script>
+</html>

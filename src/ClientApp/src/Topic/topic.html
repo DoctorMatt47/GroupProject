@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - Topic Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+            $("#side-panel").load("../Side_panel/side-panel.html");
+            $("#complaint1").load("../Complaint/complaint.html");
+            $("#compiler").load("../Code-Compiler/code-compiler.html");
+            $("#commentForm").load("../Comment-Creation/comment-creation.html");
+            $("#moderator-panel").load("../Moderator_panel/moderator-panel.html");
+        });
+    </script>
+</head>
+<body id="page-header" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+
+<div class=" container-fluid  box mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="panel">
+                <div class="panel-heading topic-panel-heading">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div id="complaint1"></div>
+                            <div class="col-sm-11">
+                                <a>
+                                    <div class="section" id="section">Javascript</div>
+                                </a>
+                            </div>
+                            <div class="col-sm-1 complaint-icon">
+                                <button data-toggle="tooltip" title="Create a complaint"
+                                        onclick="openComplainForm('topic', getValueFromCurrentUrl('id')); return false;">
+                                    <span id="topic-complaint-button"  class="glyphicon glyphicon-comment comment-span" style="display: none;"></span>
+                                </button>
+                                <button data-toggle="tooltip" title="Moderate">
+                                    <span id="topic-admin-button" class="glyphicon glyphicon-copy moderate-span" style="display: none;"
+                                        onclick="openPage('../Moderator-Dispute/moderator-dispute.html', {id:getValueFromCurrentUrl('id'), type:'VerifyTopic'}); return false;"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <h3 style="font-style: inherit" id="topic-name"><strong>Create multiple elements</strong></h3>
+                        <hr>
+                    </div>
+                </div>
+                <div class="panel-body topic-panel-footer">
+                    <div id="topic-description">I want to create 4 elements with different text. The class needs to
+                        remain the same. I think I am doing this with too much code.
+                        Maybe anyone has some information how to make this code look more beautiful and more efficient?
+                        Best wishes and thank you!
+                    </div>
+                </div>
+                <div class="panel-footer" id="all-code">
+                    <div id="panel-footer-code">
+                        <div class="language" id="topic-language">Javascript</div>
+                        <div id="user-code" style="white-space: pre-wrap;">Here should be your code<br>
+                            var textBlock = document.createElement('div');<br>
+                            textBlock.setAttribute('class', 'finalBlock');<br><br>
+                            var addFinalBlock = document.getElementsByClassName('block')[0];<br>
+                            addFinalBlock.appendChild(textBlock);<br><br>
+                            textBlock.innerHTML = "Make this block a text block";
+                        </div>
+                        <br>
+                        <div style="width: 100%;">
+                            <button type="button" class="code-btn" id="run-code" onclick="openCompiler()">Run</button>
+                        </div>
+                    </div>
+                </div>
+                <button id="comment-open-button" type="submit" class="comment-btn" onclick="openCommentForm()">Add
+                    Comment
+                </button>
+            </div>
+
+            <div id="compiler"></div>
+            <div id="commentForm"></div>
+
+            <div class="comment-group" id="comment-group">
+                <div id="comment" class="panel">
+                    <div class="complaint-icon" style="margin-top: 15px;">
+                        <button data-toggle="tooltip" title="Create a complaint" onclick="openForm()">
+                            <span class="glyphicon glyphicon-comment comment-span"></span>
+                        </button>
+                        <button id="comment-admin-button" data-toggle="tooltip" title="Moderate">
+                            <span class="glyphicon glyphicon-copy moderate-span"></span>
+                        </button>
+                    </div>
+                    <p id="answer">Here we have answer text<br>
+                        "Explanation:
+
+                        This is called event delegation and works as followed.
+                        The event is attached to a static parent (staticAncestors)
+                        of the element that should be handled. This jQuery handler
+                        is triggered every time the event triggers on this element
+                        or one of the descendant elements. The handler then checks
+                        if the element that triggered the event matches your selector
+                        (dynamicChild). When there is a match then your custom handler function is executed."
+                    </p>
+                    <div class="panel-footer">
+                        <div id="panel-footer-answer-code">
+                            <div class="language" id="answer-language">Javascript</div>
+                            <p>
+                                Here should be your code<br>
+                                var textBlock = document.createElement('div');<br>
+                                textBlock.setAttribute('class', 'finalBlock');<br>
+                                var addFinalBlock = document.getElementsByClassName('block')[0];<br>
+                                addFinalBlock.appendChild(textBlock);<br>
+                                textBlock.innerHTML = "Make this block a text block";
+                            </p>
+
+                            <div style="width: 100%;">
+                                <button type="button" class="code-btn" onclick="openCompiler()">Run</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="answer-username"><a href="#">username</a></div>
+                    <p id="answer-date">Answered:20.02.2022</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row thumbnail panel align-left">
+                <div class="panel-heading text-center">
+                    <h2 style="font-family:Courier New, Courier, monospace">About discussion</h2>
+                </div>
+                <div class="panel-body" style="padding-top: 30px">
+                    <div class="row text-center">
+                        <div class="col-sm-6">
+                            <div id="viewed" style="font-size: 20px;">0</div>
+                            <p>Viewed</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <div id="answers" style="font-size: 20px;">0</div>
+                            <p>Answers</p>
+                        </div>
+                    </div>
+                    <div id="topic-info">
+                        <hr>
+                        <div id="topic-username"><a href="#">username</a></div>
+                        <div id="creation-date">creation date: 22.03.2022</div>
+                    </div>
+                </div>
+                <div class="panel-footer" style="background-color: white; text-align: center">
+                    <div id="verificationWindow">
+                        <div class="verification-section">
+                            <div class="inner-width">
+                                <div class="row">
+                                    <div class="col-sm-8"></div>
+                                    <div class="col-sm-4">
+                                        <button id="close-complaint" onclick="closeVerificationWindow(); return false;">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <h3>ARE YOU SURE?</h3>
+                                <button id="submit-btn"
+                                        onclick="closeCurrentTopic(); topicClosed({isClosed:true}); closeVerificationWindow(); return false;">
+                                    Yes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" id="close-btn" onclick="openVerificationWindow()">Close</button>
+                </div>
+            </div>
+            <div id="side-panel"></div>
+            <div id="moderator-panel"></div>
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div>
+</body>
+<script src="../Topic/script.js"></script>
+<script src="../JS/topic.js"></script>
+<script src="../JS/section.js"></script>
+<script src="../JS/languages.js"></script>
+<script src="../JS/user.js"></script>
+<script src="../JS/code.js"></script>
+<script src="../JS/httpFunctions.js"></script>
+<script src="../JS/data.js"></script>
+</html>

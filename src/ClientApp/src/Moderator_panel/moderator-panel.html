@@ -1,0 +1,80 @@
+<link href="../Moderator_panel/style.css" rel="stylesheet" type="text/css">
+<div class="panel user-panel">
+    <div class="panel-heading text-center" style="background-color: #56699b">
+        <h3>Moderation Panel</h3>
+    </div>
+    <div class="panel-footer moderator-panel-footer">
+        <button class=" moderator-btn btn-leave" onclick="openLeaveVerificationWindow()">Leave</button>
+        <button class=" moderator-btn btn-delete" onclick="openDeleteVerificationWindow()">Delete</button>
+        <button class=" moderator-btn btn-end" onclick="openEndVerificationWindow()">End</button>
+        <button id="open-block-button" class=" moderator-btn btn-block">Block</button>
+    </div>
+</div>
+<div id="block-container" class="fullscreen-container">
+    <div class="verification-section">
+        <div class="inner-width">
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <button class="close-verification" onclick="closeBlockVerificationWindow();"><span
+                            class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <h3>Block this User?</h3>
+            <button class="submit-verification" id="block-button">Yes</button>
+        </div>
+    </div>
+</div>
+<div id="delete-container" class="fullscreen-container">
+    <div class="verification-section">
+        <div class="inner-width">
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <button class="close-verification" onclick="closeDeleteVerificationWindow();"><span
+                            class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <h3>Send warning and delete this content?</h3>
+            <button class="submit-verification" onclick="closeDeleteVerificationWindow();" id="delete-button">Yes
+            </button>
+        </div>
+    </div>
+</div>
+<div id="leave-container" class="fullscreen-container">
+    <div class="verification-section">
+        <div class="inner-width">
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <button class="close-verification" onclick="closeLeaveVerificationWindow();"><span
+                            class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <h3>Do you want to leave this dispute without any action?</h3>
+            <button class="submit-verification" onclick="window.history.go(-1); return false;">Yes</button>
+        </div>
+    </div>
+</div>
+<div id="end-container" class="fullscreen-container">
+    <div class="verification-section">
+        <div class="inner-width">
+            <div class="row">
+                <div class="col-sm-8"></div>
+                <div class="col-sm-4">
+                    <button class="close-verification" onclick="closeEndVerificationWindow();"><span
+                            class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+            </div>
+            <h3> Do you want to close this dispute without any message for User?</h3>
+            <button class="submit-verification" onclick="closeEndVerificationWindow();" id="end-button">Yes, close dispute in favor of
+                the user
+            </button>
+        </div>
+    </div>
+</div>
+<script src="../Moderator_panel/script.js"></script>

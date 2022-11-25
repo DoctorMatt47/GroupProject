@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - Section Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+        });
+    </script>
+</head>
+<body id="page-header" data-spy="scroll" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+<div class=" container  box mt-5">
+    <div class="title">
+            <div id="section-name">Coffeescript</div>
+            <button style="display: none;" id="edit-button" type="button" class="edit-icon" onclick="openUpdateForm()"><span class="glyphicon glyphicon-edit"></span></button>
+            <button style="display: none;" id="delete-button" type="button" class="trash-icon" onclick="openDeleteForm()"><span class="glyphicon glyphicon-trash"></span></button>
+    </div>
+    <div id="section-description">JavaScript is a high-level,
+        often just-in-time compiled language that conforms to the ECMAScript standard.
+        It has dynamic typing, prototype-based object-orientation, and first-class functions.
+        It is multi-paradigm, supporting event-driven, functional, and imperative programming styles. It has application
+        programming interfaces (APIs)
+        for working with text, dates, regular expressions, standard data structures, and the Document Object Model
+        (DOM).
+    </div>
+    <hr class="line">
+    <div class="col-sm-12">
+        <div id="topics-container">
+            <div class="topic">
+                <div class="col-sm-2 user-info">
+                    <a href="#">
+                        <div class="language">Coffeescript</div>
+                    </a>
+                    <a href="#" id="username">username</a>
+                    <p class="topic-p">creation date</p>
+                </div>
+                <div class="vertical-line"></div>
+                <a href="#">
+                    <div class="col-sm-12">
+                        <div class="topic-name">Topic Name</div>
+                        <div class="topic-description">Here we have Topic Description.
+                            BTW we have a problem. The blocks may have different sizes.... So description should be
+                            shorter
+                            than three lines
+                            Or we should show only two sentences and then "..." Same with description in sections blocks
+                        </div>
+                        <div class="topic-info">
+                            <p class="topic-p">answered:</p>
+                            <p class="topic-p">views:</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <button id="load-more">Load more</button>
+    </div>
+</div>
+<div id="updateWindow" class="fullscreen-container">
+    <div class="update-section">
+        <h2>Update Section</h2>
+        <form onsubmit="submitUpdateSection(); closeUpdateForm(); return false;">
+            <label for="new-section-name">New Section Title</label>
+            <textarea id="new-section-name" minlength="2" maxlength="32000" required></textarea>
+            <label for="new-section-description">New Section Description</label>
+            <textarea id="new-section-description" minlength="2" maxlength="32000" required></textarea>
+
+            <button type="submit" class="comment-formBtn">Submit</button>
+            <button type="button" class="comment-formBtn" onclick="closeUpdateForm()">Close</button>
+        </form>
+    </div>
+</div>
+<div id="deleteWindow" class="fullscreen-container">
+    <div class="update-section">
+            <h2>Delete Section with all topics in it?</h2>
+            <button type="button" class="comment-formBtn" onclick="deleteCurrentSection(); closeDeleteForm();">Delete</button>
+            <button type="button" class="comment-formBtn" onclick="closeDeleteForm()">Close</button>
+    </div>
+</div>
+<div id="footer"></div>
+<script src="script.js"></script>
+<script src="../JS/topic.js"></script>
+<script src="../JS/section.js"></script>
+<script src="../JS/languages.js"></script>
+<script src="../JS/user.js"></script>
+<script src="../JS/code.js"></script>
+<script src="../JS/httpFunctions.js"></script>
+<script src="../JS/data.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: gray !important;
+    font: 400 14px / 1.8 Lato, sans-serif;
+    letter-spacing: 1px;
+}
+
+label {
+    text-transform: uppercase;
+}
+
+#compiler-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(220, 218, 218, 0.1);
+    z-index: 9999;
+}
+
+#compiler-form {
+    overflow: auto;
+    background: #fff;
+    border: 10px solid #f67969;
+    text-align: center;
+    position: fixed;
+    padding: 0;
+    width: 30%;
+    height: 90%;
+    top: 52%;
+    left: 80%;
+    border-radius: 50px;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%)
+}
+#compiler-form::-webkit-scrollbar {
+    display: none;
+}
+

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - Administrator Account Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+        });
+    </script>
+</head>
+<body id="page-header" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+<div class=" container-fluid  box mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>Administration Tabs</h2>
+            <div class="wrapper">
+                <input class="radio" id="one" name="group" type="radio" checked>
+                <input class="radio" id="two" name="group" type="radio">
+                <input class="radio" id="three" name="group" type="radio">
+                <input class="radio" id="four" name="group" type="radio">
+
+                <div class="tabs">
+                    <label class="tab" id="one-tab" for="one">Topic and Comment Complaint List</label>
+                    <label class="tab" id="two-tab" for="two">System Warning List</label>
+                    <label class="tab" id="three-tab" for="three">Users List</label>
+                    <label class="tab" id="four-tab" for="four">Moderators List</label>
+                </div>
+
+                <div class="panels">
+                    <div class="panel" id="one-panel" style="margin: 0 50px;">
+                        <div id="complaint-list">
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title topic">
+                                            <h4><strong>Topic</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>number of complaints: 254</p>
+                                            <p>creation date:22.02.12</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title comment">
+                                            <h4><strong>Comment</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>number of complaints: 254</p>
+                                            <p>creation date:22.02.12</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                            <!--Let's display less than 12 blocks on one page-->
+                        <button id="load-more-complaints" class="load-more">Load more</button>
+                    </div>
+                    <div class="panel" id="two-panel" style="margin: 0 50px;">
+                        <div id="verify-list">
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title topic">
+                                            <h4><strong>Topic</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>number of comments: 254</p>
+                                            <p>creation date:22.02.12</p>
+                                            <p>Here we can display warning words</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title comment">
+                                            <h4><strong>Comment</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>number of comments: 254</p>
+                                            <p>creation date:22.02.12</p>
+                                            <p>Here we can display warning words</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <button id="load-more-verifies" class="load-more">Load more</button>
+                    </div>
+                    <!--User Tabs-->
+                    <div class="panel" id="three-panel">
+                        <div id="user-list">
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title user">
+                                            <h4><strong>User</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>Nickname</p>
+                                            <p>registration date:22.02.12</p>
+                                            <p>number of topics: 254</p>
+                                            <p>number of warnings: 254</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <button id="load-more-users" class="load-more">Load more</button>
+                    </div>
+
+                    <div class="panel" id="four-panel">
+                        <div id="moderator-list">
+                            <div class="col-sm-3">
+                                <a href="#">
+                                    <div class="block">
+                                        <div class="title moder">
+                                            <h4><strong>Moderator</strong></h4>
+                                        </div>
+                                        <div class="info">
+                                            <p>Nickname</p>
+                                            <p>registration date:22.02.12</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <button id="load-more-moderators" class="load-more">Load more</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row account-panel">
+                <div class="panel-heading">
+                    <h2 style="font-family:Courier New, Courier, monospace" id="username">Administrator Username</h2>
+                    <p id="registration-date">Registration date</p>
+                </div>
+                <div class="panel-footer account-panel-footer">
+                    <button type="button" class="admin-button" onclick="openCreateModeratorWindow()">Create Moderator</button>
+                    <button type="button" class="admin-button" onclick="openUserActionWindow()">Unblock User</button>
+                    <button type="button" class="admin-button" onclick="openModeratorActionWindow()">Delete Moderator</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="Unblock" class="fullscreen-container">
+    <div class="window-section">
+        <div class="row">
+            <div class="col-sm-8"></div>
+            <div class="col-sm-4">
+                <button class="close-unblock" onclick="closeUserActionWindow();"><span
+                        class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
+        </div>
+        <div class="data">
+            <label for="users">Choose User:</label>
+            <input list="nicknames" id="users" name="users" autocomplete="off">
+
+            <datalist id="nicknames">
+            </datalist>
+        </div>
+        <button type="button" class="submit-unblock" onclick="unblockSelectedUser(); closeUserActionWindow(); setTimeout(loadUsers, 100); return false;">Unblock</button>
+    </div>
+</div>
+<div id="Unblock-moderator" class="fullscreen-container">
+    <div class="window-section">
+        <div class="row">
+            <div class="col-sm-8"></div>
+            <div class="col-sm-4">
+                <button class="close-unblock" onclick="closeModeratorActionWindow();"><span
+                        class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
+        </div>
+        <div class="data">
+            <label for="moderators">Choose Moderator:</label>
+            <input list="moderator-nicknames" id="moderators" name="moderators" autocomplete="off">
+
+            <datalist id="moderator-nicknames">
+            </datalist>
+        </div>
+        <button type="button" class="submit-unblock" onclick="deleteSelectedModerator(); closeModeratorActionWindow(); return false;">Delete</button>
+    </div>
+</div>
+<div id="createModerator" class="fullscreen-container">
+    <div class="window-section">
+        <h2>Create Moderator</h2>
+        <form onsubmit="submitModerator(); closeCreateModeratorWindow(); return false;">
+            <label for="moderator-nickname">Moderator Name</label>
+            <input id="moderator-nickname" minlength="2" maxlength="32000" required>
+            <label for="moderator-password">Moderator Password</label>
+            <input id="moderator-password" minlength="2" maxlength="32000" required>
+            <button type="submit" class="window-formBtn" onclick="">Submit</button>
+            <button type="button" class="window-formBtn" onclick="closeCreateModeratorWindow()">Close</button>
+        </form>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+<script src="../Administrator_Account/script.js"></script>
+<script src="../Moderator-Account/script.js"></script>
+<script src="../JS/complains.js"></script>
+<script src="../JS/comment.js"></script>
+<script src="../JS/configurations.js"></script>
+<script src="../JS/topic.js"></script>
+<script src="../JS/section.js"></script>
+<script src="../JS/languages.js"></script>
+<script src="../JS/user.js"></script>
+<script src="../JS/code.js"></script>
+<script src="../JS/httpFunctions.js"></script>
+<script src="../JS/data.js"></script>
+</html>

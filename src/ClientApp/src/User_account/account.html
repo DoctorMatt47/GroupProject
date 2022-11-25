@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - User Account Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+        });
+    </script>
+</head>
+<body id="page-header" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+<div class=" container-fluid  box mt-5">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="row thumbnail">
+                <h2>Your Discussions</h2>
+                <div id="card-container"></div>
+                <div class="card-actions">
+                    <button id="load-more">Load more</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="row panel">
+                <div class="panel-heading" id="user-panel">
+                    <h2 style="font-family:Courier New, Courier, monospace;" id="username">Username</h2>
+                    <p id="registration-date">Registration date</p>
+                </div>
+                <!--                <div id="topic"></div>-->
+                <div class="panel-body text-center">
+                    <div class="col-sm-6 create-btn">
+                        <button type="button" onclick="openForm()">
+                            <img src="../../resources/static/plus.png" alt="create"></button>
+                        <br>
+                        <p>Create New Discussion</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <div id="created-discussions">6</div>
+                        <p style="color: black">Created Discussions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="warnings" id="warning-panel" style="display: none;">
+                <h3>WARNINGS</h3>
+                <div class="warning">
+                    <div class="warning-text" id="warning-count">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+<script src="../User_account/script.js"></script>
+<script src="../JS/topic.js"></script>
+<script src="../JS/section.js"></script>
+<script src="../JS/languages.js"></script>
+<script src="../JS/user.js"></script>
+<script src="../JS/code.js"></script>
+<script src="../JS/httpFunctions.js"></script>
+<script src="../JS/data.js"></script>
+</html>

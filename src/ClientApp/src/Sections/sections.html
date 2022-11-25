@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Hi-fi code - Sections Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("../Header/header.html");
+            $("#footer").load("../Footer/footer.html");
+        });
+    </script>
+</head>
+<body id="page-header" data-target=".navbar" data-offset="50">
+<div id="header"></div>
+<div class=" container box mt-5">
+    <div class="page-title">
+        <h1 class="text-center" style="text-transform: uppercase;font-family: Courier sans-serif">Sections</h1>
+        <div id="create-section-button" class="create-button" style="display: none;">
+            <button type="button" onclick="openCreateSectionWindow()">
+                <img src="../../resources/static/plus.png" alt="create new section">
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <form class="section-form" onsubmit="return false;">
+                <input id="section-search" type="search" placeholder="Search..." minlength="2" maxlength="32">
+                <button id="section-search-button" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="sections">
+        <div class="row" id="page-sections">
+            <div class="col-sm-3">
+                <a href="#">
+                    <div class="block">
+                        <div class="section-title">
+                            <h5><strong>CoffeeScript</strong></h5>
+                        </div>
+                        <div class=" section-info">
+                            <p>number of topics: 254</p>
+                            <p>Maybe we can add here some info about
+                                section. One sentence from Wikipedia</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="pagination" id="pages">
+    </div>
+</div>
+<div id="createSection" class="fullscreen-container">
+    <div class="window-section">
+        <h2>Comment Topic</h2>
+        <form onsubmit="submitSection(); closeCreateSectionWindow(); return false;">
+            <label for="section-title">Section Title</label>
+            <input id="section-title" minlength="2" maxlength="32000" required>
+            <label for="section-description">Section description</label>
+            <textarea id="section-description" minlength="2" maxlength="32000" required></textarea>
+            <button type="submit" class="window-formBtn">Submit</button>
+            <button type="button" class="window-formBtn" onclick="closeCreateSectionWindow()">Close</button>
+        </form>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+<script src="../Sections/script.js"></script>
+<script src="../JS/topic.js"></script>
+<script src="../JS/section.js"></script>
+<script src="../JS/languages.js"></script>
+<script src="../JS/user.js"></script>
+<script src="../JS/code.js"></script>
+<script src="../JS/httpFunctions.js"></script>
+<script src="../JS/data.js"></script>
+</html>
