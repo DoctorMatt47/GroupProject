@@ -98,7 +98,7 @@
 }
 
 /*Card Container*/
-#card-container {
+#card-container, #comment-container {
     display: flex;
     flex-wrap: wrap;
 }
@@ -144,16 +144,16 @@
     box-shadow: 0 5px #00000033;
 }
 
-#load-more,#load-more-comments:active {
+#load-more:active,#load-more-comments:active {
     box-shadow: 0 5px rgba(0, 0, 0, 0.2);
     transform: translateY(2px);
 }
 
-#load-more,#load-more-comments:not([disabled]):hover {
+#load-more:not([disabled]):hover,#load-more-comments:not([disabled]):hover {
     box-shadow: 0 1px 9px rgba(0, 0, 0, 0.2);
 }
 
-#load-more,#load-more-comments[disabled] {
+#load-more[disabled],#load-more-comments[disabled] {
     background-color: #eaeaea !important;
 }
 
