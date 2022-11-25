@@ -94,6 +94,16 @@ public class UserService : IUserService
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
+    public async Task DeleteModerator(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
+        if (user.Role is not UserRole.Moderator)
+            throw new BadRequestException("You don't have permission to delete user");
+
+        _dbContext.Set<User>().Remove(user);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     private Task<Page<UserResponse>> GetUsersByRoleAsync(
         UserRole role,
         PageRequest request,
@@ -116,12 +126,12 @@ public class UserService : IUserService
             $"login: {request.Login}",
             cancellationToken);
 
-        var containsForbidden = (await _phrases
+        var forbiddenPhrases = (await _phrases
                 .GetForbidden(cancellationToken))
-            .Any(p => _phrases.ContainsPhrase(request.Login, p.Phrase));
+            .FirstOrDefault(p => _phrases.ContainsPhrase(request.Login, p.Phrase));
 
-        if (containsForbidden)
-            throw new BadRequestException($"Login contains forbidden words: {string.Join(',', containsForbidden)}");
+        if (forbiddenPhrases is not null)
+            throw new BadRequestException($"Login contains forbidden words: {string.Join(',', forbiddenPhrases)}");
 
         var user = new User(request.Login, request.Password, _passwordHash, role);
 
