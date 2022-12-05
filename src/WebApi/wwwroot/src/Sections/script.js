@@ -118,7 +118,7 @@ const addSections = ()=>{
     getSections().then((response) => {
         const container = document.getElementById("page-sections");
         container.innerHTML = "";
-        response = response.filter(item=>item.header.toLowerCase().includes(pattern)||item.description.toLowerCase().includes(pattern));
+        response = response.sort((a,b)=>a.header.localeCompare(b.header)).filter(item=>item.header.toLowerCase().includes(pattern)||item.description.toLowerCase().includes(pattern));
         addPagesBar(container, response);
         addSectionsPage(container, response, currentPage);
     }).catch(showError);

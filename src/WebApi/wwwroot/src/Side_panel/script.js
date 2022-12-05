@@ -22,9 +22,18 @@ const addSectionsToPanel = (containerId)=>{
     const container  = document.getElementById(containerId);
     container.innerHTML = "";
     getSections().then((response) => {
-        const sections = response.sort((a,b)=>b.topicCount - a.topicCount).slice(0, 6);
-        for(let i in sections){
-            container.appendChild(createSectionForPanel(sections[i]));
+        let count = 0;
+        for(let i = 0; i < response.length; i++){
+            getSectionTopics(response[i].id, 1, 1).then(res=>{
+                count++;
+                response[i].topicCount = res.itemsCount;
+                if(count == response.length){
+                    const sections = response.sort((a,b)=>b.topicCount - a.topicCount).slice(0, 6);
+                    for(let i in sections){
+                        container.appendChild(createSectionForPanel(sections[i]));
+                    }
+                }
+            }).catch(showError);
         }
     }).catch((err) => {
         console.log(err);

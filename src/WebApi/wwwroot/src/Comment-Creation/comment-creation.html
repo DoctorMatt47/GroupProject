@@ -5,7 +5,7 @@
         <h2>Comment Topic</h2>
         <form onsubmit="submitComment(); return false;">
             <label for="comment-description">Comment description</label>
-            <textarea id="comment-description" minlength="2" maxlength="32000" required></textarea>
+            <textarea id="comment-description" minlength="2" maxlength="32000" required placeholder="In my opinion..."></textarea>
             <label for="comment-need-code">Add code</label>
             <input id="comment-need-code" type="checkbox" style="padding: 10px" checked="true"
                     onclick="setVisible(checked, 'comment-code-container', 'flex');">
