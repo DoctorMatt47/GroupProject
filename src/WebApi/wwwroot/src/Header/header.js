@@ -47,7 +47,7 @@ const adminButton = ()=>{
 };
 
 const openContacts = ()=>{
-    openMessageWindow(`"HI-FI CODE" FORUM WAS CREATED BY STUDENTS OF EPS-41 GROUP.IF YOU HAVE ANY QUESTIONS SEND IT ON THIS EMAIL ADDRESS: RUHGUWGHIWHDOHFU@GMAIL.COM`);
+    openMessageWindow(`"HI-FI CODE" FORUM WAS CREATED BY STUDENTS OF EPS-41 GROUP.IF YOU HAVE ANY QUESTIONS SEND IT ON THIS EMAIL ADDRESS: hificode@gmail.com`);
 };
 window.addEventListener("load", ()=>{
     document.getElementById("search-input").value = getValueFromCurrentUrl("pattern");
