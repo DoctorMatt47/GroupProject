@@ -172,7 +172,7 @@ window.addEventListener("load", ()=>{
     
     const id = getValueFromCurrentUrl("id");
     if(!isUUID(id)){
-        openErrorWindow("Incorrect id!");
+        openErrorWindow("Incorrect id; Try other one; Don't enter id manually;");
         addTopicToPage("", getEmptyTopic());
         return;
     }

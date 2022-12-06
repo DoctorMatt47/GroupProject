@@ -175,7 +175,7 @@ window.addEventListener("load", ()=>{
     const type = getValueFromCurrentUrl("type");
     const id = getValueFromCurrentUrl("id");
     if(!isUUID(id)){
-        openErrorWindow("Incorrect id!");
+        openErrorWindow("Incorrect id; Try other one; Don't enter id manually;");
         loadNoComplaintData("Topic", getEmptyTopic());
         return;
     }
