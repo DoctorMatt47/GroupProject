@@ -1,6 +1,7 @@
 using System.Reflection;
 using GroupProject.Application.Common.Extensions;
 using GroupProject.Infrastructure.Extensions;
+using GroupProject.Infrastructure.Persistence.Initializers;
 using GroupProject.WebApi.Extensions;
 using GroupProject.WebApi.Middlewares;
 using GroupProject.WebApi.Requirements;
@@ -9,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.Configure<ConfigurationOptions>(builder.Configuration.GetSection(nameof(ConfigurationOptions)));
 
 builder.Services
     .AddAutoMapper(Assembly.GetExecutingAssembly())
