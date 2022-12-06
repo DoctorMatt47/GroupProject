@@ -2,6 +2,7 @@
 using GroupProject.WebApi.Responses;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using ApplicationException = GroupProject.Application.Common.Exceptions.ApplicationException;
 
 namespace GroupProject.WebApi.Controllers;
 
@@ -11,7 +12,8 @@ public class ErrorController : ControllerBase
     [Route("/error")]
     public ActionResult<ErrorResponse> Handle()
     {
-        var exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+        var error = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+        if (error is not ApplicationException exception) return StatusCode(500);
 
         var responseCode = exception switch
         {
@@ -22,6 +24,11 @@ public class ErrorController : ControllerBase
             _ => 500,
         };
 
-        return StatusCode(responseCode, new ErrorResponse(exception?.Message, exception?.StackTrace));
+        return StatusCode(
+            responseCode,
+            new ErrorResponse(
+                exception.Message,
+                exception.HowToFix,
+                exception.HowToPrevent));
     }
 }

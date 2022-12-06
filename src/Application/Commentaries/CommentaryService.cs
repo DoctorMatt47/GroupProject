@@ -39,7 +39,10 @@ public class CommentaryService : ICommentaryService
     {
         var (pageRequest, orderBy, topicId, userId) = request;
         if (topicId is null && userId is null && request.OrderBy is not CommentariesOrderedBy.VerifyBefore)
-            throw new BadRequestException("Topic id and user id should not be null at the same time");
+            throw new BadRequestException(
+                "Topic id and user id should not be null at the same time",
+                "Specify topic id or user id",
+                "Do specify topic id or user id when searching for commentaries");
 
         var commentaries = _dbContext.Set<Commentary>()
             .Include(c => c.User)
@@ -132,7 +135,10 @@ public class CommentaryService : ICommentaryService
                 .ToList();
 
             if (!forbiddenPhrases.Any()) return;
-            throw new BadRequestException($"Topic contains forbidden words: {string.Join(", ", forbiddenPhrases)}");
+            throw new BadRequestException(
+                $"Commentary contains forbidden words: {string.Join(", ", forbiddenPhrases)}",
+                "Remove forbidden words from commentary",
+                "Do not use forbidden words in commentary");
         }
     }
 

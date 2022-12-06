@@ -80,7 +80,7 @@ public class UserService : IUserService
     public async Task BanUser(Guid id, CancellationToken cancellationToken)
     {
         var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
-        if (user.Role is not UserRole.User) throw new BadRequestException("You can't ban moderator or admin");
+        if (user.Role is not UserRole.User) throw new ForbiddenException("You can't ban moderator or admin");
 
         var configuration = await _configuration.Get(cancellationToken);
         user.SetBanned(configuration.BanDuration);
@@ -98,7 +98,7 @@ public class UserService : IUserService
     {
         var user = await _dbContext.Set<User>().FindOrThrowAsync(id, cancellationToken);
         if (user.Role is not UserRole.Moderator)
-            throw new BadRequestException("You don't have permission to delete user");
+            throw new ForbiddenException("You don't have permission to delete user");
 
         _dbContext.Set<User>().Remove(user);
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -128,10 +128,15 @@ public class UserService : IUserService
 
         var forbiddenPhrases = (await _phrases
                 .GetForbidden(cancellationToken))
-            .FirstOrDefault(p => _phrases.ContainsPhrase(request.Login, p.Phrase));
+            .Select(p => p.Phrase)
+            .Where(phrase => _phrases.ContainsPhrase(request.Login, phrase))
+            .ToList();
 
         if (forbiddenPhrases is not null)
-            throw new BadRequestException($"Login contains forbidden words: {string.Join(',', forbiddenPhrases)}");
+            throw new BadRequestException(
+                $"Login contains forbidden words: {string.Join(',', forbiddenPhrases)}",
+                "Remove forbidden words from your login",
+                "Do not use forbidden words in your login");
 
         var user = new User(request.Login, request.Password, _passwordHash, role);
 
@@ -143,3 +148,4 @@ public class UserService : IUserService
         return new IdResponse<Guid>(user.Id);
     }
 }
+

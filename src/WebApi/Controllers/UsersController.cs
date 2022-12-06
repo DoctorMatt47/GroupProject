@@ -13,7 +13,7 @@ public class UsersController : ApiControllerBase
 
     public UsersController(IUserService users) => _users = users;
 
-    [Authorize(Roles = "Moderator, Admin")]
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

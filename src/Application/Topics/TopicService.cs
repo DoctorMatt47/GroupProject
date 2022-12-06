@@ -93,7 +93,7 @@ public class TopicService : ITopicService
 
         await ThrowIfContainsForbiddenPhrasesAsync();
 
-        var section = await _dbContext.Set<Section>().FindOrThrowAsync(request.SectionId, cancellationToken);
+        await _dbContext.Set<Section>().AnyOrThrowAsync(request.SectionId, cancellationToken);
 
         var verificationDuration = await VerificationDurationOrNullAsync();
 
@@ -125,7 +125,10 @@ public class TopicService : ITopicService
                 .ToList();
 
             if (!forbiddenPhrases.Any()) return;
-            throw new BadRequestException($"Topic contains forbidden words: {string.Join(", ", forbiddenPhrases)}");
+            throw new BadRequestException(
+                $"Topic contains forbidden words: {string.Join(", ", forbiddenPhrases)}",
+                "Remove forbidden words from your topic",
+                "Do not use forbidden words in your topic");
         }
 
         async Task<TimeSpan?> VerificationDurationOrNullAsync()
