@@ -11,7 +11,7 @@ const createSectionForPanel = (sectionData)=>{
                             <span class="badge badge-primary badge-pill">${res.itemsCount}</span>
                         </li>`;
     });
-    section.href = addParameters("../Topics_in_section/topics_in_section.html", {id:sectionData.id});
+    section.href = addParameters("../Topics-in-section/topics-in-section.html", {id:sectionData.id});
     return section;
 };
 /**
@@ -49,7 +49,7 @@ const createLanguageForPanel = (sectionData)=>{
     section.innerHTML = `<a>
                             <li class="list-group-item language-list-item">${sectionData.header}</li>
                         </a>`;
-    section.href = addParameters("../Topics_in_section/topics_in_section.html", {id:sectionData.id});
+    section.href = addParameters("../Topics-in-section/topics-in-section.html", {id:sectionData.id});
 
     return section;
 };
