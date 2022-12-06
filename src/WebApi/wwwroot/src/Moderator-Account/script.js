@@ -147,7 +147,7 @@ const unblockSelectedUser = ()=>{
         }
     }
     if(id == null){
-        openErrorWindow(`There isn't user with login: '${input.value}'`);
+        openErrorWindow(`There isn't user with login: '${input.value}'; Try other one; Use id only from list`);
         return;
     }
     unBlockUser(id).then(()=>{

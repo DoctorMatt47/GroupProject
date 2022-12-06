@@ -107,8 +107,7 @@ const registrationSubmit = ()=>{
     register(login, password).then(response=>{
         auth(login, password);
     }).catch(error=>{
-        const message = JSON.parse(error.message);
-        registrationErrorContainer.textContent = message.message;
+        registrationErrorContainer.textContent = getErrorText(error);
     });
 };
 
@@ -121,7 +120,6 @@ const auth = (login, password)=>{
     authenticate(login, password).then(response=>{
         window.location.href = "../Home/home.html";
     }).catch(error=>{
-        const message = JSON.parse(error.message);
-        loginErrorContainer.textContent = message.message;
+        loginErrorContainer.textContent = getErrorText(error);
     });
 };
