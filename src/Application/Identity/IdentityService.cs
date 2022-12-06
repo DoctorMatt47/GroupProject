@@ -37,13 +37,17 @@ public class IdentityService : IIdentityService
         CreateIdentityRequest request,
         CancellationToken cancellationToken)
     {
-        const string exceptionMessage = "Incorrect password or login";
+        var badRequest = new BadRequestException(
+            "Incorrect password or login",
+            "Enter correct password and login",
+            "Do not forget your account credentials");
 
         var user = await _dbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == request.Login, cancellationToken);
-        if (user is null) throw new BadRequestException(exceptionMessage);
+
+        if (user is null) throw badRequest;
 
         var passwordHash = _passwordHash.Encode(request.Password, user.PasswordSalt);
-        if (!user.PasswordHash.SequenceEqual(passwordHash)) throw new BadRequestException(exceptionMessage);
+        if (!user.PasswordHash.SequenceEqual(passwordHash)) throw badRequest;
 
         _logger.LogInformation("Authenticated {Role} with id: {Id}", user.Role, user.Id);
 

@@ -125,7 +125,10 @@ public class TopicService : ITopicService
                 .ToList();
 
             if (!forbiddenPhrases.Any()) return;
-            throw new BadRequestException($"Topic contains forbidden words: {string.Join(", ", forbiddenPhrases)}");
+            throw new BadRequestException(
+                $"Topic contains forbidden words: {string.Join(", ", forbiddenPhrases)}",
+                "Remove forbidden words from your topic",
+                "Do not use forbidden words in your topic");
         }
 
         async Task<TimeSpan?> VerificationDurationOrNullAsync()
@@ -182,4 +185,3 @@ public class TopicService : ITopicService
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }
-
