@@ -34,6 +34,10 @@ public class ConfigurationInitializer : IEntityInitializer
         _dbContext.Set<ForbiddenPhrase>().AddRange(forbiddenPhrases);
 
         _dbContext.Set<Configuration>().Add(configuration);
+
+        var sections = _options.Sections.Select(s => new Section(s.Header, s.Description));
+        _dbContext.Set<Section>().AddRange(sections);
+
         _dbContext.SaveChangesAsync().GetAwaiter().GetResult();
     }
 }
