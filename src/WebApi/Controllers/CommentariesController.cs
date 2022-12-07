@@ -23,11 +23,15 @@ public class CommentariesController : ApiControllerBase
     [AllowAnonymous]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<Page<CommentaryResponse>> Get(
+    public async Task<ActionResult<Page<CommentaryResponse>>> Get(
         [FromQuery] GetCommentariesParameters parameters,
         CancellationToken cancellationToken)
     {
         var request = _mapper.Map<GetCommentariesRequest>(parameters);
+        if (request.OrderBy is not (CommentariesOrderedBy.VerifyBefore or CommentariesOrderedBy.ComplaintCount))
+            return await _commentaries.Get(request, cancellationToken);
+
+        if (!User.IsInRole("Moderator") && !User.IsInRole("Admin")) return Forbid();
         return await _commentaries.Get(request, cancellationToken);
     }
 
