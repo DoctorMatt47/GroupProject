@@ -6,7 +6,7 @@ namespace GroupProject.WebApi.Requirements;
 
 public record NotBannedRequirement : IAuthorizationRequirement;
 
-public class NotBannedHandler : AuthorizationHandler<IAuthorizationRequirement>
+public class NotBannedHandler : AuthorizationHandler<NotBannedRequirement>
 {
     private readonly IServiceProvider _provider;
 
@@ -14,7 +14,7 @@ public class NotBannedHandler : AuthorizationHandler<IAuthorizationRequirement>
 
     protected override async Task HandleRequirementAsync(
         AuthorizationHandlerContext context,
-        IAuthorizationRequirement requirement)
+        NotBannedRequirement requirement)
     {
         var userId = context.User.Identity?.Name;
         if (userId is null) return;
@@ -35,3 +35,4 @@ public class NotBannedHandler : AuthorizationHandler<IAuthorizationRequirement>
         context.Succeed(requirement);
     }
 }
+
