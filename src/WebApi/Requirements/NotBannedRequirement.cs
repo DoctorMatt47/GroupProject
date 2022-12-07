@@ -27,7 +27,7 @@ public class NotBannedHandler : AuthorizationHandler<NotBannedRequirement>
 
         if (User.IsBanned.Compile().Invoke(user))
         {
-            var message = $"You have been banned until {user.BanEndTime}";
+            var message = $"You have been banned until {user.BanEndTime} utc";
             context.Fail(new AuthorizationFailureReason(this, message));
             return;
         }
@@ -35,4 +35,3 @@ public class NotBannedHandler : AuthorizationHandler<NotBannedRequirement>
         context.Succeed(requirement);
     }
 }
-
