@@ -35,3 +35,4 @@ public class NotBannedHandler : AuthorizationHandler<NotBannedRequirement>
         context.Succeed(requirement);
     }
 }
+

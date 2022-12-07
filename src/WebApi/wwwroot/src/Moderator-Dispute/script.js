@@ -103,23 +103,23 @@ const loadModeratorPanel = (complaint, userId)=>{
     if(!("userId" in complaint)){
         authorBlockButton.style = "display:none";
     }
-    authorBlockButton.onclick = ()=>{
+    authorBlockButton.addEventListener("click",()=>{
         openBlockVerificationWindow(()=>{
             blockUser(complaint.userId).then(()=>{
                 openMessageWindow("Blocked");
             }).catch(showError);
         });
-    };
+    });
 
-    userBlockButton.onclick = ()=>{
+    userBlockButton.addEventListener("click",()=>{
         openBlockVerificationWindow(()=>{
             blockUser(userId).then(()=>{
                 openMessageWindow("Blocked");
             }).catch(showError);
         });
-    };
+    });
 
-    endButton.onclick = ()=>{
+    endButton.addEventListener("click",()=>{
         let remove = deleteComplaint;
         if(!("userId" in complaint)){
             remove = verifyTopic;
@@ -130,9 +130,9 @@ const loadModeratorPanel = (complaint, userId)=>{
             location.reload(); 
             //openPage('../Moderator-Account/moderator-account.html');
         }).catch(showError);
-    };
+    });
 
-    deleteButton.onclick = ()=>{
+    deleteButton.addEventListener("click", ()=>{
         let deleteFunction = deleteTopic;
         if(complaint.target === "Commentary"){
             deleteFunction = deleteComment;
@@ -144,7 +144,7 @@ const loadModeratorPanel = (complaint, userId)=>{
                 //openPage('../Moderator-Account/moderator-account.html');
             }).catch(showError);
         }).catch(showError);
-    };
+    });
 };
 const loadNoComplaintData = (target, data)=>{
     loadComplaintObject(data);

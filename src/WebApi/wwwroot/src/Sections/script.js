@@ -147,8 +147,13 @@ const closeCreateSectionWindow = () => {
 const submitSection = ()=>{
     const title = document.getElementById("section-title");
     const description = document.getElementById("section-description");
+    const error = document.getElementById("section-error");
+    error.textContent = "";
 
     createSection(title.value, description.value).then(()=>{
         addSections();
-    }).catch(showError);
+        closeCreateSectionWindow();
+    }).catch((err)=>{
+        error.textContent = getErrorText(err);
+    });
 };

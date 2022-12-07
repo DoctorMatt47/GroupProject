@@ -299,3 +299,8 @@ details[open] summary {
     margin-bottom: .5em;
 }
 
+#section-error{
+    font-size: 0.8em;
+    color: red;
+    white-space: pre-wrap;
+}

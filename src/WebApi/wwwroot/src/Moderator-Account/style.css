@@ -327,5 +327,9 @@ h2 {
     background-color: #eaeaea !important;
 }
 
-
+#moderator-error{
+    font-size: 0.8em;
+    color: red;
+    white-space: pre-wrap;
+}
 

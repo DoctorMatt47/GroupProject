@@ -92,3 +92,8 @@ textarea {
     margin: 0 auto 10px;
 }
 
+#topic-error{
+    font-size: 0.8em;
+    color: red;
+    white-space: pre-wrap;
+}
