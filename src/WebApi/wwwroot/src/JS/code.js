@@ -98,9 +98,9 @@ const getErrorText = (err)=>{
     let exception = err;
     if("message" in err) exception = JSON.parse(err.message);
     let text = exception;
-    if("message" in exception) text = exception.message + "; ";
-    if("howToFix" in exception) text += exception.howToFix + "; ";
-    if("howToPrevent" in exception) text += exception.howToPrevent + "; ";
+    if("message" in exception) text = exception.message + ";\n";
+    if("howToFix" in exception) text += exception.howToFix + ";\n";
+    if("howToPrevent" in exception) text += exception.howToPrevent + ";\n";
     return text;
 };
 const showError = (err) => {

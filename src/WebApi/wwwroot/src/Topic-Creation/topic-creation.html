@@ -4,23 +4,25 @@
     <div id="topicForm">
         <h2>Create new Topic</h2>
         <form onsubmit="submitTopic(); return false;">
-            <label for="topic-section">Section</label><br>
+            <p><label id="topic-error"></label></p>
+            <label for="topic-section"><span style="color: red;">*</span>Section</label><br>
             <select id="topic-section" required>
             </select><br>
-            <label for="topic-title">Topic title</label>
+            <label for="topic-title"><span style="color: red;">*</span>Topic title</label>
             <input id="topic-title" type="text" minlength="2" maxlength="32" required placeholder="Problems with java program...">
-            <label for="topic-description">Topic description</label>
+            <label for="topic-description"><span style="color: red;">*</span>Topic description</label>
             <textarea id="topic-description" minlength="2" maxlength="32000" required placeholder="Help me with this problem..."></textarea>
             <label for="need-code">Add code</label>
             <input id="need-code" type="checkbox" style="padding: 10px" checked="true"
-                    onclick="setVisible(checked, 'code', 'flex');">
+                    onclick="setVisibleForTopic(checked);">
             <div id="code" style="display:flex; flex-direction: column;">
-                <label for="topic-code-language">Language</label>
+                <label for="topic-code-language"><span style="color: red;">*</span>Language</label>
                 <select id="topic-code-language" required>
                 </select>
-                <label for="topic-code">Code</label>
-                <textarea id="topic-code" minlength="2" maxlength="32000"></textarea>
+                <label for="topic-code"><span style="color: red;">*</span>Code</label>
+                <textarea id="topic-code" minlength="2" maxlength="32000" required></textarea>
             </div>
+            <label>All fields marked with <span style="color: red;">*</span> are mandatory</label>
             <button type="submit" class="formBtn" onclick="">Submit</button>
             <button type="button" class="formBtn" onclick="closeForm(); return false;">Close</button>
         </form>

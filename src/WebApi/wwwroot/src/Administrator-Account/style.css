@@ -153,6 +153,7 @@ h2 {
 .title h4 {
     padding-left: 7px;
     padding-right: 7px;
+    font-size: 20px;
 }
 
 
@@ -392,4 +393,9 @@ textarea {
     background-color: #2c467e;
     box-shadow: 0 5px rgba(0, 0, 0, 0.2);
     transform: translateY(2px);
+}
+#moderator-error, #moderator-create-error, #moderator-delete-error{
+    font-size: 1em;
+    color: red;
+    white-space: pre-wrap;
 }

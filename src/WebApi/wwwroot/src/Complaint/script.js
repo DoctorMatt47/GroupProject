@@ -26,9 +26,18 @@ const submitComplaint = () =>{
     const type = container.getAttribute("object-type");
     const id = container.getAttribute("object-id");
     const create = type === "topic"?createTopicComplaint:createCommentComplaint;
+    const error = document.getElementById("complaint-error");
+    error.textContent = "";
+    
     create(id, document.getElementById("message").value)
         .then(response=>{
-            if("id" in response) openMessageWindow("Complaint was created!");
+            if("id" in response) {
+                openMessageWindow("Complaint was created!");
+                document.getElementById("complaint-form").reset();
+            }
             else openErrorWindow(response.message);
-        }).catch(showError);
+            closeComplainForm();
+        }).catch((err)=>{
+            error.textContent = getErrorText(err);
+        });
 };

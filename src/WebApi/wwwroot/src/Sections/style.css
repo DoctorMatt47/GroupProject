@@ -266,3 +266,8 @@ textarea {
     height: 50px;
     width: 50px;
 }
+#section-error{
+    font-size: 0.8em;
+    color: red;
+    white-space: pre-wrap;
+}
