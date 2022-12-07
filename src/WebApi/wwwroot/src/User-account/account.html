@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Hi-fi code - User Account Page</title>
+    <title>Hi-fi code - User Account</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -23,10 +23,15 @@
     <div class="row">
         <div class="col-sm-8">
             <div class="row thumbnail">
-                <h2>Your Discussions</h2>
+                <h2>Your Topics</h2>
                 <div id="card-container"></div>
                 <div class="card-actions">
                     <button id="load-more">Load more</button>
+                </div>
+                <h2>Your Commentaries</h2>
+                <div id="comment-container"></div>
+                <div class="card-actions">
+                    <button id="load-more-comments">Load more</button>
                 </div>
             </div>
         </div>
@@ -42,11 +47,11 @@
                         <button type="button" onclick="openForm()">
                             <img src="../../resources/static/plus.png" alt="create"></button>
                         <br>
-                        <p>Create New Discussion</p>
+                        <p>Create New Topic</p>
                     </div>
                     <div class="col-sm-6">
                         <div id="created-discussions">6</div>
-                        <p style="color: black">Created Discussions</p>
+                        <p style="color: black">Created Topics</p>
                     </div>
                 </div>
             </div>
@@ -61,8 +66,9 @@
 </div>
 <div id="footer"></div>
 </body>
-<script src="../User_account/script.js"></script>
+<script src="../User-account/script.js"></script>
 <script src="../JS/topic.js"></script>
+<script src="../JS/comment.js"></script>
 <script src="../JS/section.js"></script>
 <script src="../JS/languages.js"></script>
 <script src="../JS/user.js"></script>

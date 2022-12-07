@@ -151,6 +151,7 @@ const unblockSelectedUser = ()=>{
         return;
     }
     unBlockUser(id).then(()=>{
+        input.value = "";
         loadBannedUsers();
         openMessageWindow("Unblocked!");
     }).catch(showError);

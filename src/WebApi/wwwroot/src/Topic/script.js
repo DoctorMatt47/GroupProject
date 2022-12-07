@@ -169,7 +169,14 @@ window.addEventListener("load", ()=>{
         addCommentButton.style = "display:none";
     }
     commentsContainer.innerHTML = "";
-    getTopic(getValueFromCurrentUrl("id")).then(response => {
+    
+    const id = getValueFromCurrentUrl("id");
+    if(!isUUID(id)){
+        openErrorWindow("Incorrect id; Try other one; Don't enter id manually;");
+        addTopicToPage("", getEmptyTopic());
+        return;
+    }
+    getTopic(id).then(response => {
         viewTopicForCurrentUser(response.id);
         addTopicToPage(role, response);
         addCommentsToPage(role, response.id);
@@ -183,7 +190,7 @@ window.addEventListener("load", ()=>{
             }
         });
     }).catch((error)=>{
-        addTopicToPage("", {header:"", description:"", compileOptions:{code:"", language:""}, isClosed:true, viewCount:0});
+        addTopicToPage("", getEmptyTopic());
         showError(error);
     });
 });

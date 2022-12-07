@@ -1,6 +1,6 @@
 const userButton = ()=>{
     if(isLoggedIn()){
-        window.location.href = "../User_account/account.html";
+        window.location.href = "../User-account/account.html";
         return;
     }
 };
@@ -41,9 +41,13 @@ const moderatorButton = ()=>{
 };
 const adminButton = ()=>{
     if(isLoggedIn()){
-        window.location.href = "../Administrator_Account/admin-account.html";
+        window.location.href = "../Administrator-Account/admin-account.html";
         return;
     }
+};
+
+const openContacts = ()=>{
+    openMessageWindow(`"HI-FI CODE" FORUM WAS CREATED BY STUDENTS OF EPS-41 GROUP.IF YOU HAVE ANY QUESTIONS SEND IT ON THIS EMAIL ADDRESS: hificode@gmail.com`);
 };
 window.addEventListener("load", ()=>{
     document.getElementById("search-input").value = getValueFromCurrentUrl("pattern");

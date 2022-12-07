@@ -179,3 +179,10 @@ const viewTopic = (topicId)=>{
     };
     return sendAsync(URLS.Topics + `/${topicId}/View`, request);
 };
+/**
+ * 
+ * @returns topic data without data
+ */
+const getEmptyTopic = ()=>{
+    return {header:"", description:"", compileOptions:{code:"", language:""}, isClosed:true, viewCount:0};
+};

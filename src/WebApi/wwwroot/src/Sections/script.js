@@ -11,7 +11,7 @@ const createSectionObject = (section) =>{
     column.className = "col-sm-3";
 
     const a = document.createElement("a");
-    a.href = addParameters("../Topics_in_section/topics_in_section.html", {id:section.id});
+    a.href = addParameters("../Topics-in-section/topics-in-section.html", {id:section.id});
 
     const block = document.createElement("div");
     block.className = "block";
@@ -118,7 +118,7 @@ const addSections = ()=>{
     getSections().then((response) => {
         const container = document.getElementById("page-sections");
         container.innerHTML = "";
-        response = response.filter(item=>item.header.toLowerCase().includes(pattern)||item.description.toLowerCase().includes(pattern));
+        response = response.sort((a,b)=>a.header.localeCompare(b.header)).filter(item=>item.header.toLowerCase().includes(pattern)||item.description.toLowerCase().includes(pattern));
         addPagesBar(container, response);
         addSectionsPage(container, response, currentPage);
     }).catch(showError);

@@ -271,5 +271,31 @@ textarea {
     resize: none;
 }
 
+details {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    width: 100%;
+    padding: .5em .5em 0;
+    cursor: pointer;
+}
 
+summary {
+    display: flex;
+    flex-direction: row;
+    font-weight: bold;
+    font-size: 20px;
+    margin: -.5em -.5em 0;
+    padding: .5em;
+    border-bottom: 1px solid rgb(181, 181, 210);
+    border-radius: 30px;
+}
+
+details[open] {
+    padding: .5em;
+}
+
+details[open] summary {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: .5em;
+}
 

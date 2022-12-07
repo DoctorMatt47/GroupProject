@@ -174,12 +174,16 @@ const loadNoComplaintData = (target, data)=>{
 window.addEventListener("load", ()=>{
     const type = getValueFromCurrentUrl("type");
     const id = getValueFromCurrentUrl("id");
+    if(!isUUID(id)){
+        openErrorWindow("Incorrect id; Try other one; Don't enter id manually;");
+        loadNoComplaintData("Topic", getEmptyTopic());
+        return;
+    }
+    if(type === null) window.history.go(-1);
     switch(type){
         case "Complaint":
             {
-                getComplaint(id).then(loadComplaintData).catch(()=>{
-                    window.history.go(-1);
-                });
+                getComplaint(id).then(loadComplaintData).catch(showError);
             }
             break;
         case "VerifyTopic":
