@@ -171,14 +171,23 @@
                 </button>
             </div>
         </div>
-        <div class="data">
-            <label for="users">Choose User:</label>
-            <input list="nicknames" id="users" name="users" autocomplete="off">
-
-            <datalist id="nicknames">
-            </datalist>
-        </div>
-        <button type="button" class="submit-unblock" onclick="unblockSelectedUser(); closeUserActionWindow(); setTimeout(loadUsers, 100); return false;">Unblock</button>
+        <form onsubmit="unblockSelectedUser(); setTimeout(loadUsers, 100); return false;">
+            <div class="data">
+                <p><label id="moderator-error"></label></p>
+                <label for="users"><span style="color: red;">*</span>Choose User:</label>
+                <input list="nicknames" id="users" name="users" autocomplete="off" required>
+    
+                <datalist id="nicknames" >
+                    <option value="Chocolate">
+                    <option value="Coconut">
+                    <option value="Mint">
+                    <option value="Strawberry">
+                    <option value="Vanilla">
+                </datalist>
+            </div>
+            <label style="color:black; font-size:1em;">All fields marked with <span style="color: red;">*</span> are mandatory</label>
+            <button type="submit" class="submit-unblock">Unblock</button>
+        </form>
     </div>
 </div>
 <div id="Unblock-moderator" class="fullscreen-container">
@@ -191,24 +200,30 @@
                 </button>
             </div>
         </div>
-        <div class="data">
-            <label for="moderators">Choose Moderator:</label>
-            <input list="moderator-nicknames" id="moderators" name="moderators" autocomplete="off">
-
-            <datalist id="moderator-nicknames">
-            </datalist>
-        </div>
-        <button type="button" class="submit-unblock" onclick="deleteSelectedModerator(); closeModeratorActionWindow(); return false;">Delete</button>
+        <form onsubmit="deleteSelectedModerator(); return false;">
+            <div class="data">
+                <p><label id="moderator-delete-error"></label></p>
+                <label for="moderators"><span style="color: red;">*</span>Choose Moderator:</label>
+                <input list="moderator-nicknames" id="moderators" name="moderators" autocomplete="off" required>
+    
+                <datalist id="moderator-nicknames">
+                </datalist>
+            </div>
+            <label style="color:black; font-size:1em;">All fields marked with <span style="color: red;">*</span> are mandatory</label>
+            <button type="submit" class="submit-unblock">Delete</button>
+        </form>
     </div>
 </div>
 <div id="createModerator" class="fullscreen-container">
     <div class="window-section">
         <h2>Create Moderator</h2>
-        <form onsubmit="submitModerator(); closeCreateModeratorWindow(); return false;">
-            <label for="moderator-nickname">Moderator Name</label>
+        <p><label id="moderator-create-error"></label></p>
+        <form onsubmit="submitModerator(); return false;">
+            <label for="moderator-nickname"> <span style="color: red;">*</span>Moderator Name</label>
             <input id="moderator-nickname" minlength="2" maxlength="32000" required>
-            <label for="moderator-password">Moderator Password</label>
+            <label for="moderator-password"> <span style="color: red;">*</span>Moderator Password</label>
             <input id="moderator-password" minlength="2" maxlength="32000" required>
+            <label style="color:black; font-size:1em;">All fields marked with <span style="color: red;">*</span> are mandatory</label>
             <button type="submit" class="window-formBtn" onclick="">Submit</button>
             <button type="button" class="window-formBtn" onclick="closeCreateModeratorWindow()">Close</button>
         </form>

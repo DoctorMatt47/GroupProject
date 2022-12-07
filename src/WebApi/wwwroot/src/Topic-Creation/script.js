@@ -39,6 +39,7 @@ const submitTopic = () => {
     const needCodeCreate = document.getElementById("need-code");
     const codeCreate = document.getElementById("topic-code");
     const languageCreate = document.getElementById("topic-code-language");
+    const topicError = document.getElementById("topic-error");
 
     createTopic(sectionCreate.value,
         titleCreate.value, 
@@ -48,9 +49,20 @@ const submitTopic = () => {
     .then(response=>{
         if("id" in response) openPage(addParameters("../Topic/topic.html", {id:response.id}));
         else openErrorWindow(response.message);
+        closeForm();
     })
-    .catch(showError);
+    .catch((err)=>{
+        topicError.textContent = getErrorText(err);
+    });
 };
 window.addEventListener("load", ()=>{
     addBackgroundClosing(document.getElementById("topic-container"), closeForm);
 });
+
+const setVisibleForTopic = (visible)=>{
+    const codeCreate = document.getElementById("topic-code");
+    const languageCreate = document.getElementById("topic-code-language");
+    setVisible(visible, 'code', 'flex');
+    codeCreate.required = visible;
+    languageCreate.required = visible;
+};

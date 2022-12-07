@@ -114,10 +114,16 @@ const closeDeleteForm = () => {
  */
 const submitUpdateSection = ()=>{
     const sectionId = getValueFromCurrentUrl("id");
+    const error = document.getElementById("section-error");
+    error.textContent = "";
+
     updateSection(sectionId, title.value, description.value).then(()=>{
+        closeUpdateForm();
         openMessageWindow("Updated!");
         loadSection({"id":sectionId, "header":title.value, "description":description.value});
-    }).catch(showError);
+    }).catch(err=>{
+        error.textContent = getErrorText(err);
+    });
 }
 /**
  * Sends request for section removing

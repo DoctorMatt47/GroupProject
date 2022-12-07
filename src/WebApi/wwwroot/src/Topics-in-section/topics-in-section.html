@@ -74,12 +74,14 @@
 <div id="updateWindow" class="fullscreen-container">
     <div class="update-section">
         <h2>Update Section</h2>
-        <form onsubmit="submitUpdateSection(); closeUpdateForm(); return false;">
-            <label for="new-section-name">New Section Title</label>
+        <form onsubmit="submitUpdateSection(); return false;">
+            <p><label id="section-error"></label></p>
+            <label for="new-section-name"><span style="color: red;">*</span>New Section Title</label>
             <textarea id="new-section-name" minlength="2" maxlength="32000" required></textarea>
-            <label for="new-section-description">New Section Description</label>
+            <label for="new-section-description"><span style="color: red;">*</span>New Section Description</label>
             <textarea id="new-section-description" minlength="2" maxlength="32000" required></textarea>
 
+            <label style="color:black; font-size:1em;">All fields marked with <span style="color: red;">*</span> are mandatory</label>
             <button type="submit" class="comment-formBtn">Submit</button>
             <button type="button" class="comment-formBtn" onclick="closeUpdateForm()">Close</button>
         </form>

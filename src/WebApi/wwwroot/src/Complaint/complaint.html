@@ -1,12 +1,15 @@
 <link href="../Complaint/style.css" rel="stylesheet" type="text/css">
 <div id="complaint-container">
     <div class="complaint-section">
-        <div class="inner-width">
+        <form class="inner-width" id="complaint-form" onsubmit="submitComplaint(); return false;">
             <h3>OMG! Did You find a violation? Describe it and we will consider your complaint!</h3>
-            <textarea placeholder="Remove this because..." class="complaint-message" id="message"></textarea>
-            <button id="submit-btn" onclick="submitComplaint(); closeComplainForm(); return false;">Get in touch</button>
-            <a href="#" onclick="closeComplainForm()" style="color: grey">close</a>
-        </div>
+            <p><label id="complaint-error"></label></p>
+            <label><span style="color: red;">*</span>Complaint description</label>
+            <textarea placeholder="Remove this because..." class="complaint-message" id="message" required minlength="2" maxlength="1000"></textarea>
+            <label>All fields marked with <span style="color: red;">*</span> are mandatory</label>
+            <button id="submit-btn" type="submit">Get in touch</button>
+            <button onclick="closeComplainForm()" style="color: grey">close</button>
+        </form>
     </div>
 </div>
 <script src="../Complaint/script.js"></script>

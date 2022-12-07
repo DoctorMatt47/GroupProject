@@ -69,7 +69,8 @@ let complaintPage = 1;
 const loadComplains = (container)=>{
     getComplaints(perPage, complaintPage++).then((response) => {
         if(response.items.length < perPage){
-            loadMoreComplaints.style = "display: none";
+            loadMoreComplaints.classList.add("disabled");
+            loadMoreComplaints.setAttribute("disabled", true);
         }
         for(let i in response.items){
             container.appendChild(createComplaintObject(response.items[i]));
@@ -92,7 +93,8 @@ const loadVerifies = (container, words)=>{
         if(response.items.length < perPage){
             loadMoreTopics = false;
             if(!loadMoreComments && !loadMoreTopics){
-                loadMoreVerifies.style="display:none;";
+                loadMoreVerifies.classList.add("disabled");
+                loadMoreVerifies.setAttribute("disabled", true);
             }
         }
         for(let i in response.items){
@@ -107,7 +109,8 @@ const loadVerifies = (container, words)=>{
         if(response.items.length < perPage){
             loadMoreComments = false;
             if(!loadMoreComments && !loadMoreTopics){
-                loadMoreVerifies.style="display:none;";
+                loadMoreVerifies.classList.add("disabled");
+                loadMoreVerifies.setAttribute("disabled", true);
             }
         }
         for(let i in response.items){
@@ -140,6 +143,9 @@ const loadBannedUsers = ()=>{
 const unblockSelectedUser = ()=>{
     const input = document.getElementById("users");
     const datalist = document.getElementById("nicknames");
+    const error = document.getElementById("moderator-error");
+    error.textContent = "";
+
     let id = null;
     for (let i in datalist.options) {
         if (datalist.options[i].value === input.value){
@@ -147,12 +153,13 @@ const unblockSelectedUser = ()=>{
         }
     }
     if(id == null){
-        openErrorWindow(`There isn't user with login: '${input.value}'; Try other one; Use id only from list`);
+        error.textContent = `There isn't user with login: '${input.value}';\nTry other one;\nUse login only from list\n`;
         return;
     }
     unBlockUser(id).then(()=>{
         input.value = "";
         loadBannedUsers();
+        closeUserActionWindow();
         openMessageWindow("Unblocked!");
     }).catch(showError);
 };

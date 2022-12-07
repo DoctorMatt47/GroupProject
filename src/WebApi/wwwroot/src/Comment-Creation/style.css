@@ -92,4 +92,9 @@ textarea {
     justify-content: center;
     margin: 0 auto 10px;
 }
+#comment-error{
+    font-size: 0.8em;
+    color: red;
+    white-space: pre-wrap;
+}
 

@@ -48,26 +48,18 @@
                                 </button>
                             </div>
                         </div>
-                        <h3 style="font-style: inherit" id="topic-name"><strong>Create multiple elements</strong></h3>
+                        <h3 style="font-style: inherit" id="topic-name"></h3>
                         <hr>
                     </div>
                 </div>
                 <div class="panel-body topic-panel-footer">
-                    <div id="topic-description">I want to create 4 elements with different text. The class needs to
-                        remain the same. I think I am doing this with too much code.
-                        Maybe anyone has some information how to make this code look more beautiful and more efficient?
-                        Best wishes and thank you!
+                    <div id="topic-description">
                     </div>
                 </div>
                 <div class="panel-footer" id="all-code">
                     <div id="panel-footer-code">
-                        <div class="language" id="topic-language">Javascript</div>
-                        <div id="user-code" style="white-space: pre-wrap;">Here should be your code<br>
-                            var textBlock = document.createElement('div');<br>
-                            textBlock.setAttribute('class', 'finalBlock');<br><br>
-                            var addFinalBlock = document.getElementsByClassName('block')[0];<br>
-                            addFinalBlock.appendChild(textBlock);<br><br>
-                            textBlock.innerHTML = "Make this block a text block";
+                        <div class="language" id="topic-language"></div>
+                        <div id="user-code" style="white-space: pre-wrap;">
                         </div>
                         <br>
                         <div style="width: 100%;">
@@ -84,46 +76,7 @@
             <div id="commentForm"></div>
 
             <div class="comment-group" id="comment-group">
-                <div id="comment" class="panel">
-                    <div class="complaint-icon" style="margin-top: 15px;">
-                        <button data-toggle="tooltip" title="Create a complaint" onclick="openForm()">
-                            <span class="glyphicon glyphicon-comment comment-span"></span>
-                        </button>
-                        <button id="comment-admin-button" data-toggle="tooltip" title="Moderate">
-                            <span class="glyphicon glyphicon-copy moderate-span"></span>
-                        </button>
-                    </div>
-                    <p id="answer">Here we have answer text<br>
-                        "Explanation:
-
-                        This is called event delegation and works as followed.
-                        The event is attached to a static parent (staticAncestors)
-                        of the element that should be handled. This jQuery handler
-                        is triggered every time the event triggers on this element
-                        or one of the descendant elements. The handler then checks
-                        if the element that triggered the event matches your selector
-                        (dynamicChild). When there is a match then your custom handler function is executed."
-                    </p>
-                    <div class="panel-footer">
-                        <div id="panel-footer-answer-code">
-                            <div class="language" id="answer-language">Javascript</div>
-                            <p>
-                                Here should be your code<br>
-                                var textBlock = document.createElement('div');<br>
-                                textBlock.setAttribute('class', 'finalBlock');<br>
-                                var addFinalBlock = document.getElementsByClassName('block')[0];<br>
-                                addFinalBlock.appendChild(textBlock);<br>
-                                textBlock.innerHTML = "Make this block a text block";
-                            </p>
-
-                            <div style="width: 100%;">
-                                <button type="button" class="code-btn" onclick="openCompiler()">Run</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="answer-username"><a href="#">username</a></div>
-                    <p id="answer-date">Answered:20.02.2022</p>
-                </div>
+                
             </div>
         </div>
         <div class="col-sm-4">
@@ -144,8 +97,8 @@
                     </div>
                     <div id="topic-info">
                         <hr>
-                        <div id="topic-username"><a href="#">username</a></div>
-                        <div id="creation-date">creation date: 22.03.2022</div>
+                        <div id="topic-username"><a href="#"></a></div>
+                        <div id="creation-date"></div>
                     </div>
                 </div>
                 <div class="panel-footer" style="background-color: white; text-align: center">
