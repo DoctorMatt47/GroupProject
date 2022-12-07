@@ -18,8 +18,9 @@ public class CustomAuthorizationMiddlewareResultHandler : IAuthorizationMiddlewa
     {
         if (authorizeResult.Forbidden)
         {
+            context.Response.StatusCode = 403;
             var failureReasons = authorizeResult.AuthorizationFailure?.FailureReasons.FirstOrDefault();
-            await context.Response.WriteAsJsonAsync(new {failureReasons?.Message});
+            if (failureReasons is not null) await context.Response.WriteAsJsonAsync(new {failureReasons.Message});
             return;
         }
 
