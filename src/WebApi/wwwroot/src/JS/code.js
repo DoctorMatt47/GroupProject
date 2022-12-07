@@ -94,10 +94,18 @@ const addBackgroundClosing = (container, closeFunction)=>{
         if (event.target.id === container.id) closeFunction();
     });
 }
+const getErrorText = (err)=>{
+    let exception = err;
+    if("message" in err) exception = JSON.parse(err.message);
+    let text = exception;
+    if("message" in exception) text = exception.message + "; ";
+    if("howToFix" in exception) text += exception.howToFix + "; ";
+    if("howToPrevent" in exception) text += exception.howToPrevent + "; ";
+    return text;
+};
 const showError = (err) => {
     console.log(err)
-    const exception = JSON.parse(err.message);
-    openErrorWindow(exception.message);
+    openErrorWindow(getErrorText(err));
 };
 /**
  * 

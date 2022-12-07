@@ -5,7 +5,7 @@ const cardTotalElem = document.getElementById("card-total");
 
 let cardLimit = 60;
 let cardIncrease = 10;
-const pageCount = Math.ceil(cardLimit / cardIncrease);
+let pageCount = Math.ceil(cardLimit / cardIncrease);
 let currentPage = 1;
 
 const popularCardContainer = document.getElementById("popular-topics");
@@ -35,6 +35,7 @@ const addCards = (pageIndex) => {
 
     handleButtonStatus();
     getRecommendedTopics(cardIncrease, currentPage).then(response=>{
+        pageCount = response.pageCount;
         cardLimit = Math.min(cardLimit, response.itemsCount);
         cardIncrease = Math.min(cardIncrease, response.itemsCount);
         const endRange =
