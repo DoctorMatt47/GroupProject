@@ -132,7 +132,7 @@ public class UserService : IUserService
             .Where(phrase => _phrases.ContainsPhrase(request.Login, phrase))
             .ToList();
 
-        if (forbiddenPhrases is not null)
+        if (forbiddenPhrases.Any())
             throw new BadRequestException(
                 $"Login contains forbidden words: {string.Join(',', forbiddenPhrases)}",
                 "Remove forbidden words from your login",
@@ -148,4 +148,3 @@ public class UserService : IUserService
         return new IdResponse<Guid>(user.Id);
     }
 }
-

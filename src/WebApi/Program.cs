@@ -11,7 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+var configurationSection = builder.Configuration.GetSection(nameof(ConfigurationOptions));
 builder.Services.Configure<ConfigurationOptions>(builder.Configuration.GetSection(nameof(ConfigurationOptions)));
+builder.Services.Configure<SectionOptions>(
+    configurationSection.GetRequiredSection(nameof(ConfigurationOptions.Sections)));
 
 builder.Services
     .AddAutoMapper(Assembly.GetExecutingAssembly())
