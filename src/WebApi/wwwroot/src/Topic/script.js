@@ -185,7 +185,8 @@ window.addEventListener("load", ()=>{
         
         window.addEventListener("scroll", ()=>{
             let limitBottom = document.documentElement.offsetHeight - window.innerHeight;
-            if(document.documentElement.scrollTop == limitBottom){
+            console.log(limitBottom + " " + document.documentElement.scrollTop)
+            if(Math.round(document.documentElement.scrollTop) == limitBottom){
                 addCommentsToPage(role, response.id);
             }
         });
