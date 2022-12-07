@@ -11,4 +11,4 @@ public record CommentaryResponse(
     Guid TopicId,
     DateTime CreationTime,
     int ComplaintCount,
-    DateTime VerifyBefore);
+    DateTime? VerifyBefore);

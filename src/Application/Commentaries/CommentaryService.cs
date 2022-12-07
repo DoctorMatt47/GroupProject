@@ -38,7 +38,13 @@ public class CommentaryService : ICommentaryService
     public async Task<Page<CommentaryResponse>> Get(GetCommentariesRequest request, CancellationToken cancellationToken)
     {
         var (pageRequest, orderBy, topicId, userId) = request;
-        if (topicId is null && userId is null && request.OrderBy is not CommentariesOrderedBy.VerifyBefore)
+        var isInvalidRequest = request.OrderBy is not (
+                CommentariesOrderedBy.VerifyBefore or
+                CommentariesOrderedBy.ComplaintCount)
+            && topicId is null
+            && userId is null;
+
+        if (isInvalidRequest)
             throw new BadRequestException(
                 "Topic id and user id should not be null at the same time",
                 "Specify topic id or user id",
@@ -157,3 +163,4 @@ public class CommentaryService : ICommentaryService
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }
+

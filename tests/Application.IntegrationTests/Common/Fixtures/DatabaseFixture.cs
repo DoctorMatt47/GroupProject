@@ -67,6 +67,25 @@ public class DatabaseFixture
         return user;
     }
 
+    public async Task<Commentary> CreateCommentaryAsync(Guid topicId)
+    {
+        using var scope = _scopeFactory.CreateScope();
+        var dbContext = scope.ServiceProvider.GetService<IAppDbContext>()!;
+
+        var fixture = new Fixture();
+        var commentary = new Commentary(
+            fixture.Create<string>(),
+            fixture.Create<CompileOptions>(),
+            topicId,
+            DefaultUser.Id,
+            fixture.Create<TimeSpan>().Add(TimeSpan.FromSeconds(1)));
+
+        dbContext.Set<Commentary>().Add(commentary);
+        await dbContext.SaveChangesAsync();
+
+        return commentary;
+    }
+
     public Task<Topic> CreateTopicAsync() => CreateTopicAsync(DefaultUser.Id, DefaultSection.Id);
 
     public async Task<Topic> CreateTopicAsync(Guid userId, int sectionId)
@@ -81,7 +100,7 @@ public class DatabaseFixture
             fixture.Create<CompileOptions>(),
             userId,
             sectionId,
-            fixture.Create<TimeSpan>());
+            fixture.Create<TimeSpan>().Add(TimeSpan.FromSeconds(10)));
 
         dbContext.Set<Topic>().Add(topic);
         await dbContext.SaveChangesAsync();
@@ -102,4 +121,29 @@ public class DatabaseFixture
 
         return section;
     }
+
+    public async Task<Complaint> CreateComplaint(ComplaintTarget target, Guid elementId)
+    {
+        using var scope = _scopeFactory.CreateScope();
+        var dbContext = scope.ServiceProvider.GetService<IAppDbContext>()!;
+
+        var fixture = new Fixture();
+        var complaint = new Complaint(fixture.Create<string>(), target, elementId, DefaultUser.Id,
+            TimeSpan.FromDays(1));
+
+        await dbContext.Set<Complaint>().AddAsync(complaint);
+        await dbContext.SaveChangesAsync();
+
+        return complaint;
+    }
+
+    public async Task AddVerificationRequiredPhrase(string phrase)
+    {
+        using var scope = _scopeFactory.CreateScope();
+        var dbContext = scope.ServiceProvider.GetService<IAppDbContext>()!;
+
+        await dbContext.Set<VerificationRequiredPhrase>().AddAsync(new VerificationRequiredPhrase(phrase));
+        await dbContext.SaveChangesAsync();
+    }
 }
+

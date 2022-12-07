@@ -4,10 +4,12 @@ using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.Common.Requests;
 using GroupProject.Application.IntegrationTests.Common.Fixtures;
+using GroupProject.Application.IntegrationTests.Common.Utils;
 using GroupProject.Application.Topics;
 using GroupProject.Domain.Entities;
 using GroupProject.Domain.Enums;
 using GroupProject.Domain.ValueObjects;
+using Microsoft.EntityFrameworkCore;
 
 namespace GroupProject.Application.IntegrationTests.Topics;
 
@@ -44,7 +46,7 @@ public class TopicServiceTests
 
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.Items.Should().OnlyContain(t => t.SectionId == _db.DefaultSection.Id);
+        response.Items.Should().OnlyContain(topic => topic.SectionId == _db.DefaultSection.Id);
     }
 
     [Fact]
@@ -64,7 +66,7 @@ public class TopicServiceTests
 
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.Items.Should().OnlyContain(t => t.SectionId == _db.DefaultSection.Id);
+        response.Items.Should().OnlyContain(topic => topic.SectionId == _db.DefaultSection.Id);
     }
 
     [Fact]
@@ -83,7 +85,7 @@ public class TopicServiceTests
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.CreationTime, true);
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.Items.Should().OnlyContain(t => !t.IsClosed);
+        response.Items.Should().OnlyContain(topic => !topic.IsClosed);
     }
 
     [Fact]
@@ -94,7 +96,7 @@ public class TopicServiceTests
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.CreationTime, Substring: "a");
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.Items.Should().OnlyContain(t => t.Header.Contains(request.Substring!));
+        response.Items.Should().OnlyContain(topic => topic.Header.Contains(request.Substring!));
     }
 
     [Fact]
@@ -105,7 +107,7 @@ public class TopicServiceTests
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.CreationTime);
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.Items.Should().BeInDescendingOrder(t => t.CreationTime);
+        response.Items.Should().BeInDescendingOrder(topic => topic.CreationTime);
     }
 
     [Fact]
@@ -124,16 +126,20 @@ public class TopicServiceTests
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.ViewCount);
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.Items.Should().BeInDescendingOrder(t => t.ViewCount);
+        response.Items.Should().BeInDescendingOrder(topic => topic.ViewCount);
     }
 
     [Fact]
     public async Task Get_OrderedByComplaintCount()
     {
         var random = new Random();
+
+        var setComplaintCount = ReflectionUtil.GetPrivateSetProperty<Topic>(nameof(Topic.ComplaintCount));
         for (var i = 0; i < 10; i++)
         {
             var topic = await _db.CreateTopicAsync();
+            setComplaintCount!.SetValue(topic, random.Next(100));
+
             _dbContext.Set<Topic>().Attach(topic);
         }
 
@@ -142,21 +148,30 @@ public class TopicServiceTests
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.ComplaintCount);
         var response = await _topics.Get(request, CancellationToken.None);
 
-        response.Items.Should().BeInDescendingOrder(t => t.ComplaintCount);
+        response.Items.Should()
+            .OnlyContain(topic => topic.ComplaintCount > 0).And
+            .BeInDescendingOrder(topic => topic.ComplaintCount);
     }
 
     [Fact]
     public async Task Get_OrderedByVerifyBefore()
     {
         var now = DateTime.UtcNow;
-        for (var i = 0; i < 10; i++) await _db.CreateTopicAsync();
+
+        for (var i = 0; i < 10; i++)
+        {
+            var topic = await _db.CreateTopicAsync();
+            _dbContext.Set<Topic>().Attach(topic);
+        }
+
+        await _dbContext.SaveChangesAsync();
 
         var request = new GetTopicsRequest(new PageRequest(1, 10), TopicsOrderedBy.VerifyBefore);
         var response = await _topics.Get(request, CancellationToken.None);
 
         response.Items.Should()
-            .NotContain(t => t.VerifyBefore == null || t.VerifyBefore <= now).And
-            .BeInAscendingOrder(t => t.VerifyBefore);
+            .OnlyContain(topic => topic.VerifyBefore != null && topic.VerifyBefore > now).And
+            .BeInAscendingOrder(topic => topic.VerifyBefore);
     }
 
     [Fact]
@@ -197,7 +212,7 @@ public class TopicServiceTests
     }
 
     [Fact]
-    public async Task CreateTopic_ThrowExceptionIfTopicWithSameHeaderExist()
+    public async Task CreateTopic_ThrowExceptionIfTopicWithSameHeaderFound()
     {
         var topic = await _db.CreateTopicAsync();
         var request = CreateTopicRequest() with {Header = topic.Header};
@@ -209,7 +224,7 @@ public class TopicServiceTests
     }
 
     [Fact]
-    public async Task CreateTopic_ThrowExceptionIfSectionNotExist()
+    public async Task CreateTopic_ThrowExceptionIfSectionNotFound()
     {
         var request = CreateTopicRequest() with {SectionId = -1};
 
@@ -220,12 +235,50 @@ public class TopicServiceTests
     }
 
     [Fact]
-    public async Task CreateTopic_ThrowExceptionIfUserNotExist()
+    public async Task CreateTopic_ThrowExceptionIfUserNotFound()
     {
         var request = CreateTopicRequest() with {UserId = Guid.NewGuid()};
 
         await FluentActions
             .Invoking(() => _topics.Create(request, CancellationToken.None))
+            .Should()
+            .ThrowAsync<NotFoundException>();
+    }
+
+    [Fact]
+    public async Task VerifyTopic()
+    {
+        var topic = await _db.CreateTopicAsync();
+        await _topics.Verify(topic.Id, CancellationToken.None);
+
+        topic = await _dbContext.Set<Topic>().FindAsync(topic.Id);
+        topic!.VerifyBefore.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task VerifyTopic_ThrowExceptionIfNotFound()
+    {
+        await FluentActions
+            .Invoking(() => _topics.Verify(Guid.NewGuid(), CancellationToken.None))
+            .Should()
+            .ThrowAsync<NotFoundException>();
+    }
+
+    [Fact]
+    public async Task DeleteTopic()
+    {
+        var topic = await _db.CreateTopicAsync();
+        await _topics.Delete(topic.Id, CancellationToken.None);
+
+        var isTopicExist = await _dbContext.Set<Topic>().AnyAsync(t => t.Id == topic.Id);
+        isTopicExist.Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task DeleteTopic_ThrowExceptionIfTopicNotFound()
+    {
+        await FluentActions
+            .Invoking(() => _topics.Delete(Guid.NewGuid(), CancellationToken.None))
             .Should()
             .ThrowAsync<NotFoundException>();
     }

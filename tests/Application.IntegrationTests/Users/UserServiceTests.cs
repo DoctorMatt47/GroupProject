@@ -1,5 +1,6 @@
 ﻿using AutoFixture;
 using FluentAssertions;
+using GroupProject.Application.Common.Exceptions;
 using GroupProject.Application.Common.Interfaces;
 using GroupProject.Application.IntegrationTests.Common.Fixtures;
 using GroupProject.Application.Users;
@@ -81,6 +82,15 @@ public class UserServiceTests
 
         await _users.AddWarningToUser(user.Id, CancellationToken.None);
         user.WarningCount.Should().Be(2);
+    }
+
+    [Fact]
+    public async Task AddWarningToUser_ThrowExceptionIfNotFound()
+    {
+        await FluentActions
+            .Invoking(() => _users.AddWarningToUser(Guid.NewGuid(), CancellationToken.None))
+            .Should()
+            .ThrowAsync<NotFoundException>();
     }
 
     private User User()
