@@ -107,7 +107,7 @@
                     <p id="registration-date">Registration date</p>
                 </div>
                 <div class="panel-footer account-panel-footer">
-                    <button type="button" class="user-action-btn" onclick="openUserActionWindow()">user actions</button>
+                    <button type="button" class="user-action-btn" onclick="openUserActionWindow()">Unblock user</button>
                 </div>
             </div>
         </div>
@@ -123,19 +123,18 @@
                 </button>
             </div>
         </div>
-        <div class="data">
-            <label for="users">Choose User:</label>
-            <input list="nicknames" id="users" name="users" autocomplete="off">
-
-            <datalist id="nicknames" >
-                <option value="Chocolate">
-                <option value="Coconut">
-                <option value="Mint">
-                <option value="Strawberry">
-                <option value="Vanilla">
-            </datalist>
-        </div>
-        <button type="button" class="submit-unblock" onclick="unblockSelectedUser(); closeUserActionWindow(); return false;">Unblock</button>
+        <form onsubmit="unblockSelectedUser(); return false;">
+            <div class="data">
+                <p><label id="moderator-error"></label></p>
+                <label for="users"><span style="color: red;">*</span>Choose User:</label>
+                <input list="nicknames" id="users" name="users" autocomplete="off" required>
+    
+                <datalist id="nicknames" >
+                </datalist>
+            </div>
+            <label style="color:black; font-size:1em;">All fields marked with <span style="color: red;">*</span> are mandatory</label>
+            <button type="submit" class="submit-unblock">Unblock</button>
+        </form>
     </div>
 </div>
 <div id="footer"></div>

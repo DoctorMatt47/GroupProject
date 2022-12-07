@@ -59,12 +59,14 @@
 </div>
 <div id="createSection" class="fullscreen-container">
     <div class="window-section">
-        <h2>Comment Topic</h2>
-        <form onsubmit="submitSection(); closeCreateSectionWindow(); return false;">
-            <label for="section-title">Section Title</label>
-            <input id="section-title" minlength="2" maxlength="32" required>
-            <label for="section-description">Section description</label>
-            <textarea id="section-description" minlength="2" maxlength="32000" required></textarea>
+        <h2>Create Section</h2>
+        <form onsubmit="submitSection(); return false;">
+            <p><label id="section-error"></label></p>
+            <label for="section-title"><span style="color: red;">*</span>Section Title</label>
+            <input id="section-title" minlength="2" maxlength="32" required placeholder="Framework for language or language...">
+            <label for="section-description"><span style="color: red;">*</span>Section description</label>
+            <textarea id="section-description" minlength="2" maxlength="32000" required placeholder="This language is used for..."></textarea>
+            <label style="color:black; font-size:1em;">All fields marked with <span style="color: red;">*</span> are mandatory</label>
             <button type="submit" class="window-formBtn">Submit</button>
             <button type="button" class="window-formBtn" onclick="closeCreateSectionWindow()">Close</button>
         </form>

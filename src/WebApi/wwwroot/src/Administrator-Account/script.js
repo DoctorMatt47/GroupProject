@@ -14,10 +14,19 @@ const moderatorPassword = document.getElementById("moderator-password");
 const submitModerator = ()=>{
     const login = moderatorNickname.value;
     const password = moderatorPassword.value;
+    const error = document.getElementById("moderator-create-error");
+    error.textContent = "";
+
     createModerator(login, password).then(() => {
+        moderatorNickname.value = "";
+        moderatorPassword.value = "";
+
         loadModerators();
+        closeCreateModeratorWindow(); 
         openMessageWindow(`Created moderator with login:'${login}' and password: '${password}'!`);
-    }).catch(showError);
+    }).catch((err)=>{
+        error.textContent = getErrorText(err);
+    });
 };
 
 const userList = document.getElementById("user-list");
@@ -73,7 +82,8 @@ let currentUserPage = 1, currentModeratorPage = 1;
 const loadUserList = (getter, page, button, creator)=>{
     getter(perUserPage, page).then(response=>{
         if(response.items.length < perUserPage){
-            button.style = "display: none;";
+            button.classList.add("disabled");
+            button.setAttribute("disabled", true);
         }
         for(let i in response.items){
             creator(response.items[i]);
@@ -116,6 +126,9 @@ const loadUsers = ()=>{
 const deleteSelectedModerator = ()=>{
     const input = document.getElementById("moderators");
     const datalist = document.getElementById("moderator-nicknames");
+    const error = document.getElementById("moderator-delete-error");
+    error.textContent = "";
+
     let id = null;
     for (let i in datalist.options) {
         if (datalist.options[i].value === input.value){
@@ -123,12 +136,13 @@ const deleteSelectedModerator = ()=>{
         }
     }
     if(id == null){
-        openErrorWindow(`There isn't moderator with login: '${input.value}'`);
+        error.textContent = `There isn't moderator with login: '${input.value}';\n Try other one;\n Use login only from list\n`;
         return;
     }
     deleteModerator(id).then(()=>{
         input.value = "";
         loadModerators();
+        closeModeratorActionWindow();
         openMessageWindow("Deleted!");
     }).catch(showError);
 };

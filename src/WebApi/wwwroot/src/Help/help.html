@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Hi-fi code - Help Forum Page</title>
+    <title>Hi-fi code - Help</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -87,7 +87,7 @@
                     <span class="glyphicon glyphicon-edit"></span></button>
             </summary>
             <div>
-                <div id="forbidden-words">Forbidden words: f*ck, b*tch, ...</div>
+                <div id="forbidden-words">Forbidden words: b*d, ...</div>
                 <div id="verification-words">Verification words: kill, fight, rob, ...</div>
             </div>
         </details>
@@ -122,9 +122,9 @@
     <div class="update-section">
         <h2>Update Rules</h2>
         <form onsubmit="submitWords(); closeUpdateWordsForm(); return false;">
-            <label for="forbidden">Forbidden words</label>
+            <label for="forbidden">Forbidden words(format: word1, word2)</label>
             <input type="text" class="input-size" id="forbidden"></input>
-            <label for="verification">Verification words</label>
+            <label for="verification">Verification words(format: word1, word2)</label>
             <input type="text" class="input-size" id="verification"></input>
             <button type="submit" class="update-btn" onclick="">Submit</button>
             <button type="button" class="update-btn" onclick="closeUpdateWordsForm()">Close</button>
@@ -135,30 +135,32 @@
     <div class="update-section">
         <h2>Update Rules</h2>
         <form onsubmit="submitWarning(); closeUpdateWarningForm(); return false;">
-            <label for="update-count" style="font-size: 16px">Warning Count</label>
-            <input type="number" size="3" id="update-count" value="3" min="0">
-            <label for="update-ban-duration" style="font-size: 16px">Ban duration</label>
+            <label for="update-count" style="font-size: 16px"><span style="color: red;">*</span>Warning Count</label>
+            <input type="number" size="3" id="update-count" value="3" min="0" required>
+            <label for="update-ban-duration" style="font-size: 16px"><span style="color: red;">*</span>Ban duration</label>
             <div id="update-ban-duration">
                 <label for="ban-days">Days</label>
-                <input type="number" id="ban-days" value="0" min="0">
+                <input type="number" id="ban-days" value="0" min="0" required>
                 <label for="ban-hours">Hours</label>
-                <input type="number" id="ban-hours" value="0" min="0" max="23">
+                <input type="number" id="ban-hours" value="0" min="0" max="23" required>
                 <label for="ban-minutes">Minutes</label>
-                <input type="number" id="ban-minutes" value="0" min="0" max="59">
+                <input type="number" id="ban-minutes" value="0" min="0" max="59" required>
             </div>
-            <label for="update-complaint-duration" style="font-size: 16px">Complaint verification</label>
+            <label for="update-complaint-duration" style="font-size: 16px"><span style="color: red;">*</span>Complaint verification</label>
             <div id="update-complaint-duration">
                 <label for="complaint-days">Days</label>
-                <input type="number" id="complaint-days" value="0" min="0">
+                <input type="number" id="complaint-days" value="0" min="0" required>
                 <label for="complaint-hours">Hours</label>
-                <input type="number" id="complaint-hours" value="0" min="0" max="23">
+                <input type="number" id="complaint-hours" value="0" min="0" max="23" required>
                 <label for="complaint-minutes">Minutes</label>
-                <input type="number" id="complaint-minutes" value="0" min="0" max="59">
+                <input type="number" id="complaint-minutes" value="0" min="0" max="59" required>
             </div>
 
-
-            <button type="submit" class="update-btn" onclick="">Submit</button>
-            <button type="button" class="update-btn" onclick="closeUpdateWarningForm()">Close</button>
+            <label style="color:black; font-size:1em;">All fields marked with <span style="color: red;">*</span> are mandatory</label>
+            <div>
+                <button type="submit" class="update-btn" onclick="">Submit</button>
+                <button type="button" class="update-btn" onclick="closeUpdateWarningForm()">Close</button>
+            </div>
         </form>
     </div>
 </div>
