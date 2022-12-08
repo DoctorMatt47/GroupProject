@@ -6,8 +6,8 @@
 const createSectionForPanel = (sectionData)=>{
     const section = document.createElement("a");
     getSectionTopics(sectionData.id, 1, 1).then(res=>{
-    section.innerHTML = `<li class="list-group-item d-flex justify-content-between align-items-center">
-                            ${sectionData.header}
+    section.innerHTML = `<li class="list-group-item d-flex justify-content-between align-items-center" title=${sectionData.header}>
+                            ${textCutter(sectionData.header, 15)}${sectionData.header.length > 15?"...":""}
                             <span class="badge badge-primary badge-pill">${res.itemsCount}</span>
                         </li>`;
     });
@@ -47,7 +47,9 @@ const addSectionsToPanel = (containerId)=>{
 const createLanguageForPanel = (sectionData)=>{
     const section = document.createElement("a");
     section.innerHTML = `<a>
-                            <li class="list-group-item language-list-item">${sectionData.header}</li>
+                            <li class="list-group-item language-list-item" title=${sectionData.header}>
+                                ${textCutter(sectionData.header, 15)}${sectionData.header.length > 15?"...":""}
+                            </li>
                         </a>`;
     section.href = addParameters("../Topics-in-section/topics-in-section.html", {id:sectionData.id});
 
