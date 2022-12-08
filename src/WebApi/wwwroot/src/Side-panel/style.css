@@ -13,7 +13,12 @@
     vertical-align: bottom;
     color: #555;
 }
-
+.hide-style{
+    font-family: monospace; 
+    text-overflow: ellipsis; 
+    white-space: nowrap; 
+    overflow: hidden;
+}
 .language-list-item {
     justify-content: space-between;
     text-align: center;

@@ -18,7 +18,8 @@ const createSectionObject = (section) =>{
 
     const title = document.createElement("div");
     title.className = "section-title";
-    title.innerHTML = `<h4><strong>${section.header}</strong></h4>`;
+    title.innerHTML = `<h4><strong>${textCutter(section.header, 7)}${section.header.length > 7?"...":""}</strong></h4>`;
+    title.title = section.header;
     block.appendChild(title);
 
     const info = document.createElement("div");
