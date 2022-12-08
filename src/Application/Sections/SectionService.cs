@@ -54,6 +54,11 @@ public class SectionService : ISectionService
     public async Task Update(PutSectionRequest request, CancellationToken cancellationToken)
     {
         var section = await _dbContext.Set<Section>().FindOrThrowAsync(request.Id, cancellationToken);
+        await _dbContext.Set<Section>().NoOneOrThrowAsync(
+            s => s.Header == request.Header,
+            $"header: {request.Header}",
+            cancellationToken);
+
         section.Header = request.Header;
         section.Description = request.Description;
         await _dbContext.SaveChangesAsync(cancellationToken);
