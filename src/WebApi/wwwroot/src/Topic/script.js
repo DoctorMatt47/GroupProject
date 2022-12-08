@@ -144,7 +144,7 @@ const addTopicToPage = (role, topic)=>{
     codeLanguageContainer.textContent = LANGUAGES[topic.compileOptions.language.toLowerCase()];
     sectionContainer.textContent = topic.sectionHeader;
     sectionContainer.onclick = ()=>{
-        openPage("../Topics_in_section/topics_in_section.html", {id:topic.sectionId});
+        openPage("../Topics-in-section/topics-in-section.html", {id:topic.sectionId});
     };
     dateContainer.textContent = new Date(topic.creationTime).toLocaleDateString();
     viewedContainer.textContent = topic.viewCount;
