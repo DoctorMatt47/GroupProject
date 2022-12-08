@@ -5,6 +5,7 @@
 
 .config/
 puml/
+dist/
 
 # Database files
 *.db
