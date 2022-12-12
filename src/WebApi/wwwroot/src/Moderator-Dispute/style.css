@@ -125,3 +125,8 @@ a::after{
     text-decoration: none;
 }
 
+.complaint-wrap, #topic-name{
+    overflow-wrap: break-word; 
+    inline-size: 100%;
+    white-space: pre-wrap;
+}

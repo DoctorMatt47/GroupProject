@@ -298,3 +298,8 @@ h4 {
     /*display: block;*/
     display: none;
 }
+#topic-name{
+    font-style: inherit; 
+    overflow-wrap: break-word; 
+    inline-size: 100%;
+}
